@@ -15,6 +15,15 @@
 		D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5D7299BD9D400966683 /* String+Localized.swift */; };
 		D860B5DB299BDB4000966683 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D860B5DA299BDB4000966683 /* SnapKit */; };
 		D860B5DE299BDB7000966683 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = D860B5DD299BDB7000966683 /* Then */; };
+		D860B5E9299C860C00966683 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5E8299C860C00966683 /* Coordinator.swift */; };
+		D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5EA299C88B900966683 /* AppCoordinator.swift */; };
+		D860B5ED299C894600966683 /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5EC299C894600966683 /* CoordinatorType.swift */; };
+		D860B5F0299C8D5900966683 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5EF299C8D5900966683 /* LoginViewController.swift */; };
+		D860B5F3299C8DB000966683 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5F2299C8DB000966683 /* BaseViewController.swift */; };
+		D860B5F9299C903700966683 /* CoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5F8299C903700966683 /* CoordinatorEvent.swift */; };
+		D860B5FC299C912B00966683 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5FB299C912B00966683 /* LoginCoordinator.swift */; };
+		D860B5FE299C948400966683 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5FD299C948400966683 /* TabBarPage.swift */; };
+		D860B601299C956200966683 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B600299C956200966683 /* TabBarCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +36,15 @@
 		D860B5D2299BD8A100966683 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D860B5D4299BD8BD00966683 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D860B5D7299BD9D400966683 /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
+		D860B5E8299C860C00966683 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		D860B5EA299C88B900966683 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		D860B5EC299C894600966683 /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
+		D860B5EF299C8D5900966683 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D860B5F2299C8DB000966683 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		D860B5F8299C903700966683 /* CoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorEvent.swift; sourceTree = "<group>"; };
+		D860B5FB299C912B00966683 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		D860B5FD299C948400966683 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
+		D860B600299C956200966683 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +140,7 @@
 			children = (
 				D860B5CE299BD65000966683 /* Common */,
 				D860B5CC299BD5DE00966683 /* LoginScene */,
-				D860B5CD299BD63000966683 /* HomeScene */,
+				D860B5CD299BD63000966683 /* TabBarScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -133,6 +151,7 @@
 				D860B5C6299BD50B00966683 /* DIContainer */,
 				D8576130299BCFF800F1AFEB /* AppDelegate.swift */,
 				D8576132299BCFF800F1AFEB /* SceneDelegate.swift */,
+				D860B5EA299C88B900966683 /* AppCoordinator.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -182,20 +201,26 @@
 		D860B5CC299BD5DE00966683 /* LoginScene */ = {
 			isa = PBXGroup;
 			children = (
+				D860B5FA299C911200966683 /* Coordinator */,
+				D860B5EE299C8D4B00966683 /* ViewController */,
 			);
 			path = LoginScene;
 			sourceTree = "<group>";
 		};
-		D860B5CD299BD63000966683 /* HomeScene */ = {
+		D860B5CD299BD63000966683 /* TabBarScene */ = {
 			isa = PBXGroup;
 			children = (
+				D860B5FD299C948400966683 /* TabBarPage.swift */,
+				D860B5FF299C955100966683 /* Coordinator */,
 			);
-			path = HomeScene;
+			path = TabBarScene;
 			sourceTree = "<group>";
 		};
 		D860B5CE299BD65000966683 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D860B5F1299C8DA300966683 /* Base */,
+				D860B5E7299C85E900966683 /* Coordinator */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -214,6 +239,48 @@
 				D860B5D3299BD8A100966683 /* Localizable.strings */,
 			);
 			path = Localizing;
+			sourceTree = "<group>";
+		};
+		D860B5E7299C85E900966683 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D860B5E8299C860C00966683 /* Coordinator.swift */,
+				D860B5EC299C894600966683 /* CoordinatorType.swift */,
+				D860B5F8299C903700966683 /* CoordinatorEvent.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		D860B5EE299C8D4B00966683 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D860B5EF299C8D5900966683 /* LoginViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D860B5F1299C8DA300966683 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D860B5F2299C8DB000966683 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		D860B5FA299C911200966683 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D860B5FB299C912B00966683 /* LoginCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		D860B5FF299C955100966683 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D860B600299C956200966683 /* TabBarCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,9 +363,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D860B5F0299C8D5900966683 /* LoginViewController.swift in Sources */,
+				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
+				D860B601299C956200966683 /* TabBarCoordinator.swift in Sources */,
+				D860B5FC299C912B00966683 /* LoginCoordinator.swift in Sources */,
 				D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */,
+				D860B5ED299C894600966683 /* CoordinatorType.swift in Sources */,
+				D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */,
+				D860B5F3299C8DB000966683 /* BaseViewController.swift in Sources */,
 				D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */,
+				D860B5FE299C948400966683 /* TabBarPage.swift in Sources */,
 				D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */,
+				D860B5F9299C903700966683 /* CoordinatorEvent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
