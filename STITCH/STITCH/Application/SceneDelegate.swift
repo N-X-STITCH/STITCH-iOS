@@ -10,6 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
     func scene(
         _ scene: UIScene,
@@ -23,10 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func start(_ windowScene: UIWindowScene) {
         let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
-        
         window?.rootViewController = navigationController
         window?.backgroundColor = .white // TODO: color 변경
         window?.makeKeyAndVisible()
+        
+        appCoordinator = AppCoordinator(navigationController)
+        appCoordinator?.start()
         
         // TODO: appCoordinator 추가
         // appCoordinator start
