@@ -5,8 +5,9 @@
 //  Created by neuli on 2023/02/15.
 //
 
-import Combine
 import UIKit
+
+import RxSwift
 
 protocol AppCoordinatorProtocol: Coordinator {
     func showLoginFlow()
@@ -21,7 +22,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator]
     var type: CoordinatorType { .app }
-    var cancelBag = Set<AnyCancellable>()
+    var disposeBag = DisposeBag()
     
     // MARK: - Initializer
     

@@ -5,21 +5,22 @@
 //  Created by neuli on 2023/02/15.
 //
 
-import Combine
 import UIKit
+
+import RxSwift
 
 protocol TabBarCoordinatorProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
 }
 
-final class TabBarCoordinator: AnyObject, TabBarCoordinatorProtocol {
+final class TabBarCoordinator: TabBarCoordinatorProtocol {
     
     // MARK: - Properties
     weak var finishDelegate: CoordinatorFinishDelegate?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType { .tab }
-    var cancelBag = Set<AnyCancellable>()
+    var disposeBag = DisposeBag()
     var tabBarController: UITabBarController
     
     // MARK: - Initializer
