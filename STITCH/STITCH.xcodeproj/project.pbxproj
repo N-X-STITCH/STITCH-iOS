@@ -30,6 +30,11 @@
 		D860B60B299CE76800966683 /* Encodable+toDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B60A299CE76800966683 /* Encodable+toDictionary.swift */; };
 		D860B60D299CE7AC00966683 /* Dictionary+queryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B60C299CE7AC00966683 /* Dictionary+queryString.swift */; };
 		D860B60F299CE9F300966683 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B60E299CE9F300966683 /* NetworkService.swift */; };
+		D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B616299CF1AF00966683 /* LoginViewModel.swift */; };
+		D860B61B299CF3F100966683 /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B61A299CF3F100966683 /* AuthUseCase.swift */; };
+		D860B61F299D199A00966683 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B61E299D199A00966683 /* AuthRepository.swift */; };
+		D860B622299D19DA00966683 /* DefaultAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B621299D19DA00966683 /* DefaultAuthRepository.swift */; };
+		D860B625299D1AAF00966683 /* SingInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B624299D1AAF00966683 /* SingInUseCase.swift */; };
 		D860B633299DF5A200966683 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D860B632299DF5A200966683 /* RxCocoa */; };
 		D860B635299DF5A200966683 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D860B634299DF5A200966683 /* RxRelay */; };
 		D860B637299DF5A200966683 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D860B636299DF5A200966683 /* RxSwift */; };
@@ -60,6 +65,11 @@
 		D860B60A299CE76800966683 /* Encodable+toDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+toDictionary.swift"; sourceTree = "<group>"; };
 		D860B60C299CE7AC00966683 /* Dictionary+queryString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+queryString.swift"; sourceTree = "<group>"; };
 		D860B60E299CE9F300966683 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		D860B616299CF1AF00966683 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D860B61A299CF3F100966683 /* AuthUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUseCase.swift; sourceTree = "<group>"; };
+		D860B61E299D199A00966683 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		D860B621299D19DA00966683 /* DefaultAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAuthRepository.swift; sourceTree = "<group>"; };
+		D860B624299D1AAF00966683 /* SingInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				D860B5CB299BD5B900966683 /* UseCase */,
-				D860B5CA299BD5AF00966683 /* RepositoryInterface */,
+				D860B5CA299BD5AF00966683 /* Repository */,
 				D860B5C9299BD5A300966683 /* Entities */,
 			);
 			path = Domain;
@@ -151,8 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				D860B5CE299BD65000966683 /* Common */,
-				D860B5CC299BD5DE00966683 /* LoginScene */,
-				D860B5CD299BD63000966683 /* TabBarScene */,
+				D860B5CC299BD5DE00966683 /* Auth */,
+				D860B5CD299BD63000966683 /* TabBar */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -178,6 +188,7 @@
 		D860B5C7299BD52400966683 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D860B620299D19CC00966683 /* Auth */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -196,36 +207,39 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
-		D860B5CA299BD5AF00966683 /* RepositoryInterface */ = {
+		D860B5CA299BD5AF00966683 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D860B61D299D198F00966683 /* Auth */,
 			);
-			path = RepositoryInterface;
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		D860B5CB299BD5B900966683 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				D860B61C299D18DB00966683 /* Auth */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
 		};
-		D860B5CC299BD5DE00966683 /* LoginScene */ = {
+		D860B5CC299BD5DE00966683 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				D860B5FA299C911200966683 /* Coordinator */,
-				D860B5EE299C8D4B00966683 /* ViewController */,
+				D860B610299CF10100966683 /* Login */,
+				D860B619299CF33000966683 /* Signup */,
 			);
-			path = LoginScene;
+			path = Auth;
 			sourceTree = "<group>";
 		};
-		D860B5CD299BD63000966683 /* TabBarScene */ = {
+		D860B5CD299BD63000966683 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
 				D860B5FD299C948400966683 /* TabBarPage.swift */,
 				D860B5FF299C955100966683 /* Coordinator */,
 			);
-			path = TabBarScene;
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		D860B5CE299BD65000966683 /* Common */ = {
@@ -263,14 +277,6 @@
 				D860B5F8299C903700966683 /* CoordinatorEvent.swift */,
 			);
 			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		D860B5EE299C8D4B00966683 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D860B5EF299C8D5900966683 /* LoginViewController.swift */,
-			);
-			path = ViewController;
 			sourceTree = "<group>";
 		};
 		D860B5F1299C8DA300966683 /* Base */ = {
@@ -313,6 +319,47 @@
 				D860B608299CE71800966683 /* NetworkError.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		D860B610299CF10100966683 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				D860B5EF299C8D5900966683 /* LoginViewController.swift */,
+				D860B616299CF1AF00966683 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		D860B619299CF33000966683 /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Signup;
+			sourceTree = "<group>";
+		};
+		D860B61C299D18DB00966683 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				D860B61A299CF3F100966683 /* AuthUseCase.swift */,
+				D860B624299D1AAF00966683 /* SingInUseCase.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		D860B61D299D198F00966683 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				D860B61E299D199A00966683 /* AuthRepository.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		D860B620299D19CC00966683 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				D860B621299D19DA00966683 /* DefaultAuthRepository.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D860B606299CE58400966683 /* NetworkConfig.swift in Sources */,
+				D860B625299D1AAF00966683 /* SingInUseCase.swift in Sources */,
 				D860B604299CE45600966683 /* EndPoint.swift in Sources */,
 				D860B5F0299C8D5900966683 /* LoginViewController.swift in Sources */,
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
@@ -408,6 +456,7 @@
 				D860B601299C956200966683 /* TabBarCoordinator.swift in Sources */,
 				D860B5FC299C912B00966683 /* LoginCoordinator.swift in Sources */,
 				D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */,
+				D860B622299D19DA00966683 /* DefaultAuthRepository.swift in Sources */,
 				D860B5ED299C894600966683 /* CoordinatorType.swift in Sources */,
 				D860B60B299CE76800966683 /* Encodable+toDictionary.swift in Sources */,
 				D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */,
@@ -416,7 +465,10 @@
 				D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */,
 				D860B5FE299C948400966683 /* TabBarPage.swift in Sources */,
 				D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */,
+				D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */,
+				D860B61F299D199A00966683 /* AuthRepository.swift in Sources */,
 				D860B5F9299C903700966683 /* CoordinatorEvent.swift in Sources */,
+				D860B61B299CF3F100966683 /* AuthUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

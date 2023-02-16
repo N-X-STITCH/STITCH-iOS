@@ -12,7 +12,7 @@ protocol TabBarCoordinatorProtocol: Coordinator {
     var tabBarController: UITabBarController { get set }
 }
 
-final class TabBarCoordinator: AnyObject, TabBarCoordinatorProtocol {
+final class TabBarCoordinator: TabBarCoordinatorProtocol {
     
     // MARK: - Properties
     weak var finishDelegate: CoordinatorFinishDelegate?
