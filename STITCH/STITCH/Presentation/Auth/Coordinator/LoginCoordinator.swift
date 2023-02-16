@@ -43,5 +43,6 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
                 return
             }
             .disposed(by: disposeBag)
+        navigationController.pushViewController(loginViewController, animated: true)
     }
 }

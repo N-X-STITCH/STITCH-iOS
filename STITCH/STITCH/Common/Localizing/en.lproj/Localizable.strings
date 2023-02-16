@@ -7,3 +7,7 @@
 */
 
 "Signup" = "Signup";
+
+// LoginViewController
+"Start" = "STICHI를 통해 매일 새롭게 열리는\n오프라인 커뮤니티와 함께 새로운 일상을 시작해보세요!";
+"UseTerms" = "가입을 진행할 경우, 서비스 약관 및 개인정보 처리방침에\n동의한 것으로 간주합니다.";
