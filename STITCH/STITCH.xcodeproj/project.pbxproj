@@ -11,6 +11,7 @@
 		D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576132299BCFF800F1AFEB /* SceneDelegate.swift */; };
 		D857613A299BCFFA00F1AFEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8576139299BCFFA00F1AFEB /* Assets.xcassets */; };
 		D857613D299BCFFA00F1AFEB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D857613B299BCFFA00F1AFEB /* LaunchScreen.storyboard */; };
+		D8599A99299E012300633192 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8599A98299E012300633192 /* Images.xcassets */; };
 		D860B5D1299BD8A100966683 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D860B5D3299BD8A100966683 /* Localizable.strings */; };
 		D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5D7299BD9D400966683 /* String+Localized.swift */; };
 		D860B5DB299BDB4000966683 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D860B5DA299BDB4000966683 /* SnapKit */; };
@@ -47,6 +48,7 @@
 		D8576139299BCFFA00F1AFEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D857613C299BCFFA00F1AFEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D857613E299BCFFA00F1AFEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8599A98299E012300633192 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D860B5D2299BD8A100966683 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D860B5D4299BD8BD00966683 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D860B5D7299BD9D400966683 /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				D857613B299BCFFA00F1AFEB /* LaunchScreen.storyboard */,
 				D8576139299BCFFA00F1AFEB /* Assets.xcassets */,
+				D8599A98299E012300633192 /* Images.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D857613D299BCFFA00F1AFEB /* LaunchScreen.storyboard in Resources */,
+				D8599A99299E012300633192 /* Images.xcassets in Resources */,
 				D860B5D1299BD8A100966683 /* Localizable.strings in Resources */,
 				D857613A299BCFFA00F1AFEB /* Assets.xcassets in Resources */,
 			);

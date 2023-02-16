@@ -5,52 +5,35 @@
 //  Created by neuli on 2023/02/15.
 //
 
-import Combine
 import Foundation
 
+import RxSwift
+import RxCocoa
+
 protocol URLSessionNetworkService {
-    func request(with endpoint: Requestable) -> AnyPublisher<Data, NetworkError>
+    func request(with endpoint: Requestable) -> Observable<Data>
 }
 
 final class DefaultURLSessionNetworkService: URLSessionNetworkService {
     
+    // MARK: - Properties
+    
     private let config: NetworkConfigurable
+    
+    // MARK: - Initializer
     
     init(config: NetworkConfigurable) {
         self.config = config
     }
     
-    func request(with endpoint: Requestable) -> AnyPublisher<Data, NetworkError> {
+    // MARK: - Methods
+    
+    func request(with endpoint: Requestable) -> Observable<Data> {
         guard let request = try? endpoint.urlRequest(with: config) else {
-            return Fail(error: NetworkError.invalidURLError)
-                .eraseToAnyPublisher()
+            return .error(NetworkError.invalidURLError)
         }
         
-        return self.request(with: request)
-    }
-    
-    private func request(with request: URLRequest) -> AnyPublisher<Data, NetworkError> {
-        return URLSession.shared
-            .dataTaskPublisher(for: request)
-            .tryMap { data, response -> Data in
-                if let httpResponse = response as? HTTPURLResponse {
-                    switch httpResponse.statusCode {
-                    case 200...299: return data
-                    default: throw self.makeError(by: httpResponse.statusCode)
-                    }
-                } else {
-                    throw self.makeError(by: 500)
-                }
-            }
-            .mapError { _ in self.makeError(by: 0) }
-            .eraseToAnyPublisher()
-    }
-    
-    private func makeError(by statusCode: Int) -> NetworkError {
-        if let networkError = NetworkError(rawValue: statusCode) {
-            return networkError
-        } else {
-            return .unknownError
-        }
+        return URLSession.shared.rx
+            .data(request: request)
     }
 }

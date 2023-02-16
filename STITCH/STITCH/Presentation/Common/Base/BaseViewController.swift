@@ -5,9 +5,9 @@
 //  Created by neuli on 2023/02/15.
 //
 
-import Combine
 import UIKit
 
+import RxSwift
 import SnapKit
 import Then
 
@@ -15,8 +15,8 @@ class BaseViewController: UIViewController {
     
     // MARK: - Properties
     
-    var coordinatorPublisher = PassthroughSubject<CoordinatorEvent, Never>()
-    var cancelBag = Set<AnyCancellable>()
+    var coordinatorPublisher = PublishSubject<CoordinatorEvent>()
+    var disposeBag = DisposeBag()
     
     // MARK: - Methods
     

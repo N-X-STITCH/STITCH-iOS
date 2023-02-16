@@ -5,8 +5,9 @@
 //  Created by neuli on 2023/02/15.
 //
 
-import Combine
 import UIKit
+
+import RxSwift
 
 protocol LoginCoordinatorProtocol: Coordinator {
     func showLoginViewController()
@@ -14,15 +15,21 @@ protocol LoginCoordinatorProtocol: Coordinator {
 
 final class LoginCoordinator: LoginCoordinatorProtocol {
     
+    // MARK: - Properties
+    
     weak var finishDelegate: CoordinatorFinishDelegate?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var type: CoordinatorType { .login }
-    var cancelBag = Set<AnyCancellable>()
+    var disposeBag = DisposeBag()
+    
+    // MARK: - Initializer
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
+    
+    // MARK: - Methods
     
     func start() {
         showLoginViewController()
@@ -32,11 +39,9 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
         // TODO: DIContainer
         let loginViewController = LoginViewController()
         loginViewController.coordinatorPublisher
-            .sink { event in
-                if case CoordinatorEvent.next = event {
-                    
-                }
+            .subscribe { event in
+                return
             }
-            .store(in: &cancelBag)
+            .disposed(by: disposeBag)
     }
 }
