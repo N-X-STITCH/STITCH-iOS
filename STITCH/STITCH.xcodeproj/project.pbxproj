@@ -13,6 +13,9 @@
 		D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820259829A22EC800892CE8 /* ProfileTextCollectionView.swift */; };
 		D820259B29A2309000892CE8 /* ProfileTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820259A29A2309000892CE8 /* ProfileTextCell.swift */; };
 		D820259E29A236AB00892CE8 /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820259D29A236AB00892CE8 /* CollectionViewLayout.swift */; };
+		D82025A029A24A7C00892CE8 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820259F29A24A7C00892CE8 /* LocationViewController.swift */; };
+		D82025A229A24AC300892CE8 /* InterestedInSportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */; };
+		D82025A429A24AE900892CE8 /* CompleSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82025A329A24AE900892CE8 /* CompleSignupViewController.swift */; };
 		D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576130299BCFF800F1AFEB /* AppDelegate.swift */; };
 		D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576132299BCFF800F1AFEB /* SceneDelegate.swift */; };
 		D857613A299BCFFA00F1AFEB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8576139299BCFFA00F1AFEB /* Colors.xcassets */; };
@@ -68,6 +71,9 @@
 		D820259829A22EC800892CE8 /* ProfileTextCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextCollectionView.swift; sourceTree = "<group>"; };
 		D820259A29A2309000892CE8 /* ProfileTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextCell.swift; sourceTree = "<group>"; };
 		D820259D29A236AB00892CE8 /* CollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
+		D820259F29A24A7C00892CE8 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestedInSportsViewController.swift; sourceTree = "<group>"; };
+		D82025A329A24AE900892CE8 /* CompleSignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleSignupViewController.swift; sourceTree = "<group>"; };
 		D857612D299BCFF800F1AFEB /* STITCH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STITCH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8576130299BCFF800F1AFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8576132299BCFF800F1AFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -428,6 +434,9 @@
 				D860B616299CF1AF00966683 /* LoginViewModel.swift */,
 				D8599ABF299E425600633192 /* NicknameViewController.swift */,
 				D820258929A2208300892CE8 /* ProfileViewController.swift */,
+				D820259F29A24A7C00892CE8 /* LocationViewController.swift */,
+				D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */,
+				D82025A329A24AE900892CE8 /* CompleSignupViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -558,9 +567,11 @@
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
+				D82025A429A24AE900892CE8 /* CompleSignupViewController.swift in Sources */,
 				D860B60D299CE7AC00966683 /* Dictionary+queryString.swift in Sources */,
 				D8599AB0299E2EE100633192 /* UIFont+.swift in Sources */,
 				D860B601299C956200966683 /* TabBarCoordinator.swift in Sources */,
+				D82025A029A24A7C00892CE8 /* LocationViewController.swift in Sources */,
 				D820259B29A2309000892CE8 /* ProfileTextCell.swift in Sources */,
 				D860B5FC299C912B00966683 /* LoginCoordinator.swift in Sources */,
 				D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */,
@@ -582,6 +593,7 @@
 				D8599AB6299E349000633192 /* AppDIContainer.swift in Sources */,
 				D860B61F299D199A00966683 /* AuthRepository.swift in Sources */,
 				D860B5F9299C903700966683 /* CoordinatorEvent.swift in Sources */,
+				D82025A229A24AC300892CE8 /* InterestedInSportsViewController.swift in Sources */,
 				D820258A29A2208300892CE8 /* ProfileViewController.swift in Sources */,
 				D8599AC0299E425600633192 /* NicknameViewController.swift in Sources */,
 				D860B61B299CF3F100966683 /* AuthUseCase.swift in Sources */,

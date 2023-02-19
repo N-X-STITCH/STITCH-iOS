@@ -69,14 +69,22 @@ final class ProfileViewController: BaseViewController {
         profileTextCollectionView.setData(testData)
     }
     
+    override func bind() {
+        nextButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.coordinatorPublisher.onNext(.next)
+            }
+            .disposed(by: disposeBag)
+    }
+    
     override func configureUI() {
         view.backgroundColor = .background
         
         view.addSubview(titleLabel)
         view.addSubview(profileImageView)
         view.addSubview(cameraButton)
-        view.addSubview(nextButton)
         view.addSubview(profileTextCollectionView)
+        view.addSubview(nextButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
