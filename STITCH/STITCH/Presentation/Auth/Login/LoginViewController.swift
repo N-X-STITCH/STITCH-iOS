@@ -87,7 +87,7 @@ final class LoginViewController: BaseViewController {
     }
     
     override func configureUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = .background
         
         view.addSubview(logoImageView)
         view.addSubview(useTermsLabel)

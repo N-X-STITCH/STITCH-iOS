@@ -54,11 +54,24 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
         nicknameViewController.coordinatorPublisher
             .subscribe { [weak self] event in
                 if case .next = event {
-                    
+                    self?.showProfileViewController()
                 }
                 return
             }
             .disposed(by: disposeBag)
         navigationController.pushViewController(nicknameViewController, animated: true)
+    }
+    
+    func showProfileViewController() {
+        let profileViewController = ProfileViewController()
+        profileViewController.coordinatorPublisher
+            .subscribe { [weak self] event in
+                if case .next = event {
+//                    self?.showProfileViewController()
+                }
+                return
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(profileViewController, animated: true)
     }
 }

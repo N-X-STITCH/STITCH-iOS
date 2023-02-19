@@ -24,6 +24,7 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         bind()
+        setting()
     }
     
     init() {
@@ -36,6 +37,7 @@ class BaseViewController: UIViewController {
     
     func configureUI() {}
     func bind() {}
+    func setting() {}
 }
 
 // MARK: - NavigationBar
@@ -44,6 +46,11 @@ extension BaseViewController {
 }
 
 // MARK: - Indicator
+
+extension BaseViewController {
+}
+
+// MARK: - Keyboard
 
 extension BaseViewController {
 }

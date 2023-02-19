@@ -7,6 +7,7 @@
 
 import UIKit
 
+import RxSwift
 
 final class NicknameViewController: BaseViewController {
     
@@ -15,7 +16,7 @@ final class NicknameViewController: BaseViewController {
     enum Constant {
         static let buttonHeight = 48
         static let rowHeight = 1
-        static let textFieldHeight = 55
+        static let textFieldHeight = 56
         static let helperHeight = 18
         static let radius6 = 6
         static let padding2 = 2
@@ -32,7 +33,7 @@ final class NicknameViewController: BaseViewController {
     private let nicknameTextFiled = DefaultTextField(placeholder: "10자 내로 입력해주세요")
     
     private let textFieldRowView = UIView().then {
-        $0.backgroundColor = .gray07
+        $0.backgroundColor = .gray09
     }
     
     private let validationLabel = UILabel().then {
@@ -48,19 +49,43 @@ final class NicknameViewController: BaseViewController {
     
     private let nextButton = DefaultButton(title: "다음")
     
+    private lazy var nextButtonToolbarItem = UIBarButtonItem(customView: nextButton)
+    
+    private lazy var nextButtonToolbar = DefaultToolbar(
+        toolbarItem: nextButtonToolbarItem,
+        textFiled: nicknameTextFiled,
+        viewWidth: view.frame.size.width,
+        viewHeight: view.frame.size.height
+    )
+    
     // MARK: - Initializer
     
     // MARK: - Methods
     
+    func focusTextField(_ textField: UITextField) {
+        textField.becomeFirstResponder()
+    }
+    
+    override func bind() {
+        nextButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.coordinatorPublisher.onNext(.next)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    override func setting() {
+        focusTextField(nicknameTextFiled)
+    }
+    
     override func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         
         view.addSubview(titleLabel)
         view.addSubview(nicknameTextFiled)
         view.addSubview(textFieldRowView)
         view.addSubview(validationLabel)
         view.addSubview(textCountLabel)
-        view.addSubview(nextButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
@@ -94,12 +119,7 @@ final class NicknameViewController: BaseViewController {
             make.height.equalTo(Constant.helperHeight)
         }
         
-        nextButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).offset(-Constant.padding40)
-            make.left.equalToSuperview().offset(Constant.padding16)
-            make.right.equalToSuperview().offset(-Constant.padding16)
-            make.height.equalTo(Constant.buttonHeight)
-        }
+        nextButtonToolbar.updateConstraintsIfNeeded()
     }
 }
 
