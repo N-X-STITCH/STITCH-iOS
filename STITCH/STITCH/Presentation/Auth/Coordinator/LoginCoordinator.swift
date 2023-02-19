@@ -39,9 +39,26 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
         // TODO: DIContainer
         let loginViewController = LoginViewController()
         loginViewController.coordinatorPublisher
-            .subscribe { event in
+            .subscribe { [weak self] event in
+                if case .next = event {
+                    self?.showNicknameViewController()
+                }
                 return
             }
             .disposed(by: disposeBag)
+        navigationController.pushViewController(loginViewController, animated: true)
+    }
+    
+    func showNicknameViewController() {
+        let nicknameViewController = NicknameViewController()
+        nicknameViewController.coordinatorPublisher
+            .subscribe { [weak self] event in
+                if case .next = event {
+                    
+                }
+                return
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(nicknameViewController, animated: true)
     }
 }
