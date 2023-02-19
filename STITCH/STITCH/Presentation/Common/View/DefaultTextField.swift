@@ -29,12 +29,14 @@ final class DefaultTextField: UITextField {
         self.placeholder = placeholder
         layer.borderWidth = 0
         font = .Body1_16
+        textColor = .white
         clearButtonMode = .always
         if searchTextFiled {
             addLeftPadding()
         } else {
             addLeftPadding()
         }
+        setPlaceHolderColor(placeholder)
     }
 
     required init?(coder: NSCoder) {
@@ -53,5 +55,11 @@ final class DefaultTextField: UITextField {
             width: Constant.padding8,
             height: Int(frame.height)
         ))
+    }
+    
+    func setPlaceHolderColor(_ text: String) {
+        attributedPlaceholder = NSAttributedString(
+            string: text, attributes: [.foregroundColor: UIColor.gray09]
+        )
     }
 }
