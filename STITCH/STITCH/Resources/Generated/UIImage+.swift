@@ -10,4 +10,5 @@ import UIKit
 extension UIImage {
     static let appleLoginButton = UIImage(named: "appleLoginButton")
     static let kakaoLoginButton = UIImage(named: "kakaoLoginButton")
+    static let cameraIcon = UIImage(named: "cameraIcon")
 }
