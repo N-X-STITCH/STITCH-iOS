@@ -12,8 +12,8 @@ final class DefaultButton: UIButton {
     init(
         title: String,
         font: UIFont? = .Body1_16,
-        fontColor: UIColor? = .white,
-        disabledFontColor: UIColor? = .gray07,
+        fontColor: UIColor? = .black,
+        disabledFontColor: UIColor? = .gray12,
         normalColor: UIColor? = .blue05,
         highlightedColor: UIColor? = .blue06,
         disabledColor: UIColor? = .gray03
