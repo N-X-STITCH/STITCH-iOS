@@ -7,6 +7,9 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class LoginViewController: BaseViewController {
     
     // MARK: - Properties
@@ -74,6 +77,14 @@ final class LoginViewController: BaseViewController {
     // MARK: - Initializer
     
     // MARK: - Methods
+    
+    override func bind() {
+        kakaoLoginButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.coordinatorPublisher.onNext(.next)
+            }
+            .disposed(by: disposeBag)
+    }
     
     override func configureUI() {
         view.backgroundColor = .black
