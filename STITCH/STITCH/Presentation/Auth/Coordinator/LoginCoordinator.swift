@@ -9,11 +9,7 @@ import UIKit
 
 import RxSwift
 
-protocol LoginCoordinatorProtocol: Coordinator {
-    func showLoginViewController()
-}
-
-final class LoginCoordinator: LoginCoordinatorProtocol {
+final class LoginCoordinator: Coordinator {
     
     // MARK: - Properties
     
@@ -35,43 +31,64 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
         showLoginViewController()
     }
     
-    func showLoginViewController() {
+    private func showLoginViewController() {
         // TODO: DIContainer
         let loginViewController = LoginViewController()
-        loginViewController.coordinatorPublisher
-            .subscribe { [weak self] event in
-                if case .next = event {
-                    self?.showNicknameViewController()
-                }
-                return
-            }
-            .disposed(by: disposeBag)
+        addNextEvent(loginViewController, showNicknameViewController)
         navigationController.pushViewController(loginViewController, animated: true)
     }
     
-    func showNicknameViewController() {
+    private func showNicknameViewController() {
         let nicknameViewController = NicknameViewController()
-        nicknameViewController.coordinatorPublisher
-            .subscribe { [weak self] event in
-                if case .next = event {
-                    self?.showProfileViewController()
-                }
-                return
-            }
-            .disposed(by: disposeBag)
+        addNextEvent(nicknameViewController, showProfileViewController)
         navigationController.pushViewController(nicknameViewController, animated: true)
     }
     
-    func showProfileViewController() {
+    private func showProfileViewController() {
         let profileViewController = ProfileViewController()
-        profileViewController.coordinatorPublisher
+        addNextEvent(profileViewController, showLocationViewController)
+        navigationController.pushViewController(profileViewController, animated: true)
+    }
+    
+    private func showLocationViewController() {
+        let locationViewController = LocationViewController()
+        locationViewController.coordinatorPublisher
             .subscribe { [weak self] event in
                 if case .next = event {
-//                    self?.showProfileViewController()
+                    self?.showInterestedInSportsViewController()
                 }
-                return
+                if case .findLocation = event {
+                    self?.showFindLocationViewController()
+                }
             }
             .disposed(by: disposeBag)
-        navigationController.pushViewController(profileViewController, animated: true)
+        navigationController.pushViewController(locationViewController, animated: true)
+    }
+    
+    private func showFindLocationViewController() {
+        let findLocationViewController = FindLocationViewController()
+        navigationController.pushViewController(findLocationViewController, animated: true)
+    }
+    
+    private func showInterestedInSportsViewController() {
+        let interestedInSportsViewController = InterestedInSportsViewController()
+        addNextEvent(interestedInSportsViewController, showCompleteSignupViewController)
+        navigationController.pushViewController(interestedInSportsViewController, animated: true)
+    }
+    
+    private func showCompleteSignupViewController() {
+        let completeSignupViewControoler = CompleteSignupViewController()
+        
+        navigationController.pushViewController(completeSignupViewControoler, animated: true)
+    }
+    
+    private func addNextEvent(_ viewController: BaseViewController, _ showViewController: @escaping () -> Void) {
+        viewController.coordinatorPublisher
+            .subscribe { event in
+                if case .next = event {
+                    showViewController()
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }

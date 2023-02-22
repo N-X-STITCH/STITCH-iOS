@@ -46,3 +46,39 @@ enum ProfileTextCollectionViewLayout {
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
 }
+
+enum SportsCollectionViewLayout {
+    
+    enum Constant {
+        static let cellHeight = 88
+        static let spacing8 = 8
+    }
+    
+    static func layout() -> UICollectionViewLayout {
+        let sectionProvider = {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
+            -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .absolute(CGFloat(Constant.cellHeight)),
+                heightDimension: .absolute(CGFloat(Constant.cellHeight))
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.edgeSpacing = .init(leading: .fixed(8), top: nil, trailing: .fixed(8), bottom: .fixed(16))
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(CGFloat(Constant.cellHeight + Constant.spacing8 * 2))
+            )
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            
+            let section = NSCollectionLayoutSection(group: group)
+            
+            return section
+
+        }
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+    }
+}

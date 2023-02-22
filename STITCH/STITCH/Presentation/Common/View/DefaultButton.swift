@@ -19,8 +19,8 @@ final class DefaultButton: UIButton {
         fontColor: UIColor? = .black,
         disabledFontColor: UIColor? = .gray12,
         normalColor: UIColor? = .yellow05_primary,
-//        highlightedColor: UIColor? = .yellow06_pressed,
-        disabledColor: UIColor? = .gray12
+        disabledColor: UIColor? = .gray12,
+        icon: UIImage? = nil
     ) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
@@ -30,9 +30,9 @@ final class DefaultButton: UIButton {
         setTitleColor(disabledColor, for: .disabled)
         backgroundColor = normalColor
         layer.cornerRadius = CGFloat(Constant.radius6)
-//        setBackgroundColor(normalColor, for: .normal)
-//        setBackgroundColor(highlightedColor, for: .highlighted)
-//        setBackgroundColor(disabledColor, for: .disabled)
+        if let icon = icon {
+            setImage(icon, for: .normal)
+        }
     }
 
     required init?(coder: NSCoder) {
