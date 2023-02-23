@@ -9,6 +9,7 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    let appDIContainer = AppDIContainer()
     var window: UIWindow?
     var appCoordinator: AppCoordinator?
 
@@ -28,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.backgroundColor = .background // TODO: color 변경
         window?.makeKeyAndVisible()
         
-        appCoordinator = AppCoordinator(navigationController)
+        appCoordinator = AppCoordinator(navigationController, appDIContainer: appDIContainer)
         appCoordinator?.start()
         
         // TODO: appCoordinator 추가

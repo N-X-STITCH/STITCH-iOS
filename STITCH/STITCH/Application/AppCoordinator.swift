@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol AppCoordinatorProtocol: Coordinator {
-    func showLoginFlow()
+    func showAuthFlow()
     func showTabFlow()
 }
 
@@ -24,10 +24,16 @@ final class AppCoordinator: AppCoordinatorProtocol {
     var type: CoordinatorType { .app }
     var disposeBag = DisposeBag()
     
+    private let appDIContainer: AppDIContainer
+    
     // MARK: - Initializer
     
-    init(_ navigationController: UINavigationController) {
+    init(
+        _ navigationController: UINavigationController,
+        appDIContainer: AppDIContainer
+    ) {
         self.navigationController = navigationController
+        self.appDIContainer = appDIContainer
         childCoordinators = []
     }
     
@@ -35,14 +41,15 @@ final class AppCoordinator: AppCoordinatorProtocol {
     
     func start() {
         // TODO: Login 분기처리 (자동로그인)
-        showLoginFlow()
+        showAuthFlow()
     }
     
-    func showLoginFlow() {
-        let loginCoordinator = LoginCoordinator(navigationController)
-        loginCoordinator.finishDelegate = self
-        loginCoordinator.start()
-        childCoordinators.append(loginCoordinator)
+    func showAuthFlow() {
+        let authDIContainer = appDIContainer.makeAuthSceneDIContainer()
+        let authCoordinator = authDIContainer.authCoordinator(navigationController: navigationController)
+        authCoordinator.finishDelegate = self
+        authCoordinator.start()
+        childCoordinators.append(authCoordinator)
     }
     
     func showTabFlow() {
@@ -63,7 +70,7 @@ extension AppCoordinator: CoordinatorFinishDelegate {
             showTabFlow()
         case .tab:
             navigationController.viewControllers.removeAll()
-            showLoginFlow()
+            showAuthFlow()
         default:
             break
         }

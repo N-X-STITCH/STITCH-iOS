@@ -1,5 +1,5 @@
 //
-//  LoginCoordinator.swift
+//  AuthCoordinator.swift
 //  STITCH
 //
 //  Created by neuli on 2023/02/15.
@@ -9,7 +9,11 @@ import UIKit
 
 import RxSwift
 
-final class LoginCoordinator: Coordinator {
+protocol AuthCoordinatorDependencies {
+    func nicknameViewController() -> NicknameViewController
+}
+
+final class AuthCoordinator: Coordinator {
     
     // MARK: - Properties
     
@@ -19,10 +23,16 @@ final class LoginCoordinator: Coordinator {
     var type: CoordinatorType { .login }
     var disposeBag = DisposeBag()
     
+    private let dependencies: AuthCoordinatorDependencies
+    
     // MARK: - Initializer
     
-    init(_ navigationController: UINavigationController) {
+    init(
+        _ navigationController: UINavigationController,
+        dependecies: AuthCoordinatorDependencies
+    ) {
         self.navigationController = navigationController
+        self.dependencies = dependecies
     }
     
     // MARK: - Methods
@@ -39,7 +49,7 @@ final class LoginCoordinator: Coordinator {
     }
     
     private func showNicknameViewController() {
-        let nicknameViewController = NicknameViewController()
+        let nicknameViewController = dependencies.nicknameViewController()
         addNextEvent(nicknameViewController, showProfileViewController)
         navigationController.pushViewController(nicknameViewController, animated: true)
     }
