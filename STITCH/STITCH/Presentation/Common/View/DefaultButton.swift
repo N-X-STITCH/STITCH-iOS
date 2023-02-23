@@ -17,9 +17,8 @@ final class DefaultButton: UIButton {
         title: String,
         font: UIFont? = .Body1_16,
         fontColor: UIColor? = .black,
-        disabledFontColor: UIColor? = .gray12,
+        disabledFontColor: UIColor? = .white,
         normalColor: UIColor? = .yellow05_primary,
-        disabledColor: UIColor? = .gray12,
         icon: UIImage? = nil
     ) {
         super.init(frame: .zero)
@@ -27,7 +26,7 @@ final class DefaultButton: UIButton {
         titleLabel?.font = font
         setTitleColor(fontColor, for: .normal)
         setTitleColor(fontColor, for: .highlighted)
-        setTitleColor(disabledColor, for: .disabled)
+        setTitleColor(disabledFontColor, for: .disabled)
         backgroundColor = normalColor
         layer.cornerRadius = CGFloat(Constant.radius6)
         if let icon = icon {
