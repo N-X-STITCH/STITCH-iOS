@@ -38,6 +38,7 @@ final class NicknameViewController: BaseViewController {
     
     private let validationLabel = UILabel().then {
         $0.text = ""
+        $0.textColor = .error01
         $0.font = .Caption1_12
     }
     
@@ -58,24 +59,84 @@ final class NicknameViewController: BaseViewController {
         viewHeight: view.frame.size.height
     )
     
+    private let nicknameViewModel: NicknameViewModel
+    
     // MARK: - Initializer
+    
+    init(nicknameViewModel: NicknameViewModel) {
+        self.nicknameViewModel = nicknameViewModel
+        super.init()
+    }
     
     // MARK: - Methods
     
-    func focusTextField(_ textField: UITextField) {
+    private func focusTextField(_ textField: UITextField) {
         textField.becomeFirstResponder()
+    }
+    
+    private func setValidation(_ validation: NicknameValidation) {
+        validationLabel.text = validation.message
+        setButtonIsEnabledColor(validation.isEnabled)
+        
+        switch validation {
+        case .ok:
+            textFieldRowView.backgroundColor = .yellow05_primary
+            textCountLabel.textColor = .white
+        default:
+            textFieldRowView.backgroundColor = .error01
+            textCountLabel.textColor = .error01
+        }
+    }
+    
+    private func setButtonIsEnabledColor(_ isEnabled: Bool) {
+        nextButton.isEnabled = isEnabled
+        if isEnabled {
+            nextButton.backgroundColor = .yellow05_primary
+            nextButtonToolbar.barTintColor = .yellow05_primary
+        } else {
+            nextButton.backgroundColor = .gray12
+            nextButtonToolbar.barTintColor = .gray12
+        }
     }
     
     override func bind() {
         nextButton.rx.tap
-            .subscribe { [weak self] _ in
-                self?.coordinatorPublisher.onNext(.next)
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.next)
+            }
+            .disposed(by: disposeBag)
+        
+        nicknameTextFiled.rx.text
+            .withUnretained(self)
+            .subscribe { owner, text in
+                owner.textCountLabel.text = "\(text?.count ?? 0) / 10"
+            }
+            .disposed(by: disposeBag)
+        
+        let input = NicknameViewModel.Input(
+            nicknameTextFieldChanged: nicknameTextFiled.rx.text.orEmpty
+                .filter { !$0.isEmpty }
+                .distinctUntilChanged()
+                .debounce(.milliseconds(10), scheduler: MainScheduler.asyncInstance)
+                .asObservable(),
+            nextButtonTap: nextButton.rx.tap.asObservable()
+        )
+        
+        let output = nicknameViewModel.transform(input: input)
+        
+        output.nicknameValidation
+            .asObservable()
+            .withUnretained(self)
+            .subscribe { owner, validation in
+                owner.setValidation(validation)
             }
             .disposed(by: disposeBag)
     }
     
     override func setting() {
         focusTextField(nicknameTextFiled)
+        setButtonIsEnabledColor(false)
     }
     
     override func configureUI() {
