@@ -74,6 +74,7 @@
 		D868BA3829A8A14200E80012 /* FindLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */; };
 		D868BA3A29A8A32C00E80012 /* FindLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3929A8A32C00E80012 /* FindLocationUseCase.swift */; };
 		D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */; };
+		D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
@@ -147,6 +148,7 @@
 		D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewModel.swift; sourceTree = "<group>"; };
 		D868BA3929A8A32C00E80012 /* FindLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationUseCase.swift; sourceTree = "<group>"; };
 		D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestedSportsViewModel.swift; sourceTree = "<group>"; };
+		D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgressView.swift; sourceTree = "<group>"; };
 		D86B254E29A742620041EB00 /* NicknameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidation.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */,
 				D820258729A21E2B00892CE8 /* DefaultToolbar.swift */,
 				D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */,
+				D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */,
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
 				D868BA3029A7C5D100E80012 /* ImagePickerController.swift in Sources */,
+				D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
 				D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */,

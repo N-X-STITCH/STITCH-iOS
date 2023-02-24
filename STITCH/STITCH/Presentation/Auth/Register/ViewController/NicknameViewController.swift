@@ -14,6 +14,7 @@ final class NicknameViewController: BaseViewController {
     // MARK: - Properties
     
     enum Constant {
+        static let barHeight = 4
         static let buttonHeight = 48
         static let rowHeight = 1
         static let textFieldHeight = 56
@@ -26,7 +27,7 @@ final class NicknameViewController: BaseViewController {
         static let padding40 = 40
     }
     
-    // progressBar
+    private let progressView = DefaultProgressView(.nickname)
     
     private let titleLabel = DefaultTitleLabel(text: "안녕하세요!\n닉네임을 알려주세요")
     
@@ -139,16 +140,22 @@ final class NicknameViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(progressView)
         view.addSubview(titleLabel)
         view.addSubview(nicknameTextFiled)
         view.addSubview(textFieldRowView)
         view.addSubview(validationLabel)
         view.addSubview(textCountLabel)
         
+        progressView.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide.snp.top)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.barHeight)
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
-            make.left.equalToSuperview().offset(Constant.padding16)
-            make.right.equalToSuperview().offset(-Constant.padding16)
+            make.top.equalTo(progressView.snp.bottom).offset(Constant.padding24)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
         }
         
         nicknameTextFiled.snp.makeConstraints { make in

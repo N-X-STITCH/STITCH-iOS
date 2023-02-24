@@ -15,6 +15,7 @@ final class ProfileViewController: BaseViewController {
     // MARK: - Properties
     
     enum Constant {
+        static let barHeight = 4
         static let profileWidth = 125
         static let cameraIconWidth = 48
         static let titleHeight = 56
@@ -26,7 +27,7 @@ final class ProfileViewController: BaseViewController {
         static let padding48 = 48
     }
     
-    // progressBar
+    private let progressView = DefaultProgressView(.profile)
     
     private let titleLabel = DefaultTitleLabel(text: "나의 프로필 사진과\n나를 표현하는 글을 선택해 주세요")
     
@@ -113,14 +114,21 @@ final class ProfileViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(progressView)
         view.addSubview(titleLabel)
         view.addSubview(profileImageView)
         view.addSubview(cameraButton)
         view.addSubview(profileTextCollectionView)
         view.addSubview(nextButton)
         
+        progressView.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide.snp.top)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.barHeight)
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
+            make.top.equalTo(progressView.snp.bottom).offset(Constant.padding24)
             make.left.equalToSuperview().offset(Constant.padding16)
             make.right.equalToSuperview().offset(-Constant.padding16)
         }

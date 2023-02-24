@@ -48,19 +48,19 @@ final class AuthCoordinator: Coordinator {
         // TODO: DIContainer
         let loginViewController = LoginViewController()
         addNextEvent(loginViewController, showNicknameViewController)
-        navigationController.pushViewController(loginViewController, animated: true)
+        navigationController.pushViewController(loginViewController, animated: false)
     }
     
     private func showNicknameViewController() {
         let nicknameViewController = dependencies.nicknameViewController()
         addNextEvent(nicknameViewController, showProfileViewController)
-        navigationController.pushViewController(nicknameViewController, animated: true)
+        navigationController.pushViewController(nicknameViewController, animated: false)
     }
     
     private func showProfileViewController() {
         let profileViewController = dependencies.profileViewController()
         addNextEvent(profileViewController, showLocationViewController)
-        navigationController.pushViewController(profileViewController, animated: true)
+        navigationController.pushViewController(profileViewController, animated: false)
     }
     
     private func showLocationViewController() {
@@ -75,7 +75,7 @@ final class AuthCoordinator: Coordinator {
                 }
             }
             .disposed(by: disposeBag)
-        navigationController.pushViewController(locationViewController, animated: true)
+        navigationController.pushViewController(locationViewController, animated: false)
     }
     
     private func showFindLocationViewController() {
@@ -86,13 +86,13 @@ final class AuthCoordinator: Coordinator {
     private func showInterestedInSportsViewController() {
         let interestedInSportsViewController = dependencies.interestedInSportsViewController()
         addNextEvent(interestedInSportsViewController, showCompleteSignupViewController)
-        navigationController.pushViewController(interestedInSportsViewController, animated: true)
+        navigationController.pushViewController(interestedInSportsViewController, animated: false)
     }
     
     private func showCompleteSignupViewController() {
         let completeSignupViewControoler = CompleteSignupViewController()
         
-        navigationController.pushViewController(completeSignupViewControoler, animated: true)
+        navigationController.pushViewController(completeSignupViewControoler, animated: false)
     }
     
     private func addNextEvent(_ viewController: BaseViewController, _ showViewController: @escaping () -> Void) {

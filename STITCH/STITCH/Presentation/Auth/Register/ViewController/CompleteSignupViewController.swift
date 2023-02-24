@@ -14,13 +14,14 @@ final class CompleteSignupViewController: BaseViewController {
     // MARK: - Properties
     
     enum Constant {
+        static let barHeight = 4
         static let buttonHeight = 48
         static let imageHeight = 220
         static let padding16 = 16
         static let padding24 = 24
     }
     
-    // progressBar
+    private let progressView = DefaultProgressView(.complete)
     
     private let titleLabel = DefaultTitleLabel(text: "가입이 완료되었습니다!\nSTITCH를 통해 새로운 사람들과\n매칭을 즐겨보세요")
     
@@ -45,12 +46,19 @@ final class CompleteSignupViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(progressView)
         view.addSubview(titleLabel)
         view.addSubview(startImageView)
         view.addSubview(nextButton)
         
+        progressView.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide.snp.top)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.barHeight)
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
+            make.top.equalTo(progressView.snp.bottom).offset(Constant.padding24)
             make.left.equalToSuperview().offset(Constant.padding16)
             make.right.equalToSuperview().offset(-Constant.padding16)
         }

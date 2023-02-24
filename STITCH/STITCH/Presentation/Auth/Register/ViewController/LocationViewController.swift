@@ -14,6 +14,7 @@ final class LocationViewController: BaseViewController {
     // MARK: - Properties
     
     enum Constant {
+        static let barHeight = 4
         static let buttonHeight = 48
         static let rowHeight = 1
         static let inputButtonHeight = 56
@@ -27,7 +28,7 @@ final class LocationViewController: BaseViewController {
         static let padding34 = 34
     }
     
-    // progressBar
+    private let progressView = DefaultProgressView(.location)
     
     private let titleLabel = DefaultTitleLabel(text: "현재 거주하는\n위치를 설정해주세요")
     
@@ -85,14 +86,21 @@ final class LocationViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(progressView)
         view.addSubview(titleLabel)
         view.addSubview(homeStackView)
         view.addSubview(inputButton)
         view.addSubview(textFieldRowView)
         view.addSubview(nextButton)
         
+        progressView.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide.snp.top)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.barHeight)
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
+            make.top.equalTo(progressView.snp.bottom).offset(Constant.padding24)
             make.left.equalToSuperview().offset(Constant.padding16)
             make.right.equalToSuperview().offset(-Constant.padding16)
         }
