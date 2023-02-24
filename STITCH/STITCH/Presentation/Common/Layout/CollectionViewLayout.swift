@@ -82,3 +82,10 @@ enum SportsCollectionViewLayout {
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
 }
+
+enum LocationResultCollectionViewLayout {
+    static func layout() -> UICollectionViewLayout {
+        let listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
+        return UICollectionViewCompositionalLayout.list(using: listConfiguration)
+    }
+}

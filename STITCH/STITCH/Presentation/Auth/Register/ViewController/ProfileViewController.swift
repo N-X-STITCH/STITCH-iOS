@@ -38,7 +38,10 @@ final class ProfileViewController: BaseViewController {
         $0.contentHorizontalAlignment = .center
     }
     
-    private lazy var profileTextCollectionView = ProfileTextCollectionView(self)
+    private lazy var profileTextCollectionView = ProfileTextCollectionView(
+        self,
+        layout: ProfileTextCollectionViewLayout.layout()
+    )
     
     private let nextButton = DefaultButton(title: "다음")
     

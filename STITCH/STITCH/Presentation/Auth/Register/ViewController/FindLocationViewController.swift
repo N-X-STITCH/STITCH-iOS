@@ -25,13 +25,20 @@ final class FindLocationViewController: BaseViewController {
     }
     
     private let searchTextField = DefaultTextField(
-        placeholder: "동명(읍, 면)으로 검색 (ex.서초동)"
+        placeholder: "동명(읍, 면)으로 검색 (ex.서초동)",
+        leftView: true
     )
-    
-    private let searchButton = DefaultButton(title: " 현재위치로 찾기", font: .Caption1_12, icon: .gps)
     
     private let textFieldRowView = UIView().then {
         $0.backgroundColor = .gray09
+    }
+    
+    private let searchButton = DefaultButton(title: " 현재위치로 찾기", font: .Caption1_12, icon: .gps)
+    
+    private let searchResultTitleLabel = UILabel().then {
+        $0.text = "현재위치 결과"
+        $0.textColor = .white
+        $0.font = .Subhead_16
     }
     
     // MARK: - Initializer

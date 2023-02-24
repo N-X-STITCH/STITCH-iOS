@@ -26,7 +26,10 @@ final class InterestedInSportsViewController: BaseViewController {
     
     private let nextButton = DefaultButton(title: "다음")
     
-    private lazy var sportsCollectionView = SportsCollectionView(self)
+    private lazy var sportsCollectionView = SportsCollectionView(
+        self,
+        layout: SportsCollectionViewLayout.layout()
+    )
     
     // MARK: - Initializer
     

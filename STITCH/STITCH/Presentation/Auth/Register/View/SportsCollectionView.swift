@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SportsCollectionView: UICollectionView {
+final class SportsCollectionView: BaseCollectionView {
     
     // MARK: - Properties
     
@@ -18,31 +18,17 @@ final class SportsCollectionView: UICollectionView {
     
     // MARK: - Initializer
     
-    init(_ delegate: UICollectionViewDelegate) {
-        super.init(
-            frame: .zero,
-            collectionViewLayout: SportsCollectionViewLayout.layout()
-        )
-        configure(delegate: delegate)
-        configureUI()
-        configureDataSource()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override init(_ delegate: UICollectionViewDelegate, layout: UICollectionViewLayout) {
+        super.init(delegate, layout: layout)
     }
     
     // MARK: - Methods
     
-    private func configure(delegate: UICollectionViewDelegate) {
-        self.delegate = delegate
-    }
-    
-    private func configureUI() {
+    override func configureUI() {
         backgroundColor = .background
     }
     
-    private func configureDataSource() {
+    override func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<SportsCell, Sport> {
             cell, indexPath, item in
             cell.set(sport: item)
