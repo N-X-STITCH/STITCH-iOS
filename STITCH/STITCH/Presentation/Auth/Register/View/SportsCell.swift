@@ -15,14 +15,14 @@ final class SportsCell: UICollectionViewCell {
         static let width = 88
         static let iconWidth = 36
         static let radius12 = 12
-        static let alpha = 0.3
+        static let alpha = 0.6
         static let padding8 = 8
     }
     
     // MARK: - Properties
     
     let sportIconLabel = UILabel().then {
-        $0.font = .Body2_24
+        $0.font = .systemFont(ofSize: 36)
         $0.textAlignment = .center
     }
     
@@ -54,7 +54,7 @@ final class SportsCell: UICollectionViewCell {
     // MARK: - Methods
     
     private func configureUI() {
-        contentView.backgroundColor = .black.withAlphaComponent(CGFloat(Constant.alpha))
+        contentView.backgroundColor = .gray12.withAlphaComponent(CGFloat(Constant.alpha))
         contentView.layer.cornerRadius = CGFloat(Constant.radius12)
         
         contentView.addSubview(stackView)
