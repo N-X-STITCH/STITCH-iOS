@@ -12,7 +12,7 @@ final class DefaultProfileImageView: UIImageView {
     init() {
         super.init(frame: .zero)
         clipsToBounds = true
-        image = UIImage(systemName: "person.circle.fill")?
+        image = UIImage(systemName: "person.crop.circle.fill")?
             .withTintColor(.white, renderingMode: .alwaysOriginal)
         contentMode = .scaleAspectFill
         backgroundColor = .gray09

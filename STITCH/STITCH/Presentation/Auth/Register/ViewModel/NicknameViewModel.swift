@@ -14,7 +14,6 @@ final class NicknameViewModel: ViewModel {
     
     struct Input {
         let nicknameTextFieldChanged: Observable<String>
-        let nextButtonTap: Observable<Void>
     }
     
     struct Output {

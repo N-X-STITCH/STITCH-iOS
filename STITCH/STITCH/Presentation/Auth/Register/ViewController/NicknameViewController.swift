@@ -90,13 +90,8 @@ final class NicknameViewController: BaseViewController {
     
     private func setButtonIsEnabledColor(_ isEnabled: Bool) {
         nextButton.isEnabled = isEnabled
-        if isEnabled {
-            nextButton.backgroundColor = .yellow05_primary
-            nextButtonToolbar.barTintColor = .yellow05_primary
-        } else {
-            nextButton.backgroundColor = .gray12
-            nextButtonToolbar.barTintColor = .gray12
-        }
+        nextButton.setButtonBackgroundColor(isEnabled)
+        nextButtonToolbar.setButtonBackgroundColor(isEnabled)
     }
     
     override func bind() {
@@ -107,7 +102,9 @@ final class NicknameViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        nicknameTextFiled.rx.text
+        let textField = nicknameTextFiled.rx.text.share()
+        
+        textField
             .withUnretained(self)
             .subscribe { owner, text in
                 owner.textCountLabel.text = "\(text?.count ?? 0) / 10"
@@ -115,12 +112,12 @@ final class NicknameViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         let input = NicknameViewModel.Input(
-            nicknameTextFieldChanged: nicknameTextFiled.rx.text.orEmpty
+            nicknameTextFieldChanged: textField
+                .compactMap { $0 }
                 .filter { !$0.isEmpty }
                 .distinctUntilChanged()
                 .debounce(.milliseconds(10), scheduler: MainScheduler.asyncInstance)
-                .asObservable(),
-            nextButtonTap: nextButton.rx.tap.asObservable()
+                .asObservable()
         )
         
         let output = nicknameViewModel.transform(input: input)

@@ -30,4 +30,8 @@ final class DefaultToolbar: UIToolbar {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setButtonBackgroundColor(_ isEnabled: Bool) {
+        barTintColor = isEnabled ? .yellow05_primary : .gray12
+    }
 }
