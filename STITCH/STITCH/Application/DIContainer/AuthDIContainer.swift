@@ -59,6 +59,10 @@ final class AuthDIContainer {
         return FindLocationViewModel(findLocationUseCase: findLocationUseCase())
     }
     
+    func interestedInSportsViewModel() -> InterestedSportsViewModel {
+        return InterestedSportsViewModel()
+    }
+    
     // MARK: - ViewControllers
     
     func nicknameViewController() -> NicknameViewController {
@@ -75,6 +79,12 @@ final class AuthDIContainer {
     
     func findLocationViewController() -> FindLocationViewController {
         return FindLocationViewController(findLocationViewModel: findLocationViewModel())
+    }
+    
+    func interestedInSportsViewController() -> InterestedInSportsViewController {
+        return InterestedInSportsViewController(
+            interestedInSportsViewModel: interestedInSportsViewModel()
+        )
     }
 }
 

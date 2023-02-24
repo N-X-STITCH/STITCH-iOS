@@ -31,20 +31,86 @@ final class InterestedInSportsViewController: BaseViewController {
         layout: SportsCollectionViewLayout.layout()
     )
     
+    // MARK: Properties
+    
+    private let interestedInSportsViewModel: InterestedSportsViewModel
+    
     // MARK: - Initializer
+    
+    init(interestedInSportsViewModel: InterestedSportsViewModel) {
+        self.interestedInSportsViewModel = interestedInSportsViewModel
+        super.init()
+    }
     
     // MARK: - Methods
     
+    func setNextButton(isEnabled: Bool) {
+        nextButton.isEnabled = isEnabled
+        nextButton.setButtonBackgroundColor(isEnabled)
+    }
+    
     override func setting() {
-        sportsCollectionView.setData(Sport.allCases)
+        setNextButton(isEnabled: false)
     }
     
     override func bind() {
         nextButton.rx.tap
-            .subscribe { [weak self] _ in
-                self?.coordinatorPublisher.onNext(.next)
+            .withUnretained(self)
+            .subscribe { owner,  _ in
+                owner.coordinatorPublisher.onNext(.next)
             }
             .disposed(by: disposeBag)
+        
+        let selected = sportsCollectionView.rx.itemSelected.share()
+        
+        selected
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe { owner, indexPath in
+                owner.sportsCollectionView.update(indexPath)
+            }
+            .disposed(by: disposeBag)
+        
+        let deseleted = sportsCollectionView.rx.itemDeselected.share()
+        
+        deseleted
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe { owner, indexPath in
+                owner.sportsCollectionView.update(indexPath)
+            }
+            .disposed(by: disposeBag)
+        
+        let input = InterestedSportsViewModel.Input(
+            configureCollectionView: Single<Void>.just(()).asObservable(),
+            sportSelected: selected,
+            sportDeselected: deseleted
+        )
+        
+        let output = interestedInSportsViewModel.transform(input: input)
+        
+        output.configureCollectionViewData
+            .withUnretained(self)
+            .subscribe { owner, sports in
+                owner.sportsCollectionView.setData(sports)
+            }
+            .disposed(by: disposeBag)
+        
+        output.selectedIndexPath
+            .map { $0.count }
+            .withUnretained(self)
+            .subscribe { owner, count in
+                if 3 <= count {
+                    owner.setNextButton(isEnabled: true)
+                } else {
+                    owner.setNextButton(isEnabled: false)
+                }
+            }
+            .disposed(by: disposeBag)
+            
+        
+        output.selectDisposable.disposed(by: disposeBag)
+        output.deselectDisposable.disposed(by: disposeBag)
     }
     
     override func configureUI() {

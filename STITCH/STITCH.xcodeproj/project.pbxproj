@@ -73,6 +73,7 @@
 		D868BA3629A89C6100E80012 /* BaseCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3529A89C6100E80012 /* BaseCollectionView.swift */; };
 		D868BA3829A8A14200E80012 /* FindLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */; };
 		D868BA3A29A8A32C00E80012 /* FindLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3929A8A32C00E80012 /* FindLocationUseCase.swift */; };
+		D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
@@ -145,6 +146,7 @@
 		D868BA3529A89C6100E80012 /* BaseCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionView.swift; sourceTree = "<group>"; };
 		D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewModel.swift; sourceTree = "<group>"; };
 		D868BA3929A8A32C00E80012 /* FindLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationUseCase.swift; sourceTree = "<group>"; };
+		D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestedSportsViewModel.swift; sourceTree = "<group>"; };
 		D86B254E29A742620041EB00 /* NicknameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidation.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				D800291029A5FC5200F75378 /* NicknameViewModel.swift */,
 				D868BA2629A7A1C100E80012 /* ProfileViewModel.swift */,
 				D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */,
+				D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -706,6 +709,7 @@
 				D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */,
 				D820259E29A236AB00892CE8 /* CollectionViewLayout.swift in Sources */,
 				D868BA3629A89C6100E80012 /* BaseCollectionView.swift in Sources */,
+				D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */,
 				D8599AA7299E2B9D00633192 /* Assets+Generated.swift in Sources */,
 				D860B609299CE71800966683 /* NetworkError.swift in Sources */,
 				D8599AB8299E349C00633192 /* AuthDIContainer.swift in Sources */,

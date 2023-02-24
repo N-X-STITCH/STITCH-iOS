@@ -13,6 +13,7 @@ protocol AuthCoordinatorDependencies {
     func nicknameViewController() -> NicknameViewController
     func profileViewController() -> ProfileViewController
     func findLocationViewController() -> FindLocationViewController
+    func interestedInSportsViewController() -> InterestedInSportsViewController
 }
 
 final class AuthCoordinator: Coordinator {
@@ -83,7 +84,7 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showInterestedInSportsViewController() {
-        let interestedInSportsViewController = InterestedInSportsViewController()
+        let interestedInSportsViewController = dependencies.interestedInSportsViewController()
         addNextEvent(interestedInSportsViewController, showCompleteSignupViewController)
         navigationController.pushViewController(interestedInSportsViewController, animated: true)
     }

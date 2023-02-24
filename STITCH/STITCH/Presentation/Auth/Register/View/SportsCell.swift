@@ -68,4 +68,14 @@ final class SportsCell: UICollectionViewCell {
         sportIconLabel.text = sport.icon
         sportNameLabel.text = sport.name
     }
+    
+    func configure(_ isSelected: Bool) {
+        if isSelected {
+            contentView.layer.borderWidth = 1
+            contentView.layer.borderColor = UIColor.yellow05_primary.cgColor
+        } else {
+            contentView.layer.borderWidth = 0
+            contentView.layer.borderColor = nil
+        }
+    }
 }
