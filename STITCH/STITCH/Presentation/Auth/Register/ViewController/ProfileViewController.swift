@@ -8,13 +8,14 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 
 final class ProfileViewController: BaseViewController {
     
     // MARK: - Properties
     
     enum Constant {
-        static let profileWidth = 100
+        static let profileWidth = 125
         static let cameraIconWidth = 48
         static let titleHeight = 56
         static let buttonHeight = 48
@@ -41,38 +42,67 @@ final class ProfileViewController: BaseViewController {
     
     private let nextButton = DefaultButton(title: "다음")
     
-    // TODO: 삭제
-    private let testData = [
-        "삶과 운동의 균형이 중요하다 생각해요",
-        "새로운 사람들과 다양한 경험을 해보고 싶어요",
-        "반복되는 일상에 특별함을 원해요",
-        "경험을 통해 다양한 가치들을 얻는다고 생각해요",
-        "삶과 운동의 균형이 중요하다 생각해요1",
-        "새로운 사람들과 다양한 경험을 해보고 싶어요1",
-        "반복되는 일상에 특별함을 원해요1",
-        "경험을 통해 다양한 가치들을 얻는다고 생각해요1",
-        "삶과 운동의 균형이 중요하다 생각해요2",
-        "새로운 사람들과 다양한 경험을 해보고 싶어요2",
-        "반복되는 일상에 특별함을 원해요2",
-        "경험을 통해 다양한 가치들을 얻는다고 생각해요2",
-        "삶과 운동의 균형이 중요하다 생각해요3",
-        "새로운 사람들과 다양한 경험을 해보고 싶어요3",
-        "반복되는 일상에 특별함을 원해요3",
-        "경험을 통해 다양한 가치들을 얻는다고 생각해요3"
-    ]
+    // MARK: Properties
+    
+    private let profileViewModel: ProfileViewModel
+    private lazy var imagePickerController = ImagePickerController()
     
     // MARK: - Initializer
     
+    init(profileViewModel: ProfileViewModel) {
+        self.profileViewModel = profileViewModel
+        super.init()
+    }
+    
     // MARK: - Methods
     
+    private func setNextButton(isEnabled: Bool) {
+        nextButton.isEnabled = isEnabled
+        nextButton.setButtonBackgroundColor(isEnabled)
+    }
+    
     override func setting() {
-        profileTextCollectionView.setData(testData)
+        setNextButton(isEnabled: false)
+        imagePickerController.delegate = self
     }
     
     override func bind() {
         nextButton.rx.tap
-            .subscribe { [weak self] _ in
-                self?.coordinatorPublisher.onNext(.next)
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.next)
+            }
+            .disposed(by: disposeBag)
+        
+        profileTextCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.setNextButton(isEnabled: true)
+            }
+            .disposed(by: disposeBag)
+        
+        let imageObservable = cameraButton.rx.tap
+            .withUnretained(self)
+            .flatMapLatest { owner, _ in
+                owner.imagePickerController.pickImage(allowsEditing: true)
+            }
+            .share()
+        
+        imageObservable
+            .bind(to: profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        let input = ProfileViewModel.Input(
+            configureCollectionView: Single<Void>.just(()).asObservable(),
+            profileImage: imageObservable.map { $0.jpegData(compressionQuality: 1.0) }
+        )
+        
+        let output = profileViewModel.transform(input: input)
+        
+        output.configureCollectionViewData
+            .withUnretained(self)
+            .subscribe { owner, profileTexts in
+                owner.profileTextCollectionView.setData(profileTexts)
             }
             .disposed(by: disposeBag)
     }

@@ -11,6 +11,7 @@ import RxSwift
 
 protocol AuthCoordinatorDependencies {
     func nicknameViewController() -> NicknameViewController
+    func profileViewController() -> ProfileViewController
 }
 
 final class AuthCoordinator: Coordinator {
@@ -55,7 +56,7 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showProfileViewController() {
-        let profileViewController = ProfileViewController()
+        let profileViewController = dependencies.profileViewController()
         addNextEvent(profileViewController, showLocationViewController)
         navigationController.pushViewController(profileViewController, animated: true)
     }

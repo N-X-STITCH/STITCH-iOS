@@ -11,8 +11,8 @@ final class ProfileTextCollectionView: UICollectionView {
     
     // MARK: - Properties
     
-    typealias ProfileTextDataSource = UICollectionViewDiffableDataSource<Int, String>
-    typealias ProfileTextSnapshot = NSDiffableDataSourceSnapshot<Int, String>
+    typealias ProfileTextDataSource = UICollectionViewDiffableDataSource<Int, ProfileText>
+    typealias ProfileTextSnapshot = NSDiffableDataSourceSnapshot<Int, ProfileText>
     
     var profileTextDataSource: ProfileTextDataSource!
     
@@ -43,13 +43,13 @@ final class ProfileTextCollectionView: UICollectionView {
     }
     
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<ProfileTextCell, String> {
+        let cellRegistration = UICollectionView.CellRegistration<ProfileTextCell, ProfileText> {
             cell, indexPath, text in
             cell.setLabel(text: text)
         }
         
         profileTextDataSource = ProfileTextDataSource(collectionView: self) {
-            (collectionView: UICollectionView, indexPath: IndexPath, item: String)
+            (collectionView: UICollectionView, indexPath: IndexPath, item: ProfileText)
             -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
@@ -59,7 +59,7 @@ final class ProfileTextCollectionView: UICollectionView {
         }
     }
     
-    func setData(_ texts: [String]) {
+    func setData(_ texts: [ProfileText]) {
         var snapshot = ProfileTextSnapshot()
         snapshot.appendSections([0])
         snapshot.appendItems(texts)

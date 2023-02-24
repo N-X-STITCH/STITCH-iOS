@@ -18,7 +18,13 @@ final class ProfileTextCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    let label = UILabel().then {
+    override var isSelected: Bool {
+        didSet {
+            configure(isSelected)
+        }
+    }
+    
+    private let label = UILabel().then {
         $0.font = .Caption1_12
         $0.textColor = .gray09
         $0.textAlignment = .center
@@ -37,6 +43,12 @@ final class ProfileTextCell: UICollectionViewCell {
     
     // MARK: - Methods
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        label.layer.borderWidth = 0
+        label.layer.borderColor = nil
+    }
+    
     func configureUI() {
         contentView.backgroundColor = .background
         
@@ -51,7 +63,19 @@ final class ProfileTextCell: UICollectionViewCell {
         }
     }
     
-    func setLabel(text: String) {
-        label.text = text
+    func setLabel(text: ProfileText) {
+        label.text = text.text
+    }
+    
+    func configure(_ isSelected: Bool) {
+        if isSelected {
+            label.layer.borderWidth = 1
+            label.layer.borderColor = UIColor.yellow05_primary.cgColor
+            label.textColor = .yellow05_primary
+        } else {
+            label.layer.borderWidth = 0
+            label.layer.borderColor = nil
+            label.textColor = .gray09
+        }
     }
 }

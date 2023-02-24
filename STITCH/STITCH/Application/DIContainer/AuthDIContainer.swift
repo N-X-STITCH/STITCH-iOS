@@ -37,16 +37,28 @@ final class AuthDIContainer {
         return DefaultNicknameUseCase()
     }
     
+    func profileUseCase() -> ProfileUseCase {
+        return DefaultProfileUseCase()
+    }
+    
     // MARK: - View Models
     
     func nicknameViewModel() -> NicknameViewModel {
         return NicknameViewModel(nicknameUseCase: nicknameUseCase())
     }
     
+    func profileViewModel() -> ProfileViewModel {
+        return ProfileViewModel(profileUseCase: profileUseCase())
+    }
+    
     // MARK: - ViewControllers
     
     func nicknameViewController() -> NicknameViewController {
         return NicknameViewController(nicknameViewModel: nicknameViewModel())
+    }
+    
+    func profileViewController() -> ProfileViewController {
+        return ProfileViewController(profileViewModel: profileViewModel())
     }
 }
 
