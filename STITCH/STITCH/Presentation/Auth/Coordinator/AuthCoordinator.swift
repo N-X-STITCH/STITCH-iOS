@@ -12,6 +12,7 @@ import RxSwift
 protocol AuthCoordinatorDependencies {
     func nicknameViewController() -> NicknameViewController
     func profileViewController() -> ProfileViewController
+    func findLocationViewController() -> FindLocationViewController
 }
 
 final class AuthCoordinator: Coordinator {
@@ -77,7 +78,7 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showFindLocationViewController() {
-        let findLocationViewController = FindLocationViewController()
+        let findLocationViewController = dependencies.findLocationViewController()
         navigationController.pushViewController(findLocationViewController, animated: true)
     }
     

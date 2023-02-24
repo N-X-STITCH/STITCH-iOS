@@ -41,12 +41,40 @@ final class FindLocationViewController: BaseViewController {
         $0.font = .Subhead_16
     }
     
+    private lazy var locationResultCollectionView = LocationResultCollectionView(
+        self,
+        layout: LocationResultCollectionViewLayout.layout()
+    )
+    
+    // MARK: Properties
+    
+    private let findLocationViewModel: FindLocationViewModel
+    
     // MARK: - Initializer
+    
+    init(findLocationViewModel: FindLocationViewModel) {
+        self.findLocationViewModel = findLocationViewModel
+        super.init()
+    }
     
     // MARK: - Methods
     
+    override func setting() {
+    }
+    
     override func bind() {
+        let input = FindLocationViewModel.Input(
+            configureCollectionView: Single<Void>.just(()).asObservable()
+        )
         
+        let output = findLocationViewModel.transform(input: input)
+        
+        output.configureCollectionViewData
+            .withUnretained(self)
+            .subscribe { owner, locations in
+                owner.locationResultCollectionView.setData(locations)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureUI() {
@@ -55,6 +83,8 @@ final class FindLocationViewController: BaseViewController {
         view.addSubview(searchTextField)
         view.addSubview(textFieldRowView)
         view.addSubview(searchButton)
+        view.addSubview(searchResultTitleLabel)
+        view.addSubview(locationResultCollectionView)
         
         searchTextField.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top)
@@ -73,6 +103,20 @@ final class FindLocationViewController: BaseViewController {
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.buttonHeight)
         }
+        
+        searchResultTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(searchButton.snp.bottom).offset(Constant.padding16)
+            make.left.equalToSuperview().offset(Constant.padding16)
+        }
+        
+        locationResultCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(searchResultTitleLabel.snp.bottom).offset(Constant.padding24)
+            make.left.equalToSuperview()
+            make.right.bottom.equalToSuperview().inset(Constant.padding16)
+        }
     }
 }
 
+extension FindLocationViewController: UICollectionViewDelegate {
+    
+}

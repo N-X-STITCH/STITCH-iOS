@@ -41,6 +41,10 @@ final class AuthDIContainer {
         return DefaultProfileUseCase()
     }
     
+    func findLocationUseCase() -> FindLocationUseCase {
+        return DefaultFindLocationUseCase()
+    }
+    
     // MARK: - View Models
     
     func nicknameViewModel() -> NicknameViewModel {
@@ -51,6 +55,10 @@ final class AuthDIContainer {
         return ProfileViewModel(profileUseCase: profileUseCase())
     }
     
+    func findLocationViewModel() -> FindLocationViewModel {
+        return FindLocationViewModel(findLocationUseCase: findLocationUseCase())
+    }
+    
     // MARK: - ViewControllers
     
     func nicknameViewController() -> NicknameViewController {
@@ -59,6 +67,14 @@ final class AuthDIContainer {
     
     func profileViewController() -> ProfileViewController {
         return ProfileViewController(profileViewModel: profileViewModel())
+    }
+    
+//    func LocationViewController() -> LocationViewController {
+//
+//    }
+    
+    func findLocationViewController() -> FindLocationViewController {
+        return FindLocationViewController(findLocationViewModel: findLocationViewModel())
     }
 }
 
