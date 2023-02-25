@@ -65,7 +65,15 @@ final class LocationViewController: BaseViewController {
     
     private let nextButton = DefaultButton(title: "다음")
     
+    // MARK: Propeties
+    
+    private let signupViewModel: SignupViewModel
+    
     // MARK: - Initializer
+    
+    init(signupViewModel: SignupViewModel) {
+        self.signupViewModel = signupViewModel
+    }
     
     // MARK: - Methods
     

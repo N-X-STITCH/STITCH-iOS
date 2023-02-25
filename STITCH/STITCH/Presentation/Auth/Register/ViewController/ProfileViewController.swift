@@ -49,12 +49,17 @@ final class ProfileViewController: BaseViewController {
     // MARK: Properties
     
     private let profileViewModel: ProfileViewModel
+    private let signupViewModel: SignupViewModel
     private lazy var imagePickerController = ImagePickerController()
     
     // MARK: - Initializer
     
-    init(profileViewModel: ProfileViewModel) {
+    init(
+        profileViewModel: ProfileViewModel,
+        signupViewModel: SignupViewModel
+    ) {
         self.profileViewModel = profileViewModel
+        self.signupViewModel = signupViewModel
         super.init()
     }
     

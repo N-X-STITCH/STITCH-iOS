@@ -60,12 +60,19 @@ final class NicknameViewController: BaseViewController {
         viewHeight: view.frame.size.height
     )
     
+    // MARK: Properties
+    
     private let nicknameViewModel: NicknameViewModel
+    private let signupViewModel: SignupViewModel
     
     // MARK: - Initializer
     
-    init(nicknameViewModel: NicknameViewModel) {
+    init(
+        nicknameViewModel: NicknameViewModel,
+        signupViewModel: SignupViewModel
+    ) {
         self.nicknameViewModel = nicknameViewModel
+        self.signupViewModel = signupViewModel
         super.init()
     }
     
@@ -100,6 +107,7 @@ final class NicknameViewController: BaseViewController {
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.coordinatorPublisher.onNext(.next)
+                owner.signupViewModel.nickname
             }
             .disposed(by: disposeBag)
         

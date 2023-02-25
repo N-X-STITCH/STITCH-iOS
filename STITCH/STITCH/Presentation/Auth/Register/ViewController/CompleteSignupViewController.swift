@@ -31,7 +31,15 @@ final class CompleteSignupViewController: BaseViewController {
     
     private let nextButton = DefaultButton(title: "⚡️ 시작하기")
     
+    // MARK: Properties
+    
+    private let signupViewModel: SignupViewModel
+    
     // MARK: - Initializer
+    
+    init(signupViewModel: SignupViewModel) {
+        self.signupViewModel = signupViewModel
+    }
     
     // MARK: - Methods
     

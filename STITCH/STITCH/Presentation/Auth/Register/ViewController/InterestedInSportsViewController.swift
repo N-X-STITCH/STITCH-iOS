@@ -35,11 +35,16 @@ final class InterestedInSportsViewController: BaseViewController {
     // MARK: Properties
     
     private let interestedInSportsViewModel: InterestedSportsViewModel
+    private let signupViewModel: SignupViewModel
     
     // MARK: - Initializer
     
-    init(interestedInSportsViewModel: InterestedSportsViewModel) {
+    init(
+        interestedInSportsViewModel: InterestedSportsViewModel,
+        signupViewModel: SignupViewModel
+    ) {
         self.interestedInSportsViewModel = interestedInSportsViewModel
+        self.signupViewModel = signupViewModel
         super.init()
     }
     
