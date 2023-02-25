@@ -39,6 +39,7 @@ final class CompleteSignupViewController: BaseViewController {
     
     init(signupViewModel: SignupViewModel) {
         self.signupViewModel = signupViewModel
+        super.init()
     }
     
     // MARK: - Methods

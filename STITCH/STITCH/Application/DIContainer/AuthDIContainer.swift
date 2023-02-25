@@ -16,11 +16,13 @@ final class AuthDIContainer {
     // MARK: - Properties
     
     private let dependencies: Dependencies
+    private let signupViewModel: SignupViewModel
     
     // MARK: - Initializer
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
+        signupViewModel = SignupViewModel()
     }
     
     // MARK: - Coordinator
@@ -47,6 +49,7 @@ final class AuthDIContainer {
     
     // MARK: - View Models
     
+    
     func nicknameViewModel() -> NicknameViewModel {
         return NicknameViewModel(nicknameUseCase: nicknameUseCase())
     }
@@ -66,16 +69,22 @@ final class AuthDIContainer {
     // MARK: - ViewControllers
     
     func nicknameViewController() -> NicknameViewController {
-        return NicknameViewController(nicknameViewModel: nicknameViewModel())
+        return NicknameViewController(
+            nicknameViewModel: nicknameViewModel(),
+            signupViewModel: signupViewModel
+        )
     }
     
     func profileViewController() -> ProfileViewController {
-        return ProfileViewController(profileViewModel: profileViewModel())
+        return ProfileViewController(
+            profileViewModel: profileViewModel(),
+            signupViewModel: signupViewModel
+        )
     }
     
-//    func LocationViewController() -> LocationViewController {
-//
-//    }
+    func locationViewController() -> LocationViewController {
+        return LocationViewController(signupViewModel: signupViewModel)
+    }
     
     func findLocationViewController() -> FindLocationViewController {
         return FindLocationViewController(findLocationViewModel: findLocationViewModel())
@@ -83,8 +92,13 @@ final class AuthDIContainer {
     
     func interestedInSportsViewController() -> InterestedInSportsViewController {
         return InterestedInSportsViewController(
-            interestedInSportsViewModel: interestedInSportsViewModel()
+            interestedInSportsViewModel: interestedInSportsViewModel(),
+            signupViewModel: signupViewModel
         )
+    }
+    
+    func completeSignupViewController() -> CompleteSignupViewController {
+        return CompleteSignupViewController(signupViewModel: signupViewModel)
     }
 }
 

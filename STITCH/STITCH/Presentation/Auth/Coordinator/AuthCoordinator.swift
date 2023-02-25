@@ -12,8 +12,10 @@ import RxSwift
 protocol AuthCoordinatorDependencies {
     func nicknameViewController() -> NicknameViewController
     func profileViewController() -> ProfileViewController
+    func locationViewController() -> LocationViewController
     func findLocationViewController() -> FindLocationViewController
     func interestedInSportsViewController() -> InterestedInSportsViewController
+    func completeSignupViewController() -> CompleteSignupViewController
 }
 
 final class AuthCoordinator: Coordinator {
@@ -64,7 +66,7 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showLocationViewController() {
-        let locationViewController = LocationViewController()
+        let locationViewController = dependencies.locationViewController()
         locationViewController.coordinatorPublisher
             .subscribe { [weak self] event in
                 if case .next = event {
@@ -90,7 +92,7 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showCompleteSignupViewController() {
-        let completeSignupViewControoler = CompleteSignupViewController()
+        let completeSignupViewControoler = dependencies.completeSignupViewController()
         
         navigationController.pushViewController(completeSignupViewControoler, animated: false)
     }
