@@ -207,11 +207,9 @@
 		D805FDD929A5B4850007E63D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D8599ABF299E425600633192 /* NicknameViewController.swift */,
-				D820258929A2208300892CE8 /* ProfileViewController.swift */,
+				D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */,
 				D820259F29A24A7C00892CE8 /* LocationViewController.swift */,
 				D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */,
-				D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */,
 				D82025A329A24AE900892CE8 /* CompleteSignupViewController.swift */,
 			);
 			path = ViewController;
@@ -220,10 +218,8 @@
 		D805FDDA29A5B48C0007E63D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D800291029A5FC5200F75378 /* NicknameViewModel.swift */,
-				D868BA2629A7A1C100E80012 /* ProfileViewModel.swift */,
-				D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */,
 				D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */,
+				D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */,
 				D868BA3F29A8FAA400E80012 /* SignupViewModel.swift */,
 			);
 			path = ViewModel;
@@ -256,6 +252,7 @@
 		D857612F299BCFF800F1AFEB /* STITCH */ = {
 			isa = PBXGroup;
 			children = (
+				D868BA4129AA1B3900E80012 /* temp */,
 				D8599AA3299E25AE00633192 /* swiftgen.yml */,
 				D860B5C5299BD4CA00966683 /* Application */,
 				D860B5C4299BD4BD00966683 /* Presentation */,
@@ -561,6 +558,17 @@
 				D868BA2F29A7C5D100E80012 /* ImagePickerController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		D868BA4129AA1B3900E80012 /* temp */ = {
+			isa = PBXGroup;
+			children = (
+				D800291029A5FC5200F75378 /* NicknameViewModel.swift */,
+				D868BA2629A7A1C100E80012 /* ProfileViewModel.swift */,
+				D8599ABF299E425600633192 /* NicknameViewController.swift */,
+				D820258929A2208300892CE8 /* ProfileViewController.swift */,
+			);
+			path = temp;
 			sourceTree = "<group>";
 		};
 		D86B254D29A7424E0041EB00 /* Validation */ = {

@@ -15,15 +15,31 @@ final class CompleteSignupViewController: BaseViewController {
     
     enum Constant {
         static let barHeight = 4
-        static let buttonHeight = 48
+        static let buttonHeight = 56
         static let imageHeight = 220
         static let padding16 = 16
         static let padding24 = 24
     }
     
-    private let progressView = DefaultProgressView(.complete)
-    
-    private let titleLabel = DefaultTitleLabel(text: "가입이 완료되었습니다!\nSTITCH를 통해 새로운 사람들과\n매칭을 즐겨보세요")
+    private let titleLabel = UILabel().then {
+        let text = "가입이 완료되었습니다!\nSTITCH를 통해 새로운 사람들과\n매칭을 즐겨보세요"
+        $0.textColor = .white
+        var paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.17
+        let attributedText = NSMutableAttributedString(
+            string: text,
+            attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        )
+        attributedText.addAttribute(
+            .foregroundColor,
+            value: UIColor.yellow05_primary,
+            range: (text as NSString).range(of: "STITCH")
+        )
+        $0.attributedText = attributedText
+        $0.numberOfLines = 0
+        $0.font = .Headline_20
+        $0.textAlignment = .left
+    }
     
     private let startImageView = UIImageView().then {
         $0.image = .home2
@@ -55,19 +71,12 @@ final class CompleteSignupViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
-        view.addSubview(progressView)
         view.addSubview(titleLabel)
         view.addSubview(startImageView)
         view.addSubview(nextButton)
         
-        progressView.snp.makeConstraints { make in
-            make.top.equalTo(view.layoutMarginsGuide.snp.top)
-            make.left.right.equalToSuperview().inset(Constant.padding16)
-            make.height.equalTo(Constant.barHeight)
-        }
-        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(progressView.snp.bottom).offset(Constant.padding24)
+            make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
             make.left.equalToSuperview().offset(Constant.padding16)
             make.right.equalToSuperview().offset(-Constant.padding16)
         }

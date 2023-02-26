@@ -10,11 +10,9 @@ import UIKit
 import RxSwift
 
 protocol AuthCoordinatorDependencies {
-    func nicknameViewController() -> NicknameViewController
-    func profileViewController() -> ProfileViewController
+    func interestedInSportsViewController() -> InterestedInSportsViewController
     func locationViewController() -> LocationViewController
     func findLocationViewController() -> FindLocationViewController
-    func interestedInSportsViewController() -> InterestedInSportsViewController
     func completeSignupViewController() -> CompleteSignupViewController
 }
 
@@ -49,20 +47,14 @@ final class AuthCoordinator: Coordinator {
     private func showLoginViewController() {
         // TODO: DIContainer
         let loginViewController = LoginViewController()
-        addNextEvent(loginViewController, showNicknameViewController)
-        navigationController.pushViewController(loginViewController, animated: false)
+        addNextEvent(loginViewController, showInterestedInSportsViewController)
+        navigationController.pushViewController(loginViewController, animated: true)
     }
     
-    private func showNicknameViewController() {
-        let nicknameViewController = dependencies.nicknameViewController()
-        addNextEvent(nicknameViewController, showProfileViewController)
-        navigationController.pushViewController(nicknameViewController, animated: false)
-    }
-    
-    private func showProfileViewController() {
-        let profileViewController = dependencies.profileViewController()
-        addNextEvent(profileViewController, showLocationViewController)
-        navigationController.pushViewController(profileViewController, animated: false)
+    private func showInterestedInSportsViewController() {
+        let interestedInSportsViewController = dependencies.interestedInSportsViewController()
+        addNextEvent(interestedInSportsViewController, showLocationViewController)
+        navigationController.pushViewController(interestedInSportsViewController, animated: true)
     }
     
     private func showLocationViewController() {
@@ -70,14 +62,14 @@ final class AuthCoordinator: Coordinator {
         locationViewController.coordinatorPublisher
             .subscribe { [weak self] event in
                 if case .next = event {
-                    self?.showInterestedInSportsViewController()
+                    self?.showCompleteSignupViewController()
                 }
                 if case .findLocation = event {
                     self?.showFindLocationViewController()
                 }
             }
             .disposed(by: disposeBag)
-        navigationController.pushViewController(locationViewController, animated: false)
+        navigationController.pushViewController(locationViewController, animated: true)
     }
     
     private func showFindLocationViewController() {
@@ -85,16 +77,10 @@ final class AuthCoordinator: Coordinator {
         navigationController.pushViewController(findLocationViewController, animated: true)
     }
     
-    private func showInterestedInSportsViewController() {
-        let interestedInSportsViewController = dependencies.interestedInSportsViewController()
-        addNextEvent(interestedInSportsViewController, showCompleteSignupViewController)
-        navigationController.pushViewController(interestedInSportsViewController, animated: false)
-    }
-    
     private func showCompleteSignupViewController() {
         let completeSignupViewControoler = dependencies.completeSignupViewController()
         
-        navigationController.pushViewController(completeSignupViewControoler, animated: false)
+        navigationController.pushViewController(completeSignupViewControoler, animated: true)
     }
     
     private func addNextEvent(_ viewController: BaseViewController, _ showViewController: @escaping () -> Void) {

@@ -21,8 +21,6 @@ final class InterestedInSportsViewController: BaseViewController {
         static let padding40 = 40
     }
     
-    private let progressView = DefaultProgressView(.sports)
-    
     private let titleLabel = DefaultTitleLabel(text: "관심있는 운동 종목을\n3개 이상 선택하세요")
     
     private let nextButton = DefaultButton(title: "다음")
@@ -122,19 +120,12 @@ final class InterestedInSportsViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
-        view.addSubview(progressView)
         view.addSubview(titleLabel)
         view.addSubview(nextButton)
         view.addSubview(sportsCollectionView)
         
-        progressView.snp.makeConstraints { make in
-            make.top.equalTo(view.layoutMarginsGuide.snp.top)
-            make.left.right.equalToSuperview().inset(Constant.padding16)
-            make.height.equalTo(Constant.barHeight)
-        }
-        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(progressView.snp.bottom).offset(Constant.padding24)
+            make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
             make.left.right.equalToSuperview().inset(Constant.padding16)
         }
         

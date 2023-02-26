@@ -17,11 +17,12 @@ final class FindLocationViewController: BaseViewController {
         static let textFieldHeight = 56
         static let rowHeight = 1
         static let buttonHeight = 32
-        static let radius4 = 4
+        static let radius16 = 16
         static let padding2 = 2
         static let padding8 = 8
         static let padding16 = 16
         static let padding24 = 24
+        static let padding32 = 32
     }
     
     private let searchTextField = DefaultTextField(
@@ -33,7 +34,12 @@ final class FindLocationViewController: BaseViewController {
         $0.backgroundColor = .gray09
     }
     
-    private let searchButton = DefaultButton(title: " 현재위치로 찾기", font: .Caption1_12, icon: .gps)
+    private let searchButton = DefaultButton(
+        title: " 현재위치로 찾기",
+        font: .Caption1_12,
+        icon: .gps,
+        radius: Constant.radius16
+    )
     
     private let searchResultTitleLabel = UILabel().then {
         $0.text = "현재위치 결과"
@@ -99,13 +105,13 @@ final class FindLocationViewController: BaseViewController {
         }
         
         searchButton.snp.makeConstraints { make in
-            make.top.equalTo(textFieldRowView.snp.bottom).offset(Constant.padding16)
+            make.top.equalTo(textFieldRowView.snp.bottom).offset(Constant.padding24)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.buttonHeight)
         }
         
         searchResultTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(searchButton.snp.bottom).offset(Constant.padding16)
+            make.top.equalTo(searchButton.snp.bottom).offset(Constant.padding32)
             make.left.equalToSuperview().offset(Constant.padding16)
         }
         

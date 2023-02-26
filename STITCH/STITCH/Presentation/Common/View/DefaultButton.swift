@@ -10,7 +10,7 @@ import UIKit
 final class DefaultButton: UIButton {
     
     enum Constant {
-        static let radius6 = 6
+        static let radius24 = 24
     }
     
     init(
@@ -19,7 +19,8 @@ final class DefaultButton: UIButton {
         fontColor: UIColor? = .black,
         disabledFontColor: UIColor? = .white,
         normalColor: UIColor? = .yellow05_primary,
-        icon: UIImage? = nil
+        icon: UIImage? = nil,
+        radius: Int = Constant.radius24
     ) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
@@ -28,7 +29,7 @@ final class DefaultButton: UIButton {
         setTitleColor(fontColor, for: .highlighted)
         setTitleColor(disabledFontColor, for: .disabled)
         backgroundColor = normalColor
-        layer.cornerRadius = CGFloat(Constant.radius6)
+        layer.cornerRadius = CGFloat(radius)
         if let icon = icon {
             setImage(icon, for: .normal)
         }
