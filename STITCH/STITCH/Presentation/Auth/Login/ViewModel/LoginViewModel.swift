@@ -16,12 +16,12 @@ final class LoginViewModel {
     
     // MARK: - Properties
     
-    private let signInUseCase: SignInUseCase
+    private let authUseCase: AuthUseCase
     
     // MARK: - Initializer
     
-    init(signInUseCase: SignInUseCase) {
-        self.signInUseCase = signInUseCase
+    init(authUseCase: AuthUseCase) {
+        self.authUseCase = authUseCase
     }
     
     

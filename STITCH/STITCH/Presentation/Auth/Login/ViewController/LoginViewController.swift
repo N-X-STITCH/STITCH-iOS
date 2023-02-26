@@ -74,7 +74,14 @@ final class LoginViewController: BaseViewController {
         $0.setImage(.appleLoginButton, for: .normal)
     }
     
+    private let loginViewModel: LoginViewModel
+    
     // MARK: - Initializer
+    
+    init(loginViewModel: LoginViewModel) {
+        self.loginViewModel = loginViewModel
+        super.init()
+    }
     
     // MARK: - Methods
     

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 
 protocol AuthCoordinatorDependencies {
+    func loginViewController() -> LoginViewController
     func interestedInSportsViewController() -> InterestedInSportsViewController
     func locationViewController() -> LocationViewController
     func findLocationViewController() -> FindLocationViewController
@@ -46,7 +47,7 @@ final class AuthCoordinator: Coordinator {
     
     private func showLoginViewController() {
         // TODO: DIContainer
-        let loginViewController = LoginViewController()
+        let loginViewController = dependencies.loginViewController()
         addNextEvent(loginViewController, showInterestedInSportsViewController)
         navigationController.pushViewController(loginViewController, animated: true)
     }

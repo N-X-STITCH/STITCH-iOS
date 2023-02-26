@@ -35,6 +35,10 @@ final class AuthDIContainer {
     
     // MARK: - Use Cases
     
+    func authUseCase() -> AuthUseCase {
+        return DefaultAuthUseCase()
+    }
+    
     func nicknameUseCase() -> NicknameUseCase {
         return DefaultNicknameUseCase()
     }
@@ -49,6 +53,9 @@ final class AuthDIContainer {
     
     // MARK: - View Models
     
+    func loginViewModel() -> LoginViewModel {
+        return LoginViewModel(authUseCase: authUseCase())
+    }
     
     func nicknameViewModel() -> NicknameViewModel {
         return NicknameViewModel(nicknameUseCase: nicknameUseCase())
@@ -67,6 +74,10 @@ final class AuthDIContainer {
     }
     
     // MARK: - ViewControllers
+    
+    func loginViewController() -> LoginViewController {
+        return LoginViewController(loginViewModel: loginViewModel())
+    }
     
     func nicknameViewController() -> NicknameViewController {
         return NicknameViewController(
