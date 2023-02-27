@@ -16,11 +16,15 @@ final class LoginViewModel: ViewModel {
         let appleLoginTap: Observable<Void>
     }
     
-    struct Output {}
+    struct Output {
+        let loginResult: Observable<LoginInfo>
+    }
     
     // MARK: - Properties
     
     private let authUseCase: AuthUseCase
+    
+    let disposeBag = DisposeBag()
     
     // MARK: - Initializer
     
@@ -31,7 +35,12 @@ final class LoginViewModel: ViewModel {
     // MARK: - Methods
     
     func transform(input: Input) -> Output {
-//        let kakaoLoginResult = input.kakaoLoginTap
-        return Output()
+        let kakaoLoginResult = input.kakaoLoginTap
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.authUseCase.socialLogin(.kakao)
+            }
+
+        return Output(loginResult: kakaoLoginResult)
     }
 }

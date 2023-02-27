@@ -86,7 +86,21 @@ final class LoginViewController: BaseViewController {
     // MARK: - Methods
     
     override func bind() {
-        kakaoLoginButton.rx.tap
+        
+        let input = LoginViewModel.Input(
+            kakaoLoginTap: kakaoLoginButton.rx.tap.asObservable(),
+            appleLoginTap: appleLoginButton.rx.tap.asObservable()
+        )
+        
+        let output = loginViewModel.transform(input: input)
+        
+        output.loginResult
+            .subscribe { loginInfo in
+                print(loginInfo)
+            }
+            .disposed(by: disposeBag)
+        
+        appleLoginButton.rx.tap
             .subscribe { [weak self] _ in
                 self?.coordinatorPublisher.onNext(.next)
             }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-import KakaoSDKCommon
+import RxKakaoSDKCommon
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        KakaoSDK.initSDK(appKey: "f30befcc09673d8cc6c76af17a8cbee7")
+        RxKakaoSDK.initSDK(appKey: "f30befcc09673d8cc6c76af17a8cbee7")
         
         return true
     }
