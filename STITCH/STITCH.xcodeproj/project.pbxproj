@@ -75,6 +75,8 @@
 		D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */; };
 		D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */; };
 		D868BA4029A8FAA400E80012 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3F29A8FAA400E80012 /* SignupViewModel.swift */; };
+		D868BA4429AB172F00E80012 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D868BA4329AB172F00E80012 /* RxKakaoSDKAuth */; };
+		D868BA4629AB172F00E80012 /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = D868BA4529AB172F00E80012 /* RxKakaoSDKCommon */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
@@ -164,6 +166,8 @@
 				D860B633299DF5A200966683 /* RxCocoa in Frameworks */,
 				D860B5DB299BDB4000966683 /* SnapKit in Frameworks */,
 				D860B637299DF5A200966683 /* RxSwift in Frameworks */,
+				D868BA4629AB172F00E80012 /* RxKakaoSDKCommon in Frameworks */,
+				D868BA4429AB172F00E80012 /* RxKakaoSDKAuth in Frameworks */,
 				D860B635299DF5A200966683 /* RxRelay in Frameworks */,
 				D860B5DE299BDB7000966683 /* Then in Frameworks */,
 			);
@@ -614,6 +618,8 @@
 				D860B632299DF5A200966683 /* RxCocoa */,
 				D860B634299DF5A200966683 /* RxRelay */,
 				D860B636299DF5A200966683 /* RxSwift */,
+				D868BA4329AB172F00E80012 /* RxKakaoSDKAuth */,
+				D868BA4529AB172F00E80012 /* RxKakaoSDKCommon */,
 			);
 			productName = STITCH;
 			productReference = D857612D299BCFF800F1AFEB /* STITCH.app */;
@@ -648,6 +654,7 @@
 				D860B5D9299BDB3F00966683 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				D860B5DC299BDB7000966683 /* XCRemoteSwiftPackageReference "Then" */,
 				D860B631299DF5A200966683 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				D868BA4229AB172F00E80012 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 			);
 			productRefGroup = D857612E299BCFF800F1AFEB /* Products */;
 			projectDirPath = "";
@@ -985,6 +992,14 @@
 				kind = branch;
 			};
 		};
+		D868BA4229AB172F00E80012 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1012,6 +1027,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D860B631299DF5A200966683 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		D868BA4329AB172F00E80012 /* RxKakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D868BA4229AB172F00E80012 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKAuth;
+		};
+		D868BA4529AB172F00E80012 /* RxKakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D868BA4229AB172F00E80012 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKCommon;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

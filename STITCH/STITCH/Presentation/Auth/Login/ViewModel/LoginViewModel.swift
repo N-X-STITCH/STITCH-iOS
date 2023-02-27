@@ -9,9 +9,13 @@ import Foundation
 
 import RxSwift
 
-final class LoginViewModel {
+final class LoginViewModel: ViewModel {
     
-    struct Input {}
+    struct Input {
+        let kakaoLoginTap: Observable<Void>
+        let appleLoginTap: Observable<Void>
+    }
+    
     struct Output {}
     
     // MARK: - Properties
@@ -24,6 +28,10 @@ final class LoginViewModel {
         self.authUseCase = authUseCase
     }
     
-    
     // MARK: - Methods
+    
+    func transform(input: Input) -> Output {
+//        let kakaoLoginResult = input.kakaoLoginTap
+        return Output()
+    }
 }

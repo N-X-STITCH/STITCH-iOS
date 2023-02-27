@@ -7,11 +7,20 @@
 
 import UIKit
 
+import KakaoSDKAuth
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let appDIContainer = AppDIContainer()
     var window: UIWindow?
     var appCoordinator: AppCoordinator?
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url,
+           AuthApi.isKakaoTalkLoginUrl(url) {
+            _ = AuthController.handleOpenUrl(url: url)
+        }
+    }
 
     func scene(
         _ scene: UIScene,
