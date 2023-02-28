@@ -206,8 +206,9 @@
 		D805FDD729A5B46E0007E63D /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				D805FDDA29A5B48C0007E63D /* ViewModel */,
-				D805FDD929A5B4850007E63D /* ViewController */,
+				D868BA6529AE38C100E80012 /* InterestedSports */,
+				D805FDDA29A5B48C0007E63D /* Location */,
+				D805FDD929A5B4850007E63D /* CompleteSignup */,
 				D805FDD829A5B47F0007E63D /* View */,
 			);
 			path = Register;
@@ -225,25 +226,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		D805FDD929A5B4850007E63D /* ViewController */ = {
+		D805FDD929A5B4850007E63D /* CompleteSignup */ = {
 			isa = PBXGroup;
 			children = (
-				D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */,
-				D820259F29A24A7C00892CE8 /* LocationViewController.swift */,
-				D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */,
+				D868BA3F29A8FAA400E80012 /* SignupViewModel.swift */,
 				D82025A329A24AE900892CE8 /* CompleteSignupViewController.swift */,
 			);
-			path = ViewController;
+			path = CompleteSignup;
 			sourceTree = "<group>";
 		};
-		D805FDDA29A5B48C0007E63D /* ViewModel */ = {
+		D805FDDA29A5B48C0007E63D /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */,
 				D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */,
-				D868BA3F29A8FAA400E80012 /* SignupViewModel.swift */,
+				D820259F29A24A7C00892CE8 /* LocationViewController.swift */,
+				D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */,
 			);
-			path = ViewModel;
+			path = Location;
 			sourceTree = "<group>";
 		};
 		D820259C29A2369C00892CE8 /* Layout */ = {
@@ -546,8 +545,8 @@
 		D860B610299CF10100966683 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				D8E1113229A3223C00A3CE6A /* ViewModel */,
-				D8E1113129A3223600A3CE6A /* ViewController */,
+				D860B5EF299C8D5900966683 /* LoginViewController.swift */,
+				D860B616299CF1AF00966683 /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -624,28 +623,21 @@
 			path = AuthService;
 			sourceTree = "<group>";
 		};
+		D868BA6529AE38C100E80012 /* InterestedSports */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */,
+				D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */,
+			);
+			path = InterestedSports;
+			sourceTree = "<group>";
+		};
 		D86B254D29A7424E0041EB00 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
 				D86B254E29A742620041EB00 /* NicknameValidation.swift */,
 			);
 			path = Validation;
-			sourceTree = "<group>";
-		};
-		D8E1113129A3223600A3CE6A /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D860B5EF299C8D5900966683 /* LoginViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		D8E1113229A3223C00A3CE6A /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D860B616299CF1AF00966683 /* LoginViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
