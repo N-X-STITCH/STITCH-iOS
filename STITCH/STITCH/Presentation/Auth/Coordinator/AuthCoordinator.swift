@@ -61,12 +61,13 @@ final class AuthCoordinator: Coordinator {
     private func showLocationViewController() {
         let locationViewController = dependencies.locationViewController()
         locationViewController.coordinatorPublisher
-            .subscribe { [weak self] event in
+            .withUnretained(self)
+            .subscribe { owner, event in
                 if case .next = event {
-                    self?.showCompleteSignupViewController()
+                    owner.showCompleteSignupViewController()
                 }
                 if case .findLocation = event {
-                    self?.showFindLocationViewController()
+                    owner.showFindLocationViewController()
                 }
             }
             .disposed(by: disposeBag)
@@ -79,9 +80,16 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showCompleteSignupViewController() {
-        let completeSignupViewControoler = dependencies.completeSignupViewController()
-        
-        navigationController.pushViewController(completeSignupViewControoler, animated: true)
+        let completeSignupViewController = dependencies.completeSignupViewController()
+        completeSignupViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .next = event {
+                    owner.finish()
+                }
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(completeSignupViewController, animated: true)
     }
     
     private func addNextEvent(_ viewController: BaseViewController, _ showViewController: @escaping () -> Void) {
