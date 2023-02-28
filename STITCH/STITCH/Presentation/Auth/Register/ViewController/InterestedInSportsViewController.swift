@@ -58,12 +58,6 @@ final class InterestedInSportsViewController: BaseViewController {
     }
     
     override func bind() {
-        nextButton.rx.tap
-            .withUnretained(self)
-            .subscribe { owner,  _ in
-                owner.coordinatorPublisher.onNext(.next)
-            }
-            .disposed(by: disposeBag)
         
         let selected = sportsCollectionView.rx.itemSelected.share()
         
@@ -111,7 +105,15 @@ final class InterestedInSportsViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
-            
+        
+        nextButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner,  _ in
+                owner.coordinatorPublisher.onNext(.next)
+                let sports = output.selectedIndexPath.value.map { Sport.allCases[$0.row] }
+                owner.signupViewModel.sports = sports
+            }
+            .disposed(by: disposeBag)
         
         output.selectDisposable.disposed(by: disposeBag)
         output.deselectDisposable.disposed(by: disposeBag)

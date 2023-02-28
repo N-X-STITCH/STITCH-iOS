@@ -84,7 +84,10 @@ final class AuthDIContainer {
     // MARK: - ViewControllers
     
     func loginViewController() -> LoginViewController {
-        return LoginViewController(loginViewModel: loginViewModel())
+        return LoginViewController(
+            loginViewModel: loginViewModel(),
+            signupViewModel: signupViewModel
+        )
     }
     
     func nicknameViewController() -> NicknameViewController {

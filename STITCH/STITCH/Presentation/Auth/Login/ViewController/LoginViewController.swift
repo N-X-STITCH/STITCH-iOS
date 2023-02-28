@@ -74,12 +74,19 @@ final class LoginViewController: BaseViewController {
         $0.setImage(.appleLoginButton, for: .normal)
     }
     
+    // MARK: Properties
+    
     private let loginViewModel: LoginViewModel
+    private let signupViewModel: SignupViewModel
     
     // MARK: - Initializer
     
-    init(loginViewModel: LoginViewModel) {
+    init(
+        loginViewModel: LoginViewModel,
+        signupViewModel: SignupViewModel
+    ) {
         self.loginViewModel = loginViewModel
+        self.signupViewModel = signupViewModel
         super.init()
     }
     
@@ -95,8 +102,10 @@ final class LoginViewController: BaseViewController {
         let output = loginViewModel.transform(input: input)
         
         output.loginResult
-            .subscribe { loginInfo in
-                print(loginInfo)
+            .withUnretained(self)
+            .subscribe { owner, loginInfo in
+                owner.signupViewModel.loginInfo = loginInfo
+                // TODO: 계정이 이미 있다면 home, 없다면 회원가입으로 이동
             }
             .disposed(by: disposeBag)
         

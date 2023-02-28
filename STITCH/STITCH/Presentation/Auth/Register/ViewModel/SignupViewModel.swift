@@ -14,11 +14,9 @@ final class SignupViewModel {
     
     // MARK: - Properties
     
-    let nickname: Observable<String>? = nil
-    let profileImage: Observable<Data?>? = nil
-    let profileText: Observable<ProfileText>? = nil
-    let location: Observable<String>? = nil
-    let sports: Observable<[Sport]>? = nil
+    var loginInfo: LoginInfo? = nil
+    var sports: [Sport] = []
+    var location: String? = nil
     
     struct Input {
         let signupButtonTap: Observable<Void>
@@ -33,4 +31,8 @@ final class SignupViewModel {
     init() { }
     
     // MARK: - Methods
+    
+//    func transform(_ input: Input) -> Output {
+//        input.signupButtonTap
+//    }
 }

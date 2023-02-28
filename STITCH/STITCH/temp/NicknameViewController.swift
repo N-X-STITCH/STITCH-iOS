@@ -107,7 +107,6 @@ final class NicknameViewController: BaseViewController {
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.coordinatorPublisher.onNext(.next)
-                owner.signupViewModel.nickname
             }
             .disposed(by: disposeBag)
         
