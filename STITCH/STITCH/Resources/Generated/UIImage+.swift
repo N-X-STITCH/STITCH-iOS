@@ -15,4 +15,9 @@ extension UIImage {
     static let home2 = UIImage(named: "home-2")
     static let gps = UIImage(named: "gps")
     static let searchGlasses = UIImage(named: "searchGlass")
+    static let home = UIImage(named: "home")
+    static let homeSelect = UIImage(named: "home-select")
+    static let people = UIImage(named: "people")
+    static let peopleSelect = UIImage(named: "people-select")
+    static let mymenu = UIImage(named: "user-square")
 }

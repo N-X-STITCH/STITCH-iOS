@@ -85,6 +85,7 @@
 		D868BA5B29AC908E00E80012 /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA5A29AC908E00E80012 /* LoginInfo.swift */; };
 		D868BA5E29AC990C00E80012 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D868BA5D29AC990C00E80012 /* RxKakaoSDKUser */; };
 		D868BA6029ACBE0800E80012 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA5F29ACBE0800E80012 /* User.swift */; };
+		D868BA6229ADCF6500E80012 /* HomeDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA6129ADCF6500E80012 /* HomeDIContainer.swift */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
@@ -166,6 +167,7 @@
 		D868BA5729AC894800E80012 /* SocialLoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginError.swift; sourceTree = "<group>"; };
 		D868BA5A29AC908E00E80012 /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		D868BA5F29ACBE0800E80012 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D868BA6129ADCF6500E80012 /* HomeDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDIContainer.swift; sourceTree = "<group>"; };
 		D86B254E29A742620041EB00 /* NicknameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidation.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 			children = (
 				D8599AB5299E349000633192 /* AppDIContainer.swift */,
 				D8599AB7299E349C00633192 /* AuthDIContainer.swift */,
+				D868BA6129ADCF6500E80012 /* HomeDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -745,6 +748,7 @@
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
 				D868BA3029A7C5D100E80012 /* ImagePickerController.swift in Sources */,
 				D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */,
+				D868BA6229ADCF6500E80012 /* HomeDIContainer.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
 				D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */,
