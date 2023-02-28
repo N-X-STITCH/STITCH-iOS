@@ -18,4 +18,9 @@ final class AppDIContainer {
         let dependencies = AuthDIContainer.Dependencies(urlsessionNetworkService: urlsessionNetworkService)
         return AuthDIContainer(dependencies: dependencies)
     }
+    
+    func makeTabBarDIContainer() -> TabBarDIContainer {
+        let dependencies = TabBarDIContainer.Dependencies(urlsessionNetworkService: urlsessionNetworkService)
+        return TabBarDIContainer(dependencies: dependencies)
+    }
 }

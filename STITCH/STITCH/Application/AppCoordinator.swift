@@ -53,7 +53,8 @@ final class AppCoordinator: AppCoordinatorProtocol {
     }
     
     func showTabFlow() {
-        let tabBarCoordinator = TabBarCoordinator(navigationController)
+        let tabBarDIContainer = appDIContainer.makeTabBarDIContainer()
+        let tabBarCoordinator = tabBarDIContainer.tabBarCoordinator(navigationController: navigationController)
         tabBarCoordinator.finishDelegate = self
         tabBarCoordinator.start()
         childCoordinators.append(tabBarCoordinator)
