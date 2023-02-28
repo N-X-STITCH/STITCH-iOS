@@ -7,6 +7,8 @@
 
 import Foundation
 
+import RxSwift
+
 protocol AuthUseCase {
     
 }
@@ -17,9 +19,7 @@ final class DefaultAuthUseCase: AuthUseCase {
     
     // MARK: - Initializer
     
-    init() {
-        
-    }
+    init() {}
     
     // MARK: - Methods
 }

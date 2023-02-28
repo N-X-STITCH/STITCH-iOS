@@ -24,18 +24,21 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         bind()
+        setting()
     }
     
     init() {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func configureUI() {}
     func bind() {}
+    func setting() {}
 }
 
 // MARK: - NavigationBar
@@ -44,6 +47,11 @@ extension BaseViewController {
 }
 
 // MARK: - Indicator
+
+extension BaseViewController {
+}
+
+// MARK: - Gridient
 
 extension BaseViewController {
 }

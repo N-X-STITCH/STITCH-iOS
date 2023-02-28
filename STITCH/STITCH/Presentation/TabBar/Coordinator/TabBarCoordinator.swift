@@ -28,13 +28,14 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         tabBarController = UITabBarController()
+        tabBarController.tabBar.tintColor = .yellow05_primary
     }
     
     // MARK: - Methods
     
     func start() {
         // TODO: 탭바 추가
-        let pages: [TabBarPage] = [.home, .profile]
+        let pages: [TabBarPage] = [.home, .crew, .myMenu]
         let controllers: [UINavigationController] = pages.map { tabController($0) }
         prepareTabBarController(with: controllers)
     }
@@ -55,15 +56,17 @@ extension TabBarCoordinator {
         let navigationController = UINavigationController()
         navigationController.tabBarItem = UITabBarItem(
             title: page.title,
-            image: nil,
-            selectedImage: nil
+            image: page.deselectedIcon,
+            selectedImage: page.selectedIcon
         )
         
         switch page {
         case .home:
             // let homeViewController = HomeViewController()
             navigationController.pushViewController(UIViewController(), animated: true)
-        case .profile:
+        case .crew:
+            navigationController.pushViewController(UIViewController(), animated: true)
+        case .myMenu:
             // let ProfileViewController = ProfileViewController()
             navigationController.pushViewController(UIViewController(), animated: true)
         }

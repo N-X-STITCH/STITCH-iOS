@@ -21,6 +21,8 @@ extension UIFont {
     static let Headline_28 = UIFont(name: "Pretendard-SemiBold", size: 28)
     static let Subhead_16 = UIFont(name: "Pretendard-SemiBold", size: 16)
     static let Subhead_24 = UIFont(name: "Pretendard-SemiBold", size: 24)
+    static let Subhead2_14 = UIFont(name: "Pretendard-SemiBold", size: 14)
+    static let Subhead2_20 = UIFont(name: "Pretendard-SemiBold", size: 20)
     
     // Body
     static let Body1_16 = UIFont(name: "Pretendard-Regular", size: 16)

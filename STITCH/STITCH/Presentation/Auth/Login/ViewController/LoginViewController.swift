@@ -5,6 +5,7 @@
 //  Created by neuli on 2023/02/15.
 //
 
+import AuthenticationServices
 import UIKit
 
 import RxSwift
@@ -74,20 +75,74 @@ final class LoginViewController: BaseViewController {
         $0.setImage(.appleLoginButton, for: .normal)
     }
     
+    // MARK: Properties
+    
+    private let loginViewModel: LoginViewModel
+    private let signupViewModel: SignupViewModel
+    
+    private lazy var kakaoLoginService: SocialLoginService = KakaoLoginService()
+    private lazy var appleLoginService: SocialLoginService = AppleLoginService(self)
+    
     // MARK: - Initializer
+    
+    init(
+        loginViewModel: LoginViewModel,
+        signupViewModel: SignupViewModel
+    ) {
+        self.loginViewModel = loginViewModel
+        self.signupViewModel = signupViewModel
+        super.init()
+    }
     
     // MARK: - Methods
     
     override func bind() {
+        
         kakaoLoginButton.rx.tap
-            .subscribe { [weak self] _ in
-                self?.coordinatorPublisher.onNext(.next)
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .flatMap { _ in self.kakaoLoginService.login() }
+            .withUnretained(self)
+            .subscribe { owner, loginInfo in
+                owner.signupViewModel.loginInfo = loginInfo
+                owner.coordinatorPublisher.onNext(.next)
             }
             .disposed(by: disposeBag)
+        
+        appleLoginButton.rx.tap
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .flatMap { _ in self.appleLoginService.login() }
+            .withUnretained(self)
+            .subscribe { owner, loginInfo in
+                owner.signupViewModel.loginInfo = loginInfo
+                owner.coordinatorPublisher.onNext(.next)
+            }
+            .disposed(by: disposeBag)
+        
+
+//        let input = LoginViewModel.Input(
+//            kakaoLoginInfo: kakaoLoginButton.rx.tap.withLatestFrom(kakaoLoginService.loginInfo),
+//            appleLoginInfo: appleLoginButton.rx.tap.withLatestFrom(appleLoginService.loginInfo))
+//        )
+//
+//        let output = loginViewModel.transform(input: input)
+//
+//        output.loginResult
+//            .withUnretained(self)
+//            .subscribe { owner, loginInfo in
+//                owner.signupViewModel.loginInfo = loginInfo
+//                // TODO: 계정이 이미 있다면 home, 없다면 회원가입으로 이동
+//            }
+//            .disposed(by: disposeBag)
+//
+//        appleLoginButton.rx.tap
+//            .subscribe { [weak self] _ in
+//                self?.coordinatorPublisher.onNext(.next)
+//            }
+//            .disposed(by: disposeBag)
     }
     
     override func configureUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = .background
         
         view.addSubview(logoImageView)
         view.addSubview(useTermsLabel)

@@ -10,7 +10,7 @@ import UIKit
 final class DefaultTitleLabel: UILabel {
     init(
         text: String,
-        textColor: UIColor? = .gray14,
+        textColor: UIColor? = .white,
         font: UIFont? = .Headline_20
     ) {
         super.init(frame: .zero)
@@ -21,7 +21,7 @@ final class DefaultTitleLabel: UILabel {
         lineBreakMode = .byWordWrapping
         textAlignment = .left
         
-        var paragraphStyle = NSMutableParagraphStyle()
+        let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.17
         
         attributedText = NSMutableAttributedString(

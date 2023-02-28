@@ -7,10 +7,20 @@
 
 import UIKit
 
+import KakaoSDKAuth
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    let appDIContainer = AppDIContainer()
     var window: UIWindow?
     var appCoordinator: AppCoordinator?
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url,
+           AuthApi.isKakaoTalkLoginUrl(url) {
+            _ = AuthController.handleOpenUrl(url: url)
+        }
+    }
 
     func scene(
         _ scene: UIScene,
@@ -25,10 +35,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationController
-        window?.backgroundColor = .white // TODO: color 변경
+        window?.backgroundColor = .background // TODO: color 변경
         window?.makeKeyAndVisible()
         
-        appCoordinator = AppCoordinator(navigationController)
+        appCoordinator = AppCoordinator(navigationController, appDIContainer: appDIContainer)
         appCoordinator?.start()
         
         // TODO: appCoordinator 추가
