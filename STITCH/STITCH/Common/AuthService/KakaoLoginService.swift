@@ -17,7 +17,7 @@ import KakaoSDKUser
 final class KakaoLoginService: SocialLoginService {
 
     private let disposeBag = DisposeBag()
-    private let loginInfo = PublishSubject<LoginInfo>()
+    let loginInfo = PublishSubject<LoginInfo>()
     
     init() {}
 

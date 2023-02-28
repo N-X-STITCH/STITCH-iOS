@@ -12,5 +12,6 @@ import RxSwift
 typealias AccessToken = String
 
 protocol SocialLoginService {
+    var loginInfo: PublishSubject<LoginInfo> { get }
     func login() -> Observable<LoginInfo>
 }

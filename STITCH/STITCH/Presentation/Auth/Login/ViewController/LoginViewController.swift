@@ -5,6 +5,7 @@
 //  Created by neuli on 2023/02/15.
 //
 
+import AuthenticationServices
 import UIKit
 
 import RxSwift
@@ -79,6 +80,9 @@ final class LoginViewController: BaseViewController {
     private let loginViewModel: LoginViewModel
     private let signupViewModel: SignupViewModel
     
+    private lazy var kakaoLoginService: SocialLoginService = KakaoLoginService()
+    private lazy var appleLoginService: SocialLoginService = AppleLoginService(self)
+    
     // MARK: - Initializer
     
     init(
@@ -94,26 +98,47 @@ final class LoginViewController: BaseViewController {
     
     override func bind() {
         
-        let input = LoginViewModel.Input(
-            kakaoLoginTap: kakaoLoginButton.rx.tap.asObservable(),
-            appleLoginTap: appleLoginButton.rx.tap.asObservable()
-        )
-        
-        let output = loginViewModel.transform(input: input)
-        
-        output.loginResult
+        kakaoLoginButton.rx.tap
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .flatMap { _ in self.kakaoLoginService.login() }
             .withUnretained(self)
             .subscribe { owner, loginInfo in
                 owner.signupViewModel.loginInfo = loginInfo
-                // TODO: 계정이 이미 있다면 home, 없다면 회원가입으로 이동
+                owner.coordinatorPublisher.onNext(.next)
             }
             .disposed(by: disposeBag)
         
         appleLoginButton.rx.tap
-            .subscribe { [weak self] _ in
-                self?.coordinatorPublisher.onNext(.next)
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .flatMap { _ in self.appleLoginService.login() }
+            .withUnretained(self)
+            .subscribe { owner, loginInfo in
+                owner.signupViewModel.loginInfo = loginInfo
+                owner.coordinatorPublisher.onNext(.next)
             }
             .disposed(by: disposeBag)
+        
+
+//        let input = LoginViewModel.Input(
+//            kakaoLoginInfo: kakaoLoginButton.rx.tap.withLatestFrom(kakaoLoginService.loginInfo),
+//            appleLoginInfo: appleLoginButton.rx.tap.withLatestFrom(appleLoginService.loginInfo))
+//        )
+//
+//        let output = loginViewModel.transform(input: input)
+//
+//        output.loginResult
+//            .withUnretained(self)
+//            .subscribe { owner, loginInfo in
+//                owner.signupViewModel.loginInfo = loginInfo
+//                // TODO: 계정이 이미 있다면 home, 없다면 회원가입으로 이동
+//            }
+//            .disposed(by: disposeBag)
+//
+//        appleLoginButton.rx.tap
+//            .subscribe { [weak self] _ in
+//                self?.coordinatorPublisher.onNext(.next)
+//            }
+//            .disposed(by: disposeBag)
     }
     
     override func configureUI() {

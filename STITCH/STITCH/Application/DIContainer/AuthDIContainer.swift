@@ -33,14 +33,6 @@ final class AuthDIContainer {
     
     // MARK: - Repositories
     
-    func kakaoLoginService() -> KakaoLoginService {
-        return KakaoLoginService()
-    }
-    
-    func appleLoginService() -> AppleLoginService {
-        return AppleLoginService()
-    }
-    
     // MARK: - Use Cases
     
     func authUseCase() -> AuthUseCase {
