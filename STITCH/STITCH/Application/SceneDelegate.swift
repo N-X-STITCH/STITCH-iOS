@@ -37,12 +37,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
         window?.backgroundColor = .background // TODO: color 변경
         window?.makeKeyAndVisible()
+        setDarkMode()
         
         appCoordinator = AppCoordinator(navigationController, appDIContainer: appDIContainer)
         appCoordinator?.start()
         
         // TODO: appCoordinator 추가
         // appCoordinator start
+    }
+    
+    func setDarkMode() {
+        if #available(iOS 13.0, *) {
+            window?.overrideUserInterfaceStyle = .dark
+        }
     }
 }
 
