@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum MatchType {
-    case match, classMatch
+enum MatchType: String, Codable {
+    case match, crewMatch, classMatch
 }
