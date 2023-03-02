@@ -20,4 +20,5 @@ extension UIImage {
     static let people = UIImage(named: "people")
     static let peopleSelect = UIImage(named: "people-select")
     static let mymenu = UIImage(named: "user-square")
+    static let userIcon = UIImage(named: "user")
 }
