@@ -95,9 +95,10 @@ enum LocationResultCollectionViewLayout {
 enum PopularCollectionViewLayout {
     
     enum Constant {
-        static let headerHeight = 28
+        static let padding16 = 16
+        static let headerHeight = 44
         static let groupFractionalWidth = 0.9
-        static let groupHeight = 340
+        static let groupHeight = 356
     }
     
     static func layout() -> UICollectionViewLayout {
@@ -122,7 +123,7 @@ enum PopularCollectionViewLayout {
                 top: 0,
                 leading: 0,
                 bottom: 0,
-                trailing: 0
+                trailing: CGFloat(Constant.padding16)
             )
             
             let headerSize = NSCollectionLayoutSize(
@@ -140,6 +141,13 @@ enum PopularCollectionViewLayout {
             
             return section
         }
-        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+        
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.scrollDirection = .vertical
+        
+        return UICollectionViewCompositionalLayout(
+            sectionProvider: sectionProvider,
+            configuration: configuration
+        )
     }
 }

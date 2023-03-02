@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 final class PopularMatchCell: BaseCollectionViewCell {
     
     enum Constant {
@@ -16,6 +18,7 @@ final class PopularMatchCell: BaseCollectionViewCell {
         static let padding14 = 14
         static let padding16 = 16
         static let padding20 = 20
+        static let radius24 = 24
         static let profileWidth = 36
         static let iconWidth = 24
     }
@@ -24,7 +27,10 @@ final class PopularMatchCell: BaseCollectionViewCell {
     
     static let reuseIdentifier = "PopularMatchCell"
     
-    private let backgroundImageView = UIImageView()
+    private let backgroundImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
+    
     private let profileImageView = DefaultProfileImageView(true)
     
     private let nicknameLabel = UILabel().then {
@@ -65,6 +71,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
     
     override func configureUI() {
         contentView.backgroundColor = .yellow05_primary
+        contentView.layer.cornerRadius = CGFloat(Constant.radius24)
+        contentView.clipsToBounds = true
         
         contentView.addSubview(backgroundImageView)
         contentView.addSubview(profileImageView)
@@ -121,6 +129,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
         let owner = matchInfo.owner
         
         nicknameLabel.text = owner.nickname
+        guard let url = URL(string: "https://blog.kakaocdn.net/dn/pbATv/btqxtXkCDlt/DwhLZCFllImV3OOYWassZ0/img.jpg") else { return }
+        backgroundImageView.kf.setImage(with: url)
         // TODO: 추가
     }
 }

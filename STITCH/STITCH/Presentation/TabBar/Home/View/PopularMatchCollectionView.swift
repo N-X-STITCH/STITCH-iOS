@@ -40,6 +40,8 @@ final class PopularMatchCollectionView: BaseCollectionView {
             withReuseIdentifier: PopularHeaderView.reuseIdentifier
         )
         super.configure(delegate: delegate)
+        showsVerticalScrollIndicator = false
+        showsHorizontalScrollIndicator = false
     }
     
     override func configureUI() {

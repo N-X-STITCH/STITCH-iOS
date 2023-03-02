@@ -40,6 +40,7 @@ final class TabBarCoordinator: Coordinator {
     // MARK: - Methods
     
     func start() {
+        navigationController.isNavigationBarHidden = true
         // TODO: 탭바 추가
         let pages: [TabBarPage] = [.home, .crew, .myMenu]
         let controllers: [UINavigationController] = pages.map { tabController($0) }
