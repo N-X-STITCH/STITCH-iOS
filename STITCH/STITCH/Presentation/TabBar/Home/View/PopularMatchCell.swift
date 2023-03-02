@@ -64,6 +64,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
     // MARK: - Methods
     
     override func configureUI() {
+        contentView.backgroundColor = .yellow05_primary
+        
         contentView.addSubview(backgroundImageView)
         contentView.addSubview(profileImageView)
         contentView.addSubview(nicknameLabel)
@@ -112,5 +114,13 @@ final class PopularMatchCell: BaseCollectionViewCell {
             make.left.equalToSuperview().offset(Constant.padding16)
             make.bottom.equalTo(titleLabel.snp.bottom).offset(-Constant.padding8)
         }
+    }
+    
+    func setMatch(_ matchInfo: MatchInfo) {
+//        let match = matchInfo.match
+        let owner = matchInfo.owner
+        
+        nicknameLabel.text = owner.nickname
+        // TODO: 추가
     }
 }

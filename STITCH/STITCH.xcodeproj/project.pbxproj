@@ -98,8 +98,9 @@
 		D868BA8429B05C9500E80012 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8329B05C9500E80012 /* BaseCollectionViewCell.swift */; };
 		D868BA8629B05E8200E80012 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8529B05E8200E80012 /* DefaultBadgeView.swift */; };
 		D868BA8D29B05F8600E80012 /* MatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8C29B05F8600E80012 /* MatchType.swift */; };
-		D868BA9629B070B000E80012 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9529B070B000E80012 /* HomeSection.swift */; };
+		D868BA9629B070B000E80012 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9529B070B000E80012 /* MatchInfo.swift */; };
 		D868BA9829B0715800E80012 /* MatchCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9729B0715800E80012 /* MatchCollectionView.swift */; };
+		D868BA9A29B07BE300E80012 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9929B07BE300E80012 /* Match.swift */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
@@ -195,8 +196,9 @@
 		D868BA8329B05C9500E80012 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		D868BA8529B05E8200E80012 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
 		D868BA8C29B05F8600E80012 /* MatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchType.swift; sourceTree = "<group>"; };
-		D868BA9529B070B000E80012 /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
+		D868BA9529B070B000E80012 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		D868BA9729B0715800E80012 /* MatchCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCollectionView.swift; sourceTree = "<group>"; };
+		D868BA9929B07BE300E80012 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		D86B254E29A742620041EB00 /* NicknameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidation.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 			children = (
 				D868BA5A29AC908E00E80012 /* LoginInfo.swift */,
 				D868BA5F29ACBE0800E80012 /* User.swift */,
+				D868BA9929B07BE300E80012 /* Match.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -702,12 +705,12 @@
 			isa = PBXGroup;
 			children = (
 				D868BA7529B04D2600E80012 /* TopScrollView.swift */,
-				D868BA9729B0715800E80012 /* MatchCollectionView.swift */,
-				D868BA7D29B0525700E80012 /* MatchHeaderView.swift */,
-				D868BA8129B05C6600E80012 /* MatchCell.swift */,
 				D868BA7729B0516600E80012 /* PopularMatchCollectionView.swift */,
 				D868BA7B29B0524D00E80012 /* PopularHeaderView.swift */,
 				D868BA7F29B05C5600E80012 /* PopularMatchCell.swift */,
+				D868BA9729B0715800E80012 /* MatchCollectionView.swift */,
+				D868BA7D29B0525700E80012 /* MatchHeaderView.swift */,
+				D868BA8129B05C6600E80012 /* MatchCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -725,7 +728,7 @@
 		D868BA9429B070A300E80012 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D868BA9529B070B000E80012 /* HomeSection.swift */,
+				D868BA9529B070B000E80012 /* MatchInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -854,6 +857,7 @@
 				D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */,
 				D868BA6229ADCF6500E80012 /* TabBarDIContainer.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
+				D868BA9A29B07BE300E80012 /* Match.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
 				D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */,
 				D860B60D299CE7AC00966683 /* Dictionary+queryString.swift in Sources */,
@@ -890,7 +894,7 @@
 				D868BA4029A8FAA400E80012 /* SignupViewModel.swift in Sources */,
 				D868BA7629B04D2600E80012 /* TopScrollView.swift in Sources */,
 				D860B5F3299C8DB000966683 /* BaseViewController.swift in Sources */,
-				D868BA9629B070B000E80012 /* HomeSection.swift in Sources */,
+				D868BA9629B070B000E80012 /* MatchInfo.swift in Sources */,
 				D868BA3A29A8A32C00E80012 /* FindLocationUseCase.swift in Sources */,
 				D868BA7A29B051CD00E80012 /* BaseCollectionReusableView.swift in Sources */,
 				D868BA5829AC894800E80012 /* SocialLoginError.swift in Sources */,

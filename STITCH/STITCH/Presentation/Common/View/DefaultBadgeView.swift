@@ -56,6 +56,9 @@ final class DefaultBadgeView: UIView {
         case .match:
             sportBadge.text = sport.name
             configureUI(sportBadge)
+        case .crewMatch:
+            sportBadge.text = sport.name
+            configureUI(sportBadge)
         case .classMatch:
             sportBadge.text = sport.name
             let stackView = UIStackView(arrangedSubviews: [classBadge, sportBadge]).then {

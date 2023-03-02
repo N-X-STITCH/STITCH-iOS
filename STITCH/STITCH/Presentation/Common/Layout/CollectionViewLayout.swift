@@ -92,8 +92,54 @@ enum LocationResultCollectionViewLayout {
     }
 }
 
-enum HomeCollectionViewLayout {
+enum PopularCollectionViewLayout {
+    
+    enum Constant {
+        static let headerHeight = 28
+        static let groupFractionalWidth = 0.9
+        static let groupHeight = 340
+    }
+    
     static func layout() -> UICollectionViewLayout {
-        return UICollectionViewLayout()
+        let sectionProvider = {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
+            -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(1.0)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(0.9),
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
+            )
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            group.contentInsets = NSDirectionalEdgeInsets(
+                top: 0,
+                leading: 0,
+                bottom: 0,
+                trailing: 0
+            )
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(CGFloat(Constant.headerHeight))
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: PopularMatchCollectionView.sectionHeaderElementKind,
+                alignment: .top
+            )
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [sectionHeader]
+            section.orthogonalScrollingBehavior = .groupPaging
+            
+            return section
+        }
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
 }
