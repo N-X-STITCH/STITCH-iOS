@@ -91,3 +91,9 @@ enum LocationResultCollectionViewLayout {
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
     }
 }
+
+enum HomeCollectionViewLayout {
+    static func layout() -> UICollectionViewLayout {
+        return UICollectionViewLayout()
+    }
+}

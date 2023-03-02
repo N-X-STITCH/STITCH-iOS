@@ -1,5 +1,5 @@
 //
-//  HomeHeaderView.swift
+//  MatchHeaderView.swift
 //  STITCH
 //
 //  Created by neuli on 2023/03/02.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeHeaderView: BaseCollectionReusableView {
+final class MatchHeaderView: BaseCollectionReusableView {
     
     // MARK: - Properties
     
