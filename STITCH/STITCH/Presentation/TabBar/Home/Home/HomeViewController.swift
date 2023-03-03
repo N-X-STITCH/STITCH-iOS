@@ -12,15 +12,24 @@ final class HomeViewController: BaseViewController {
     // MARK: - Properties
     
     enum Constant {
+        static let padding12 = 12
         static let padding16 = 16
+        static let padding32 = 32
         static let scrollViewHeight = 350
         static let popularCollectionViewHeight = 400
+        static let pages = 3
     }
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
+    private let topView = UIView()
     private lazy var topScrollView = TopScrollView(delegate: self, view)
+    
+    private lazy var topPageControl = UIPageControl(frame: .zero).then {
+        $0.numberOfPages = Constant.pages
+    }
+    
     private lazy var popularMatchCollectionView = PopularMatchCollectionView(
         self,
         layout: PopularCollectionViewLayout.layout()
@@ -35,6 +44,10 @@ final class HomeViewController: BaseViewController {
     init(homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
         super.init()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        setGradientLayer(superView: topView)
     }
     
     // MARK: - Methods
@@ -65,18 +78,31 @@ final class HomeViewController: BaseViewController {
             make.height.greaterThanOrEqualTo(view.snp.height).priority(.low)
         }
         
-        contentView.addSubview(topScrollView)
+        contentView.addSubview(topView)
+        topView.addSubview(topScrollView)
+        contentView.addSubview(topPageControl)
         contentView.addSubview(popularMatchCollectionView)
         
-        topScrollView.backgroundColor = .yellow01
-        topScrollView.snp.makeConstraints { make in
+        topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(Constant.scrollViewHeight)
         }
         
+        topScrollView.backgroundColor = .yellow01
+        topScrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+//            make.top.left.right.equalToSuperview()
+//            make.height.equalTo(Constant.scrollViewHeight)
+        }
+        
+        topPageControl.snp.makeConstraints { make in
+            make.top.equalTo(topScrollView.snp.bottom).offset(Constant.padding12)
+            make.centerX.equalToSuperview()
+        }
+        
         popularMatchCollectionView.backgroundColor = .cyan
         popularMatchCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(topScrollView.snp.bottom)
+            make.top.equalTo(topPageControl.snp.bottom).offset(Constant.padding32)
             make.left.equalToSuperview().offset(Constant.padding16)
             make.right.equalToSuperview()
             make.height.equalTo(Constant.popularCollectionViewHeight)
@@ -93,6 +119,38 @@ final class HomeViewController: BaseViewController {
         scrollView.contentInset.top = -topInset
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
+    
+    func setPageControl(page: Int) {
+        topPageControl.currentPage = page
+    }
+    
+    private func setGradientLayer(superView: UIView) {
+        let layer = CAGradientLayer()
+        layer.colors = [
+            UIColor.background.withAlphaComponent(0.0).cgColor,
+            UIColor.background.cgColor
+        ]
+        
+        layer.locations = [0, 1]
+        layer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        layer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        layer.transform = CATransform3DMakeAffineTransform(
+            CGAffineTransform(a: 0, b: 1, c: -1, d: 0, tx: 1, ty: 0)
+        )
+        layer.bounds = superView.bounds.insetBy(
+            dx: -0.5 * superView.bounds.size.width,
+            dy: -0.5 * superView.bounds.size.height
+        )
+        layer.position = superView.center
+        superView.layer.addSublayer(layer)
+    }
 }
 
 extension HomeViewController: UICollectionViewDelegate {}
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        setPageControl(page: page)
+    }
+}

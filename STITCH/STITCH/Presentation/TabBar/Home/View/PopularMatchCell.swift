@@ -118,9 +118,11 @@ final class PopularMatchCell: BaseCollectionViewCell {
             make.bottom.equalTo(matchInfoLabel.snp.top)
         }
         
+        // TODO: 삭제
+        badgeView.set(matchType: .match, sport: .pingPong)
         badgeView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(Constant.padding16)
-            make.bottom.equalTo(titleLabel.snp.bottom).offset(-Constant.padding8)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-Constant.padding8)
         }
     }
     

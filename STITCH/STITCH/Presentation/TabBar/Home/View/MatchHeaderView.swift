@@ -9,25 +9,27 @@ import UIKit
 
 final class MatchHeaderView: BaseCollectionReusableView {
     
-    // MARK: - Properties
+    static let reuseIdentifier = "MatchHeaderView"
     
-    static let reuseIdentifier = "HomeHeaderAllView"
+    enum Constant {
+        static let padding16 = 16
+    }
+    
+    // MARK: - Properties
     
     private let titleLabel = UILabel().then {
         $0.text = "새롭게 열린 매치"
+        $0.textColor = .white
+        $0.font = .Headline_20
     }
-    
-    let viewAllButton = UIButton()
-    
-    // MARK: - Initializer
     
     // MARK: - Methods
     
     override func configureUI() {
+        addSubview(titleLabel)
         
-    }
-    
-    func setTitle(_ title: String) {
-        titleLabel.text = title
+        titleLabel.snp.makeConstraints { make in
+            make.top.left.equalToSuperview()
+        }
     }
 }

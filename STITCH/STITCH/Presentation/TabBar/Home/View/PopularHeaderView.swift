@@ -32,8 +32,7 @@ final class PopularHeaderView: BaseCollectionReusableView {
         addSubview(viewAllButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.equalToSuperview().offset(Constant.padding16)
+            make.top.left.equalToSuperview()
         }
         
         viewAllButton.snp.makeConstraints { make in

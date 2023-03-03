@@ -17,6 +17,11 @@ final class TopScrollView: UIScrollView {
     }
     
     private let screen: CGRect?
+    private let imageViews: [UIImageView] = [
+        UIImageView().then { $0.contentMode = .scaleToFill },
+        UIImageView().then { $0.contentMode = .scaleToFill },
+        UIImageView().then { $0.contentMode = .scaleToFill }
+    ]
     
     // MARK: - Initializer
     
@@ -34,7 +39,7 @@ final class TopScrollView: UIScrollView {
         isScrollEnabled = true
         isPagingEnabled = true
         contentInsetAdjustmentBehavior = .never
-        bounces = true
+        bounces = false
     }
     
     required init?(coder: NSCoder) {
@@ -56,9 +61,7 @@ final class TopScrollView: UIScrollView {
         )
         for (index, imageURL) in imageURLs.enumerated() {
             guard let url = URL(string: imageURL) else { return }
-            let imageView = UIImageView().then {
-                $0.contentMode = .scaleToFill
-            }
+            let imageView = imageViews[index]
             imageView.kf.setImage(with: url)
             imageView.frame = imageRect
             imageView.frame.origin.x = (screen?.width ?? 0) * CGFloat(index)
