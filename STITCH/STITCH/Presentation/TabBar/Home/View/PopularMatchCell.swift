@@ -39,7 +39,9 @@ final class PopularMatchCell: BaseCollectionViewCell {
         $0.font = .Subhead2_14
     }
     
-    private let badgeView = DefaultBadgeView(frame: .zero)
+    private lazy var classBadgeView = ClassBadge()
+    
+    private let sportBadgeView = SportBadge(sport: .etc)
     
     private let titleLabel = UILabel().then {
         $0.text = "이번주 토요일 테니스"
@@ -77,7 +79,6 @@ final class PopularMatchCell: BaseCollectionViewCell {
         contentView.addSubview(backgroundImageView)
         contentView.addSubview(profileImageView)
         contentView.addSubview(nicknameLabel)
-        contentView.addSubview(badgeView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(matchInfoLabel)
         contentView.addSubview(peopleIconView)
@@ -117,20 +118,38 @@ final class PopularMatchCell: BaseCollectionViewCell {
             make.left.equalToSuperview().offset(Constant.padding16)
             make.bottom.equalTo(matchInfoLabel.snp.top)
         }
-        
-        // TODO: 삭제
-        badgeView.set(matchType: .match, sport: .pingPong)
+    }
+    
+    private func setBadgeConstraint(badgeView: UIView) {
+        addSubview(badgeView)
         badgeView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(Constant.padding16)
             make.bottom.equalTo(titleLabel.snp.top).offset(-Constant.padding8)
+            make.left.equalToSuperview().offset(Constant.padding16)
+        }
+    }
+    
+    private func setBadge(match: Match) {
+        sportBadgeView.set(sport: match.sport)
+        switch match.matchType {
+        case .classMatch:
+            let stackView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
+                $0.axis = .horizontal
+                $0.spacing = CGFloat(Constant.padding6)
+            }
+            setBadgeConstraint(badgeView: stackView)
+        default:
+            setBadgeConstraint(badgeView: sportBadgeView)
         }
     }
     
     func setMatch(_ matchInfo: MatchInfo) {
-//        let match = matchInfo.match
+        let match = matchInfo.match
         let owner = matchInfo.owner
         
         nicknameLabel.text = owner.nickname
+        
+        setBadge(match: match)
+        
         guard let url = URL(string: "https://blog.kakaocdn.net/dn/pbATv/btqxtXkCDlt/DwhLZCFllImV3OOYWassZ0/img.jpg") else { return }
         backgroundImageView.kf.setImage(with: url)
         // TODO: 추가

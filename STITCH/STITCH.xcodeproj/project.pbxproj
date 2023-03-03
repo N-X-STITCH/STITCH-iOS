@@ -96,7 +96,7 @@
 		D868BA8029B05C5600E80012 /* PopularMatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA7F29B05C5600E80012 /* PopularMatchCell.swift */; };
 		D868BA8229B05C6600E80012 /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8129B05C6600E80012 /* MatchCell.swift */; };
 		D868BA8429B05C9500E80012 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8329B05C9500E80012 /* BaseCollectionViewCell.swift */; };
-		D868BA8629B05E8200E80012 /* DefaultBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8529B05E8200E80012 /* DefaultBadgeView.swift */; };
+		D868BA8629B05E8200E80012 /* DefaultBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */; };
 		D868BA8D29B05F8600E80012 /* MatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8C29B05F8600E80012 /* MatchType.swift */; };
 		D868BA9629B070B000E80012 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9529B070B000E80012 /* MatchInfo.swift */; };
 		D868BA9829B0715800E80012 /* MatchCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9729B0715800E80012 /* MatchCollectionView.swift */; };
@@ -105,6 +105,7 @@
 		D868BA9F29B0EA8D00E80012 /* TopScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9E29B0EA8D00E80012 /* TopScrollImageView.swift */; };
 		D868BAA129B0EADC00E80012 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAA029B0EADC00E80012 /* BaseView.swift */; };
 		D868BAA329B1C3B300E80012 /* HomeMatchSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAA229B1C3B300E80012 /* HomeMatchSection.swift */; };
+		D868BAA929B206E600E80012 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAA829B206E600E80012 /* Badge.swift */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
@@ -198,7 +199,7 @@
 		D868BA7F29B05C5600E80012 /* PopularMatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMatchCell.swift; sourceTree = "<group>"; };
 		D868BA8129B05C6600E80012 /* MatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
 		D868BA8329B05C9500E80012 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
-		D868BA8529B05E8200E80012 /* DefaultBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeView.swift; sourceTree = "<group>"; };
+		D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeLabel.swift; sourceTree = "<group>"; };
 		D868BA8C29B05F8600E80012 /* MatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchType.swift; sourceTree = "<group>"; };
 		D868BA9529B070B000E80012 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
 		D868BA9729B0715800E80012 /* MatchCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCollectionView.swift; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 		D868BA9E29B0EA8D00E80012 /* TopScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScrollImageView.swift; sourceTree = "<group>"; };
 		D868BAA029B0EADC00E80012 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		D868BAA229B1C3B300E80012 /* HomeMatchSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMatchSection.swift; sourceTree = "<group>"; };
+		D868BAA829B206E600E80012 /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		D86B254E29A742620041EB00 /* NicknameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidation.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -354,7 +356,8 @@
 				D820258729A21E2B00892CE8 /* DefaultToolbar.swift */,
 				D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */,
 				D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */,
-				D868BA8529B05E8200E80012 /* DefaultBadgeView.swift */,
+				D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */,
+				D868BAA829B206E600E80012 /* Badge.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -859,6 +862,7 @@
 				D87BD88C299E77C7003A1B76 /* DefaultTextField.swift in Sources */,
 				D8E1113029A3222500A3CE6A /* FindLocationViewController.swift in Sources */,
 				D868BA8429B05C9500E80012 /* BaseCollectionViewCell.swift in Sources */,
+				D868BAA929B206E600E80012 /* Badge.swift in Sources */,
 				D800291629A600A300F75378 /* NicknameUseCase.swift in Sources */,
 				D868BA3429A89A2100E80012 /* LocationResultCollectionView.swift in Sources */,
 				D860B5F0299C8D5900966683 /* LoginViewController.swift in Sources */,
@@ -903,7 +907,7 @@
 				D868BA4A29AC7DAE00E80012 /* SocialLoginService.swift in Sources */,
 				D868BA6029ACBE0800E80012 /* User.swift in Sources */,
 				D860B609299CE71800966683 /* NetworkError.swift in Sources */,
-				D868BA8629B05E8200E80012 /* DefaultBadgeView.swift in Sources */,
+				D868BA8629B05E8200E80012 /* DefaultBadgeLabel.swift in Sources */,
 				D8599AB8299E349C00633192 /* AuthDIContainer.swift in Sources */,
 				D868BA4029A8FAA400E80012 /* SignupViewModel.swift in Sources */,
 				D868BA7629B04D2600E80012 /* TopScrollView.swift in Sources */,

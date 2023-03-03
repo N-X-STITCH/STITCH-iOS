@@ -64,7 +64,7 @@ final class MatchCollectionView: BaseCollectionView {
             ) as? MatchHeaderView else {
                 fatalError("Cannot create header view")
             }
-            
+            supplementaryView.set(section: HomeMatchSection.allCases[indexPath.section])
             return supplementaryView
         }
     }
