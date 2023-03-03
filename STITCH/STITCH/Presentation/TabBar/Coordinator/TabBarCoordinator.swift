@@ -9,11 +9,11 @@ import UIKit
 
 import RxSwift
 
-protocol TabBarCoordinatorProtocol: Coordinator {
-    var tabBarController: UITabBarController { get set }
+protocol TabBarCoordinatorDependencies {
+    func homeViewController() -> HomeViewController
 }
 
-final class TabBarCoordinator: TabBarCoordinatorProtocol {
+final class TabBarCoordinator: Coordinator {
     
     // MARK: - Properties
     weak var finishDelegate: CoordinatorFinishDelegate?
@@ -23,10 +23,16 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     var disposeBag = DisposeBag()
     var tabBarController: UITabBarController
     
+    private let dependencies: TabBarCoordinatorDependencies
+    
     // MARK: - Initializer
     
-    init(_ navigationController: UINavigationController) {
+    init(
+        _ navigationController: UINavigationController,
+        dependecies: TabBarCoordinatorDependencies
+    ) {
         self.navigationController = navigationController
+        self.dependencies = dependecies
         tabBarController = UITabBarController()
         tabBarController.tabBar.tintColor = .yellow05_primary
     }
@@ -34,6 +40,7 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
     // MARK: - Methods
     
     func start() {
+        navigationController.isNavigationBarHidden = true
         // TODO: 탭바 추가
         let pages: [TabBarPage] = [.home, .crew, .myMenu]
         let controllers: [UINavigationController] = pages.map { tabController($0) }
@@ -62,8 +69,8 @@ extension TabBarCoordinator {
         
         switch page {
         case .home:
-            // let homeViewController = HomeViewController()
-            navigationController.pushViewController(UIViewController(), animated: true)
+            let homeViewController = dependencies.homeViewController()
+            navigationController.pushViewController(homeViewController, animated: true)
         case .crew:
             navigationController.pushViewController(UIViewController(), animated: true)
         case .myMenu:

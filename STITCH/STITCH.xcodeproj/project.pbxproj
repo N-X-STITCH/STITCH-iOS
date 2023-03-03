@@ -85,7 +85,27 @@
 		D868BA5B29AC908E00E80012 /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA5A29AC908E00E80012 /* LoginInfo.swift */; };
 		D868BA5E29AC990C00E80012 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = D868BA5D29AC990C00E80012 /* RxKakaoSDKUser */; };
 		D868BA6029ACBE0800E80012 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA5F29ACBE0800E80012 /* User.swift */; };
-		D868BA6229ADCF6500E80012 /* HomeDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA6129ADCF6500E80012 /* HomeDIContainer.swift */; };
+		D868BA6229ADCF6500E80012 /* TabBarDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA6129ADCF6500E80012 /* TabBarDIContainer.swift */; };
+		D868BA6D29AE3F4700E80012 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA6C29AE3F4700E80012 /* HomeViewModel.swift */; };
+		D868BA6F29AE3F4E00E80012 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA6E29AE3F4E00E80012 /* HomeViewController.swift */; };
+		D868BA7629B04D2600E80012 /* TopScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA7529B04D2600E80012 /* TopScrollView.swift */; };
+		D868BA7829B0516600E80012 /* PopularMatchCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA7729B0516600E80012 /* PopularMatchCollectionView.swift */; };
+		D868BA7A29B051CD00E80012 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA7929B051CD00E80012 /* BaseCollectionReusableView.swift */; };
+		D868BA7C29B0524D00E80012 /* PopularHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA7B29B0524D00E80012 /* PopularHeaderView.swift */; };
+		D868BA7E29B0525700E80012 /* MatchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA7D29B0525700E80012 /* MatchHeaderView.swift */; };
+		D868BA8029B05C5600E80012 /* PopularMatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA7F29B05C5600E80012 /* PopularMatchCell.swift */; };
+		D868BA8229B05C6600E80012 /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8129B05C6600E80012 /* MatchCell.swift */; };
+		D868BA8429B05C9500E80012 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8329B05C9500E80012 /* BaseCollectionViewCell.swift */; };
+		D868BA8629B05E8200E80012 /* DefaultBadgeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */; };
+		D868BA8D29B05F8600E80012 /* MatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA8C29B05F8600E80012 /* MatchType.swift */; };
+		D868BA9629B070B000E80012 /* MatchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9529B070B000E80012 /* MatchInfo.swift */; };
+		D868BA9829B0715800E80012 /* MatchCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9729B0715800E80012 /* MatchCollectionView.swift */; };
+		D868BA9A29B07BE300E80012 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9929B07BE300E80012 /* Match.swift */; };
+		D868BA9D29B0901F00E80012 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D868BA9C29B0901F00E80012 /* Kingfisher */; };
+		D868BA9F29B0EA8D00E80012 /* TopScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA9E29B0EA8D00E80012 /* TopScrollImageView.swift */; };
+		D868BAA129B0EADC00E80012 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAA029B0EADC00E80012 /* BaseView.swift */; };
+		D868BAA329B1C3B300E80012 /* HomeMatchSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAA229B1C3B300E80012 /* HomeMatchSection.swift */; };
+		D868BAA929B206E600E80012 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAA829B206E600E80012 /* Badge.swift */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
@@ -167,8 +187,27 @@
 		D868BA5729AC894800E80012 /* SocialLoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginError.swift; sourceTree = "<group>"; };
 		D868BA5A29AC908E00E80012 /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		D868BA5F29ACBE0800E80012 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		D868BA6129ADCF6500E80012 /* HomeDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDIContainer.swift; sourceTree = "<group>"; };
+		D868BA6129ADCF6500E80012 /* TabBarDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarDIContainer.swift; sourceTree = "<group>"; };
 		D868BA6329ADD8A200E80012 /* STITCH.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = STITCH.entitlements; sourceTree = "<group>"; };
+		D868BA6C29AE3F4700E80012 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		D868BA6E29AE3F4E00E80012 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D868BA7529B04D2600E80012 /* TopScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScrollView.swift; sourceTree = "<group>"; };
+		D868BA7729B0516600E80012 /* PopularMatchCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMatchCollectionView.swift; sourceTree = "<group>"; };
+		D868BA7929B051CD00E80012 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
+		D868BA7B29B0524D00E80012 /* PopularHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularHeaderView.swift; sourceTree = "<group>"; };
+		D868BA7D29B0525700E80012 /* MatchHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchHeaderView.swift; sourceTree = "<group>"; };
+		D868BA7F29B05C5600E80012 /* PopularMatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMatchCell.swift; sourceTree = "<group>"; };
+		D868BA8129B05C6600E80012 /* MatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
+		D868BA8329B05C9500E80012 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBadgeLabel.swift; sourceTree = "<group>"; };
+		D868BA8C29B05F8600E80012 /* MatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchType.swift; sourceTree = "<group>"; };
+		D868BA9529B070B000E80012 /* MatchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchInfo.swift; sourceTree = "<group>"; };
+		D868BA9729B0715800E80012 /* MatchCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCollectionView.swift; sourceTree = "<group>"; };
+		D868BA9929B07BE300E80012 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		D868BA9E29B0EA8D00E80012 /* TopScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopScrollImageView.swift; sourceTree = "<group>"; };
+		D868BAA029B0EADC00E80012 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		D868BAA229B1C3B300E80012 /* HomeMatchSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMatchSection.swift; sourceTree = "<group>"; };
+		D868BAA829B206E600E80012 /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		D86B254E29A742620041EB00 /* NicknameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidation.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -184,6 +223,7 @@
 				D868BA5E29AC990C00E80012 /* RxKakaoSDKUser in Frameworks */,
 				D860B633299DF5A200966683 /* RxCocoa in Frameworks */,
 				D860B5DB299BDB4000966683 /* SnapKit in Frameworks */,
+				D868BA9D29B0901F00E80012 /* Kingfisher in Frameworks */,
 				D860B637299DF5A200966683 /* RxSwift in Frameworks */,
 				D868BA4629AB172F00E80012 /* RxKakaoSDKCommon in Frameworks */,
 				D868BA4429AB172F00E80012 /* RxKakaoSDKAuth in Frameworks */,
@@ -206,8 +246,9 @@
 		D805FDD729A5B46E0007E63D /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				D805FDDA29A5B48C0007E63D /* ViewModel */,
-				D805FDD929A5B4850007E63D /* ViewController */,
+				D868BA6529AE38C100E80012 /* InterestedSports */,
+				D805FDDA29A5B48C0007E63D /* Location */,
+				D805FDD929A5B4850007E63D /* CompleteSignup */,
 				D805FDD829A5B47F0007E63D /* View */,
 			);
 			path = Register;
@@ -225,25 +266,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		D805FDD929A5B4850007E63D /* ViewController */ = {
+		D805FDD929A5B4850007E63D /* CompleteSignup */ = {
 			isa = PBXGroup;
 			children = (
-				D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */,
-				D820259F29A24A7C00892CE8 /* LocationViewController.swift */,
-				D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */,
+				D868BA3F29A8FAA400E80012 /* SignupViewModel.swift */,
 				D82025A329A24AE900892CE8 /* CompleteSignupViewController.swift */,
 			);
-			path = ViewController;
+			path = CompleteSignup;
 			sourceTree = "<group>";
 		};
-		D805FDDA29A5B48C0007E63D /* ViewModel */ = {
+		D805FDDA29A5B48C0007E63D /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */,
 				D868BA3729A8A14200E80012 /* FindLocationViewModel.swift */,
-				D868BA3F29A8FAA400E80012 /* SignupViewModel.swift */,
+				D820259F29A24A7C00892CE8 /* LocationViewController.swift */,
+				D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */,
 			);
-			path = ViewModel;
+			path = Location;
 			sourceTree = "<group>";
 		};
 		D820259C29A2369C00892CE8 /* Layout */ = {
@@ -317,6 +356,8 @@
 				D820258729A21E2B00892CE8 /* DefaultToolbar.swift */,
 				D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */,
 				D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */,
+				D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */,
+				D868BAA829B206E600E80012 /* Badge.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -336,6 +377,7 @@
 		D860B5BF299BD48000966683 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D868BA8B29B05F7200E80012 /* Model */,
 				D868BA6429AE021700E80012 /* AuthService */,
 				D86B254D29A7424E0041EB00 /* Validation */,
 				D860B607299CE70B00966683 /* Constant */,
@@ -391,7 +433,7 @@
 			children = (
 				D8599AB5299E349000633192 /* AppDIContainer.swift */,
 				D8599AB7299E349C00633192 /* AuthDIContainer.swift */,
-				D868BA6129ADCF6500E80012 /* HomeDIContainer.swift */,
+				D868BA6129ADCF6500E80012 /* TabBarDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -416,6 +458,7 @@
 			children = (
 				D868BA5A29AC908E00E80012 /* LoginInfo.swift */,
 				D868BA5F29ACBE0800E80012 /* User.swift */,
+				D868BA9929B07BE300E80012 /* Match.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -451,6 +494,9 @@
 			children = (
 				D860B5FD299C948400966683 /* TabBarPage.swift */,
 				D860B5FF299C955100966683 /* Coordinator */,
+				D868BA6829AE3EFE00E80012 /* Home */,
+				D868BA6929AE3F0500E80012 /* Crew */,
+				D868BA6A29AE3F0A00E80012 /* MyMenu */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -502,6 +548,9 @@
 			children = (
 				D860B5F2299C8DB000966683 /* BaseViewController.swift */,
 				D868BA3529A89C6100E80012 /* BaseCollectionView.swift */,
+				D868BA7929B051CD00E80012 /* BaseCollectionReusableView.swift */,
+				D868BA8329B05C9500E80012 /* BaseCollectionViewCell.swift */,
+				D868BAA029B0EADC00E80012 /* BaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -536,9 +585,7 @@
 			isa = PBXGroup;
 			children = (
 				D868BA5929AC894E00E80012 /* Error */,
-				D805FDD529A5B2980007E63D /* Sport.swift */,
 				D868BA2A29A7B4DF00E80012 /* ProfileText.swift */,
-				D868BA5529AC88EE00E80012 /* SocialLogin.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -546,8 +593,8 @@
 		D860B610299CF10100966683 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				D8E1113229A3223C00A3CE6A /* ViewModel */,
-				D8E1113129A3223600A3CE6A /* ViewController */,
+				D860B5EF299C8D5900966683 /* LoginViewController.swift */,
+				D860B616299CF1AF00966683 /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -624,28 +671,88 @@
 			path = AuthService;
 			sourceTree = "<group>";
 		};
+		D868BA6529AE38C100E80012 /* InterestedSports */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA3B29A8DE0E00E80012 /* InterestedSportsViewModel.swift */,
+				D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */,
+			);
+			path = InterestedSports;
+			sourceTree = "<group>";
+		};
+		D868BA6829AE3EFE00E80012 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA9429B070A300E80012 /* Model */,
+				D868BA7029AE422D00E80012 /* View */,
+				D868BA6B29AE3F2B00E80012 /* Home */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		D868BA6929AE3F0500E80012 /* Crew */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Crew;
+			sourceTree = "<group>";
+		};
+		D868BA6A29AE3F0A00E80012 /* MyMenu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MyMenu;
+			sourceTree = "<group>";
+		};
+		D868BA6B29AE3F2B00E80012 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA6C29AE3F4700E80012 /* HomeViewModel.swift */,
+				D868BA6E29AE3F4E00E80012 /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		D868BA7029AE422D00E80012 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA7529B04D2600E80012 /* TopScrollView.swift */,
+				D868BA9E29B0EA8D00E80012 /* TopScrollImageView.swift */,
+				D868BA7729B0516600E80012 /* PopularMatchCollectionView.swift */,
+				D868BA7B29B0524D00E80012 /* PopularHeaderView.swift */,
+				D868BA7F29B05C5600E80012 /* PopularMatchCell.swift */,
+				D868BA9729B0715800E80012 /* MatchCollectionView.swift */,
+				D868BA7D29B0525700E80012 /* MatchHeaderView.swift */,
+				D868BA8129B05C6600E80012 /* MatchCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D868BA8B29B05F7200E80012 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA5529AC88EE00E80012 /* SocialLogin.swift */,
+				D805FDD529A5B2980007E63D /* Sport.swift */,
+				D868BA8C29B05F8600E80012 /* MatchType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D868BA9429B070A300E80012 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA9529B070B000E80012 /* MatchInfo.swift */,
+				D868BAA229B1C3B300E80012 /* HomeMatchSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D86B254D29A7424E0041EB00 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
 				D86B254E29A742620041EB00 /* NicknameValidation.swift */,
 			);
 			path = Validation;
-			sourceTree = "<group>";
-		};
-		D8E1113129A3223600A3CE6A /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D860B5EF299C8D5900966683 /* LoginViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		D8E1113229A3223C00A3CE6A /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D860B616299CF1AF00966683 /* LoginViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -673,6 +780,7 @@
 				D868BA4329AB172F00E80012 /* RxKakaoSDKAuth */,
 				D868BA4529AB172F00E80012 /* RxKakaoSDKCommon */,
 				D868BA5D29AC990C00E80012 /* RxKakaoSDKUser */,
+				D868BA9C29B0901F00E80012 /* Kingfisher */,
 			);
 			productName = STITCH;
 			productReference = D857612D299BCFF800F1AFEB /* STITCH.app */;
@@ -708,6 +816,7 @@
 				D860B5DC299BDB7000966683 /* XCRemoteSwiftPackageReference "Then" */,
 				D860B631299DF5A200966683 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				D868BA4229AB172F00E80012 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				D868BA9B29B0901F00E80012 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D857612E299BCFF800F1AFEB /* Products */;
 			projectDirPath = "";
@@ -745,21 +854,27 @@
 				D860B606299CE58400966683 /* NetworkConfig.swift in Sources */,
 				D820258829A21E2C00892CE8 /* DefaultToolbar.swift in Sources */,
 				D8599ABE299E365700633192 /* UIImage+.swift in Sources */,
+				D868BA7C29B0524D00E80012 /* PopularHeaderView.swift in Sources */,
 				D868BA2B29A7B4DF00E80012 /* ProfileText.swift in Sources */,
+				D868BA6F29AE3F4E00E80012 /* HomeViewController.swift in Sources */,
 				D820258C29A220CC00892CE8 /* DefaultProfileImageView.swift in Sources */,
 				D860B604299CE45600966683 /* EndPoint.swift in Sources */,
 				D87BD88C299E77C7003A1B76 /* DefaultTextField.swift in Sources */,
 				D8E1113029A3222500A3CE6A /* FindLocationViewController.swift in Sources */,
+				D868BA8429B05C9500E80012 /* BaseCollectionViewCell.swift in Sources */,
+				D868BAA929B206E600E80012 /* Badge.swift in Sources */,
 				D800291629A600A300F75378 /* NicknameUseCase.swift in Sources */,
 				D868BA3429A89A2100E80012 /* LocationResultCollectionView.swift in Sources */,
 				D860B5F0299C8D5900966683 /* LoginViewController.swift in Sources */,
 				D8599AC5299E44DC00633192 /* DefaultTitleLabel.swift in Sources */,
 				D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */,
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
+				D868BA8229B05C6600E80012 /* MatchCell.swift in Sources */,
 				D868BA3029A7C5D100E80012 /* ImagePickerController.swift in Sources */,
 				D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */,
-				D868BA6229ADCF6500E80012 /* HomeDIContainer.swift in Sources */,
+				D868BA6229ADCF6500E80012 /* TabBarDIContainer.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
+				D868BA9A29B07BE300E80012 /* Match.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
 				D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */,
 				D860B60D299CE7AC00966683 /* Dictionary+queryString.swift in Sources */,
@@ -769,9 +884,11 @@
 				D82025A029A24A7C00892CE8 /* LocationViewController.swift in Sources */,
 				D820259B29A2309000892CE8 /* ProfileTextCell.swift in Sources */,
 				D860B5FC299C912B00966683 /* AuthCoordinator.swift in Sources */,
+				D868BA6D29AE3F4700E80012 /* HomeViewModel.swift in Sources */,
 				D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */,
 				D800291429A5FF1C00F75378 /* ViewModel.swift in Sources */,
 				D868BA5229AC871E00E80012 /* AppleLoginService.swift in Sources */,
+				D868BAA129B0EADC00E80012 /* BaseView.swift in Sources */,
 				D860B622299D19DA00966683 /* DefaultAuthRepository.swift in Sources */,
 				D868BA3829A8A14200E80012 /* FindLocationViewModel.swift in Sources */,
 				D860B5ED299C894600966683 /* CoordinatorType.swift in Sources */,
@@ -783,27 +900,38 @@
 				D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */,
 				D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */,
 				D820259E29A236AB00892CE8 /* CollectionViewLayout.swift in Sources */,
+				D868BA8029B05C5600E80012 /* PopularMatchCell.swift in Sources */,
 				D868BA3629A89C6100E80012 /* BaseCollectionView.swift in Sources */,
 				D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */,
 				D8599AA7299E2B9D00633192 /* Assets+Generated.swift in Sources */,
 				D868BA4A29AC7DAE00E80012 /* SocialLoginService.swift in Sources */,
 				D868BA6029ACBE0800E80012 /* User.swift in Sources */,
 				D860B609299CE71800966683 /* NetworkError.swift in Sources */,
+				D868BA8629B05E8200E80012 /* DefaultBadgeLabel.swift in Sources */,
 				D8599AB8299E349C00633192 /* AuthDIContainer.swift in Sources */,
 				D868BA4029A8FAA400E80012 /* SignupViewModel.swift in Sources */,
+				D868BA7629B04D2600E80012 /* TopScrollView.swift in Sources */,
 				D860B5F3299C8DB000966683 /* BaseViewController.swift in Sources */,
+				D868BA9629B070B000E80012 /* MatchInfo.swift in Sources */,
 				D868BA3A29A8A32C00E80012 /* FindLocationUseCase.swift in Sources */,
+				D868BA7A29B051CD00E80012 /* BaseCollectionReusableView.swift in Sources */,
 				D868BA5829AC894800E80012 /* SocialLoginError.swift in Sources */,
 				D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */,
 				D860B5FE299C948400966683 /* TabBarPage.swift in Sources */,
 				D805FDD629A5B2980007E63D /* Sport.swift in Sources */,
+				D868BA7829B0516600E80012 /* PopularMatchCollectionView.swift in Sources */,
 				D868BA2929A7A1EE00E80012 /* ProfileUseCase.swift in Sources */,
 				D868BA5629AC88EE00E80012 /* SocialLogin.swift in Sources */,
+				D868BA9F29B0EA8D00E80012 /* TopScrollImageView.swift in Sources */,
 				D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */,
 				D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */,
+				D868BA7E29B0525700E80012 /* MatchHeaderView.swift in Sources */,
 				D8599AB6299E349000633192 /* AppDIContainer.swift in Sources */,
 				D860B61F299D199A00966683 /* AuthRepository.swift in Sources */,
+				D868BA8D29B05F8600E80012 /* MatchType.swift in Sources */,
 				D860B5F9299C903700966683 /* CoordinatorEvent.swift in Sources */,
+				D868BA9829B0715800E80012 /* MatchCollectionView.swift in Sources */,
+				D868BAA329B1C3B300E80012 /* HomeMatchSection.swift in Sources */,
 				D82025A229A24AC300892CE8 /* InterestedInSportsViewController.swift in Sources */,
 				D820258A29A2208300892CE8 /* ProfileViewController.swift in Sources */,
 				D8599AC0299E425600633192 /* NicknameViewController.swift in Sources */,
@@ -1063,6 +1191,14 @@
 				kind = branch;
 			};
 		};
+		D868BA9B29B0901F00E80012 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1105,6 +1241,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D868BA4229AB172F00E80012 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
 			productName = RxKakaoSDKUser;
+		};
+		D868BA9C29B0901F00E80012 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D868BA9B29B0901F00E80012 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -91,3 +91,116 @@ enum LocationResultCollectionViewLayout {
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
     }
 }
+
+enum PopularCollectionViewLayout {
+    
+    enum Constant {
+        static let padding16 = 16
+        static let headerHeight = 44
+        static let groupFractionalWidth = 0.9
+        static let groupHeight = 356
+    }
+    
+    static func layout() -> UICollectionViewLayout {
+        let sectionProvider = {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
+            -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(1.0)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(0.9),
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
+            )
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            group.contentInsets = NSDirectionalEdgeInsets(
+                top: 0,
+                leading: 0,
+                bottom: 0,
+                trailing: CGFloat(Constant.padding16)
+            )
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(CGFloat(Constant.headerHeight))
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: PopularMatchCollectionView.sectionHeaderElementKind,
+                alignment: .top
+            )
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [sectionHeader]
+            section.orthogonalScrollingBehavior = .groupPaging
+            
+            return section
+        }
+        
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.scrollDirection = .vertical
+        
+        return UICollectionViewCompositionalLayout(
+            sectionProvider: sectionProvider,
+            configuration: configuration
+        )
+    }
+}
+
+enum MatchCollectionViewLayout {
+    
+    enum Constant {
+        static let padding16 = 16
+        static let padding24 = 24
+        static let headerHeight = 84
+        static let groupHeight = 112
+    }
+    
+    static func layout() -> UICollectionViewLayout {
+        let sectionProvider = {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
+            -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(1.0)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
+            )
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            group.contentInsets = NSDirectionalEdgeInsets(
+                top: 0,
+                leading: 0,
+                bottom: CGFloat(Constant.padding24),
+                trailing: 0
+            )
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(CGFloat(Constant.headerHeight))
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: MatchCollectionView.sectionHeaderElementKind,
+                alignment: .top
+            )
+            let section = NSCollectionLayoutSection(group: group)
+            section.interGroupSpacing = CGFloat(Constant.padding24)
+            section.boundarySupplementaryItems = [sectionHeader]
+            return section
+        }
+        
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+    }
+}

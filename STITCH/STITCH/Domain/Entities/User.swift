@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct User: Codable {
-    let nickname: String?
-    let email: String?
-    let profileImageURL: String?
-    let interestedSports: [String]?
-    let location: String?
+struct User: Hashable, Codable {
+    let id: String
+    let nickname: String
+    let profileImageURL: String
+    let interestedSports: [Sport]
+    let address: String
 }
