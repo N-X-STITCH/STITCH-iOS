@@ -12,10 +12,15 @@ final class MatchHeaderView: BaseCollectionReusableView {
     static let reuseIdentifier = "MatchHeaderView"
     
     enum Constant {
-        static let padding16 = 16
+        static let lineHeight = 8
+        static let padding24 = 24
     }
     
     // MARK: - Properties
+    
+    private let lineView = UIView().then {
+        $0.backgroundColor = .gray12
+    }
     
     private let titleLabel = UILabel().then {
         $0.text = "새롭게 열린 매치"
@@ -26,10 +31,17 @@ final class MatchHeaderView: BaseCollectionReusableView {
     // MARK: - Methods
     
     override func configureUI() {
+        addSubview(lineView)
         addSubview(titleLabel)
         
+        lineView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+            make.height.equalTo(Constant.lineHeight)
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.top.left.equalToSuperview()
+            make.top.equalTo(lineView.snp.bottom).offset(Constant.padding24)
+            make.left.equalToSuperview()
         }
     }
 }

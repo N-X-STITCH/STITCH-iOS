@@ -17,6 +17,7 @@ final class HomeViewController: BaseViewController {
         static let padding32 = 32
         static let scrollViewHeight = 350
         static let popularCollectionViewHeight = 400
+        static let matchCollectionViewHeight = 1400
         static let pages = 3
     }
     
@@ -33,6 +34,11 @@ final class HomeViewController: BaseViewController {
     private lazy var popularMatchCollectionView = PopularMatchCollectionView(
         self,
         layout: PopularCollectionViewLayout.layout()
+    )
+    
+    private lazy var matchCollectionView = MatchCollectionView(
+        self,
+        layout: MatchCollectionViewLayout.layout()
     )
     
     // MARK: Properties
@@ -58,7 +64,8 @@ final class HomeViewController: BaseViewController {
     }
     
     override func bind() {
-
+        topScrollView.setImages()
+        matchCollectionView.setData(matchInfos: MatchInfo.dump(), classMatchInfos: MatchInfo.classDump())
     }
     
     override func configureUI() {
@@ -82,6 +89,7 @@ final class HomeViewController: BaseViewController {
         topView.addSubview(topScrollView)
         contentView.addSubview(topPageControl)
         contentView.addSubview(popularMatchCollectionView)
+        contentView.addSubview(matchCollectionView)
         
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -91,8 +99,6 @@ final class HomeViewController: BaseViewController {
         topScrollView.backgroundColor = .yellow01
         topScrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-//            make.top.left.right.equalToSuperview()
-//            make.height.equalTo(Constant.scrollViewHeight)
         }
         
         topPageControl.snp.makeConstraints { make in
@@ -108,7 +114,13 @@ final class HomeViewController: BaseViewController {
             make.height.equalTo(Constant.popularCollectionViewHeight)
         }
         
-        topScrollView.setImages()
+        matchCollectionView.backgroundColor = .black
+        matchCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(popularMatchCollectionView.snp.bottom).offset(Constant.padding32)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.matchCollectionViewHeight)
+            make.bottom.equalToSuperview()
+        }
     }
     
     func setScrollViewTop() {

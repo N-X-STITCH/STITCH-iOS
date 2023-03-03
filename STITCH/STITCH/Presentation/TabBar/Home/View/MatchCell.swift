@@ -17,11 +17,16 @@ final class MatchCell: BaseCollectionViewCell {
         static let padding12 = 12
         static let radius8 = 8
         static let imageWidth = 88
+        static let titleHeight = 24
+        static let infoHeight = 18
+        static let iconWidth = 16
     }
     
     // MARK: - Properties
     
     private let matchImageView = UIImageView().then {
+        $0.layer.cornerRadius = CGFloat(Constant.radius8)
+        $0.clipsToBounds = true
         $0.contentMode = .scaleToFill
     }
     
@@ -40,7 +45,7 @@ final class MatchCell: BaseCollectionViewCell {
     }
     
     private let peopleIconView = UIImageView().then {
-        $0.image = .people
+        $0.image = .userIcon
     }
     
     private let peopleCountLabel = UILabel().then {
@@ -50,6 +55,11 @@ final class MatchCell: BaseCollectionViewCell {
     }
     
     // MARK: - Initializer
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        matchImageView.image = nil
+    }
     
     // MARK: - Methods
     
@@ -62,7 +72,7 @@ final class MatchCell: BaseCollectionViewCell {
         contentView.addSubview(peopleCountLabel)
         
         matchImageView.snp.makeConstraints { make in
-            make.top.left.bottom.equalToSuperview()
+            make.top.left.equalToSuperview()
             make.width.height.equalTo(Constant.imageWidth)
         }
         
@@ -75,16 +85,19 @@ final class MatchCell: BaseCollectionViewCell {
         matchTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(sportBadgeView.snp.bottom).offset(Constant.padding4)
             make.left.equalTo(matchImageView.snp.right).offset(Constant.padding12)
+            make.height.equalTo(Constant.titleHeight)
         }
         
         matchInfoLabel.snp.makeConstraints { make in
             make.top.equalTo(matchTitleLabel.snp.bottom)
             make.left.equalTo(matchImageView.snp.right).offset(Constant.padding12)
+            make.height.equalTo(Constant.infoHeight)
         }
         
         peopleIconView.snp.makeConstraints { make in
             make.top.equalTo(matchInfoLabel.snp.bottom).offset(Constant.padding6)
             make.left.equalTo(matchImageView.snp.right).offset(Constant.padding12)
+            make.width.height.equalTo(Constant.iconWidth)
         }
         
         peopleCountLabel.snp.makeConstraints { make in
@@ -94,8 +107,11 @@ final class MatchCell: BaseCollectionViewCell {
     }
     
     func setMatch(_ matchInfo: MatchInfo) {
-        guard let url = URL(string: "https://blog.kakaocdn.net/dn/pbATv/btqxtXkCDlt/DwhLZCFllImV3OOYWassZ0/img.jpg") else { return }
+        let match = matchInfo.match
+        matchTitleLabel.text = match.title
+        matchInfoLabel.text = "\(match.place) | \(match.startTime)"
+        guard let url = URL(string: match.matchImageURL) else { return }
         matchImageView.kf.setImage(with: url)
-        // TODO: 추가
+        // TODO: 추가 인원수?
     }
 }
