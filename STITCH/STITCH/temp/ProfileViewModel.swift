@@ -23,15 +23,15 @@ final class ProfileViewModel: ViewModel {
     
     // MARK: - Properties
     
-    private let profileUseCase: ProfileUseCase
+//    private let profileUseCase: ProfileUseCase
     
     private var selectedIndexPath: IndexPath?
     
     // MARK: - Initializer
     
-    init(profileUseCase: ProfileUseCase) {
-        self.profileUseCase = profileUseCase
-    }
+//    init(profileUseCase: ProfileUseCase) {
+//        self.profileUseCase = profileUseCase
+//    }
     
     // MARK: - Methods
     

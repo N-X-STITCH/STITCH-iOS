@@ -23,16 +23,36 @@ final class SignupViewModel {
     }
     
     struct Output {
-        
+        let signupResult: Observable<Data>
     }
+    
+    private let signupUseCase: SignupUseCase
     
     // MARK: - Initializer
     
-    init() { }
+    init(signupUseCase: SignupUseCase) {
+        self.signupUseCase = signupUseCase
+    }
     
     // MARK: - Methods
     
-//    func transform(_ input: Input) -> Output {
-//        input.signupButtonTap
-//    }
+    func transform(_ input: Input) -> Output {
+        let signupResult = input.signupButtonTap
+            .withUnretained(self)
+            .flatMap { owner, _ -> Observable<Data> in
+                let user = owner.makeUser()
+                return owner.signupUseCase.signup(user: user)
+            }
+        return Output(signupResult: signupResult)
+    }
+    
+    private func makeUser() -> User {
+        guard let loginInfo = loginInfo else { fatalError("cannot create userInfo") }
+        let user = User(
+            loginInfo: loginInfo,
+            sports: sports,
+            address: location ?? ""
+        )
+        return user
+    }
 }

@@ -10,7 +10,7 @@ import Foundation
 final class AppDIContainer {
     
     lazy var urlsessionNetworkService: URLSessionNetworkService = {
-        let config = NetworkConfig(baseURL: URL(string: "https://api.sampleapis.com/coffee/hot")!)
+        let config = NetworkConfig(baseURL: URL(string: "http://Lets-env.eba-uzcfq5tn.ap-northeast-2.elasticbeanstalk.com/")!)
         return DefaultURLSessionNetworkService(config: config)
     }()
     

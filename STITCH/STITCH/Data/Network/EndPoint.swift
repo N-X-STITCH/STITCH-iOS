@@ -11,6 +11,29 @@ enum HTTPMethodType: String {
     case GET, POST, PUT, PATCH, DELETE
 }
 
+final class Endpoint: Requestable {
+    
+    let path: String
+    let method: HTTPMethodType
+    let headerParameters: [String: String]
+    let queryParameters: [String: Any]
+    let bodyParameters: [String: Any]
+    
+    init(
+        path: String,
+        method: HTTPMethodType,
+        headerParameters: [String: String] = ["Content-Type": "application/json"],
+        queryParameters: [String: Any] = [:],
+        bodyParameters: [String: Any] = [:]
+    ) {
+        self.path = path
+        self.method = method
+        self.headerParameters = headerParameters
+        self.queryParameters = queryParameters
+        self.bodyParameters = bodyParameters
+    }
+}
+
 protocol Requestable {
     var path: String { get }
     var method: HTTPMethodType { get }
@@ -31,7 +54,7 @@ extension Requestable {
             throw NetworkError.invalidURLError
         }
         var urlQueryItems: [URLQueryItem] = []
-
+        
         queryParameters.forEach {
             urlQueryItems.append(URLQueryItem(name: $0.key, value: "\($0.value)"))
         }
