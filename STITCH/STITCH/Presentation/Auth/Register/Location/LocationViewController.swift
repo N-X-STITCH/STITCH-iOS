@@ -77,16 +77,28 @@ final class LocationViewController: BaseViewController {
     // MARK: - Methods
     
     override func bind() {
-        nextButton.rx.tap
-            .subscribe { [weak self] _ in
-                self?.coordinatorPublisher.onNext(.next)
-            }
-            .disposed(by: disposeBag)
         
         inputButton.rx.tap
             .subscribe { [weak self] _ in
                 self?.coordinatorPublisher.onNext(.findLocation)
             }
+            .disposed(by: disposeBag)
+        
+        let signupInput = SignupViewModel.Input(
+            signupButtonTap: nextButton.rx.tap.asObservable()
+        )
+        
+        let signupOutput = signupViewModel.transform(signupInput)
+        
+        signupOutput.signupResult
+            .withUnretained(self)
+            .subscribe(on: MainScheduler.asyncInstance)
+            .subscribe (onNext: { owner, data in
+                print(data)
+                owner.coordinatorPublisher.onNext(.next)
+            }, onError: { error in
+                print("통신 실패: ", error)
+            })
             .disposed(by: disposeBag)
     }
     

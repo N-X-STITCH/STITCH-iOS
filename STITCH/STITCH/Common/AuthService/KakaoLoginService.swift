@@ -30,8 +30,8 @@ final class KakaoLoginService: SocialLoginService {
         return UserApi.shared.rx.me()
             .subscribe { user in
                 let loginInfo = LoginInfo(
-                    nickname: user.kakaoAccount?.profile?.nickname,
-                    email: user.kakaoAccount?.email,
+                    id: "\(String(describing: user.id))",
+                    nickname: user.kakaoAccount?.profile?.nickname ?? "User\(Int.random(in: 0...999))",
                     profileImageURL: user.kakaoAccount?.profile?.profileImageUrl?.absoluteString
                 )
                 self.loginInfo.onNext(loginInfo)
@@ -43,7 +43,6 @@ final class KakaoLoginService: SocialLoginService {
         kakaoLoginToken()
             .withUnretained(self)
             .subscribe(onNext: { owner, token in
-                print(token.accessToken)
                 owner.userInfo()
             }, onError: { error in
                 print(error)

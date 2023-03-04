@@ -48,10 +48,11 @@ extension AppleLoginService: ASAuthorizationControllerDelegate, ASAuthorizationC
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             let loginInfo = LoginInfo(
-                nickname: appleIDCredential.fullName?.nickname,
-                email: appleIDCredential.email,
+                id: appleIDCredential.user,
+                nickname: appleIDCredential.fullName?.nickname ?? "User\(Int.random(in: 0...9999))",
                 profileImageURL: nil
             )
+            print(loginInfo)
             self.loginInfo.onNext(loginInfo)
         default: break
         }

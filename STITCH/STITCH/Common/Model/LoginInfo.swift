@@ -8,7 +8,7 @@
 import Foundation
 
 struct LoginInfo {
-    let nickname: String?
-    let email: String?
+    let id: String
+    let nickname: String
     let profileImageURL: String?
 }

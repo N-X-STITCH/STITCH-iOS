@@ -22,14 +22,14 @@ final class LoginViewModel: ViewModel {
     
     // MARK: - Properties
     
-    private let authUseCase: AuthUseCase
+    private let signupUseCase: SignupUseCase
     
     let disposeBag = DisposeBag()
     
     // MARK: - Initializer
     
-    init(authUseCase: AuthUseCase) {
-        self.authUseCase = authUseCase
+    init(signupUseCase: SignupUseCase) {
+        self.signupUseCase = signupUseCase
     }
     
     // MARK: - Methods

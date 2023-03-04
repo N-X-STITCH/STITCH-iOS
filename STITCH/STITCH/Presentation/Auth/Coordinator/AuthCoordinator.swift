@@ -62,6 +62,7 @@ final class AuthCoordinator: Coordinator {
         let locationViewController = dependencies.locationViewController()
         locationViewController.coordinatorPublisher
             .withUnretained(self)
+            .subscribe(on: MainScheduler.asyncInstance)
             .subscribe { owner, event in
                 if case .next = event {
                     owner.showCompleteSignupViewController()
