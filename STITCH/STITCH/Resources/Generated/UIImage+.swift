@@ -17,8 +17,11 @@ extension UIImage {
     static let searchGlasses = UIImage(named: "searchGlass")
     static let home = UIImage(named: "home")
     static let homeSelect = UIImage(named: "home-select")
-    static let people = UIImage(named: "people")
-    static let peopleSelect = UIImage(named: "people-select")
+    static let category = UIImage(named: "category")
+    static let categorySelect = UIImage(named: "category-select")
+    static let myMatch = UIImage(named: "myMatch")
+    static let myMatchSelect = UIImage(named: "myMatch-select")
     static let mymenu = UIImage(named: "user-square")
+    static let mymenuSelect = UIImage(named: "user-square-select")
     static let userIcon = UIImage(named: "user")
 }

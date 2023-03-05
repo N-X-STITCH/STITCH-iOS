@@ -42,7 +42,7 @@ final class TabBarCoordinator: Coordinator {
     func start() {
         navigationController.isNavigationBarHidden = true
         // TODO: 탭바 추가
-        let pages: [TabBarPage] = [.home, .crew, .myMenu]
+        let pages: [TabBarPage] = [.home, .category, .myMatch, .myMenu]
         let controllers: [UINavigationController] = pages.map { tabController($0) }
         prepareTabBarController(with: controllers)
     }
@@ -71,7 +71,9 @@ extension TabBarCoordinator {
         case .home:
             let homeViewController = dependencies.homeViewController()
             navigationController.pushViewController(homeViewController, animated: true)
-        case .crew:
+        case .category:
+            navigationController.pushViewController(UIViewController(), animated: true)
+        case .myMatch:
             navigationController.pushViewController(UIViewController(), animated: true)
         case .myMenu:
             // let ProfileViewController = ProfileViewController()

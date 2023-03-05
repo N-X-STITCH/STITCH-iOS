@@ -11,6 +11,7 @@ final class AuthDIContainer {
     
     struct Dependencies {
         let urlsessionNetworkService: URLSessionNetworkService
+        let userDefaultsService: UserDefaultsService
     }
     
     // MARK: - Properties
@@ -33,7 +34,10 @@ final class AuthDIContainer {
     // MARK: - Repositories
     
     func signupRepository() -> SignupRepository {
-        return DefaultSignupRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
+        return DefaultSignupRepository(
+            urlSessionNetworkService: dependencies.urlsessionNetworkService,
+            userDefaultsService: dependencies.userDefaultsService
+        )
     }
     
     // MARK: - Use Cases

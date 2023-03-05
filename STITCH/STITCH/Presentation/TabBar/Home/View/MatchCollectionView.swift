@@ -13,8 +13,8 @@ final class MatchCollectionView: BaseCollectionView {
     
     // MARK: - Properties
     
-    typealias MatchDataSource = UICollectionViewDiffableDataSource<HomeMatchSection, MatchInfo>
-    typealias MatchSnapshot = NSDiffableDataSourceSnapshot<HomeMatchSection, MatchInfo>
+    typealias MatchDataSource = UICollectionViewDiffableDataSource<Int, MatchInfo>
+    typealias MatchSnapshot = NSDiffableDataSourceSnapshot<Int, MatchInfo>
     
     var matchDataSource: MatchDataSource!
     
@@ -64,16 +64,14 @@ final class MatchCollectionView: BaseCollectionView {
             ) as? MatchHeaderView else {
                 fatalError("Cannot create header view")
             }
-            supplementaryView.set(section: HomeMatchSection.allCases[indexPath.section])
             return supplementaryView
         }
     }
     
-    func setData(matchInfos: [MatchInfo], classMatchInfos: [MatchInfo]) {
+    func setData(matchInfos: [MatchInfo]) {
         var snapshot = MatchSnapshot()
-        snapshot.appendSections(HomeMatchSection.allCases)
-        snapshot.appendItems(matchInfos, toSection: .match)
-        snapshot.appendItems(classMatchInfos, toSection: .classMatch)
+        snapshot.appendSections([0])
+        snapshot.appendItems(matchInfos)
         matchDataSource.apply(snapshot)
     }
 
