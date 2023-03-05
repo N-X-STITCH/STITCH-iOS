@@ -65,7 +65,7 @@ final class HomeViewController: BaseViewController {
     
     override func bind() {
         topScrollView.setImages()
-        matchCollectionView.setData(matchInfos: MatchInfo.dump(), classMatchInfos: MatchInfo.classDump())
+        matchCollectionView.setData(matchInfos: MatchInfo.dump())
     }
     
     override func configureUI() {

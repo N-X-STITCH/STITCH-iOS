@@ -9,13 +9,15 @@ import UIKit
 
 enum TabBarPage: Int {
     case home
-    case crew
+    case category
+    case myMatch
     case myMenu
     
     init?(index: Int) {
         switch index {
         case 0: self = .home
-        case 1: self = .crew
+        case 1: self = .category
+        case 3: self = .myMatch
         case 2: self = .myMenu
         default: return nil
         }
@@ -24,7 +26,8 @@ enum TabBarPage: Int {
     var title: String {
         switch self {
         case .home: return "홈"
-        case .crew: return "크류"
+        case .category: return "카테고리"
+        case .myMatch: return "마이매치"
         case .myMenu: return "마이메뉴"
         }
     }
@@ -35,17 +38,19 @@ enum TabBarPage: Int {
     
     var selectedIcon: UIImage? {
         switch self {
-        case .home: return UIImage.homeSelect
-        case .crew: return UIImage.peopleSelect
-        case .myMenu: return UIImage.mymenu
+        case .home: return .homeSelect
+        case .category: return .categorySelect
+        case .myMatch: return .myMatchSelect
+        case .myMenu: return .mymenuSelect
         }
     }
     
     var deselectedIcon: UIImage? {
         switch self {
-        case .home: return UIImage.home
-        case .crew: return UIImage.people
-        case .myMenu: return UIImage.mymenu?.withTintColor(.yellow05_primary)
+        case .home: return .home
+        case .category: return .category
+        case .myMatch: return .myMatch
+        case .myMenu: return .mymenu?.withTintColor(.yellow05_primary)
         }
     }
 }
