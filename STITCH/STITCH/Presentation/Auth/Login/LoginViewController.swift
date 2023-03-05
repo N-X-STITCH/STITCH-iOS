@@ -18,29 +18,34 @@ final class LoginViewController: BaseViewController {
     enum Constant {
         static let width = 328
         static let buttonHeight = 48
-        static let imageHeight = 142
+        static let imageWidth = 38
+        static let imageHeight = 35
+        static let stitchLogoWidth = 124
+        static let stitchLogoHeight = 26
         static let paading12 = 12
         static let paading16 = 16
         static let paading20 = 20
         static let paading24 = 24
-        static let padding80 = 80
+        static let padding32 = 32
     }
     
-    private let logoImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "heart.fill")
-    }
+    private let logoImageView = UIImageView(image: .logo)
+    
+    private let stitchLogoImageView = UIImageView(image: .stitchLogo)
+    
+    private let waveBackgroundView = UIImageView(image: .waveBackground)
     
     private let startLabel = UILabel().then {
         var paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.44
+        paragraphStyle.lineHeightMultiple = 1.34
         $0.attributedText = NSMutableAttributedString(
-            string: NSLocalizedString("Start", comment: ""),
+            string: "일상속에서 함께하는\n운동의 즐거움을 새롭게 경험해보세요",
             attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
         )
         $0.numberOfLines = 0
-        $0.font = .Body2_14
+        $0.font = .Subhead2_20
         $0.textColor = .white
-        $0.textAlignment = .center
+        $0.textAlignment = .left
     }
     
     private let useTermsLabel = UILabel().then {
@@ -67,13 +72,9 @@ final class LoginViewController: BaseViewController {
         $0.textAlignment = .center
     }
     
-    private let kakaoLoginButton = UIButton().then {
-        $0.setImage(.kakaoLoginButton, for: .normal)
-    }
+    private let kakaoLoginButton = IconButton(iconButtonType: .kakao)
     
-    private let appleLoginButton = UIButton().then {
-        $0.setImage(.appleLoginButton, for: .normal)
-    }
+    private let appleLoginButton = IconButton(iconButtonType: .apple)
     
     // MARK: Properties
     
@@ -94,6 +95,10 @@ final class LoginViewController: BaseViewController {
         super.init()
     }
     
+    override func viewDidLayoutSubviews() {
+        addBackgroundGradient()
+    }
+    
     // MARK: - Methods
     
     override func bind() {
@@ -105,6 +110,7 @@ final class LoginViewController: BaseViewController {
             .subscribe { owner, loginInfo in
                 owner.signupViewModel.loginInfo = loginInfo
                 owner.coordinatorPublisher.onNext(.next)
+                owner.kakaoLoginService.initializeLoginInfo()
             }
             .disposed(by: disposeBag)
         
@@ -115,46 +121,45 @@ final class LoginViewController: BaseViewController {
             .subscribe { owner, loginInfo in
                 owner.signupViewModel.loginInfo = loginInfo
                 owner.coordinatorPublisher.onNext(.next)
+                owner.appleLoginService.initializeLoginInfo()
             }
             .disposed(by: disposeBag)
-        
-
-//        let input = LoginViewModel.Input(
-//            kakaoLoginInfo: kakaoLoginButton.rx.tap.withLatestFrom(kakaoLoginService.loginInfo),
-//            appleLoginInfo: appleLoginButton.rx.tap.withLatestFrom(appleLoginService.loginInfo))
-//        )
-//
-//        let output = loginViewModel.transform(input: input)
-//
-//        output.loginResult
-//            .withUnretained(self)
-//            .subscribe { owner, loginInfo in
-//                owner.signupViewModel.loginInfo = loginInfo
-//                // TODO: 계정이 이미 있다면 home, 없다면 회원가입으로 이동
-//            }
-//            .disposed(by: disposeBag)
-//
-//        appleLoginButton.rx.tap
-//            .subscribe { [weak self] _ in
-//                self?.coordinatorPublisher.onNext(.next)
-//            }
-//            .disposed(by: disposeBag)
     }
     
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(waveBackgroundView)
         view.addSubview(logoImageView)
+        view.addSubview(stitchLogoImageView)
         view.addSubview(useTermsLabel)
         view.addSubview(appleLoginButton)
         view.addSubview(kakaoLoginButton)
         view.addSubview(startLabel)
         
+        waveBackgroundView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(UIScreen.main.bounds.height / 3)
+        }
+        
         logoImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(Constant.padding80)
+            make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding32)
+            make.left.equalToSuperview().offset(Constant.paading16)
+            make.width.equalTo(Constant.imageWidth)
+            make.height.equalTo(Constant.imageHeight)
+        }
+        
+        stitchLogoImageView.snp.makeConstraints { make in
+            make.left.equalTo(logoImageView.snp.right).offset(Constant.paading12)
+            make.centerY.equalTo(logoImageView.snp.centerY)
+            make.width.equalTo(Constant.stitchLogoWidth)
+            make.height.equalTo(Constant.stitchLogoHeight)
+        }
+        
+        startLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(Constant.paading16)
             make.right.equalToSuperview().offset(-Constant.paading16)
-            make.height.equalTo(Constant.imageHeight)
+            make.top.equalTo(logoImageView.snp.bottom).offset(Constant.paading24)
         }
         
         useTermsLabel.snp.makeConstraints { make in
@@ -167,18 +172,35 @@ final class LoginViewController: BaseViewController {
             make.left.equalToSuperview().offset(Constant.paading16)
             make.right.equalToSuperview().offset(-Constant.paading16)
             make.bottom.equalTo(useTermsLabel.snp.top).offset(-Constant.paading24)
+            make.height.equalTo(Constant.buttonHeight)
         }
         
         kakaoLoginButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(Constant.paading16)
             make.right.equalToSuperview().offset(-Constant.paading16)
             make.bottom.equalTo(appleLoginButton.snp.top).offset(-Constant.paading12)
+            make.height.equalTo(Constant.buttonHeight)
         }
-        
-        startLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(Constant.paading16)
-            make.right.equalToSuperview().offset(-Constant.paading16)
-            make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-Constant.paading12)
-        }
+    }
+    
+    private func addBackgroundGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+          UIColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 1).cgColor,
+          UIColor(red: 0.205, green: 0.208, blue: 0.213, alpha: 1).cgColor
+        ]
+        gradientLayer.locations = [0, 1]
+        gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        gradientLayer.transform = CATransform3DMakeAffineTransform(
+            CGAffineTransform(a: 0.88, b: 1.02, c: -1.02, d: 0.28, tx: 0.56, ty: -0.16)
+        )
+        gradientLayer.bounds = view.bounds.insetBy(
+            dx: -0.5 * view.bounds.size.width,
+            dy: -0.5 * view.bounds.size.height
+        )
+        gradientLayer.position = view.center
+
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
 }

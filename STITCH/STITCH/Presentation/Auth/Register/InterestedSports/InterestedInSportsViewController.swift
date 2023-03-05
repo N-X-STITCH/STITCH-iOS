@@ -16,10 +16,14 @@ final class InterestedInSportsViewController: BaseViewController {
     enum Constant {
         static let barHeight = 4
         static let buttonHeight = 48
+        static let collectionViewHeight = 312
+        static let bottomGradientViewHeight = 116
         static let padding16 = 16
         static let padding24 = 24
         static let padding40 = 40
     }
+    
+    private let bottomGradientView = UIImageView(image: .bottomGridientView)
     
     private let titleLabel = DefaultTitleLabel(text: "관심있는 운동 종목을\n3개 이상 선택하세요")
     
@@ -123,25 +127,31 @@ final class InterestedInSportsViewController: BaseViewController {
         view.backgroundColor = .background
         
         view.addSubview(titleLabel)
-        view.addSubview(nextButton)
         view.addSubview(sportsCollectionView)
+        view.addSubview(bottomGradientView)
+        view.addSubview(nextButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
             make.left.right.equalToSuperview().inset(Constant.padding16)
         }
         
+        sportsCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constant.padding40)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(Constant.collectionViewHeight)
+            make.bottom.equalTo(nextButton.snp.top)
+        }
+        
+        bottomGradientView.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(Constant.bottomGradientViewHeight)
+        }
+        
         nextButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
-        }
-        
-        sportsCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(Constant.padding40)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(312)
-            make.bottom.equalTo(nextButton.snp.top)
         }
     }
 }

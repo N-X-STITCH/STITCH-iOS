@@ -41,7 +41,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     
     func start() {
         // TODO: Login 분기처리 (자동로그인)
-        showTabFlow()
+        showAuthFlow()
     }
     
     func showAuthFlow() {

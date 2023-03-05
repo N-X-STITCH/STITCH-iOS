@@ -13,7 +13,7 @@ import RxSwift
 final class AppleLoginService: NSObject, SocialLoginService {
     
     private let viewControoler: UIViewController
-    let loginInfo = PublishSubject<LoginInfo>()
+    var loginInfo = PublishSubject<LoginInfo>()
     
     init(_ viewController: UIViewController) {
         self.viewControoler = viewController
@@ -33,6 +33,11 @@ final class AppleLoginService: NSObject, SocialLoginService {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+    }
+    
+    func initializeLoginInfo() {
+        loginInfo.dispose()
+        loginInfo = PublishSubject<LoginInfo>()
     }
 }
 

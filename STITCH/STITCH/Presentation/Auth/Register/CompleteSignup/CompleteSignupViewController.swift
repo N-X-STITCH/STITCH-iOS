@@ -16,7 +16,8 @@ final class CompleteSignupViewController: BaseViewController {
     enum Constant {
         static let barHeight = 4
         static let buttonHeight = 56
-        static let imageHeight = 220
+        static let imageWidth = 270
+        static let imageHeight = 224
         static let padding16 = 16
         static let padding24 = 24
     }
@@ -41,11 +42,9 @@ final class CompleteSignupViewController: BaseViewController {
         $0.textAlignment = .left
     }
     
-    private let startImageView = UIImageView().then {
-        $0.image = .home2
-    }
+    private let startImageView = UIImageView(image: .completeSignup)
     
-    private let nextButton = DefaultButton(title: "⚡️ 시작하기")
+    private let nextButton = IconButton(iconButtonType: .start)
     
     // MARK: Properties
     
@@ -56,6 +55,11 @@ final class CompleteSignupViewController: BaseViewController {
     init(signupViewModel: SignupViewModel) {
         self.signupViewModel = signupViewModel
         super.init()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // TODO: 작동
+        // addGradientLayerToButton()
     }
     
     // MARK: - Methods
@@ -82,9 +86,10 @@ final class CompleteSignupViewController: BaseViewController {
         }
         
         startImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(Constant.imageHeight)
+            make.width.equalTo(Constant.imageWidth)
+            make.height.equalTo(Constant.imageHeight)
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(24)
+            make.centerY.equalToSuperview().offset(Constant.padding24)
         }
         
         nextButton.snp.makeConstraints { make in
@@ -92,5 +97,28 @@ final class CompleteSignupViewController: BaseViewController {
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    private func addGradientLayerToButton() {
+        let gradientLayer = CAGradientLayer()
+
+        gradientLayer.colors = [
+          UIColor(red: 1, green: 1, blue: 0, alpha: 1).cgColor,
+          UIColor(red: 1, green: 0.78, blue: 0, alpha: 1).cgColor
+        ]
+
+        gradientLayer.locations = [0, 1]
+        gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        gradientLayer.transform = CATransform3DMakeAffineTransform(
+            CGAffineTransform(a: 1, b: -0.94, c: 0.94, d: 4, tx: -0.47, ty: -1)
+        )
+        gradientLayer.bounds = nextButton.bounds.insetBy(
+            dx: -0.5 * nextButton.bounds.size.width,
+            dy: -0.5 * nextButton.bounds.size.height
+        )
+        gradientLayer.position = nextButton.center
+        nextButton.layer.addSublayer(gradientLayer)
+        nextButton.layer.cornerRadius = CGFloat(Constant.buttonHeight / 2)
     }
 }
