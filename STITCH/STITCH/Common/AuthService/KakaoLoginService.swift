@@ -17,7 +17,7 @@ import KakaoSDKUser
 final class KakaoLoginService: SocialLoginService {
 
     private let disposeBag = DisposeBag()
-    let loginInfo = PublishSubject<LoginInfo>()
+    var loginInfo = PublishSubject<LoginInfo>()
     
     init() {}
 
@@ -56,5 +56,10 @@ final class KakaoLoginService: SocialLoginService {
         } else {
             return UserApi.shared.rx.loginWithKakaoAccount()
         }
+    }
+    
+    func initializeLoginInfo() {
+        loginInfo.dispose()
+        loginInfo = PublishSubject<LoginInfo>()
     }
 }

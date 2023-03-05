@@ -72,9 +72,9 @@ final class LoginViewController: BaseViewController {
         $0.textAlignment = .center
     }
     
-    private let kakaoLoginButton = LoginButton(loginButtonType: .kakao)
+    private let kakaoLoginButton = IconButton(iconButtonType: .kakao)
     
-    private let appleLoginButton = LoginButton(loginButtonType: .apple)
+    private let appleLoginButton = IconButton(iconButtonType: .apple)
     
     // MARK: Properties
     
@@ -110,6 +110,7 @@ final class LoginViewController: BaseViewController {
             .subscribe { owner, loginInfo in
                 owner.signupViewModel.loginInfo = loginInfo
                 owner.coordinatorPublisher.onNext(.next)
+                owner.kakaoLoginService.initializeLoginInfo()
             }
             .disposed(by: disposeBag)
         
@@ -120,6 +121,7 @@ final class LoginViewController: BaseViewController {
             .subscribe { owner, loginInfo in
                 owner.signupViewModel.loginInfo = loginInfo
                 owner.coordinatorPublisher.onNext(.next)
+                owner.appleLoginService.initializeLoginInfo()
             }
             .disposed(by: disposeBag)
     }
