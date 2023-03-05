@@ -28,6 +28,6 @@ final class DefaultSignupUseCase: SignupUseCase {
     // MARK: - Methods
     
     func signup(user: User) -> Observable<Data> {
-        return signupRepository.createUser(user: user)
+        return signupRepository.create(user: user)
     }
 }

@@ -14,8 +14,13 @@ final class AppDIContainer {
         return DefaultURLSessionNetworkService(config: config)
     }()
     
+    lazy var userDefaultsService: UserDefaultsService = DefaultUserDefaultsService()
+    
     func makeAuthSceneDIContainer() -> AuthDIContainer {
-        let dependencies = AuthDIContainer.Dependencies(urlsessionNetworkService: urlsessionNetworkService)
+        let dependencies = AuthDIContainer.Dependencies(
+            urlsessionNetworkService: urlsessionNetworkService,
+            userDefaultsService: userDefaultsService
+        )
         return AuthDIContainer(dependencies: dependencies)
     }
     

@@ -62,13 +62,16 @@ final class AuthCoordinator: Coordinator {
         let locationViewController = dependencies.locationViewController()
         locationViewController.coordinatorPublisher
             .withUnretained(self)
-            .subscribe(on: MainScheduler.asyncInstance)
             .subscribe { owner, event in
                 if case .next = event {
-                    owner.showCompleteSignupViewController()
+                    DispatchQueue.main.async {
+                        owner.showCompleteSignupViewController()
+                    }
                 }
                 if case .findLocation = event {
-                    owner.showFindLocationViewController()
+                    DispatchQueue.main.async {
+                        owner.showFindLocationViewController()
+                    }
                 }
             }
             .disposed(by: disposeBag)
