@@ -41,6 +41,10 @@ final class HomeViewController: BaseViewController {
         layout: MatchCollectionViewLayout.layout()
     )
     
+    private let locationButton = IconButton(iconButtonType: .location)
+    
+    private lazy var locationBarButton = UIBarButtonItem(customView: locationButton)
+    
     // MARK: Properties
     
     private let homeViewModel: HomeViewModel
@@ -66,6 +70,10 @@ final class HomeViewController: BaseViewController {
     override func bind() {
         topScrollView.setImages()
         matchCollectionView.setData(matchInfos: MatchInfo.dump())
+    }
+    
+    override func configureNavigation() {
+        navigationItem.leftBarButtonItem = locationBarButton
     }
     
     override func configureUI() {

@@ -51,11 +51,11 @@ final class TabBarCoordinator: Coordinator {
 }
 
 extension TabBarCoordinator {
-    private func prepareTabBarController(with tabController: [UIViewController]) {
+    private func prepareTabBarController(with tabControllers: [UIViewController]) {
         // tabBarController.delegate = self
-        tabBarController.setViewControllers(tabController, animated: true)
+        tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.home.pageNumber
-        
+        configureTabBar(with: tabControllers)
         navigationController.viewControllers = [tabBarController]
     }
     
@@ -80,5 +80,16 @@ extension TabBarCoordinator {
             navigationController.pushViewController(UIViewController(), animated: true)
         }
         return navigationController
+    }
+    
+    private func configureTabBar(with tabControllers: [UIViewController]) {
+        tabBarController.tabBar.backgroundColor = .background
+        tabBarController.tabBar.isTranslucent = false
+        if #available(iOS 15.0, *) {
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = .background
+            tabBarController.tabBar.standardAppearance = tabBarAppearance
+        }
     }
 }

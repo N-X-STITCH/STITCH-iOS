@@ -23,6 +23,8 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureNavigation()
+        configureNavigationBar()
         bind()
         setting()
     }
@@ -37,6 +39,7 @@ class BaseViewController: UIViewController {
     }
     
     func configureUI() {}
+    func configureNavigation() {}
     func bind() {}
     func setting() {}
 }
@@ -44,6 +47,11 @@ class BaseViewController: UIViewController {
 // MARK: - NavigationBar
 
 extension BaseViewController {
+    func configureNavigationBar() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+    }
 }
 
 // MARK: - Indicator
