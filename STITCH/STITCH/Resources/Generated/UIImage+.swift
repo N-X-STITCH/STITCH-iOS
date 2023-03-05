@@ -14,6 +14,7 @@ extension UIImage {
     static let appleLogo = UIImage(named: "appleLogo")
     static let kakaoLogo = UIImage(named: "kakaoLogo")
     static let bottomGridientView = UIImage(named: "bottomGradientView")
+    static let smallBottomGradientView = UIImage(named: "smallBottomGradientView")
     static let completeSignup = UIImage(named: "completeSignup")
     
     static let arrowDown = UIImage(named: "arrow-down")
