@@ -7,14 +7,16 @@
 
 import UIKit
 
-enum LoginButtonType {
+enum IconButtonType {
     case kakao
     case apple
+    case start
     
     var text: String {
         switch self {
         case .kakao: return "카카오로 로그인"
         case .apple: return "Apple로 로그인"
+        case .start: return "시작하기"
         }
     }
     
@@ -22,6 +24,7 @@ enum LoginButtonType {
         switch self {
         case .kakao: return .kakaoLogo
         case .apple: return .appleLogo
+        case .start: return .myMatchSelect?.withTintColor(.gray12)
         }
     }
     
@@ -29,31 +32,32 @@ enum LoginButtonType {
         switch self {
         case .kakao: return UIColor(red: 0.996, green: 0.898, blue: 0, alpha: 1)
         case .apple: return .white
+        case .start: return .yellow05_primary
         }
     }
 }
 
-final class LoginButton: UIButton {
+final class IconButton: UIButton {
     
     enum Constant {
         static let padding6 = 6
     }
 
     init(
-        loginButtonType: LoginButtonType
+        iconButtonType: IconButtonType
     ) {
         super.init(frame: .zero)
 
-        var attributedString = AttributedString(loginButtonType.text)
+        var attributedString = AttributedString(iconButtonType.text)
         attributedString.font = .Body1_16
         attributedString.foregroundColor = .systemBackground
 
         var configuration = UIButton.Configuration.filled()
         configuration.titleAlignment = .center
-        configuration.image = loginButtonType.icon
+        configuration.image = iconButtonType.icon
         configuration.imagePlacement = .leading
         configuration.imagePadding = CGFloat(Constant.padding6)
-        configuration.baseBackgroundColor = loginButtonType.backgroundColor
+        configuration.baseBackgroundColor = iconButtonType.backgroundColor
         configuration.attributedTitle = attributedString
         configuration.cornerStyle = .capsule
         self.configuration = configuration
