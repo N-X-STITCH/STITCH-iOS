@@ -17,6 +17,7 @@ extension UIImage {
     static let smallBottomGradientView = UIImage(named: "smallBottomGradientView")
     static let completeSignup = UIImage(named: "completeSignup")
     
+    static let plus = UIImage(named: "add")
     static let arrowDown = UIImage(named: "arrow-down")
     static let cameraIcon = UIImage(named: "cameraIcon")
     static let home2 = UIImage(named: "home-2")
