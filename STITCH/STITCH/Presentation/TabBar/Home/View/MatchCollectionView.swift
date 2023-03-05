@@ -37,7 +37,7 @@ final class MatchCollectionView: BaseCollectionView {
     }
     
     override func configureUI() {
-        backgroundColor = .orange
+        backgroundColor = .background
     }
     
     override func configureDataSource() {

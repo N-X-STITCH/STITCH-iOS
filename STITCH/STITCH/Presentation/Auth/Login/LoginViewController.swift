@@ -95,7 +95,7 @@ final class LoginViewController: BaseViewController {
         super.init()
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewDidAppear(_ animated: Bool) {
         addBackgroundGradient()
     }
     

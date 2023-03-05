@@ -14,9 +14,12 @@ final class HomeViewController: BaseViewController {
     enum Constant {
         static let padding12 = 12
         static let padding16 = 16
+        static let padding24 = 24
         static let padding32 = 32
+        static let padding40 = 40
+        static let floatingButtonWidth = 56
         static let scrollViewHeight = 350
-        static let popularCollectionViewHeight = 400
+        static let popularCollectionViewHeight = 384
         static let matchCollectionViewHeight = 1400
         static let pages = 3
     }
@@ -45,8 +48,11 @@ final class HomeViewController: BaseViewController {
     
     private lazy var locationBarButton = UIBarButtonItem(customView: locationButton)
     
+    private let floatingButton = FloatingButton(frame: .zero)
+    
     // MARK: Properties
     
+    private var isNavigationBarTranscluent = true
     private let homeViewModel: HomeViewModel
     
     // MARK: - Initializer
@@ -56,15 +62,19 @@ final class HomeViewController: BaseViewController {
         super.init()
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setGradientLayer(superView: topView)
     }
     
     // MARK: - Methods
     
     override func setting() {
+        // TODO: 삭제
         popularMatchCollectionView.setData(MatchInfo.dump())
+        
         setScrollViewTop()
+        scrollView.delegate = self
     }
     
     override func bind() {
@@ -80,11 +90,18 @@ final class HomeViewController: BaseViewController {
         view.backgroundColor = .background
         
         view.addSubview(scrollView)
+        view.addSubview(floatingButton)
         scrollView.addSubview(contentView)
         
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top)
             make.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        floatingButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(Constant.padding16)
+            make.bottom.equalToSuperview().inset(Constant.padding24)
+            make.width.height.equalTo(Constant.floatingButtonWidth)
         }
         
         contentView.snp.makeConstraints { make in
@@ -104,7 +121,6 @@ final class HomeViewController: BaseViewController {
             make.height.equalTo(Constant.scrollViewHeight)
         }
         
-        topScrollView.backgroundColor = .yellow01
         topScrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -114,7 +130,6 @@ final class HomeViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
         
-        popularMatchCollectionView.backgroundColor = .cyan
         popularMatchCollectionView.snp.makeConstraints { make in
             make.top.equalTo(topPageControl.snp.bottom).offset(Constant.padding32)
             make.left.equalToSuperview().offset(Constant.padding16)
@@ -122,9 +137,8 @@ final class HomeViewController: BaseViewController {
             make.height.equalTo(Constant.popularCollectionViewHeight)
         }
         
-        matchCollectionView.backgroundColor = .black
         matchCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(popularMatchCollectionView.snp.bottom).offset(Constant.padding32)
+            make.top.equalTo(popularMatchCollectionView.snp.bottom).offset(Constant.padding40)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.matchCollectionViewHeight)
             make.bottom.equalToSuperview()
@@ -170,7 +184,21 @@ extension HomeViewController: UICollectionViewDelegate {}
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-        setPageControl(page: page)
+        if topScrollView == scrollView {
+            let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+            setPageControl(page: page)
+        }
+        
+        if self.scrollView == scrollView {
+            if isNavigationBarTranscluent &&
+                CGFloat(Constant.scrollViewHeight) <= scrollView.contentOffset.y {
+                isNavigationBarTranscluent = false
+                configureNavigationBar(isTranslucent: false)
+            } else if !isNavigationBarTranscluent &&
+                        CGFloat(Constant.scrollViewHeight) > scrollView.contentOffset.y {
+                isNavigationBarTranscluent = true
+                configureNavigationBar(isTranslucent: true)
+            }
+        }
     }
 }

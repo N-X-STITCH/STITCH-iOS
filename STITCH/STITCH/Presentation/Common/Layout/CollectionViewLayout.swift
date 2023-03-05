@@ -98,7 +98,7 @@ enum PopularCollectionViewLayout {
         static let padding16 = 16
         static let headerHeight = 44
         static let groupFractionalWidth = 0.9
-        static let groupHeight = 356
+        static let groupHeight = 340
     }
     
     static func layout() -> UICollectionViewLayout {
@@ -107,7 +107,7 @@ enum PopularCollectionViewLayout {
             -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(1.0)
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             

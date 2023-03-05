@@ -11,12 +11,13 @@ final class PopularHeaderView: BaseCollectionReusableView {
     
     enum Constant {
         static let padding16 = 16
+        static let labelHeight = 28
     }
     
     static let reuseIdentifier = "PopularHeaderView"
     
     private let titleLabel = UILabel().then {
-        $0.text = "지금 인기있는 매치"
+        $0.text = "추천하는 Teach 매치"
         $0.textColor = .white
         $0.font = .Headline_20
     }
@@ -33,6 +34,7 @@ final class PopularHeaderView: BaseCollectionReusableView {
         
         titleLabel.snp.makeConstraints { make in
             make.top.left.equalToSuperview()
+            make.height.equalTo(Constant.labelHeight)
         }
         
         viewAllButton.snp.makeConstraints { make in

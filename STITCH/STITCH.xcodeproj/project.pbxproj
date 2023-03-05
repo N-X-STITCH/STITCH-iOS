@@ -22,6 +22,7 @@
 		D82025A029A24A7C00892CE8 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820259F29A24A7C00892CE8 /* LocationViewController.swift */; };
 		D82025A229A24AC300892CE8 /* InterestedInSportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */; };
 		D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82025A329A24AE900892CE8 /* CompleteSignupViewController.swift */; };
+		D850FC7029B4BFA100DC08C6 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC6F29B4BFA100DC08C6 /* FloatingButton.swift */; };
 		D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576130299BCFF800F1AFEB /* AppDelegate.swift */; };
 		D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576132299BCFF800F1AFEB /* SceneDelegate.swift */; };
 		D857613A299BCFFA00F1AFEB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8576139299BCFFA00F1AFEB /* Colors.xcassets */; };
@@ -133,6 +134,7 @@
 		D820259F29A24A7C00892CE8 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestedInSportsViewController.swift; sourceTree = "<group>"; };
 		D82025A329A24AE900892CE8 /* CompleteSignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteSignupViewController.swift; sourceTree = "<group>"; };
+		D850FC6F29B4BFA100DC08C6 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		D857612D299BCFF800F1AFEB /* STITCH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STITCH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8576130299BCFF800F1AFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8576132299BCFF800F1AFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -741,6 +743,7 @@
 				D868BA9729B0715800E80012 /* MatchCollectionView.swift */,
 				D868BA7D29B0525700E80012 /* MatchHeaderView.swift */,
 				D868BA8129B05C6600E80012 /* MatchCell.swift */,
+				D850FC6F29B4BFA100DC08C6 /* FloatingButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -919,6 +922,7 @@
 				D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */,
 				D860B60B299CE76800966683 /* Encodable+toDictionary.swift in Sources */,
 				D868BA2729A7A1C100E80012 /* ProfileViewModel.swift in Sources */,
+				D850FC7029B4BFA100DC08C6 /* FloatingButton.swift in Sources */,
 				D868BA5029AC871700E80012 /* KakaoLoginService.swift in Sources */,
 				D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */,
 				D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */,

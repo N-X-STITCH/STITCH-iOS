@@ -63,7 +63,7 @@ final class CompleteSignupViewController: BaseViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        // TODO: 작동
+        // TODO: 작동 view did layout?
         // addGradientLayerToButton()
     }
     
