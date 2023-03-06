@@ -28,6 +28,7 @@ final class HomeViewController: BaseViewController {
     private let contentView = UIView()
     
     private let topView = UIView()
+    private lazy var topGradientLayer = CAGradientLayer()
     private lazy var topScrollView = TopScrollView(delegate: self, view)
     
     private lazy var topPageControl = UIPageControl(frame: .zero).then {
@@ -62,8 +63,8 @@ final class HomeViewController: BaseViewController {
         super.init()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         setGradientLayer(superView: topView)
     }
     
@@ -80,6 +81,14 @@ final class HomeViewController: BaseViewController {
     override func bind() {
         topScrollView.setImages()
         matchCollectionView.setData(matchInfos: MatchInfo.dump())
+        
+        floatingButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.generateImpactHaptic()
+                owner.coordinatorPublisher.onNext(.selectMatchType)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
@@ -159,24 +168,26 @@ final class HomeViewController: BaseViewController {
     }
     
     private func setGradientLayer(superView: UIView) {
-        let layer = CAGradientLayer()
-        layer.colors = [
+        topGradientLayer.colors = [
             UIColor.background.withAlphaComponent(0.0).cgColor,
             UIColor.background.cgColor
         ]
         
-        layer.locations = [0, 1]
-        layer.startPoint = CGPoint(x: 0.25, y: 0.5)
-        layer.endPoint = CGPoint(x: 0.75, y: 0.5)
-        layer.transform = CATransform3DMakeAffineTransform(
+        topGradientLayer.locations = [0, 1]
+        topGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        topGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        topGradientLayer.transform = CATransform3DMakeAffineTransform(
             CGAffineTransform(a: 0, b: 1, c: -1, d: 0, tx: 1, ty: 0)
         )
-        layer.bounds = superView.bounds.insetBy(
+        topGradientLayer.bounds = superView.bounds.insetBy(
             dx: -0.5 * superView.bounds.size.width,
             dy: -0.5 * superView.bounds.size.height
         )
-        layer.position = superView.center
-        superView.layer.addSublayer(layer)
+        topGradientLayer.position = superView.center
+        
+        if topGradientLayer.superlayer == nil {
+            superView.layer.addSublayer(topGradientLayer)
+        }
     }
 }
 

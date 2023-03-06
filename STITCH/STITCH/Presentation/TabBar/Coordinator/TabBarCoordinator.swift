@@ -11,6 +11,7 @@ import RxSwift
 
 protocol TabBarCoordinatorDependencies {
     func homeViewController() -> HomeViewController
+    func selectMatchViewController() -> SelectMatchViewController
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -69,8 +70,7 @@ extension TabBarCoordinator {
         
         switch page {
         case .home:
-            let homeViewController = dependencies.homeViewController()
-            navigationController.pushViewController(homeViewController, animated: true)
+            showHomeViewController(navigationController)
         case .category:
             navigationController.pushViewController(UIViewController(), animated: true)
         case .myMatch:
@@ -91,5 +91,28 @@ extension TabBarCoordinator {
             tabBarAppearance.backgroundColor = .background
             tabBarController.tabBar.standardAppearance = tabBarAppearance
         }
+    }
+}
+
+// MARK: - Home
+
+extension TabBarCoordinator {
+    private func showHomeViewController(_ navigationController: UINavigationController) {
+        let homeViewController = dependencies.homeViewController()
+        homeViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .selectMatchType = event {
+                    owner.showSelectMatchViewController(navigationController)
+                }
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(homeViewController, animated: true)
+    }
+    
+    private func showSelectMatchViewController(_ navigationController: UINavigationController) {
+        let selectMatchViewController = dependencies.selectMatchViewController()
+        // addNextEvent(selectMatchViewController, <#T##showViewController: () -> Void##() -> Void#>)
+        navigationController.pushViewController(selectMatchViewController, animated: true)
     }
 }

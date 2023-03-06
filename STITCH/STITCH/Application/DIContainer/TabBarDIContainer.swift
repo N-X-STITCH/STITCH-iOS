@@ -16,6 +16,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: - Properties
     
     private let dependencies: Dependencies
+    private lazy var createMatchViewModel = CreateMatchViewModel(createMatchUseCase: createMatchUseCase())
     
     // MARK: - Initializer
     
@@ -31,7 +32,15 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     // MARK: - Repositories
     
+    func matchRepository() -> MatchRepository {
+        return DefaultMatchRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
+    }
+    
     // MARK: - Use Cases
+    
+    func createMatchUseCase() -> CreateMatchUseCase {
+        return DefaultCreateMatchUseCase(matchRepository: matchRepository())
+    }
         
     // MARK: - View Models
     
@@ -39,9 +48,17 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return HomeViewModel()
     }
     
+    // MARK: Create Match
+    
     // MARK: - ViewControllers
     
     func homeViewController() -> HomeViewController {
         return HomeViewController(homeViewModel: homeViewModel())
+    }
+    
+    // MARK: Create Match
+    
+    func selectMatchViewController() -> SelectMatchViewController {
+        return SelectMatchViewController(createMatchViewModel: createMatchViewModel)
     }
 }
