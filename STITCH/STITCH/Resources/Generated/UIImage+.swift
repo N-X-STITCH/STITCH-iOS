@@ -34,4 +34,7 @@ extension UIImage {
     static let mymenu = UIImage(named: "user-square")
     static let mymenuSelect = UIImage(named: "user-square-select")
     static let userIcon = UIImage(named: "user")
+    
+    static let flashCircle = UIImage(named: "flash-circle")
+    static let userCircle = UIImage(named: "user-circle")
 }
