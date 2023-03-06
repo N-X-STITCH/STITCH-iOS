@@ -68,3 +68,23 @@ extension BaseViewController {
 
 extension BaseViewController {
 }
+
+// MARK: - Haptic
+
+extension BaseViewController {
+    func generateNotificationHaptic(_ feedBackType: UINotificationFeedbackGenerator.FeedbackType) {
+        let hapticNotification = UINotificationFeedbackGenerator()
+        hapticNotification.notificationOccurred(feedBackType)
+    }
+    
+    func generateSelectionHaptic() {
+        let haptic = UISelectionFeedbackGenerator()
+        haptic.prepare()
+        haptic.selectionChanged()
+    }
+    
+    func generateImpactHaptic(_ feedBackType: UIImpactFeedbackGenerator.FeedbackStyle = .medium) {
+        let haptic = UIImpactFeedbackGenerator(style: feedBackType)
+        haptic.impactOccurred()
+    }
+}

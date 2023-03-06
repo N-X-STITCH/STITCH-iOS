@@ -21,9 +21,4 @@ extension UIButton {
 
         setBackgroundImage(backgroundImage, for: state)
     }
-    
-    func generateHaptic(_ feedBackType: UINotificationFeedbackGenerator.FeedbackType) {
-        let hapticNotification = UINotificationFeedbackGenerator()
-        hapticNotification.notificationOccurred(feedBackType)
-    }
 }
