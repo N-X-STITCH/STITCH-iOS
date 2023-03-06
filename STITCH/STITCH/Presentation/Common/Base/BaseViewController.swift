@@ -48,12 +48,11 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     func configureNavigationBar(isTranslucent: Bool = true) {
+        navigationController?.navigationBar.isTranslucent = isTranslucent
         if isTranslucent {
             navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController?.navigationBar.shadowImage = UIImage()
-            navigationController?.navigationBar.isTranslucent = true
         } else {
-            navigationController?.navigationBar.isTranslucent = false
             navigationController?.navigationBar.barTintColor = .background
         }
     }

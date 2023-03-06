@@ -16,7 +16,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: - Properties
     
     private let dependencies: Dependencies
-    private lazy var createMatchViewModel = CreateMatchViewModel(createMatchUseCase: createMatchUseCase())
+    private var createMatchViewModel: CreateMatchViewModel!
     
     // MARK: - Initializer
     
@@ -48,6 +48,10 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return HomeViewModel()
     }
     
+    func makeCreateMatchViewModel() -> CreateMatchViewModel {
+        return CreateMatchViewModel(createMatchUseCase: createMatchUseCase())
+    }
+    
     // MARK: Create Match
     
     // MARK: - ViewControllers
@@ -59,6 +63,15 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: Create Match
     
     func selectMatchViewController() -> SelectMatchViewController {
+        createMatchViewModel = makeCreateMatchViewModel()
         return SelectMatchViewController(createMatchViewModel: createMatchViewModel)
+    }
+    
+    func selectSportViewController() -> SelectSportViewController {
+        return SelectSportViewController(createMatchViewModel: createMatchViewModel)
+    }
+    
+    func createMatchViewController() -> CreateMatchViewController {
+        return CreateMatchViewController(createMatchViewModel: createMatchViewModel)
     }
 }

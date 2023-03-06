@@ -57,6 +57,13 @@ final class SelectMatchViewController: BaseViewController {
         // TODO: 삭제
         matchTypeCollectionView.setData(CreateMatchType.allCases)
         
+        nextButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.next)
+            }
+            .disposed(by: disposeBag)
+        
         let selected = matchTypeCollectionView.rx.itemSelected.share()
         
         selected
@@ -98,7 +105,7 @@ final class SelectMatchViewController: BaseViewController {
         
         nextButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(Constant.padding16)
-            make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
     }

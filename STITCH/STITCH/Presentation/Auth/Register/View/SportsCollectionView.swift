@@ -18,15 +18,19 @@ final class SportsCollectionView: BaseCollectionView {
     
     // MARK: - Initializer
     
-    override init(_ delegate: UICollectionViewDelegate, layout: UICollectionViewLayout) {
+    init(
+        _ delegate: UICollectionViewDelegate,
+        layout: UICollectionViewLayout,
+        allowsMultipleSelection: Bool = true
+    ) {
         super.init(delegate, layout: layout)
+        self.allowsMultipleSelection = allowsMultipleSelection
     }
     
     // MARK: - Methods
     
     override func configure(delegate: UICollectionViewDelegate) {
         super.configure(delegate: delegate)
-        allowsMultipleSelection = true
     }
     
     override func configureUI() {

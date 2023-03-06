@@ -12,6 +12,8 @@ import RxSwift
 protocol TabBarCoordinatorDependencies {
     func homeViewController() -> HomeViewController
     func selectMatchViewController() -> SelectMatchViewController
+    func selectSportViewController() -> SelectSportViewController
+    func createMatchViewController() -> CreateMatchViewController
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -112,7 +114,28 @@ extension TabBarCoordinator {
     
     private func showSelectMatchViewController(_ navigationController: UINavigationController) {
         let selectMatchViewController = dependencies.selectMatchViewController()
-        // addNextEvent(selectMatchViewController, <#T##showViewController: () -> Void##() -> Void#>)
+        selectMatchViewController.hidesBottomBarWhenPushed = true
+        addNextEventWithNav(
+            selectMatchViewController,
+            showSelectSportViewController(_:),
+            navigationController
+        )
         navigationController.pushViewController(selectMatchViewController, animated: true)
+    }
+    
+    private func showSelectSportViewController(_ navigationController: UINavigationController) {
+        let selectSportViewController = dependencies.selectSportViewController()
+        addNextEventWithNav(
+            selectSportViewController,
+            showCreateMatchViewController(_:),
+            navigationController
+        )
+        navigationController.pushViewController(selectSportViewController, animated: true)
+    }
+    
+    private func showCreateMatchViewController(_ navigationController: UINavigationController) {
+        let createMatchViewController = dependencies.createMatchViewController()
+        // addEvent
+        navigationController.pushViewController(createMatchViewController, animated: true)
     }
 }

@@ -30,6 +30,8 @@
 		D850FC8329B4D38100DC08C6 /* CreateMatchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8229B4D38100DC08C6 /* CreateMatchUseCase.swift */; };
 		D850FC8629B4D3D000DC08C6 /* DefaultMatchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8529B4D3D000DC08C6 /* DefaultMatchRepository.swift */; };
 		D850FC8929B4D3DC00DC08C6 /* MatchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8829B4D3DC00DC08C6 /* MatchRepository.swift */; };
+		D850FC8D29B5A60000DC08C6 /* SelectSportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8C29B5A60000DC08C6 /* SelectSportViewController.swift */; };
+		D850FC8F29B5ADFC00DC08C6 /* CreateMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8E29B5ADFC00DC08C6 /* CreateMatchViewController.swift */; };
 		D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576130299BCFF800F1AFEB /* AppDelegate.swift */; };
 		D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576132299BCFF800F1AFEB /* SceneDelegate.swift */; };
 		D857613A299BCFFA00F1AFEB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8576139299BCFFA00F1AFEB /* Colors.xcassets */; };
@@ -149,6 +151,8 @@
 		D850FC8229B4D38100DC08C6 /* CreateMatchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMatchUseCase.swift; sourceTree = "<group>"; };
 		D850FC8529B4D3D000DC08C6 /* DefaultMatchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMatchRepository.swift; sourceTree = "<group>"; };
 		D850FC8829B4D3DC00DC08C6 /* MatchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRepository.swift; sourceTree = "<group>"; };
+		D850FC8C29B5A60000DC08C6 /* SelectSportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSportViewController.swift; sourceTree = "<group>"; };
+		D850FC8E29B5ADFC00DC08C6 /* CreateMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMatchViewController.swift; sourceTree = "<group>"; };
 		D857612D299BCFF800F1AFEB /* STITCH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STITCH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8576130299BCFF800F1AFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8576132299BCFF800F1AFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 		D850FC7529B4CB6F00DC08C6 /* SelectSport */ = {
 			isa = PBXGroup;
 			children = (
+				D850FC8C29B5A60000DC08C6 /* SelectSportViewController.swift */,
 			);
 			path = SelectSport;
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 		D850FC7629B4CB7E00DC08C6 /* CreateMatch */ = {
 			isa = PBXGroup;
 			children = (
+				D850FC8E29B5ADFC00DC08C6 /* CreateMatchViewController.swift */,
 				D850FC7F29B4D30200DC08C6 /* CreateMatchViewModel.swift */,
 			);
 			path = CreateMatch;
@@ -997,6 +1003,7 @@
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
 				D868BA9A29B07BE300E80012 /* Match.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
+				D850FC8F29B5ADFC00DC08C6 /* CreateMatchViewController.swift in Sources */,
 				D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */,
 				D860B60D299CE7AC00966683 /* Dictionary+queryString.swift in Sources */,
 				D868BA5B29AC908E00E80012 /* LoginInfo.swift in Sources */,
@@ -1019,6 +1026,7 @@
 				D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */,
 				D860B60B299CE76800966683 /* Encodable+toDictionary.swift in Sources */,
 				D868BA2729A7A1C100E80012 /* ProfileViewModel.swift in Sources */,
+				D850FC8D29B5A60000DC08C6 /* SelectSportViewController.swift in Sources */,
 				D850FC7029B4BFA100DC08C6 /* FloatingButton.swift in Sources */,
 				D868BA5029AC871700E80012 /* KakaoLoginService.swift in Sources */,
 				D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */,
