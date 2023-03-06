@@ -37,4 +37,8 @@ extension UIImage {
     
     static let flashCircle = UIImage(named: "flash-circle")
     static let userCircle = UIImage(named: "user-circle")
+    static let gallery = UIImage(named: "gallery")
+    
+    static let plusCircle = UIImage(systemName: "plus.circle")
+    static let minusCircle = UIImage(systemName: "minus.circle")
 }
