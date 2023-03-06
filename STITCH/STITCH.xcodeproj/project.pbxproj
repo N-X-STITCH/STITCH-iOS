@@ -32,6 +32,10 @@
 		D850FC8929B4D3DC00DC08C6 /* MatchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8829B4D3DC00DC08C6 /* MatchRepository.swift */; };
 		D850FC8D29B5A60000DC08C6 /* SelectSportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8C29B5A60000DC08C6 /* SelectSportViewController.swift */; };
 		D850FC8F29B5ADFC00DC08C6 /* CreateMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC8E29B5ADFC00DC08C6 /* CreateMatchViewController.swift */; };
+		D850FC9229B5B36300DC08C6 /* SelectPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9129B5B36300DC08C6 /* SelectPhotoView.swift */; };
+		D850FC9429B5B6C100DC08C6 /* DefaultTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9329B5B6C100DC08C6 /* DefaultTextView.swift */; };
+		D850FC9629B5BB2200DC08C6 /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9529B5BB2200DC08C6 /* Stepper.swift */; };
+		D850FC9829B5D4A000DC08C6 /* UIView+addSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9729B5D4A000DC08C6 /* UIView+addSubviews.swift */; };
 		D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576130299BCFF800F1AFEB /* AppDelegate.swift */; };
 		D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576132299BCFF800F1AFEB /* SceneDelegate.swift */; };
 		D857613A299BCFFA00F1AFEB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8576139299BCFFA00F1AFEB /* Colors.xcassets */; };
@@ -153,6 +157,10 @@
 		D850FC8829B4D3DC00DC08C6 /* MatchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRepository.swift; sourceTree = "<group>"; };
 		D850FC8C29B5A60000DC08C6 /* SelectSportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSportViewController.swift; sourceTree = "<group>"; };
 		D850FC8E29B5ADFC00DC08C6 /* CreateMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMatchViewController.swift; sourceTree = "<group>"; };
+		D850FC9129B5B36300DC08C6 /* SelectPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoView.swift; sourceTree = "<group>"; };
+		D850FC9329B5B6C100DC08C6 /* DefaultTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextView.swift; sourceTree = "<group>"; };
+		D850FC9529B5BB2200DC08C6 /* Stepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
+		D850FC9729B5D4A000DC08C6 /* UIView+addSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubviews.swift"; sourceTree = "<group>"; };
 		D857612D299BCFF800F1AFEB /* STITCH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STITCH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8576130299BCFF800F1AFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8576132299BCFF800F1AFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -352,6 +360,7 @@
 		D850FC7629B4CB7E00DC08C6 /* CreateMatch */ = {
 			isa = PBXGroup;
 			children = (
+				D850FC9029B5B35800DC08C6 /* View */,
 				D850FC8E29B5ADFC00DC08C6 /* CreateMatchViewController.swift */,
 				D850FC7F29B4D30200DC08C6 /* CreateMatchViewModel.swift */,
 			);
@@ -396,6 +405,14 @@
 				D850FC8829B4D3DC00DC08C6 /* MatchRepository.swift */,
 			);
 			path = Match;
+			sourceTree = "<group>";
+		};
+		D850FC9029B5B35800DC08C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D850FC9129B5B36300DC08C6 /* SelectPhotoView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		D8576124299BCFF800F1AFEB = {
@@ -459,11 +476,13 @@
 				D8599AC4299E44DC00633192 /* DefaultTitleLabel.swift */,
 				D87BD887299E730D003A1B76 /* DefaultButton.swift */,
 				D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */,
+				D850FC9329B5B6C100DC08C6 /* DefaultTextView.swift */,
 				D820258729A21E2B00892CE8 /* DefaultToolbar.swift */,
 				D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */,
 				D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */,
 				D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */,
 				D868BAA829B206E600E80012 /* Badge.swift */,
+				D850FC9529B5BB2200DC08C6 /* Stepper.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -646,6 +665,7 @@
 				D860B60A299CE76800966683 /* Encodable+toDictionary.swift */,
 				D860B60C299CE7AC00966683 /* Dictionary+queryString.swift */,
 				D87BD889299E766D003A1B76 /* UIButton+.swift */,
+				D850FC9729B5D4A000DC08C6 /* UIView+addSubviews.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -978,6 +998,7 @@
 				D860B606299CE58400966683 /* NetworkConfig.swift in Sources */,
 				D820258829A21E2C00892CE8 /* DefaultToolbar.swift in Sources */,
 				D8599ABE299E365700633192 /* UIImage+.swift in Sources */,
+				D850FC9429B5B6C100DC08C6 /* DefaultTextView.swift in Sources */,
 				D868BA7C29B0524D00E80012 /* PopularHeaderView.swift in Sources */,
 				D868BA2B29A7B4DF00E80012 /* ProfileText.swift in Sources */,
 				D868BA6F29AE3F4E00E80012 /* HomeViewController.swift in Sources */,
@@ -998,6 +1019,7 @@
 				D868BA8229B05C6600E80012 /* MatchCell.swift in Sources */,
 				D868BA3029A7C5D100E80012 /* ImagePickerController.swift in Sources */,
 				D850FC7E29B4D2DE00DC08C6 /* SelectMatchViewController.swift in Sources */,
+				D850FC9629B5BB2200DC08C6 /* Stepper.swift in Sources */,
 				D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */,
 				D868BA6229ADCF6500E80012 /* TabBarDIContainer.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
@@ -1011,6 +1033,7 @@
 				D860B601299C956200966683 /* TabBarCoordinator.swift in Sources */,
 				D82025A029A24A7C00892CE8 /* LocationViewController.swift in Sources */,
 				D850FC7C29B4CC7B00DC08C6 /* MatchTypeCollectionView.swift in Sources */,
+				D850FC9229B5B36300DC08C6 /* SelectPhotoView.swift in Sources */,
 				D820259B29A2309000892CE8 /* ProfileTextCell.swift in Sources */,
 				D860B5FC299C912B00966683 /* AuthCoordinator.swift in Sources */,
 				D868BA6D29AE3F4700E80012 /* HomeViewModel.swift in Sources */,
@@ -1018,6 +1041,7 @@
 				D850FC8029B4D30200DC08C6 /* CreateMatchViewModel.swift in Sources */,
 				D800291429A5FF1C00F75378 /* ViewModel.swift in Sources */,
 				D868BA5229AC871E00E80012 /* AppleLoginService.swift in Sources */,
+				D850FC9829B5D4A000DC08C6 /* UIView+addSubviews.swift in Sources */,
 				D868BAA129B0EADC00E80012 /* BaseView.swift in Sources */,
 				D860B622299D19DA00966683 /* DefaultSignupRepository.swift in Sources */,
 				D868BA3829A8A14200E80012 /* FindLocationViewModel.swift in Sources */,
