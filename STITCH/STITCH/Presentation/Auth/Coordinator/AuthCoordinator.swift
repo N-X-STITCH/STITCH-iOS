@@ -46,7 +46,6 @@ final class AuthCoordinator: Coordinator {
     }
     
     private func showLoginViewController() {
-        // TODO: DIContainer
         let loginViewController = dependencies.loginViewController()
         addNextEvent(loginViewController, showInterestedInSportsViewController)
         navigationController.pushViewController(loginViewController, animated: true)
@@ -94,15 +93,5 @@ final class AuthCoordinator: Coordinator {
             }
             .disposed(by: disposeBag)
         navigationController.pushViewController(completeSignupViewController, animated: true)
-    }
-    
-    private func addNextEvent(_ viewController: BaseViewController, _ showViewController: @escaping () -> Void) {
-        viewController.coordinatorPublisher
-            .subscribe { event in
-                if case .next = event {
-                    showViewController()
-                }
-            }
-            .disposed(by: disposeBag)
     }
 }

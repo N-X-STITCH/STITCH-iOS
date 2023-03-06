@@ -10,4 +10,5 @@ import Foundation
 enum CoordinatorEvent {
     case next
     case findLocation
+    case selectMatchType
 }
