@@ -43,4 +43,5 @@ extension UIImage {
     
     static let plusCircle = UIImage(systemName: "plus.circle")
     static let minusCircle = UIImage(systemName: "minus.circle")
+    static let clock = UIImage(systemName: "clock.fill")
 }

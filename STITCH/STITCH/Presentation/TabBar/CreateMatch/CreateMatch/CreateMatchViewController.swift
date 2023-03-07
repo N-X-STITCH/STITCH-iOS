@@ -20,7 +20,10 @@ final class CreateMatchViewController: BaseViewController {
         static let padding16 = 16
         static let padding20 = 18
         static let padding24 = 24
+        static let padding28 = 28
         static let padding32 = 32
+        static let padding48 = 48
+        static let radius10 = 10
         static let titleLabelHeight = 56
         static let matchImageHeight = 96
         static let titleHeight = 20
@@ -29,9 +32,12 @@ final class CreateMatchViewController: BaseViewController {
         static let textViewHeight = 158
         static let countLabelHeight = 18
         static let barHeight = 1
+        static let clockIconWidth = 18
         static let contentViewHeight = 3000
         static let stepperWidth = 100
         static let stepperHeight = 24
+        static let defaultTime = 30
+        static let defaultPeople = 2
     }
     
     private let scrollView = UIScrollView()
@@ -54,12 +60,40 @@ final class CreateMatchViewController: BaseViewController {
     private let matchScheduleTextField = DefaultTextField(placeholder: "날짜와 시간을 설정해주세요")
     private let matchScheduleRowView = UIView().then { $0.backgroundColor  = .gray09 }
     
-    // TODO: 달력
     private lazy var calendarView = CalendarView(frame: .zero)
+    // TODO: 시작 시간 표시
+    private let clockImageView = UIImageView(
+        image: .clock?.withTintColor(.gray02, renderingMode: .alwaysOriginal)
+    )
+    private lazy var startTimeTextField = UITextField().then {
+        $0.delegate = self
+        $0.text = "오전 00:00"
+        $0.textColor = .gray02
+        $0.font = .Body1_16
+        $0.tintColor = .clear
+        $0.inputView = startTimePickerView
+        $0.inputAccessoryView = startTimePickerToolBar
+    }
+    private lazy var startTimePickerView = TimePickerView(viewController: self)
+    private let cancelButton = UIBarButtonItem(title: "취소", style: .done, target: nil, action: nil).then {
+        $0.tintColor = .gray04
+    }
+    private let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    private let doneButton = UIBarButtonItem(title: "확인", style: .done, target: nil, action: nil).then {
+        $0.tintColor = .yellow05_primary
+    }
+    private lazy var startTimePickerToolBar = UIToolbar(
+        frame: CGRect(origin: .zero, size: CGSize(width: view.frame.width, height: 48))
+    ).then {
+        $0.backgroundColor = .gray12.withAlphaComponent(0.8)
+        $0.setItems([cancelButton, space, doneButton], animated: true)
+        $0.sizeToFit()
+        $0.set(corners: [.topLeft, .topRight], radius: CGFloat(Constant.radius10))
+    }
     
     private let matchTimeTitleLabel = DefaultTitleLabel(text: "소요시간", textColor: .gray02, font: .Subhead2_14)
     private let matchTimeTextField = DefaultTextField(placeholder: "날짜와 시간을 설정해주세요")
-    private let matchTimeStepper = Stepper(defaultText: "30분", defaultValue: 30)
+    private let matchTimeStepper = Stepper(defaultText: "30분", defaultValue: Constant.defaultTime)
     private let matchTimeRowView = UIView().then { $0.backgroundColor  = .gray09 }
     
     // TODO: 장소 선택 버튼
@@ -69,7 +103,7 @@ final class CreateMatchViewController: BaseViewController {
     private let matchPeopleTitleLabel = DefaultTitleLabel(text: "참가인원", textColor: .gray02, font: .Subhead2_14)
     private let matchPeopleSubTitleLabel = DefaultTitleLabel(text: "(본인을 포함한 총 참여 인원수)", textColor: .gray06, font: .Body2_14)
     private let matchPeopleTextField = DefaultTextField(placeholder: "인원수 설정")
-    private let matchPeopleStepper = Stepper(defaultText: "2명", defaultValue: 2)
+    private let matchPeopleStepper = Stepper(defaultText: "2명", defaultValue: Constant.defaultPeople)
     private let matchPeopleRowView = UIView().then { $0.backgroundColor  = .gray09 }
     
     private let matchFeeTitleLabel = DefaultTitleLabel(text: "참가비가 있나요?", textColor: .gray02, font: .Subhead2_14)
@@ -112,7 +146,19 @@ final class CreateMatchViewController: BaseViewController {
     }
     
     override func bind() {
+        doneButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.startTimeTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
         
+        cancelButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.startTimeTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
@@ -192,34 +238,62 @@ extension CreateMatchViewController: FSCalendarDelegateAppearance {
 
         return .gray04
     }
-
-//    func calendar(
-//        _ calendar: FSCalendar,
-//        appearance: FSCalendarAppearance,
-//        fillSelectionColorFor date: Date
-//    ) -> UIColor? {
-//        return .yellow05_primary
-//    }
-//    
-//    func calendar(
-//        _ calendar: FSCalendar,
-//        appearance: FSCalendarAppearance,
-//        titleSelectionColorFor date: Date
-//    ) -> UIColor? {
-//        <#code#>
-//    }
 }
 
+// MARK: - UIPickerViewDelegaet
+
+extension CreateMatchViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            return Meridiem.allCases[row].rawValue
+        case 1:
+            return "\(Hour.allCases[row].rawValue)"
+        default:
+            return "\(Minute.allCases[row].rawValue)"
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            guard let text = startTimeTextField.text else { return }
+            let timeText = text.components(separatedBy: " ")[1]
+            startTimeTextField.text = "\(Meridiem.allCases[row].rawValue) \(timeText)"
+        case 1:
+            return
+        default:
+            return
+        }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension CreateMatchViewController: UITextFieldDelegate {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        return false
+    }
+}
+
+// MARK: - UI
 
 extension CreateMatchViewController {
     private func configureContentView() {
         contentView.addSubviews([titleLabel, matchImageView])
         contentView.addSubviews([matchTitleLabel, matchTitleTextField, matchTitleRowView, matchTitleCountLabel])
         contentView.addSubviews([matchDetailTitleLabel, matchDetailTextView, matchDetailRowView, matchDetailCountLabel])
-        contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView, calendarView])
+        contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView])
+        contentView.addSubviews([calendarView, startTimeTextField, clockImageView])
         contentView.addSubviews([matchTimeTitleLabel, matchTimeTextField, matchTimeStepper, matchTimeRowView])
         contentView.addSubviews([matchLocationTitleLabel])
-        contentView.addSubviews([matchPeopleTitleLabel, matchPeopleSubTitleLabel, matchPeopleTextField, matchPeopleStepper, matchPeopleRowView])
+        contentView.addSubviews([
+            matchPeopleTitleLabel, matchPeopleSubTitleLabel, matchPeopleTextField, matchPeopleStepper, matchPeopleRowView
+        ])
         contentView.addSubviews([matchFeeTitleLabel, matchFeeSubTitleLabel])
         
         configureTitleView()
@@ -314,15 +388,28 @@ extension CreateMatchViewController {
         }
         
         calendarView.snp.makeConstraints { make in
-            make.top.equalTo(matchScheduleRowView.snp.bottom).offset(32)
-            make.height.equalTo(312)
+            make.top.equalTo(matchScheduleRowView.snp.bottom).offset(Constant.padding32)
+            make.height.equalTo(312) // TODO: 미정
             make.left.right.equalToSuperview().inset(Constant.padding16)
         }
+        
+        startTimeTextField.snp.makeConstraints { make in
+            make.top.equalTo(calendarView.snp.bottom).offset(Constant.padding28)
+            make.centerX.equalToSuperview()
+        }
+        
+        clockImageView.snp.makeConstraints { make in
+            make.right.equalTo(startTimeTextField.snp.left).offset(-Constant.padding8)
+            make.centerY.equalTo(startTimeTextField)
+            make.width.height.equalTo(Constant.clockIconWidth)
+        }
+        
+        startTimePickerToolBar.updateConstraintsIfNeeded()
     }
     
     private func configureTimeView() {
         matchTimeTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(calendarView.snp.bottom).offset(Constant.padding32)
+            make.top.equalTo(startTimeTextField.snp.bottom).offset(Constant.padding48)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.titleHeight)
         }
@@ -388,23 +475,5 @@ extension CreateMatchViewController {
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.barHeight)
         }
-    }
-}
-
-extension UIScrollView {
-    func updateContentSize() {
-        let unionCalculatedTotalRect = recursiveUnionInDepthFor(view: self)
-
-        self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height+50)
-    }
-    
-    private func recursiveUnionInDepthFor(view: UIView) -> CGRect {
-        var totalRect: CGRect = .zero
-        
-        for subView in view.subviews {
-            totalRect = totalRect.union(recursiveUnionInDepthFor(view: subView))
-        }
-        
-        return totalRect.union(view.frame)
     }
 }
