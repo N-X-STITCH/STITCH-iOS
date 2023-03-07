@@ -54,7 +54,7 @@ final class NicknameViewController: BaseViewController {
     private lazy var nextButtonToolbarItem = UIBarButtonItem(customView: nextButton)
     
     private lazy var nextButtonToolbar = DefaultToolbar(
-        toolbarItem: nextButtonToolbarItem,
+        toolbarItems: [nextButtonToolbarItem],
         textFiled: nicknameTextFiled,
         viewWidth: view.frame.size.width,
         viewHeight: view.frame.size.height

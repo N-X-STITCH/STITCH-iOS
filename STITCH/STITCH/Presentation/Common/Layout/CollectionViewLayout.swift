@@ -98,7 +98,7 @@ enum PopularCollectionViewLayout {
         static let padding16 = 16
         static let headerHeight = 44
         static let groupFractionalWidth = 0.9
-        static let groupHeight = 356
+        static let groupHeight = 340
     }
     
     static func layout() -> UICollectionViewLayout {
@@ -107,7 +107,7 @@ enum PopularCollectionViewLayout {
             -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(1.0)
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
@@ -204,3 +204,41 @@ enum MatchCollectionViewLayout {
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
 }
+
+enum MatchTypeCollectionViewLayout {
+    
+    enum Constant {
+        static let padding12 = 12
+        static let groupHeight = 80
+    }
+    
+    static func layout() -> UICollectionViewLayout {
+        let sectionProvider = {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
+            -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
+            )
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            group.edgeSpacing = NSCollectionLayoutEdgeSpacing(
+                leading: nil, top: nil, trailing: nil, bottom: .fixed(12)
+            )
+            
+            let section = NSCollectionLayoutSection(group: group)
+            return section
+        }
+        
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+    }
+}
+

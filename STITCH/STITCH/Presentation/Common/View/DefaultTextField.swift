@@ -16,15 +16,10 @@ final class DefaultTextField: UITextField {
         static let height = 55
     }
 
-//    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
-//        var padding = super.rightViewRect(forBounds: bounds)
-//        padding.origin.x -= Constant.space16.cgFloat
-//        return padding
-//    }
-
     init(
         placeholder: String,
-        leftView: Bool = false
+        leftView: Bool = true,
+        leftSearchView: Bool = false
     ) {
         super.init(frame: .zero)
         self.placeholder = placeholder
@@ -35,6 +30,10 @@ final class DefaultTextField: UITextField {
         setPlaceHolderColor(placeholder)
         
         if leftView {
+            addLeftPaddingView()
+        }
+        
+        if leftSearchView {
             addLeftSearchGlassesView()
         }
     }
@@ -49,6 +48,11 @@ final class DefaultTextField: UITextField {
         )
         imageView.image = .searchGlasses
         leftView = imageView
+        leftViewMode = .always
+    }
+    
+    private func addLeftPaddingView() {
+        leftView = paddingView(width: Constant.padding8, height: Constant.padding8)
         leftViewMode = .always
     }
 

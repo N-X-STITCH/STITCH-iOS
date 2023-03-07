@@ -15,6 +15,20 @@ struct User: Hashable, Codable {
     let address: String
     
     init(
+        id: String,
+        nickname: String,
+        profileImageURL: String?,
+        interestedSports: [Sport],
+        address: String
+    ) {
+        self.id = id
+        self.nickname = nickname
+        self.profileImageURL = profileImageURL
+        self.interestedSports = interestedSports
+        self.address = address
+    }
+    
+    init(
         loginInfo: LoginInfo,
         sports: [Sport],
         address: String

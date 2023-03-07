@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Lottie
 import RxSwift
 
 final class CompleteSignupViewController: BaseViewController {
@@ -18,8 +19,10 @@ final class CompleteSignupViewController: BaseViewController {
         static let buttonHeight = 56
         static let imageWidth = 270
         static let imageHeight = 224
+        static let fireworksWidth = 360
         static let padding16 = 16
         static let padding24 = 24
+        static let padding48 = 48
     }
     
     private let titleLabel = UILabel().then {
@@ -42,6 +45,8 @@ final class CompleteSignupViewController: BaseViewController {
         $0.textAlignment = .left
     }
     
+    private let fireworksView = LottieAnimationView(name: "fireworks")
+    
     private let startImageView = UIImageView(image: .completeSignup)
     
     private let nextButton = IconButton(iconButtonType: .start)
@@ -58,11 +63,15 @@ final class CompleteSignupViewController: BaseViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        // TODO: 작동
+        // TODO: 작동 view did layout?
         // addGradientLayerToButton()
     }
     
     // MARK: - Methods
+    
+    override func setting() {
+        setAnimation()
+    }
     
     override func bind() {
         nextButton.rx.tap
@@ -77,6 +86,7 @@ final class CompleteSignupViewController: BaseViewController {
         
         view.addSubview(titleLabel)
         view.addSubview(startImageView)
+        view.insertSubview(fireworksView, belowSubview: startImageView)
         view.addSubview(nextButton)
         
         titleLabel.snp.makeConstraints { make in
@@ -86,9 +96,7 @@ final class CompleteSignupViewController: BaseViewController {
         }
         
         startImageView.snp.makeConstraints { make in
-            make.width.equalTo(Constant.imageWidth)
-            make.height.equalTo(Constant.imageHeight)
-            make.centerX.equalToSuperview()
+            make.left.right.equalToSuperview().inset(Constant.padding48)
             make.centerY.equalToSuperview().offset(Constant.padding24)
         }
         
@@ -97,6 +105,14 @@ final class CompleteSignupViewController: BaseViewController {
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    private func setAnimation() {
+        fireworksView.bounds = CGRect(x: 0, y: 0, width: Constant.fireworksWidth, height: Constant.fireworksWidth)
+        fireworksView.center = view.center
+        fireworksView.contentMode = .scaleAspectFill
+        fireworksView.loopMode = .loop
+        fireworksView.play()
     }
     
     private func addGradientLayerToButton() {

@@ -14,7 +14,7 @@ final class DefaultToolbar: UIToolbar {
     }
     
     init(
-        toolbarItem: UIBarButtonItem,
+        toolbarItems: [UIBarButtonItem],
         textFiled: UITextField,
         viewWidth: CGFloat,
         viewHeight: CGFloat
@@ -23,7 +23,7 @@ final class DefaultToolbar: UIToolbar {
         frame = CGRect(origin: .zero, size: CGSize(width: viewWidth, height: CGFloat(Constant.height)))
         barTintColor = .yellow05_primary
         isTranslucent = false
-        items = [toolbarItem]
+        items = toolbarItems
         textFiled.inputAccessoryView = self
     }
     

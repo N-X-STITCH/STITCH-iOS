@@ -44,4 +44,33 @@ extension Coordinator {
     func showAlert() {
         
     }
+    
+    func addNextEvent(
+        _ viewController: BaseViewController,
+        _ showViewController: @escaping () -> Void,
+        _ coordinatorEvent: CoordinatorEvent = .next
+    ) {
+        viewController.coordinatorPublisher
+            .subscribe { event in
+                if coordinatorEvent == event {
+                    showViewController()
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func addNextEventWithNav(
+        _ viewController: BaseViewController,
+        _ showViewController: @escaping (UINavigationController) -> Void,
+        _ navigationController: UINavigationController,
+        _ coordinatorEvent: CoordinatorEvent = .next
+    ) {
+        viewController.coordinatorPublisher
+            .subscribe { event in
+                if coordinatorEvent == event {
+                    showViewController(navigationController)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
 }

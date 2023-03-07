@@ -14,8 +14,13 @@ extension UIImage {
     static let appleLogo = UIImage(named: "appleLogo")
     static let kakaoLogo = UIImage(named: "kakaoLogo")
     static let bottomGridientView = UIImage(named: "bottomGradientView")
+    static let smallBottomGradientView = UIImage(named: "smallBottomGradientView")
     static let completeSignup = UIImage(named: "completeSignup")
     
+    static let arrowLeft = UIImage(named: "arrow-left")
+    static let arrowRight = UIImage(named: "arrow-right")
+    static let plus = UIImage(named: "add")
+    static let arrowDown = UIImage(named: "arrow-down")
     static let cameraIcon = UIImage(named: "cameraIcon")
     static let home2 = UIImage(named: "home-2")
     static let gps = UIImage(named: "gps")
@@ -31,4 +36,12 @@ extension UIImage {
     static let mymenu = UIImage(named: "user-square")
     static let mymenuSelect = UIImage(named: "user-square-select")
     static let userIcon = UIImage(named: "user")
+    
+    static let flashCircle = UIImage(named: "flash-circle")
+    static let userCircle = UIImage(named: "user-circle")
+    static let gallery = UIImage(named: "gallery")
+    
+    static let plusCircle = UIImage(systemName: "plus.circle")
+    static let minusCircle = UIImage(systemName: "minus.circle")
+    static let clock = UIImage(systemName: "clock.fill")
 }

@@ -11,6 +11,9 @@ import RxSwift
 
 protocol TabBarCoordinatorDependencies {
     func homeViewController() -> HomeViewController
+    func selectMatchViewController() -> SelectMatchViewController
+    func selectSportViewController() -> SelectSportViewController
+    func createMatchViewController() -> CreateMatchViewController
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -51,11 +54,11 @@ final class TabBarCoordinator: Coordinator {
 }
 
 extension TabBarCoordinator {
-    private func prepareTabBarController(with tabController: [UIViewController]) {
+    private func prepareTabBarController(with tabControllers: [UIViewController]) {
         // tabBarController.delegate = self
-        tabBarController.setViewControllers(tabController, animated: true)
+        tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.home.pageNumber
-        
+        configureTabBar(with: tabControllers)
         navigationController.viewControllers = [tabBarController]
     }
     
@@ -69,8 +72,7 @@ extension TabBarCoordinator {
         
         switch page {
         case .home:
-            let homeViewController = dependencies.homeViewController()
-            navigationController.pushViewController(homeViewController, animated: true)
+            showHomeViewController(navigationController)
         case .category:
             navigationController.pushViewController(UIViewController(), animated: true)
         case .myMatch:
@@ -80,5 +82,60 @@ extension TabBarCoordinator {
             navigationController.pushViewController(UIViewController(), animated: true)
         }
         return navigationController
+    }
+    
+    private func configureTabBar(with tabControllers: [UIViewController]) {
+        tabBarController.tabBar.backgroundColor = .background
+        tabBarController.tabBar.isTranslucent = false
+        if #available(iOS 15.0, *) {
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = .background
+            tabBarController.tabBar.standardAppearance = tabBarAppearance
+        }
+    }
+}
+
+// MARK: - Home
+
+extension TabBarCoordinator {
+    private func showHomeViewController(_ navigationController: UINavigationController) {
+        let homeViewController = dependencies.homeViewController()
+        homeViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .selectMatchType = event {
+                    owner.showSelectMatchViewController(navigationController)
+                }
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(homeViewController, animated: true)
+    }
+    
+    private func showSelectMatchViewController(_ navigationController: UINavigationController) {
+        let selectMatchViewController = dependencies.selectMatchViewController()
+        selectMatchViewController.hidesBottomBarWhenPushed = true
+        addNextEventWithNav(
+            selectMatchViewController,
+            showSelectSportViewController(_:),
+            navigationController
+        )
+        navigationController.pushViewController(selectMatchViewController, animated: true)
+    }
+    
+    private func showSelectSportViewController(_ navigationController: UINavigationController) {
+        let selectSportViewController = dependencies.selectSportViewController()
+        addNextEventWithNav(
+            selectSportViewController,
+            showCreateMatchViewController(_:),
+            navigationController
+        )
+        navigationController.pushViewController(selectSportViewController, animated: true)
+    }
+    
+    private func showCreateMatchViewController(_ navigationController: UINavigationController) {
+        let createMatchViewController = dependencies.createMatchViewController()
+        // addEvent
+        navigationController.pushViewController(createMatchViewController, animated: true)
     }
 }

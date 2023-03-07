@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "fscalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WenchaoD/FSCalendar.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "2a1bdab38bd4c90caaa4b593e0608c05f4173160"
+      }
+    },
+    {
       "identity" : "kakao-ios-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kakao/kakao-ios-sdk.git",

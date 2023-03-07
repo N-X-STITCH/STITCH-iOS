@@ -18,9 +18,12 @@ final class PopularMatchCell: BaseCollectionViewCell {
         static let padding14 = 14
         static let padding16 = 16
         static let padding20 = 20
-        static let radius24 = 24
+        static let radius24 = 28
         static let profileWidth = 36
+        static let labelHeight18 = 18
+        static let labelHeight24 = 24
         static let iconWidth = 24
+        static let bottomGradientViewHeight = 120
     }
     
     // MARK: - Properties
@@ -30,6 +33,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
     private let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
     }
+    
+    private let bottomGradientView = UIImageView(image: .smallBottomGradientView)
     
     private let profileImageView = DefaultProfileImageView(true)
     
@@ -77,6 +82,7 @@ final class PopularMatchCell: BaseCollectionViewCell {
         contentView.clipsToBounds = true
         
         contentView.addSubview(backgroundImageView)
+        contentView.addSubview(bottomGradientView)
         contentView.addSubview(profileImageView)
         contentView.addSubview(nicknameLabel)
         contentView.addSubview(titleLabel)
@@ -86,6 +92,11 @@ final class PopularMatchCell: BaseCollectionViewCell {
         
         backgroundImageView.snp.makeConstraints { make in
             make.top.left.right.bottom.equalToSuperview()
+        }
+        
+        bottomGradientView.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(Constant.bottomGradientViewHeight)
         }
         
         profileImageView.snp.makeConstraints { make in
@@ -112,11 +123,13 @@ final class PopularMatchCell: BaseCollectionViewCell {
         matchInfoLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(Constant.padding16)
             make.bottom.equalTo(peopleIconView.snp.top).offset(-Constant.padding8)
+            make.height.equalTo(Constant.labelHeight18)
         }
         
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(Constant.padding16)
             make.bottom.equalTo(matchInfoLabel.snp.top)
+            make.height.equalTo(Constant.labelHeight24)
         }
     }
     

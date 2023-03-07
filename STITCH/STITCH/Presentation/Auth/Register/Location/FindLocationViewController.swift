@@ -27,7 +27,7 @@ final class FindLocationViewController: BaseViewController {
     
     private let searchTextField = DefaultTextField(
         placeholder: "동명(읍, 면)으로 검색 (ex.서초동)",
-        leftView: true
+        leftSearchView: true
     )
     
     private let textFieldRowView = UIView().then {
