@@ -7,6 +7,8 @@
 
 import UIKit
 
+import FSCalendar
+
 final class CreateMatchViewController: BaseViewController {
     
     // MARK: - Properties
@@ -27,7 +29,7 @@ final class CreateMatchViewController: BaseViewController {
         static let textViewHeight = 158
         static let countLabelHeight = 18
         static let barHeight = 1
-        static let contentViewHeight = 1500
+        static let contentViewHeight = 3000
         static let stepperWidth = 100
         static let stepperHeight = 24
     }
@@ -53,6 +55,7 @@ final class CreateMatchViewController: BaseViewController {
     private let matchScheduleRowView = UIView().then { $0.backgroundColor  = .gray09 }
     
     // TODO: 달력
+    private lazy var calendarView = CalendarView(frame: .zero)
     
     private let matchTimeTitleLabel = DefaultTitleLabel(text: "소요시간", textColor: .gray02, font: .Subhead2_14)
     private let matchTimeTextField = DefaultTextField(placeholder: "날짜와 시간을 설정해주세요")
@@ -78,6 +81,12 @@ final class CreateMatchViewController: BaseViewController {
     
     // MARK: Properties
     
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter
+    }()
+    
     private let createMatchViewModel: CreateMatchViewModel
     
     // MARK: - Initializer
@@ -89,7 +98,7 @@ final class CreateMatchViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollView.contentSize.height = 1500
+        scrollView.updateContentSize()
     }
     
     // MARK: - Methods
@@ -97,6 +106,9 @@ final class CreateMatchViewController: BaseViewController {
     override func setting() {
         // TODO: 삭제
         scrollView.delegate = self
+        calendarView.dataSource = self
+        calendarView.delegate = self
+        calendarView.isUserInteractionEnabled = true
     }
     
     override func bind() {
@@ -117,6 +129,10 @@ final class CreateMatchViewController: BaseViewController {
             make.edges.equalToSuperview()
         }
         
+        scrollView.contentLayoutGuide.snp.makeConstraints { make in
+            make.height.equalTo(Constant.contentViewHeight)
+        }
+        
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView.contentLayoutGuide)
             make.width.equalTo(scrollView.snp.width)
@@ -127,15 +143,80 @@ final class CreateMatchViewController: BaseViewController {
     }
 }
 
+// MARK: - UIScrollView Delegate
+
 extension CreateMatchViewController: UIScrollViewDelegate {
 }
+
+// MARK: - FSCalendar Delegate
+
+extension CreateMatchViewController: FSCalendarDelegate, FSCalendarDataSource {
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print(date)
+        print("did select date \(self.dateFormatter.string(from: date))")
+        let selectedDates = calendar.selectedDates.map { self.dateFormatter.string(from: $0) }
+        if monthPosition == .next || monthPosition == .previous {
+            calendar.setCurrentPage(date, animated: true)
+        }
+    }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return Date()
+    }
+}
+
+extension CreateMatchViewController: FSCalendarDelegateAppearance {
+    func calendar(
+        _ calendar: FSCalendar,
+        appearance: FSCalendarAppearance,
+        titleDefaultColorFor date: Date
+    ) -> UIColor? {
+        let dateMonth = Calendar.current.component(.month, from: date)
+        let dateWeekday = Calendar.current.component(.weekday, from: date) - 1
+        let dateDay = Calendar.current.component(.day, from: date)
+        let nowMonth = Calendar.current.component(.month, from: Date.now)
+        let nowDay = Calendar.current.component(.day, from: Date.now)
+
+        if dateMonth < nowMonth {
+            return .gray10
+        } else if dateMonth == nowMonth && dateDay == nowDay {
+            return .gray12
+        } else if dateMonth == nowMonth && dateDay < nowDay {
+            return .gray10
+        } else
+        if Calendar.current.shortWeekdaySymbols[dateWeekday] == "일" {
+            return .error01
+        } else if Calendar.current.shortWeekdaySymbols[dateWeekday] == "토" {
+            return .secondary
+        }
+
+        return .gray04
+    }
+
+//    func calendar(
+//        _ calendar: FSCalendar,
+//        appearance: FSCalendarAppearance,
+//        fillSelectionColorFor date: Date
+//    ) -> UIColor? {
+//        return .yellow05_primary
+//    }
+//    
+//    func calendar(
+//        _ calendar: FSCalendar,
+//        appearance: FSCalendarAppearance,
+//        titleSelectionColorFor date: Date
+//    ) -> UIColor? {
+//        <#code#>
+//    }
+}
+
 
 extension CreateMatchViewController {
     private func configureContentView() {
         contentView.addSubviews([titleLabel, matchImageView])
         contentView.addSubviews([matchTitleLabel, matchTitleTextField, matchTitleRowView, matchTitleCountLabel])
         contentView.addSubviews([matchDetailTitleLabel, matchDetailTextView, matchDetailRowView, matchDetailCountLabel])
-        contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView])
+        contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView, calendarView])
         contentView.addSubviews([matchTimeTitleLabel, matchTimeTextField, matchTimeStepper, matchTimeRowView])
         contentView.addSubviews([matchLocationTitleLabel])
         contentView.addSubviews([matchPeopleTitleLabel, matchPeopleSubTitleLabel, matchPeopleTextField, matchPeopleStepper, matchPeopleRowView])
@@ -231,11 +312,17 @@ extension CreateMatchViewController {
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.barHeight)
         }
+        
+        calendarView.snp.makeConstraints { make in
+            make.top.equalTo(matchScheduleRowView.snp.bottom).offset(32)
+            make.height.equalTo(312)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+        }
     }
     
     private func configureTimeView() {
         matchTimeTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(matchScheduleRowView.snp.bottom).offset(Constant.padding32)
+            make.top.equalTo(calendarView.snp.bottom).offset(Constant.padding32)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.titleHeight)
         }
@@ -301,5 +388,23 @@ extension CreateMatchViewController {
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.barHeight)
         }
+    }
+}
+
+extension UIScrollView {
+    func updateContentSize() {
+        let unionCalculatedTotalRect = recursiveUnionInDepthFor(view: self)
+
+        self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height+50)
+    }
+    
+    private func recursiveUnionInDepthFor(view: UIView) -> CGRect {
+        var totalRect: CGRect = .zero
+        
+        for subView in view.subviews {
+            totalRect = totalRect.union(recursiveUnionInDepthFor(view: subView))
+        }
+        
+        return totalRect.union(view.frame)
     }
 }

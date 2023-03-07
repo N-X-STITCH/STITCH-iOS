@@ -36,6 +36,8 @@
 		D850FC9429B5B6C100DC08C6 /* DefaultTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9329B5B6C100DC08C6 /* DefaultTextView.swift */; };
 		D850FC9629B5BB2200DC08C6 /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9529B5BB2200DC08C6 /* Stepper.swift */; };
 		D850FC9829B5D4A000DC08C6 /* UIView+addSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9729B5D4A000DC08C6 /* UIView+addSubviews.swift */; };
+		D850FC9B29B5E91600DC08C6 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = D850FC9A29B5E91600DC08C6 /* FSCalendar */; };
+		D850FC9F29B6021200DC08C6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC9E29B6021200DC08C6 /* CalendarView.swift */; };
 		D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576130299BCFF800F1AFEB /* AppDelegate.swift */; };
 		D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8576132299BCFF800F1AFEB /* SceneDelegate.swift */; };
 		D857613A299BCFFA00F1AFEB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8576139299BCFFA00F1AFEB /* Colors.xcassets */; };
@@ -161,6 +163,7 @@
 		D850FC9329B5B6C100DC08C6 /* DefaultTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextView.swift; sourceTree = "<group>"; };
 		D850FC9529B5BB2200DC08C6 /* Stepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
 		D850FC9729B5D4A000DC08C6 /* UIView+addSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubviews.swift"; sourceTree = "<group>"; };
+		D850FC9E29B6021200DC08C6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D857612D299BCFF800F1AFEB /* STITCH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STITCH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8576130299BCFF800F1AFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8576132299BCFF800F1AFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -265,6 +268,7 @@
 				D868BA4429AB172F00E80012 /* RxKakaoSDKAuth in Frameworks */,
 				D860B635299DF5A200966683 /* RxRelay in Frameworks */,
 				D860B5DE299BDB7000966683 /* Then in Frameworks */,
+				D850FC9B29B5E91600DC08C6 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				D850FC9129B5B36300DC08C6 /* SelectPhotoView.swift */,
+				D850FC9E29B6021200DC08C6 /* CalendarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -923,6 +928,7 @@
 				D868BA5D29AC990C00E80012 /* RxKakaoSDKUser */,
 				D868BA9C29B0901F00E80012 /* Kingfisher */,
 				D85AA33829B478BA004B0A8B /* Lottie */,
+				D850FC9A29B5E91600DC08C6 /* FSCalendar */,
 			);
 			productName = STITCH;
 			productReference = D857612D299BCFF800F1AFEB /* STITCH.app */;
@@ -960,6 +966,7 @@
 				D868BA4229AB172F00E80012 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				D868BA9B29B0901F00E80012 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D85AA33729B478BA004B0A8B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				D850FC9929B5E91600DC08C6 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = D857612E299BCFF800F1AFEB /* Products */;
 			projectDirPath = "";
@@ -1052,6 +1059,7 @@
 				D868BA2729A7A1C100E80012 /* ProfileViewModel.swift in Sources */,
 				D850FC8D29B5A60000DC08C6 /* SelectSportViewController.swift in Sources */,
 				D850FC7029B4BFA100DC08C6 /* FloatingButton.swift in Sources */,
+				D850FC9F29B6021200DC08C6 /* CalendarView.swift in Sources */,
 				D868BA5029AC871700E80012 /* KakaoLoginService.swift in Sources */,
 				D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */,
 				D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */,
@@ -1319,6 +1327,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D850FC9929B5E91600DC08C6 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		D85AA33729B478BA004B0A8B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1370,6 +1386,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D850FC9A29B5E91600DC08C6 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D850FC9929B5E91600DC08C6 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
 		D85AA33829B478BA004B0A8B /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D85AA33729B478BA004B0A8B /* XCRemoteSwiftPackageReference "lottie-ios" */;
