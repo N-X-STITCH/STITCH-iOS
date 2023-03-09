@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Firebase
 import RxKakaoSDKCommon
 
 @main
@@ -17,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         RxKakaoSDK.initSDK(appKey: "f30befcc09673d8cc6c76af17a8cbee7")
-        
+        FirebaseApp.configure()
         return true
     }
 
