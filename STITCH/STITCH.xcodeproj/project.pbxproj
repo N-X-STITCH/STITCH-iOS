@@ -654,8 +654,8 @@
 			isa = PBXGroup;
 			children = (
 				D860B5FD299C948400966683 /* TabBarPage.swift */,
-				D850FC7329B4CB4200DC08C6 /* CreateMatch */,
 				D860B5FF299C955100966683 /* Coordinator */,
+				D850FC7329B4CB4200DC08C6 /* CreateMatch */,
 				D868BA6829AE3EFE00E80012 /* Home */,
 				D868BA6A29AE3F0A00E80012 /* MyMenu */,
 			);
@@ -847,7 +847,6 @@
 		D868BA6829AE3EFE00E80012 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D868BA7029AE422D00E80012 /* View */,
 				D868BA6B29AE3F2B00E80012 /* Home */,
 			);
 			path = Home;
@@ -863,6 +862,7 @@
 		D868BA6B29AE3F2B00E80012 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				D868BA7029AE422D00E80012 /* View */,
 				D868BA6C29AE3F4700E80012 /* HomeViewModel.swift */,
 				D868BA6E29AE3F4E00E80012 /* HomeViewController.swift */,
 			);
