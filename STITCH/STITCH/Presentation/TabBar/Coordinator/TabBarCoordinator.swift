@@ -14,6 +14,10 @@ protocol TabBarCoordinatorDependencies {
     func selectMatchViewController() -> SelectMatchViewController
     func selectSportViewController() -> SelectSportViewController
     func createMatchViewController() -> CreateMatchViewController
+    func myPageViewController() -> MyPageViewController
+    func myPageEditViewController() -> MyPageEditViewController
+    func createdMatchViewController() -> CreatedMatchViewController
+    func settingViewController() -> SettingViewController
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -78,8 +82,7 @@ extension TabBarCoordinator {
         case .myMatch:
             navigationController.pushViewController(UIViewController(), animated: true)
         case .myMenu:
-            // let ProfileViewController = ProfileViewController()
-            navigationController.pushViewController(UIViewController(), animated: true)
+            showMyPageViewController(navigationController)
         }
         return navigationController
     }
@@ -137,5 +140,26 @@ extension TabBarCoordinator {
         let createMatchViewController = dependencies.createMatchViewController()
         // addEvent
         navigationController.pushViewController(createMatchViewController, animated: true)
+    }
+}
+
+// MARK: - MyPage
+
+extension TabBarCoordinator {
+    private func showMyPageViewController(_ navigationController: UINavigationController) {
+        let myPageViewController = dependencies.myPageViewController()
+        addNextEventWithNav(
+            myPageViewController,
+            showMyPageEditViewController(_:),
+            navigationController
+        )
+        navigationController.pushViewController(myPageViewController, animated: true)
+    }
+    
+    private func showMyPageEditViewController(_ navigationController: UINavigationController) {
+        let myPageEditViewController = dependencies.myPageEditViewController()
+        addDismissEvent(myPageEditViewController)
+        myPageEditViewController.modalPresentationStyle = .fullScreen
+        navigationController.present(myPageEditViewController, animated: true)
     }
 }

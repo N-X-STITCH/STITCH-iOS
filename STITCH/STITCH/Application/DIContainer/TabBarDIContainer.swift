@@ -54,6 +54,24 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     // MARK: Create Match
     
+    // MARK: My Page
+    
+    func myPageViewModel() -> MyPageViewModel {
+        return MyPageViewModel()
+    }
+    
+    func myPageEditViewModel() -> MyPageEditViewModel {
+        return MyPageEditViewModel()
+    }
+    
+    func createdMatchViewModel() -> CreatedMatchViewModel {
+        return CreatedMatchViewModel()
+    }
+    
+    func settingViewModel() -> SettingViewModel {
+        return SettingViewModel()
+    }
+    
     // MARK: - ViewControllers
     
     func homeViewController() -> HomeViewController {
@@ -73,5 +91,23 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     func createMatchViewController() -> CreateMatchViewController {
         return CreateMatchViewController(createMatchViewModel: createMatchViewModel)
+    }
+    
+    // MARK: My Page
+    
+    func myPageViewController() -> MyPageViewController {
+        return MyPageViewController(myPageViewModel: myPageViewModel())
+    }
+    
+    func myPageEditViewController() -> MyPageEditViewController {
+        return MyPageEditViewController(myPageEditViewModel: myPageEditViewModel())
+    }
+    
+    func createdMatchViewController() -> CreatedMatchViewController {
+        return CreatedMatchViewController(createdMatchViewModel: createdMatchViewModel())
+    }
+    
+    func settingViewController() -> SettingViewController {
+        return SettingViewController(settingViewModel: settingViewModel())
     }
 }
