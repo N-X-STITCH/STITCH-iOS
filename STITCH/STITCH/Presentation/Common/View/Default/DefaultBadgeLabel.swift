@@ -37,8 +37,8 @@ class DefaultBadgeLabel: UILabel {
     
     init(
         text: String,
-        textColor: UIColor,
-        backgroundColor: UIColor,
+        textColor: UIColor = .yellow05_primary,
+        backgroundColor: UIColor = .gray11,
         font: UIFont? = .Caption2_10
     ) {
         super.init(frame: .zero)

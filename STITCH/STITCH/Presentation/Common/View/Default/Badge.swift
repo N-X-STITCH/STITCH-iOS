@@ -25,11 +25,7 @@ final class ClassBadge: DefaultBadgeLabel {
 final class SportBadge: DefaultBadgeLabel {
     
     init(sport: Sport) {
-        super.init(
-            text: sport.name,
-            textColor: .yellow05_primary,
-            backgroundColor: .gray11
-        )
+        super.init(text: sport.name)
     }
     
     required init?(coder: NSCoder) {

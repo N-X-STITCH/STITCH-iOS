@@ -44,4 +44,8 @@ final class MatchHeaderView: BaseCollectionReusableView {
             make.left.equalToSuperview()
         }
     }
+    
+    func setup(title text: String) {
+        titleLabel.text = text
+    }
 }
