@@ -88,6 +88,13 @@ final class MyPageViewController: BaseViewController {
         settingButton.rx.tap
             .withUnretained(self)
             .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.setting)
+            }
+            .disposed(by: disposeBag)
+        
+        editButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
                 owner.coordinatorPublisher.onNext(.next)
             }
             .disposed(by: disposeBag)

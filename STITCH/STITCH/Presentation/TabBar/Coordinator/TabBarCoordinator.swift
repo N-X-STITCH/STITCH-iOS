@@ -148,11 +148,16 @@ extension TabBarCoordinator {
 extension TabBarCoordinator {
     private func showMyPageViewController(_ navigationController: UINavigationController) {
         let myPageViewController = dependencies.myPageViewController()
-        addNextEventWithNav(
-            myPageViewController,
-            showMyPageEditViewController(_:),
-            navigationController
-        )
+        myPageViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .next = event {
+                    owner.showMyPageEditViewController(navigationController)
+                } else if case .setting = event {
+                    owner.showSettingViewController(navigationController)
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(myPageViewController, animated: true)
     }
     
@@ -161,5 +166,10 @@ extension TabBarCoordinator {
         addDismissEvent(myPageEditViewController)
         myPageEditViewController.modalPresentationStyle = .fullScreen
         navigationController.present(myPageEditViewController, animated: true)
+    }
+    
+    private func showSettingViewController(_ navigationController: UINavigationController) {
+        let settingViewController = dependencies.settingViewController()
+        navigationController.pushViewController(settingViewController, animated: true)
     }
 }

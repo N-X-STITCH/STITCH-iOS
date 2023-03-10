@@ -14,4 +14,5 @@ enum CoordinatorEvent {
     
     // Modal
     case dismiss
+    case setting
 }
