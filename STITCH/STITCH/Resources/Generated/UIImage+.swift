@@ -45,6 +45,13 @@ extension UIImage {
     static let minusCircle = UIImage(named: "minus-circle")
     static let clock = UIImage(named: "clock")
     
+    static let detailBottomGradient = UIImage(named: "detailBottomGradient")
+    static let calendar = UIImage(named: "calendar")
+    static let dollar = UIImage(named: "dollar-circle")
+    static let location = UIImage(named: "location")
+    static let peopleWhite = UIImage(named: "profile-2user")
+    static let success = UIImage(named: "success")
+    
     static let setting = UIImage(named: "setting")
     static let edit = UIImage(named: "edit")
     static let menu = UIImage(named: "menu")
