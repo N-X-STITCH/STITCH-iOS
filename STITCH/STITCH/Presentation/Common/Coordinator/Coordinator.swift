@@ -45,6 +45,16 @@ extension Coordinator {
         
     }
     
+    func addDismissEvent(_ viewController: BaseViewController) {
+        viewController.coordinatorPublisher
+            .subscribe { event in
+                if .dismiss == event {
+                    self.dismissViewController()
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
     func addNextEvent(
         _ viewController: BaseViewController,
         _ showViewController: @escaping () -> Void,

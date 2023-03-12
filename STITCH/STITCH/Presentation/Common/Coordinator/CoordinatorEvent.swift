@@ -11,4 +11,8 @@ enum CoordinatorEvent {
     case next
     case findLocation
     case selectMatchType
+    
+    // Modal
+    case dismiss
+    case setting
 }

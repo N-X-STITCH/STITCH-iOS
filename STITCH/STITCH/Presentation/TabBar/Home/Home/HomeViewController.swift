@@ -42,7 +42,8 @@ final class HomeViewController: BaseViewController {
     
     private lazy var matchCollectionView = MatchCollectionView(
         self,
-        layout: MatchCollectionViewLayout.layout()
+        layout: MatchCollectionViewLayout.layout(),
+        matchSection: .newMatch
     )
     
     private let locationButton = IconButton(iconButtonType: .location)
@@ -80,7 +81,7 @@ final class HomeViewController: BaseViewController {
     
     override func bind() {
         topScrollView.setImages()
-        matchCollectionView.setData(matchInfos: MatchInfo.dump())
+        matchCollectionView.setData(section: .newMatch, matchInfos: MatchInfo.dump())
         
         floatingButton.rx.tap
             .withUnretained(self)

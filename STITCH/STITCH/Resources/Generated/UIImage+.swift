@@ -21,7 +21,7 @@ extension UIImage {
     static let arrowRight = UIImage(named: "arrow-right")
     static let plus = UIImage(named: "add")
     static let arrowDown = UIImage(named: "arrow-down")
-    static let cameraIcon = UIImage(named: "cameraIcon")
+    static let cameraIcon = UIImage(named: "camera")
     static let home2 = UIImage(named: "home-2")
     static let gps = UIImage(named: "gps")
     static let searchGlasses = UIImage(named: "searchGlass")
@@ -41,7 +41,20 @@ extension UIImage {
     static let userCircle = UIImage(named: "user-circle")
     static let gallery = UIImage(named: "gallery")
     
-    static let plusCircle = UIImage(systemName: "plus.circle")
-    static let minusCircle = UIImage(systemName: "minus.circle")
-    static let clock = UIImage(systemName: "clock.fill")
+    static let plusCircle = UIImage(named: "add-circle")
+    static let minusCircle = UIImage(named: "minus-circle")
+    static let clock = UIImage(named: "clock")
+    
+    static let detailBottomGradient = UIImage(named: "detailBottomGradient")
+    static let calendar = UIImage(named: "calendar")
+    static let dollar = UIImage(named: "dollar-circle")
+    static let location = UIImage(named: "location")
+    static let peopleWhite = UIImage(named: "profile-2user")
+    static let success = UIImage(named: "success")
+    
+    static let setting = UIImage(named: "setting")
+    static let edit = UIImage(named: "edit")
+    static let menu = UIImage(named: "menu")
+    static let finish = UIImage(named: "finish")
+    static let xmark = UIImage(systemName: "xmark")
 }
