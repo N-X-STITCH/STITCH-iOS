@@ -12,6 +12,8 @@ enum IconButtonType {
     case apple
     case start
     case location
+    case matchJoin
+    case matchJoined
     
     var text: String {
         switch self {
@@ -19,6 +21,8 @@ enum IconButtonType {
         case .apple: return "Apple로 로그인"
         case .start: return "시작하기"
         case .location: return "상현동"
+        case .matchJoin: return "매치 참여하기"
+        case .matchJoined: return "현재 참여하고 있는 매치"
         }
     }
     
@@ -28,6 +32,8 @@ enum IconButtonType {
         case .apple: return .appleLogo
         case .start: return .myMatchSelect?.withTintColor(.gray12)
         case .location: return .arrowDown
+        case .matchJoin: return .myMatchSelect?.withTintColor(.gray12)
+        case .matchJoined: return nil
         }
     }
     
@@ -37,6 +43,8 @@ enum IconButtonType {
         case .apple: return .white
         case .start: return .yellow05_primary
         case .location: return UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        case .matchJoin: return .yellow05_primary
+        case .matchJoined: return .gray12
         }
     }
     
@@ -46,6 +54,8 @@ enum IconButtonType {
         case .apple: return .leading
         case .start: return .leading
         case .location: return .trailing
+        case .matchJoin: return .leading
+        case .matchJoined: return .leading
         }
     }
     
@@ -55,6 +65,8 @@ enum IconButtonType {
         case .apple: return .Body1_16
         case .start: return .Body1_16
         case .location: return .Subhead2_20
+        case .matchJoin: return .Body1_16
+        case .matchJoined: return .Body1_16
         }
     }
     
@@ -64,6 +76,8 @@ enum IconButtonType {
         case .apple: return .systemBackground
         case .start: return .systemBackground
         case .location: return .white
+        case .matchJoin: return .gray12
+        case .matchJoined: return .gray07
         }
     }
 }
@@ -98,9 +112,11 @@ final class IconButton: UIButton {
 
         var configuration = UIButton.Configuration.filled()
         configuration.titleAlignment = .center
-        configuration.image = iconButtonType.icon
-        configuration.imagePlacement = iconButtonType.direction
-        configuration.imagePadding = CGFloat(Constant.padding6)
+        if let _ = iconButtonType.icon {
+            configuration.image = iconButtonType.icon
+            configuration.imagePlacement = iconButtonType.direction
+            configuration.imagePadding = CGFloat(Constant.padding6)
+        }
         configuration.baseBackgroundColor = iconButtonType.backgroundColor
         configuration.attributedTitle = attributedString
         configuration.cornerStyle = .capsule

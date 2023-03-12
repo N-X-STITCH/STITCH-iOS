@@ -37,6 +37,9 @@
 		D8455A0D29BB5CE2006AF28B /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8455A0C29BB5CE2006AF28B /* SettingHeaderView.swift */; };
 		D8455A0F29BB5F4B006AF28B /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8455A0E29BB5F4B006AF28B /* SettingSection.swift */; };
 		D8455A1129BB6B70006AF28B /* SettingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8455A1029BB6B70006AF28B /* SettingFooterView.swift */; };
+		D8455A1429BB76BB006AF28B /* MatchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8455A1329BB76BB006AF28B /* MatchDetailViewController.swift */; };
+		D8455A1629BB76C4006AF28B /* MatchDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8455A1529BB76C4006AF28B /* MatchDetailViewModel.swift */; };
+		D8455A1829BB7A35006AF28B /* DefaultIconLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8455A1729BB7A35006AF28B /* DefaultIconLabelView.swift */; };
 		D850FC7029B4BFA100DC08C6 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC6F29B4BFA100DC08C6 /* FloatingButton.swift */; };
 		D850FC7A29B4CC6F00DC08C6 /* MatchTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC7929B4CC6F00DC08C6 /* MatchTypeCell.swift */; };
 		D850FC7C29B4CC7B00DC08C6 /* MatchTypeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850FC7B29B4CC7B00DC08C6 /* MatchTypeCollectionView.swift */; };
@@ -179,6 +182,9 @@
 		D8455A0C29BB5CE2006AF28B /* SettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
 		D8455A0E29BB5F4B006AF28B /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
 		D8455A1029BB6B70006AF28B /* SettingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFooterView.swift; sourceTree = "<group>"; };
+		D8455A1329BB76BB006AF28B /* MatchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailViewController.swift; sourceTree = "<group>"; };
+		D8455A1529BB76C4006AF28B /* MatchDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailViewModel.swift; sourceTree = "<group>"; };
+		D8455A1729BB7A35006AF28B /* DefaultIconLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultIconLabelView.swift; sourceTree = "<group>"; };
 		D850FC6F29B4BFA100DC08C6 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		D850FC7929B4CC6F00DC08C6 /* MatchTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTypeCell.swift; sourceTree = "<group>"; };
 		D850FC7B29B4CC7B00DC08C6 /* MatchTypeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTypeCollectionView.swift; sourceTree = "<group>"; };
@@ -428,6 +434,7 @@
 				D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */,
 				D868BA3D29A8F1CF00E80012 /* DefaultProgressView.swift */,
 				D868BA8529B05E8200E80012 /* DefaultBadgeLabel.swift */,
+				D8455A1729BB7A35006AF28B /* DefaultIconLabelView.swift */,
 				D868BAA829B206E600E80012 /* Badge.swift */,
 				D850FC9529B5BB2200DC08C6 /* Stepper.swift */,
 			);
@@ -441,6 +448,15 @@
 				D8455A1029BB6B70006AF28B /* SettingFooterView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D8455A1229BB7659006AF28B /* MatchDetail */ = {
+			isa = PBXGroup;
+			children = (
+				D8455A1329BB76BB006AF28B /* MatchDetailViewController.swift */,
+				D8455A1529BB76C4006AF28B /* MatchDetailViewModel.swift */,
+			);
+			path = MatchDetail;
 			sourceTree = "<group>";
 		};
 		D850FC7329B4CB4200DC08C6 /* CreateMatch */ = {
@@ -747,6 +763,7 @@
 				D860B5FD299C948400966683 /* TabBarPage.swift */,
 				D860B5FF299C955100966683 /* Coordinator */,
 				D850FC7329B4CB4200DC08C6 /* CreateMatch */,
+				D8455A1229BB7659006AF28B /* MatchDetail */,
 				D868BA6829AE3EFE00E80012 /* Home */,
 				D868BA6A29AE3F0A00E80012 /* MyMenu */,
 			);
@@ -1137,12 +1154,14 @@
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
 				D868BA8229B05C6600E80012 /* MatchCell.swift in Sources */,
 				D868BA3029A7C5D100E80012 /* ImagePickerController.swift in Sources */,
+				D8455A1829BB7A35006AF28B /* DefaultIconLabelView.swift in Sources */,
 				D850FC7E29B4D2DE00DC08C6 /* SelectMatchViewController.swift in Sources */,
 				D850FCA929B78D0200DC08C6 /* UIScrollView.swift in Sources */,
 				D850FC9629B5BB2200DC08C6 /* Stepper.swift in Sources */,
 				D868BA3E29A8F1CF00E80012 /* DefaultProgressView.swift in Sources */,
 				D868BA6229ADCF6500E80012 /* TabBarDIContainer.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
+				D8455A1629BB76C4006AF28B /* MatchDetailViewModel.swift in Sources */,
 				D8455A0429BB301B006AF28B /* MyPageViewModel.swift in Sources */,
 				D868BA9A29B07BE300E80012 /* Match.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
@@ -1214,6 +1233,7 @@
 				D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */,
 				D868BA7E29B0525700E80012 /* MatchHeaderView.swift in Sources */,
 				D8599AB6299E349000633192 /* AppDIContainer.swift in Sources */,
+				D8455A1429BB76BB006AF28B /* MatchDetailViewController.swift in Sources */,
 				D860B61F299D199A00966683 /* SignupRepository.swift in Sources */,
 				D868BA8D29B05F8600E80012 /* MatchType.swift in Sources */,
 				D8455A0229BB2C7A006AF28B /* MatchSection.swift in Sources */,
