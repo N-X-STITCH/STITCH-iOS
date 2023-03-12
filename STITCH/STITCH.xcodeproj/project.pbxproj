@@ -13,6 +13,7 @@
 		D805FDD629A5B2980007E63D /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDD529A5B2980007E63D /* Sport.swift */; };
 		D805FDDC29A5B4AD0007E63D /* SportsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */; };
 		D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDD29A5B4B60007E63D /* SportsCell.swift */; };
+		D809290629BD9D670012C459 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D809290529BD9D670012C459 /* Service-Info.plist */; };
 		D820258829A21E2C00892CE8 /* DefaultToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258729A21E2B00892CE8 /* DefaultToolbar.swift */; };
 		D820258A29A2208300892CE8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258929A2208300892CE8 /* ProfileViewController.swift */; };
 		D820258C29A220CC00892CE8 /* DefaultProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */; };
@@ -160,6 +161,7 @@
 		D805FDD529A5B2980007E63D /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
 		D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCollectionView.swift; sourceTree = "<group>"; };
 		D805FDDD29A5B4B60007E63D /* SportsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCell.swift; sourceTree = "<group>"; };
+		D809290529BD9D670012C459 /* Service-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		D820258729A21E2B00892CE8 /* DefaultToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToolbar.swift; sourceTree = "<group>"; };
 		D820258929A2208300892CE8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileImageView.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 		D857612F299BCFF800F1AFEB /* STITCH */ = {
 			isa = PBXGroup;
 			children = (
+				D809290529BD9D670012C459 /* Service-Info.plist */,
 				D84559EA29BA289E006AF28B /* GoogleService-Info.plist */,
 				D868BA6329ADD8A200E80012 /* STITCH.entitlements */,
 				D868BA4129AA1B3900E80012 /* temp */,
@@ -1114,6 +1117,7 @@
 				D85AA33C29B4A0B9004B0A8B /* fireworks.json in Resources */,
 				D8599A99299E012300633192 /* Images.xcassets in Resources */,
 				D8599AAD299E2D8500633192 /* Pretendard-Regular.otf in Resources */,
+				D809290629BD9D670012C459 /* Service-Info.plist in Resources */,
 				D84559EB29BA289E006AF28B /* GoogleService-Info.plist in Resources */,
 				D860B5D1299BD8A100966683 /* Localizable.strings in Resources */,
 				D857613A299BCFFA00F1AFEB /* Colors.xcassets in Resources */,
