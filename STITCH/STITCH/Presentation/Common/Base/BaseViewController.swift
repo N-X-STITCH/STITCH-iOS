@@ -67,9 +67,12 @@ extension BaseViewController {
 extension BaseViewController {
 }
 
-// MARK: - Gridient
+// MARK: - Keyboard
 
 extension BaseViewController {
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 // MARK: - Haptic
