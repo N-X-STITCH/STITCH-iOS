@@ -136,15 +136,18 @@ extension SetLocationViewController: NMFMapViewCameraDelegate {
         currentLocation = center
         moveMarker(to: center)
     }
+    
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        // TODO: 위치 정보 가져오기, 근데 움직일때 말고 멈췄을때
+        let center = mapView.projection.latlng(from: CGPoint(
+            x: view.frame.midX, y: view.frame.midY - 50)
+        )
+    }
 }
 
 // MARK: - NMFLocationManagerDelegate
 
 extension SetLocationViewController: NMFLocationManagerDelegate {
-    @nonobjc func locationManager(_ locationManager: NMFLocationManager!, didUpdate newHeading: CLHeading!) {
-        let location = mapView.projection.latlng(from: CGPoint(x: newHeading.x, y: newHeading.y))
-        currentLocation = location
-    }
 }
 
 // MARK: - CLLocationManagerDelegate
