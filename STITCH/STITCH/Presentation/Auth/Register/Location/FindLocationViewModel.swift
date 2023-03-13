@@ -17,7 +17,7 @@ final class FindLocationViewModel: ViewModel {
     }
     
     struct Output {
-        let configureCollectionViewData: Observable<[String]>
+        let configureCollectionViewData: Observable<[LocationInfo]>
     }
     
     // MARK: - Properties
@@ -37,10 +37,10 @@ final class FindLocationViewModel: ViewModel {
         let configureCollectionViewData = input.configureCollectionView
             .flatMap { _ in
                 return Observable.just([
-                    "경기도 수원시 영통구 광교2동",
-                    "경기도 수원시 영통구 광교3동",
-                    "경기도 수원시 영통구 광교4동",
-                    "경기도 수원시 영통구 광교5동"
+                    LocationInfo(address: "경기도 수원시 영통구 광교2동"),
+                    LocationInfo(address: "경기도 수원시 영통구 광교3동"),
+                    LocationInfo(address: "경기도 수원시 영통구 광교4동"),
+                    LocationInfo(address: "경기도 수원시 영통구 광교5동")
                 ])
             }
             .asObservable()
