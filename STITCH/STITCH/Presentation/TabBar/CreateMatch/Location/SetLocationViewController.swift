@@ -59,7 +59,6 @@ final class SetLocationViewController: BaseViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-//        mapView.touchDelegate = self
         mapView.addCameraDelegate(delegate: self)
     }
     
@@ -124,14 +123,6 @@ extension SetLocationViewController {
         let cameraUpdate = NMFCameraUpdate(scrollTo: location)
         cameraUpdate.animation = .fly
         mapView.moveCamera(cameraUpdate)
-    }
-}
-
-// MARK: - NMFMapViewTouchDelegate
-
-extension SetLocationViewController: NMFMapViewTouchDelegate {
-    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        moveMarker(to: latlng)
     }
 }
 
