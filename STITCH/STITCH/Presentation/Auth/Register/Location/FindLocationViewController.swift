@@ -5,6 +5,7 @@
 //  Created by neuli on 2023/02/20.
 //
 
+import CoreLocation
 import UIKit
 
 import RxSwift
@@ -56,6 +57,12 @@ final class FindLocationViewController: BaseViewController {
     
     private let findLocationViewModel: FindLocationViewModel
     
+    private lazy var locationManager = CLLocationManager().then {
+        $0.delegate = self
+        $0.desiredAccuracy = kCLLocationAccuracyBest
+        $0.distanceFilter = kCLDistanceFilterNone
+    }
+    
     // MARK: - Initializer
     
     init(findLocationViewModel: FindLocationViewModel) {
@@ -66,9 +73,33 @@ final class FindLocationViewController: BaseViewController {
     // MARK: - Methods
     
     override func setting() {
+        // TODO: 권한을 받아 온 후에 근처 리스트
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     override func bind() {
+        locationManager.rx.didChangeAuthorization.asObservable()
+            .filter { $0 == .authorizedAlways || $0 == .authorizedWhenInUse }
+            .subscribe { authorizationStatus in
+                print(authorizationStatus)
+            }
+            .disposed(by: disposeBag)
+        
+        locationManager.rx.didChangeLocation.asObservable()
+            .take(1)
+            .subscribe { location in
+                print(location.coordinate.longitude, location.coordinate.latitude)
+            }
+            .disposed(by: disposeBag)
+        
+        locationManager.rx.didFailWithError.asObservable()
+            .subscribe { error in
+                print("locationManager Failed: \(error.debugDescription)")
+            }
+            .disposed(by: disposeBag)
+        
+        
         let input = FindLocationViewModel.Input(
             configureCollectionView: Single<Void>.just(()).asObservable()
         )
@@ -123,6 +154,35 @@ final class FindLocationViewController: BaseViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension FindLocationViewController: UICollectionViewDelegate {
     
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension FindLocationViewController: CLLocationManagerDelegate {
+    func findAddress(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "Ko-kr")
+        
+        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) {
+            marks, error in
+            if let error {
+                print("주소 geocode 에러: \(error.localizedDescription)")
+                return
+            }
+            if let mark: CLPlacemark = marks?.last {
+                print("== CoreLocation Framework ==")
+                print("subThoroughfare : \(mark.subThoroughfare ?? "")")
+                print("country : \(mark.country ?? "")")
+                print("administrativeArea : \(mark.administrativeArea ?? "")")
+                print("locality : \(mark.locality ?? "")")
+                print("name : \(mark.name ?? "")")
+                print("description : \(mark.description)")
+            }
+        }
+    }
 }
