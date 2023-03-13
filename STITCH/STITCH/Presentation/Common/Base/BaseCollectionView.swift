@@ -11,7 +11,7 @@ class BaseCollectionView: UICollectionView {
     
     // MARK: - Initializer
     
-    init(_ delegate: UICollectionViewDelegate,
+    init(_ delegate: UICollectionViewDelegate? = nil,
          layout: UICollectionViewLayout
     ) {
         super.init(frame: .zero, collectionViewLayout: layout)
@@ -27,8 +27,10 @@ class BaseCollectionView: UICollectionView {
     
     // MARK: - Methods
     
-    func configure(delegate: UICollectionViewDelegate) {
-        self.delegate = delegate
+    func configure(delegate: UICollectionViewDelegate?) {
+        if let delegate {
+            self.delegate = delegate
+        }
     }
     
     func configureUI() {}
