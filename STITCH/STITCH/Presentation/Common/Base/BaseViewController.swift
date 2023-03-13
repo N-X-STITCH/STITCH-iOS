@@ -23,10 +23,14 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        configureNavigation()
-        configureNavigationBar()
         bind()
         setting()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigation()
+        configureNavigationBar()
     }
     
     init() {
