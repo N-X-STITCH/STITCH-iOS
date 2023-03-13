@@ -21,6 +21,8 @@ final class SetLocationViewController: BaseViewController {
         static let padding20 = 20
         static let padding24 = 24
         static let padding32 = 32
+        static let gpsBottomPadding = 130
+        static let bottomPadding = 210
     }
     
     private lazy var mapView = NMFMapView(frame: view.frame)
@@ -28,6 +30,8 @@ final class SetLocationViewController: BaseViewController {
     private let gpsButton = UIButton().then {
         $0.setImage(.mapGPS, for: .normal)
     }
+    
+    private let searchPlaceView = SearchPlaceView()
     
     // MARK: Properties
     
@@ -38,6 +42,11 @@ final class SetLocationViewController: BaseViewController {
         $0.desiredAccuracy = kCLLocationAccuracyBest
         $0.distanceFilter = kCLDistanceFilterNone
     }
+    
+    private var panGestureRecognizer: UIPanGestureRecognizer!
+    private var searchPlaceViewHeightConstraint: NSLayoutConstraint!
+    private let minimumHeight: CGFloat = 36
+    private let maximumHeight: CGFloat = UIScreen.main.bounds.height - CGFloat(Constant.bottomPadding)
     
     private let createMatchViewModel: CreateMatchViewModel
     private let setLocationViewModel: SetLocationViewModel
@@ -59,7 +68,9 @@ final class SetLocationViewController: BaseViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
+        searchPlaceView.locationResultCollectionView.delegate = self
         mapView.addCameraDelegate(delegate: self)
+        configureMapView()
     }
     
     override func bind() {
@@ -73,6 +84,26 @@ final class SetLocationViewController: BaseViewController {
                 owner.moveCamera(to: location)
             }
             .disposed(by: disposeBag)
+        
+        searchPlaceView.searchTextField.rx.controlEvent([.editingDidBegin])
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.showBottomSheetView()
+            }
+            .disposed(by: disposeBag)
+        
+        let input = SetLocationViewModel.Input(
+            viewDidLoad: Single<Void>.just(()).asObservable()
+        )
+        
+        let output = setLocationViewModel.transform(input: input)
+        
+        output.configureCollectionViewData
+            .withUnretained(self)
+            .subscribe { owner, locations in
+                owner.searchPlaceView.locationResultCollectionView.setData(locations)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureUI() {
@@ -80,6 +111,7 @@ final class SetLocationViewController: BaseViewController {
         
         view.addSubview(mapView)
         view.addSubview(gpsButton)
+        view.addSubview(searchPlaceView)
         
         mapView.snp.updateConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide)
@@ -88,18 +120,25 @@ final class SetLocationViewController: BaseViewController {
         
         gpsButton.snp.makeConstraints { make in
             make.right.equalToSuperview().inset(Constant.padding20)
-            make.bottom.equalToSuperview().inset(Constant.padding24)
+            make.bottom.equalToSuperview().inset(Constant.gpsBottomPadding)
         }
         
-        configureMapView()
+        configureBottomSheetView()
     }
     
     override func configureNavigation() {
         navigationController?.navigationBar.barTintColor = .background
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hideKeyboard()
+    }
 }
 
 extension SetLocationViewController {
+    
+    // MARK: Map
+    
     private func configureMapView() {
         let center = mapView.projection.latlng(from: CGPoint(
             x: view.frame.midX, y: view.frame.midY - 50)
@@ -123,6 +162,61 @@ extension SetLocationViewController {
         let cameraUpdate = NMFCameraUpdate(scrollTo: location)
         cameraUpdate.animation = .fly
         mapView.moveCamera(cameraUpdate)
+    }
+    
+    // MARK: Bottom Sheet
+    
+    private func configureBottomSheetView() {
+        let topConstant: CGFloat = maximumHeight
+        searchPlaceViewHeightConstraint = searchPlaceView.topAnchor.constraint(
+            equalTo: view.layoutMarginsGuide.topAnchor,
+            constant: topConstant
+        )
+        searchPlaceView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+        }
+        NSLayoutConstraint.activate([searchPlaceViewHeightConstraint])
+        
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        panGestureRecognizer.delaysTouchesBegan = false
+        panGestureRecognizer.delaysTouchesEnded = false
+        searchPlaceView.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    @objc private func handlePanGesture(_ sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+        let yTranslation = translation.y
+
+        switch sender.state {
+        case .changed:
+            let newHeight = searchPlaceViewHeightConstraint.constant - yTranslation
+            searchPlaceViewHeightConstraint.constant = max(minimumHeight, min(newHeight, maximumHeight))
+            sender.setTranslation(.zero, in: view)
+        case .ended:
+            let velocity = sender.velocity(in: view).y
+            if velocity > 0 {
+                hideBottomSheetView()
+            } else if velocity < 0 {
+                showBottomSheetView()
+            }
+        default:
+            break
+        }
+    }
+    
+    private func showBottomSheetView() {
+        searchPlaceViewHeightConstraint.constant = minimumHeight
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func hideBottomSheetView() {
+        searchPlaceViewHeightConstraint.constant = maximumHeight
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+        hideKeyboard()
     }
 }
 
@@ -153,5 +247,11 @@ extension SetLocationViewController: NMFLocationManagerDelegate {
 // MARK: - CLLocationManagerDelegate
 
 extension SetLocationViewController: CLLocationManagerDelegate {
+    
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension SetLocationViewController: UICollectionViewDelegate {
     
 }
