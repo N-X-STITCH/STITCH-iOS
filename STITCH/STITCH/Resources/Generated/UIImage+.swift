@@ -44,6 +44,8 @@ extension UIImage {
     static let plusCircle = UIImage(named: "add-circle")
     static let minusCircle = UIImage(named: "minus-circle")
     static let clock = UIImage(named: "clock")
+    static let marker = UIImage(named: "marker")
+    static let mapGPS = UIImage(named: "mapGPS")
     
     static let detailBottomGradient = UIImage(named: "detailBottomGradient")
     static let calendar = UIImage(named: "calendar")
