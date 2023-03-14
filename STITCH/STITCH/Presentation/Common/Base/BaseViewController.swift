@@ -109,19 +109,21 @@ extension BaseViewController {
         tintColor: UIColor? = .gray04,
         icon: UIImage?
     ) {
-        let toastMessage = toastMessageView(text: text, tintColor: tintColor, icon: icon)
-        
-        view.addSubview(toastMessage)
-        toastMessage.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
-            make.height.equalTo(48)
-        }
-        
-        UIView.animate(withDuration: 2.0, delay: 1.0, options: [.curveEaseOut]) {
-            toastMessage.alpha = 0.0
-        } completion: { _ in
-            toastMessage.removeFromSuperview()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let toastMessage = self.toastMessageView(text: text, tintColor: tintColor, icon: icon)
+            self.view.addSubview(toastMessage)
+            toastMessage.snp.makeConstraints { make in
+                make.left.right.equalToSuperview().inset(16)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(16)
+                make.height.equalTo(48)
+            }
+            
+            UIView.animate(withDuration: 2.0, delay: 1.0, options: [.curveEaseOut]) {
+                toastMessage.alpha = 0.0
+            } completion: { _ in
+                toastMessage.removeFromSuperview()
+            }
         }
     }
     
