@@ -161,7 +161,7 @@ enum MatchCollectionViewLayout {
         static let groupHeight = 112
     }
     
-    static func layout() -> UICollectionViewLayout {
+    static func layout(matchSection: MatchSection) -> UICollectionViewLayout {
         let sectionProvider = {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
             -> NSCollectionLayoutSection? in
@@ -186,19 +186,25 @@ enum MatchCollectionViewLayout {
                 trailing: 0
             )
             
-            let headerSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(CGFloat(Constant.headerHeight))
-            )
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: MatchCollectionView.sectionHeaderElementKind,
-                alignment: .top
-            )
-            let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = CGFloat(Constant.padding24)
-            section.boundarySupplementaryItems = [sectionHeader]
-            return section
+            if matchSection != .none {
+                let headerSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(CGFloat(Constant.headerHeight))
+                )
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: MatchCollectionView.sectionHeaderElementKind,
+                    alignment: .top
+                )
+                let section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = CGFloat(Constant.padding24)
+                section.boundarySupplementaryItems = [sectionHeader]
+                return section
+            } else {
+                let section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = CGFloat(Constant.padding24)
+                return section
+            }
         }
         
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
@@ -231,7 +237,7 @@ enum MatchTypeCollectionViewLayout {
                 subitems: [item]
             )
             group.edgeSpacing = NSCollectionLayoutEdgeSpacing(
-                leading: nil, top: nil, trailing: nil, bottom: .fixed(12)
+                leading: nil, top: nil, trailing: nil, bottom: .fixed(CGFloat(Constant.padding12))
             )
             
             let section = NSCollectionLayoutSection(group: group)
@@ -242,3 +248,41 @@ enum MatchTypeCollectionViewLayout {
     }
 }
 
+enum SportCategoryCollectionViewLayout {
+    
+    enum Constant {
+        static let padding12 = 12
+        static let groupWidth = 52
+        static let groupHeight = 74
+    }
+    
+    static func layout() -> UICollectionViewLayout {
+        let sectionProvider = {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
+            -> NSCollectionLayoutSection? in
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .absolute(CGFloat(Constant.groupWidth)),
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .absolute(CGFloat(Constant.groupWidth)),
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
+            )
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            group.edgeSpacing = NSCollectionLayoutEdgeSpacing(
+                leading: .fixed(CGFloat(Constant.padding12)), top: nil, trailing: nil, bottom: nil
+            )
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            return section
+        }
+        
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+    }
+}
