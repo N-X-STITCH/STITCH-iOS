@@ -14,18 +14,25 @@ final class AppDIContainer {
         return DefaultURLSessionNetworkService(config: config)
     }()
     
-    lazy var userDefaultsService: UserDefaultsService = DefaultUserDefaultsService()
+    let userDefaultsService: UserDefaultsService = DefaultUserDefaultsService()
+    
+    lazy var userUseCase: UserUseCase = DefaultUserUseCase(userStorage: userStorage)
+    private lazy var userStorage: UserStorage = DefaultUserStorage(userDefaultsService: userDefaultsService)
     
     func makeAuthSceneDIContainer() -> AuthDIContainer {
         let dependencies = AuthDIContainer.Dependencies(
             urlsessionNetworkService: urlsessionNetworkService,
-            userDefaultsService: userDefaultsService
+            userDefaultsService: userDefaultsService,
+            userUseCase: userUseCase
         )
         return AuthDIContainer(dependencies: dependencies)
     }
     
     func makeTabBarDIContainer() -> TabBarDIContainer {
-        let dependencies = TabBarDIContainer.Dependencies(urlsessionNetworkService: urlsessionNetworkService)
+        let dependencies = TabBarDIContainer.Dependencies(
+            urlsessionNetworkService: urlsessionNetworkService,
+            userUseCase: userUseCase
+        )
         return TabBarDIContainer(dependencies: dependencies)
     }
 }
