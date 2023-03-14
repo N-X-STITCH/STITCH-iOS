@@ -44,13 +44,14 @@ final class AppCoordinator: AppCoordinatorProtocol {
     func start() {
         userUseCase.savedUser()
             .take(1)
-            .subscribe (onNext: { user in
+            .asDriver(onErrorJustReturn: nil)
+            .drive { user in
                 if let _ = user {
                     self.showTabFlow()
                 } else {
                     self.showAuthFlow()
                 }
-            })
+            }
             .disposed(by: disposeBag)
     }
     
