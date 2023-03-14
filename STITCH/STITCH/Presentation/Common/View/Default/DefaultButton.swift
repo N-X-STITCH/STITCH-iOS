@@ -38,7 +38,9 @@ final class DefaultButton: UIButton {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+extension UIButton {
     func setButtonBackgroundColor(_ isEnabled: Bool) {
         backgroundColor = isEnabled ? .yellow05_primary : .gray12
     }
