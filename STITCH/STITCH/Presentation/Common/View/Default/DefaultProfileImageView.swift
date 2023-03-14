@@ -16,7 +16,11 @@ final class DefaultProfileImageView: UIImageView {
         static let gradationWidth = 2
     }
     
-    var isGradient = false
+    var isGradient = false {
+        didSet {
+            set(isLayer: isGradient)
+        }
+    }
     
     private lazy var gradientLayer = CAGradientLayer().then {
         $0.colors = [UIColor.yellow05_primary, UIColor.yellow07]
@@ -25,7 +29,7 @@ final class DefaultProfileImageView: UIImageView {
     private lazy var shapeLayer = CAShapeLayer().then {
         $0.lineWidth = CGFloat(Constant.lineWidth)
         $0.strokeColor = UIColor.black.cgColor
-        $0.fillColor = UIColor.clear.cgColor
+        $0.fillColor = UIColor.cyan.cgColor
     }
     
     // MARK: - Initializer
@@ -33,12 +37,12 @@ final class DefaultProfileImageView: UIImageView {
     init(_ isGradient: Bool = false) {
         super.init(frame: .zero)
         clipsToBounds = true
-        image = UIImage(systemName: "person.crop.circle.fill")?
+        image = UIImage(systemName: "circle.fill")?
             .withTintColor(.white, renderingMode: .alwaysOriginal)
         contentMode = .scaleAspectFill
-        backgroundColor = .gray09
-        
+        backgroundColor = .clear
         self.isGradient = isGradient
+        set(isLayer: isGradient)
     }
     
     override func layoutSubviews() {
@@ -63,4 +67,13 @@ final class DefaultProfileImageView: UIImageView {
     }
     
     // MARK: - Methods
+    
+    private func set(isLayer: Bool) {
+        if isLayer {
+            layer.borderWidth = 1
+            layer.borderColor = UIColor.yellow05_primary.cgColor
+        } else {
+            layer.borderWidth = 0
+        }
+    }
 }
