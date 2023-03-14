@@ -62,7 +62,7 @@ final class MyPageViewController: BaseViewController {
     
     private lazy var createdMatchCollectionView = MatchCollectionView(
         self,
-        layout: MatchCollectionViewLayout.layout(),
+        layout: MatchCollectionViewLayout.layout(matchSection: .createdMatchList(nickname: "")),
         matchSection: .createdMatchList(nickname: "")
     )
     

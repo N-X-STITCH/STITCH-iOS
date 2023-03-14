@@ -12,6 +12,8 @@ import RxSwift
 protocol TabBarCoordinatorDependencies {
     // Home
     func homeViewController() -> HomeViewController
+    // Category
+    func matchCategoryViewController() -> MatchCategoryViewController
     // Create Match
     func selectMatchViewController() -> SelectMatchViewController
     func selectSportViewController() -> SelectSportViewController
@@ -82,7 +84,7 @@ extension TabBarCoordinator {
         case .home:
             showHomeViewController(navigationController)
         case .category:
-            navigationController.pushViewController(UIViewController(), animated: true)
+            showMatchCategoryViewController(navigationController)
         case .myMatch:
             navigationController.pushViewController(UIViewController(), animated: true)
         case .myMenu:
@@ -138,6 +140,23 @@ extension TabBarCoordinator {
             navigationController
         )
         navigationController.pushViewController(selectSportViewController, animated: true)
+    }
+}
+
+// MARK: - Match Category
+
+extension TabBarCoordinator {
+    private func showMatchCategoryViewController(_ navigationController: UINavigationController) {
+        let matchCategoryViewController = dependencies.matchCategoryViewController()
+        matchCategoryViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .selectMatchType = event {
+                    owner.showSelectMatchViewController(navigationController)
+                }
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(matchCategoryViewController, animated: true)
     }
 }
 

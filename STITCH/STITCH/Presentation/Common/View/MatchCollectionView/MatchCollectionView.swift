@@ -65,6 +65,10 @@ final class MatchCollectionView: BaseCollectionView {
             )
         }
         
+        if case .none = matchSection {
+            return
+        }
+        
         matchDataSource.supplementaryViewProvider = {
             collectionView, kind, indexPath -> UICollectionReusableView in
             guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(

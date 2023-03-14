@@ -34,7 +34,7 @@ final class InterestedSportsViewModel: ViewModel {
     func transform(input: Input) -> Output {
         
         let configureCollectionViewData = input.configureCollectionView
-            .flatMap { return Observable.just(Sport.allCases).asObservable() }
+            .flatMap { return Observable.just(Array(Sport.allCases[1...])).asObservable() }
             .asObservable()
         
         let selectedIndexPath = BehaviorRelay<[IndexPath]>(value: [])

@@ -56,6 +56,12 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return HomeViewModel()
     }
     
+    // MARK: Match
+    
+    func matchCategoryViewModel() -> MatchCategoryViewModel {
+        return MatchCategoryViewModel()
+    }
+    
     // MARK: Create Match
     
     func makeCreateMatchViewModel() -> CreateMatchViewModel {
@@ -90,6 +96,12 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     func homeViewController() -> HomeViewController {
         return HomeViewController(homeViewModel: homeViewModel())
+    }
+    
+    // MARK: Match
+    
+    func matchCategoryViewController() -> MatchCategoryViewController {
+        return MatchCategoryViewController(matchCategoryViewModel: matchCategoryViewModel())
     }
     
     // MARK: Create Match

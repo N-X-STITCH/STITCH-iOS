@@ -42,7 +42,7 @@ final class HomeViewController: BaseViewController {
     
     private lazy var matchCollectionView = MatchCollectionView(
         self,
-        layout: MatchCollectionViewLayout.layout(),
+        layout: MatchCollectionViewLayout.layout(matchSection: .newMatch),
         matchSection: .newMatch
     )
     

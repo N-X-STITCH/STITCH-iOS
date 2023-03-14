@@ -114,7 +114,7 @@ final class InterestedInSportsViewController: BaseViewController {
             .withUnretained(self)
             .subscribe { owner,  _ in
                 owner.coordinatorPublisher.onNext(.next)
-                let sports = output.selectedIndexPath.value.map { Sport.allCases[$0.row] }
+                let sports = output.selectedIndexPath.value.map { Sport.allCases[$0.row + 1] }
                 owner.signupViewModel.sports = sports
             }
             .disposed(by: disposeBag)
