@@ -122,9 +122,8 @@ final class LoginViewController: BaseViewController {
                 owner.signupViewModel.loginInfo = loginInfo
                 owner.kakaoLoginService.initializeLoginInfo()
                 owner.appleLoginService.initializeLoginInfo()
-            }, onError: { error in
-                // TODO: 토스트 메세지 :: 로그인에 실패했습니다.
-                print("로그인 실패 \(error.localizedDescription)")
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
             })
             .disposed(by: disposeBag)
         
