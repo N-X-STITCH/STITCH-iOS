@@ -12,12 +12,11 @@ import RxSwift
 final class LoginViewModel: ViewModel {
     
     struct Input {
-        let kakaoLoginInfo: Observable<LoginInfo>
-        let appleLoginInfo: Observable<LoginInfo>
+        let loginInfo: Observable<LoginInfo>
     }
     
     struct Output {
-//        let loginResult: Observable<LoginInfo>
+        let signupedUser: Observable<Bool>
     }
     
     // MARK: - Properties
@@ -35,7 +34,14 @@ final class LoginViewModel: ViewModel {
     // MARK: - Methods
     
     func transform(input: Input) -> Output {
-
-        return Output()
+        let signupedUser = input.loginInfo
+            .withUnretained(self)
+            .flatMap { owner, loginInfo in
+                print("보내는 아이디")
+                print(loginInfo)
+                return owner.signupUseCase.isSignuped(userID: loginInfo.id)
+            }
+        
+        return Output(signupedUser: signupedUser)
     }
 }

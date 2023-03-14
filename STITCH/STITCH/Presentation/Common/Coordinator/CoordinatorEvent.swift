@@ -13,6 +13,9 @@ enum CoordinatorEvent {
     case dismiss
     case pop
     
+    // login
+    case showHome
+    
     // Sign up
     case findLocation
     

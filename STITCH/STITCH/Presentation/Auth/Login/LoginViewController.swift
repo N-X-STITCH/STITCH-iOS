@@ -102,26 +102,44 @@ final class LoginViewController: BaseViewController {
     // MARK: - Methods
     
     override func bind() {
-        
-        kakaoLoginButton.rx.tap
+        let kakaoLogin = kakaoLoginButton.rx.tap
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
-            .flatMap { _ in self.kakaoLoginService.login() }
+            .flatMap { _ in return self.kakaoLoginService.login() }
+            .share()
+
+        let appleLogin = appleLoginButton.rx.tap
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .flatMap { _ in return self.appleLoginService.login() }
+            .share()
+        
+        let login = Observable.of(kakaoLogin, appleLogin).merge()
+            .share()
+        
+        login
             .withUnretained(self)
-            .subscribe { owner, loginInfo in
+            .subscribe (onNext: { owner, loginInfo in
+                print("로그인됨", loginInfo)
                 owner.signupViewModel.loginInfo = loginInfo
-                owner.coordinatorPublisher.onNext(.next)
                 owner.kakaoLoginService.initializeLoginInfo()
-            }
+                owner.appleLoginService.initializeLoginInfo()
+            }, onError: { error in
+                // TODO: 토스트 메세지 :: 로그인에 실패했습니다.
+                print("로그인 실패 \(error.localizedDescription)")
+            })
             .disposed(by: disposeBag)
         
-        appleLoginButton.rx.tap
-            .throttle(.seconds(2), scheduler: MainScheduler.instance)
-            .flatMap { _ in self.appleLoginService.login() }
+        let loginInput = LoginViewModel.Input(loginInfo: login)
+        let loginOutput = loginViewModel.transform(input: loginInput)
+        
+        loginOutput.signupedUser
             .withUnretained(self)
-            .subscribe { owner, loginInfo in
-                owner.signupViewModel.loginInfo = loginInfo
-                owner.coordinatorPublisher.onNext(.next)
-                owner.appleLoginService.initializeLoginInfo()
+            .subscribe { owner, isSignuped in
+                print("가입이 되었는지", isSignuped)
+                if isSignuped {
+                    owner.coordinatorPublisher.onNext(.showHome)
+                } else {
+                    owner.coordinatorPublisher.onNext(.next)
+                }
             }
             .disposed(by: disposeBag)
     }

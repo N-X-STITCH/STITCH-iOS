@@ -108,6 +108,7 @@
 		D860B633299DF5A200966683 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D860B632299DF5A200966683 /* RxCocoa */; };
 		D860B635299DF5A200966683 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D860B634299DF5A200966683 /* RxRelay */; };
 		D860B637299DF5A200966683 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D860B636299DF5A200966683 /* RxSwift */; };
+		D863D95A29C071B4006E99B6 /* Observable+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863D95929C071B4006E99B6 /* Observable+Data.swift */; };
 		D868BA2B29A7B4DF00E80012 /* ProfileText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA2A29A7B4DF00E80012 /* ProfileText.swift */; };
 		D868BA3029A7C5D100E80012 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA2F29A7C5D100E80012 /* ImagePickerController.swift */; };
 		D868BA3429A89A2100E80012 /* LocationResultCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BA3329A89A2100E80012 /* LocationResultCollectionView.swift */; };
@@ -259,6 +260,7 @@
 		D860B61A299CF3F100966683 /* SignupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupUseCase.swift; sourceTree = "<group>"; };
 		D860B61E299D199A00966683 /* SignupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRepository.swift; sourceTree = "<group>"; };
 		D860B621299D19DA00966683 /* DefaultSignupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignupRepository.swift; sourceTree = "<group>"; };
+		D863D95929C071B4006E99B6 /* Observable+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Data.swift"; sourceTree = "<group>"; };
 		D868BA2A29A7B4DF00E80012 /* ProfileText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileText.swift; sourceTree = "<group>"; };
 		D868BA2F29A7C5D100E80012 /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		D868BA3329A89A2100E80012 /* LocationResultCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultCollectionView.swift; sourceTree = "<group>"; };
@@ -828,6 +830,7 @@
 				D87BD889299E766D003A1B76 /* UIButton+.swift */,
 				D850FC9729B5D4A000DC08C6 /* UIView+.swift */,
 				D850FCA829B78D0200DC08C6 /* UIScrollView.swift */,
+				D863D95929C071B4006E99B6 /* Observable+Data.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1281,6 +1284,7 @@
 				D850FCA729B72EC200DC08C6 /* TimePickerView.swift in Sources */,
 				D8455A1129BB6B70006AF28B /* SettingFooterView.swift in Sources */,
 				D8599AB8299E349C00633192 /* AuthDIContainer.swift in Sources */,
+				D863D95A29C071B4006E99B6 /* Observable+Data.swift in Sources */,
 				D868BA4029A8FAA400E80012 /* SignupViewModel.swift in Sources */,
 				D868BA7629B04D2600E80012 /* TopScrollView.swift in Sources */,
 				D860B5F3299C8DB000966683 /* BaseViewController.swift in Sources */,
