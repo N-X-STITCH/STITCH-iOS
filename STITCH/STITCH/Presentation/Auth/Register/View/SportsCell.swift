@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SportsCell: UICollectionViewCell {
+final class SportsCell: BaseCollectionViewCell {
     
     enum Constant {
         static let width = 88
@@ -42,18 +42,9 @@ final class SportsCell: UICollectionViewCell {
     
     // MARK: - Initializer
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Methods
     
-    private func configureUI() {
+    override func configureUI() {
         contentView.backgroundColor = .gray12.withAlphaComponent(CGFloat(Constant.alpha))
         contentView.layer.cornerRadius = CGFloat(Constant.radius12)
         

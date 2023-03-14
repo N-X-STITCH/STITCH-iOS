@@ -155,6 +155,8 @@
 		D8795E3629BF173E004856EF /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3529BF173E004856EF /* SearchPlaceView.swift */; };
 		D8795E3929BF3AD8004856EF /* LocationResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3829BF3AD8004856EF /* LocationResultCell.swift */; };
 		D8795E3C29BF3B3D004856EF /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3B29BF3B3D004856EF /* LocationInfo.swift */; };
+		D8795E4029C01168004856EF /* SportCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3F29C01168004856EF /* SportCategoryCell.swift */; };
+		D8795E4229C01172004856EF /* SportCategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E4129C01172004856EF /* SportCategoryCollectionView.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
 		D87BD88C299E77C7003A1B76 /* DefaultTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */; };
@@ -300,6 +302,8 @@
 		D8795E3529BF173E004856EF /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D8795E3829BF3AD8004856EF /* LocationResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultCell.swift; sourceTree = "<group>"; };
 		D8795E3B29BF3B3D004856EF /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
+		D8795E3F29C01168004856EF /* SportCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportCategoryCell.swift; sourceTree = "<group>"; };
+		D8795E4129C01172004856EF /* SportCategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportCategoryCollectionView.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextField.swift; sourceTree = "<group>"; };
@@ -782,6 +786,7 @@
 			children = (
 				D860B5FD299C948400966683 /* TabBarPage.swift */,
 				D860B5FF299C955100966683 /* Coordinator */,
+				D8795E3D29C0111E004856EF /* MatchCategory */,
 				D850FC7329B4CB4200DC08C6 /* CreateMatch */,
 				D8455A1229BB7659006AF28B /* MatchDetail */,
 				D868BA6829AE3EFE00E80012 /* Home */,
@@ -1054,6 +1059,23 @@
 			path = LocationResultCollectionView;
 			sourceTree = "<group>";
 		};
+		D8795E3D29C0111E004856EF /* MatchCategory */ = {
+			isa = PBXGroup;
+			children = (
+				D8795E3E29C01158004856EF /* View */,
+			);
+			path = MatchCategory;
+			sourceTree = "<group>";
+		};
+		D8795E3E29C01158004856EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D8795E3F29C01168004856EF /* SportCategoryCell.swift */,
+				D8795E4129C01172004856EF /* SportCategoryCollectionView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1186,6 +1208,7 @@
 				D868BAB329B3242F00E80012 /* UserDTO.swift in Sources */,
 				D868BA3429A89A2100E80012 /* LocationResultCollectionView.swift in Sources */,
 				D860B5F0299C8D5900966683 /* LoginViewController.swift in Sources */,
+				D8795E4029C01168004856EF /* SportCategoryCell.swift in Sources */,
 				D8599AC5299E44DC00633192 /* DefaultTitleLabel.swift in Sources */,
 				D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */,
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
@@ -1272,6 +1295,7 @@
 				D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */,
 				D868BA7E29B0525700E80012 /* MatchHeaderView.swift in Sources */,
 				D8795E3929BF3AD8004856EF /* LocationResultCell.swift in Sources */,
+				D8795E4229C01172004856EF /* SportCategoryCollectionView.swift in Sources */,
 				D8599AB6299E349000633192 /* AppDIContainer.swift in Sources */,
 				D8455A1429BB76BB006AF28B /* MatchDetailViewController.swift in Sources */,
 				D860B61F299D199A00966683 /* SignupRepository.swift in Sources */,
