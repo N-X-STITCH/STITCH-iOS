@@ -18,8 +18,12 @@ final class AuthDIContainer {
     // MARK: - Properties
     
     private let dependencies: Dependencies
-    private lazy var signupViewModel = SignupViewModel(signupUseCase: signupUseCase())
     private let userUseCase: UserUseCase
+    
+    private lazy var signupViewModel = SignupViewModel(
+        signupUseCase: signupUseCase(),
+        userUseCase: userUseCase
+    )
     
     // MARK: - Initializer
     
