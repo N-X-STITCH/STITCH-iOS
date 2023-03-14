@@ -23,19 +23,24 @@ final class DefaultSignupRepository: SignupRepository {
     
     // MARK: - Methods
     
-    func create(user: User) -> Observable<Data> {
+    func create(user: User) -> Observable<User> {
         let userDTO = UserDTO(user: user)
         let endpoint = UserAPIEndpoints.createUser(userDTO: userDTO)
         return urlSessionNetworkService.request(with: endpoint)
+            .map(UserDTO.self)
+            .map { User(userDTO: $0) }
     }
     
-    func isUser(userID: String) -> Observable<Data> {
+    func isUser(userID: String) -> Observable<Bool> {
         let endpoint = UserAPIEndpoints.isUser(userID: userID)
         return urlSessionNetworkService.request(with: endpoint)
+            .map(Bool.self)
     }
     
-    func fetchUser(userID: String) -> Observable<Data> {
+    func fetchUser(userID: String) -> Observable<User> {
         let endpoint = UserAPIEndpoints.fetchUser(userID: userID)
         return urlSessionNetworkService.request(with: endpoint)
+            .map(UserDTO.self)
+            .map { User(userDTO: $0) }
     }
 }

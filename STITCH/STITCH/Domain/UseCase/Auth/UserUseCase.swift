@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol UserUseCase {
-    func save(user: User)
+    func save(user: User) -> Observable<Void>
     func savedUser() -> Observable<User?>
 }
 
@@ -28,8 +28,8 @@ final class DefaultUserUseCase: UserUseCase {
     
     // MARK: - Methods
     
-    func save(user: User) {
-        userStorage.save(user: user)
+    func save(user: User) -> Observable<Void> {
+        return userStorage.save(user: user)
     }
     
     func savedUser() -> Observable<User?> {

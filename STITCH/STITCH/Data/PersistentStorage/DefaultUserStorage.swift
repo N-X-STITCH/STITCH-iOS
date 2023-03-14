@@ -25,8 +25,9 @@ final class DefaultUserStorage: UserStorage {
     
     // MARK: - Methods
     
-    func save(user: User) {
+    func save(user: User) -> Observable<Void> {
         userDefaultsService.save(value: user, forKey: userIDKey)
+        return Single<Void>.just(()).asObservable()
     }
     
     func fetchUser() -> Observable<User?> {

@@ -10,6 +10,6 @@ import Foundation
 import RxSwift
 
 protocol UserStorage {
-    func save(user: User)
+    func save(user: User) -> Observable<Void>
     func fetchUser() -> Observable<User?>
 }
