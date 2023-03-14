@@ -26,11 +26,13 @@ struct MatchInfo: Hashable {
             fee: 5000
         )
         let owner1 = User(
-            id: "w1",
-            nickname: "내가 주인",
-            profileImageURL: "https://openimage.interpark.com/goods_image_big/4/1/7/5/8564064175_l.jpg",
-            interestedSports: [.tennis],
-            address: ""
+            id: "123123",
+            nickname: "123123",
+            profileImageURL: "",
+            interestedSports: [],
+            address: "",
+            token: "",
+            introduce: ""
         )
         let match2 = Match(
             matchID: "2",
@@ -46,11 +48,13 @@ struct MatchInfo: Hashable {
             fee: 5000
         )
         let owner2 = User(
-            id: "w2",
-            nickname: "내가 안주인",
-            profileImageURL: "https://openimage.interpark.com/goods_image_big/4/1/7/5/8564064175_l.jpg",
-            interestedSports: [.tennis],
-            address: ""
+            id: "123123333",
+            nickname: "123123333",
+            profileImageURL: "",
+            interestedSports: [],
+            address: "",
+            token: "",
+            introduce: ""
         )
         let matchInfo1 = MatchInfo(match: match1, owner: owner1)
         let matchInfo2 = MatchInfo(match: match2, owner: owner2)
