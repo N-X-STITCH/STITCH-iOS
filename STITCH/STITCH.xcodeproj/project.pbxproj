@@ -677,6 +677,7 @@
 		D860B5BF299BD48000966683 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D868BA5929AC894E00E80012 /* Error */,
 				D868BA6429AE021700E80012 /* AuthService */,
 				D86B254D29A7424E0041EB00 /* Validation */,
 				D860B607299CE70B00966683 /* Constant */,
@@ -895,7 +896,6 @@
 		D860B607299CE70B00966683 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				D868BA5929AC894E00E80012 /* Error */,
 				D868BA2A29A7B4DF00E80012 /* ProfileText.swift */,
 			);
 			path = Constant;
