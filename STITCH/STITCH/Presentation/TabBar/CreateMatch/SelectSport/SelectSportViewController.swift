@@ -48,7 +48,7 @@ final class SelectSportViewController: BaseViewController {
     
     override func bind() {
         
-        sportsCollectionView.setData(Sport.allCases)
+        sportsCollectionView.setData(Array(Sport.allCases[1...]))
         
         let selected = sportsCollectionView.rx.itemSelected.share()
         

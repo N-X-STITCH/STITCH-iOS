@@ -64,7 +64,7 @@ final class SportsCollectionView: BaseCollectionView {
     
     func update(_ indexPath: IndexPath) {
         var snapshot = sportsDatasource.snapshot()
-        let id = Sport.allCases[indexPath.item]
+        let id = Sport.allCases[indexPath.item + 1]
         snapshot.reconfigureItems([id])
         sportsDatasource.apply(snapshot)
     }

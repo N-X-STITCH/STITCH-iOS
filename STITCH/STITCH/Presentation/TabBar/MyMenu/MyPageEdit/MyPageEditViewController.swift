@@ -104,7 +104,7 @@ final class MyPageEditViewController: BaseViewController {
     
     override func setting() {
         imagePickerController.delegate = self
-        sportsCollectionView.setData(Sport.allCases)
+        sportsCollectionView.setData(Array(Sport.allCases[1...]))
     }
     
     override func bind() {
