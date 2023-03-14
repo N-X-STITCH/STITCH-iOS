@@ -94,3 +94,83 @@ extension BaseViewController {
         haptic.impactOccurred()
     }
 }
+
+extension BaseViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        generateImpactHaptic()
+    }
+}
+
+// MARK: - ToastMessage
+
+extension BaseViewController {
+    func showToastMessage(
+        text: String,
+        tintColor: UIColor? = .gray04,
+        icon: UIImage?
+    ) {
+        let toastMessage = toastMessageView(text: text, tintColor: tintColor, icon: icon)
+        
+        view.addSubview(toastMessage)
+        toastMessage.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
+            make.height.equalTo(48)
+        }
+        
+        UIView.animate(withDuration: 2.0, delay: 1.0, options: [.curveEaseOut]) {
+            toastMessage.alpha = 0.0
+        } completion: { _ in
+            toastMessage.removeFromSuperview()
+        }
+    }
+    
+    private func toastMessageView(
+        text: String,
+        tintColor: UIColor? = .gray04,
+        icon: UIImage?
+    ) -> UIView {
+        let toastMessageView = UIView().then {
+            $0.backgroundColor = .gray12
+        }
+        let iconImageView = UIImageView(image: icon)
+        let messageLabel = UILabel().then {
+            $0.text = text
+            $0.textColor = tintColor
+            $0.font = .Body2_14
+        }
+        toastMessageView.addSubviews([iconImageView, messageLabel])
+        
+        iconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+        }
+        
+        messageLabel.snp.makeConstraints { make in
+            make.left.equalTo(iconImageView.snp.right).offset(12)
+            make.centerY.equalToSuperview()
+        }
+        
+        return toastMessageView
+    }
+}
+
+// MARK: - UIResponder + handle error
+
+extension UIResponder {
+    func handle(error: Error) {
+        guard let viewController = self as? BaseViewController else {
+            guard let nextReponder = next else {
+                return assertionFailure("처리할 수 없는 에러 \(error.localizedDescription)")
+            }
+            nextReponder.handle(error: error)
+            return
+        }
+        
+        viewController.showToastMessage(
+            text: "에러: \(error.localizedDescription)",
+            icon: UIImage(systemName: "xmark.circle.fill")?.withTintColor(.gray04, renderingMode: .alwaysOriginal)
+        )
+    }
+}
