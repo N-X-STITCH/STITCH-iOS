@@ -10,10 +10,14 @@ import UIKit
 import RxSwift
 
 protocol TabBarCoordinatorDependencies {
+    // Home
     func homeViewController() -> HomeViewController
+    // Create Match
     func selectMatchViewController() -> SelectMatchViewController
     func selectSportViewController() -> SelectSportViewController
     func createMatchViewController() -> CreateMatchViewController
+    func setLocationViewController() -> SetLocationViewController
+    // My Page
     func myPageViewController() -> MyPageViewController
     func myPageEditViewController() -> MyPageEditViewController
     func createdMatchViewController() -> CreatedMatchViewController
@@ -135,11 +139,28 @@ extension TabBarCoordinator {
         )
         navigationController.pushViewController(selectSportViewController, animated: true)
     }
-    
+}
+
+// MARK: - Create Match
+
+extension TabBarCoordinator {
     private func showCreateMatchViewController(_ navigationController: UINavigationController) {
         let createMatchViewController = dependencies.createMatchViewController()
-        // addEvent
+        createMatchViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .setLocation = event {
+                    owner.showSetLocationViewController(navigationController)
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(createMatchViewController, animated: true)
+    }
+    
+    private func showSetLocationViewController(_ navigationController: UINavigationController) {
+        let setLocationViewController = dependencies.setLocationViewController()
+        addPopEvent(setLocationViewController)
+        navigationController.pushViewController(setLocationViewController, animated: true)
     }
 }
 

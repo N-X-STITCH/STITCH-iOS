@@ -45,6 +45,16 @@ extension Coordinator {
         
     }
     
+    func addPopEvent(_ viewController: BaseViewController) {
+        viewController.coordinatorPublisher
+            .subscribe { event in
+                if .pop == event {
+                    self.popViewController()
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
     func addDismissEvent(_ viewController: BaseViewController) {
         viewController.coordinatorPublisher
             .subscribe { event in

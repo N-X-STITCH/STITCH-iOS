@@ -29,7 +29,7 @@ final class SportsCollectionView: BaseCollectionView {
     
     // MARK: - Methods
     
-    override func configure(delegate: UICollectionViewDelegate) {
+    override func configure(delegate: UICollectionViewDelegate?) {
         super.configure(delegate: delegate)
     }
     

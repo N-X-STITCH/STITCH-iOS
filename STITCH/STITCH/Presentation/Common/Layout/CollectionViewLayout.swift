@@ -86,7 +86,7 @@ enum SportsCollectionViewLayout {
 enum LocationResultCollectionViewLayout {
     static func layout() -> UICollectionViewLayout {
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
-        listConfiguration.backgroundColor = .background
+        listConfiguration.backgroundColor = .clear
         listConfiguration.separatorConfiguration.color = .gray11
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
     }

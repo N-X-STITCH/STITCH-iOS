@@ -13,6 +13,7 @@
 		D805FDD629A5B2980007E63D /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDD529A5B2980007E63D /* Sport.swift */; };
 		D805FDDC29A5B4AD0007E63D /* SportsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */; };
 		D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDD29A5B4B60007E63D /* SportsCell.swift */; };
+		D809290629BD9D670012C459 /* Service-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D809290529BD9D670012C459 /* Service-Info.plist */; };
 		D820258829A21E2C00892CE8 /* DefaultToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258729A21E2B00892CE8 /* DefaultToolbar.swift */; };
 		D820258A29A2208300892CE8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258929A2208300892CE8 /* ProfileViewController.swift */; };
 		D820258C29A220CC00892CE8 /* DefaultProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */; };
@@ -22,6 +23,9 @@
 		D82025A029A24A7C00892CE8 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820259F29A24A7C00892CE8 /* LocationViewController.swift */; };
 		D82025A229A24AC300892CE8 /* InterestedInSportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */; };
 		D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82025A329A24AE900892CE8 /* CompleteSignupViewController.swift */; };
+		D828DA4C29BDB84B00B598FE /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = D828DA4B29BDB84B00B598FE /* NMapsMap */; };
+		D828DA5029BDBCEF00B598FE /* SetLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D828DA4F29BDBCEF00B598FE /* SetLocationViewController.swift */; };
+		D828DA5229BDBD2100B598FE /* SetLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D828DA5129BDBD2100B598FE /* SetLocationViewModel.swift */; };
 		D84559EB29BA289E006AF28B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D84559EA29BA289E006AF28B /* GoogleService-Info.plist */; };
 		D84559EE29BA296E006AF28B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D84559ED29BA296E006AF28B /* FirebaseAnalytics */; };
 		D84559F029BA296E006AF28B /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = D84559EF29BA296E006AF28B /* FirebaseRemoteConfig */; };
@@ -147,6 +151,10 @@
 		D868BAAF29B31C3000E80012 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAAE29B31C3000E80012 /* APIEndpoints.swift */; };
 		D868BAB329B3242F00E80012 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D868BAB229B3242F00E80012 /* UserDTO.swift */; };
 		D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B254E29A742620041EB00 /* NicknameValidation.swift */; };
+		D8795E3429BEFC5A004856EF /* CLLocationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3329BEFC5A004856EF /* CLLocationDelegateProxy.swift */; };
+		D8795E3629BF173E004856EF /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3529BF173E004856EF /* SearchPlaceView.swift */; };
+		D8795E3929BF3AD8004856EF /* LocationResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3829BF3AD8004856EF /* LocationResultCell.swift */; };
+		D8795E3C29BF3B3D004856EF /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3B29BF3B3D004856EF /* LocationInfo.swift */; };
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
 		D87BD88C299E77C7003A1B76 /* DefaultTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */; };
@@ -160,6 +168,7 @@
 		D805FDD529A5B2980007E63D /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
 		D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCollectionView.swift; sourceTree = "<group>"; };
 		D805FDDD29A5B4B60007E63D /* SportsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCell.swift; sourceTree = "<group>"; };
+		D809290529BD9D670012C459 /* Service-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Service-Info.plist"; sourceTree = "<group>"; };
 		D820258729A21E2B00892CE8 /* DefaultToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToolbar.swift; sourceTree = "<group>"; };
 		D820258929A2208300892CE8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileImageView.swift; sourceTree = "<group>"; };
@@ -169,6 +178,8 @@
 		D820259F29A24A7C00892CE8 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		D82025A129A24AC300892CE8 /* InterestedInSportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestedInSportsViewController.swift; sourceTree = "<group>"; };
 		D82025A329A24AE900892CE8 /* CompleteSignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteSignupViewController.swift; sourceTree = "<group>"; };
+		D828DA4F29BDBCEF00B598FE /* SetLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLocationViewController.swift; sourceTree = "<group>"; };
+		D828DA5129BDBD2100B598FE /* SetLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLocationViewModel.swift; sourceTree = "<group>"; };
 		D84559EA29BA289E006AF28B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D84559F529BB1312006AF28B /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		D84559F729BB131B006AF28B /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +296,10 @@
 		D868BAAE29B31C3000E80012 /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
 		D868BAB229B3242F00E80012 /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		D86B254E29A742620041EB00 /* NicknameValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidation.swift; sourceTree = "<group>"; };
+		D8795E3329BEFC5A004856EF /* CLLocationDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationDelegateProxy.swift; sourceTree = "<group>"; };
+		D8795E3529BF173E004856EF /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
+		D8795E3829BF3AD8004856EF /* LocationResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultCell.swift; sourceTree = "<group>"; };
+		D8795E3B29BF3B3D004856EF /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextField.swift; sourceTree = "<group>"; };
@@ -299,6 +314,7 @@
 				D868BA5E29AC990C00E80012 /* RxKakaoSDKUser in Frameworks */,
 				D860B633299DF5A200966683 /* RxCocoa in Frameworks */,
 				D84559EE29BA296E006AF28B /* FirebaseAnalytics in Frameworks */,
+				D828DA4C29BDB84B00B598FE /* NMapsMap in Frameworks */,
 				D860B5DB299BDB4000966683 /* SnapKit in Frameworks */,
 				D868BA9D29B0901F00E80012 /* Kingfisher in Frameworks */,
 				D860B637299DF5A200966683 /* RxSwift in Frameworks */,
@@ -341,7 +357,6 @@
 				D820259A29A2309000892CE8 /* ProfileTextCell.swift */,
 				D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */,
 				D805FDDD29A5B4B60007E63D /* SportsCell.swift */,
-				D868BA3329A89A2100E80012 /* LocationResultCollectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -411,7 +426,7 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		D84559FD29BB18E7006AF28B /* MatchList */ = {
+		D84559FD29BB18E7006AF28B /* MatchCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				D868BA9729B0715800E80012 /* MatchCollectionView.swift */,
@@ -419,7 +434,7 @@
 				D868BA8129B05C6600E80012 /* MatchCell.swift */,
 				D8455A0129BB2C7A006AF28B /* MatchSection.swift */,
 			);
-			path = MatchList;
+			path = MatchCollectionView;
 			sourceTree = "<group>";
 		};
 		D84559FE29BB18F5006AF28B /* Default */ = {
@@ -500,6 +515,9 @@
 		D850FC7729B4CB9B00DC08C6 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				D828DA4F29BDBCEF00B598FE /* SetLocationViewController.swift */,
+				D828DA5129BDBD2100B598FE /* SetLocationViewModel.swift */,
+				D8795E3529BF173E004856EF /* SearchPlaceView.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -567,6 +585,7 @@
 		D857612F299BCFF800F1AFEB /* STITCH */ = {
 			isa = PBXGroup;
 			children = (
+				D809290529BD9D670012C459 /* Service-Info.plist */,
 				D84559EA29BA289E006AF28B /* GoogleService-Info.plist */,
 				D868BA6329ADD8A200E80012 /* STITCH.entitlements */,
 				D868BA4129AA1B3900E80012 /* temp */,
@@ -606,7 +625,8 @@
 			isa = PBXGroup;
 			children = (
 				D84559FE29BB18F5006AF28B /* Default */,
-				D84559FD29BB18E7006AF28B /* MatchList */,
+				D8795E3A29BF3B17004856EF /* LocationResultCollectionView */,
+				D84559FD29BB18E7006AF28B /* MatchCollectionView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -902,6 +922,7 @@
 			isa = PBXGroup;
 			children = (
 				D868BA2F29A7C5D100E80012 /* ImagePickerController.swift */,
+				D8795E3329BEFC5A004856EF /* CLLocationDelegateProxy.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1011,6 +1032,7 @@
 			isa = PBXGroup;
 			children = (
 				D868BA9529B070B000E80012 /* MatchInfo.swift */,
+				D8795E3B29BF3B3D004856EF /* LocationInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1021,6 +1043,15 @@
 				D86B254E29A742620041EB00 /* NicknameValidation.swift */,
 			);
 			path = Validation;
+			sourceTree = "<group>";
+		};
+		D8795E3A29BF3B17004856EF /* LocationResultCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				D868BA3329A89A2100E80012 /* LocationResultCollectionView.swift */,
+				D8795E3829BF3AD8004856EF /* LocationResultCell.swift */,
+			);
+			path = LocationResultCollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1053,6 +1084,7 @@
 				D850FC9A29B5E91600DC08C6 /* FSCalendar */,
 				D84559ED29BA296E006AF28B /* FirebaseAnalytics */,
 				D84559EF29BA296E006AF28B /* FirebaseRemoteConfig */,
+				D828DA4B29BDB84B00B598FE /* NMapsMap */,
 			);
 			productName = STITCH;
 			productReference = D857612D299BCFF800F1AFEB /* STITCH.app */;
@@ -1092,6 +1124,7 @@
 				D85AA33729B478BA004B0A8B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				D850FC9929B5E91600DC08C6 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				D84559EC29BA296E006AF28B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D828DA4A29BDB84B00B598FE /* XCRemoteSwiftPackageReference "NMapsMap-SPM" */,
 			);
 			productRefGroup = D857612E299BCFF800F1AFEB /* Products */;
 			projectDirPath = "";
@@ -1114,6 +1147,7 @@
 				D85AA33C29B4A0B9004B0A8B /* fireworks.json in Resources */,
 				D8599A99299E012300633192 /* Images.xcassets in Resources */,
 				D8599AAD299E2D8500633192 /* Pretendard-Regular.otf in Resources */,
+				D809290629BD9D670012C459 /* Service-Info.plist in Resources */,
 				D84559EB29BA289E006AF28B /* GoogleService-Info.plist in Resources */,
 				D860B5D1299BD8A100966683 /* Localizable.strings in Resources */,
 				D857613A299BCFFA00F1AFEB /* Colors.xcassets in Resources */,
@@ -1127,9 +1161,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8795E3429BEFC5A004856EF /* CLLocationDelegateProxy.swift in Sources */,
+				D8795E3629BF173E004856EF /* SearchPlaceView.swift in Sources */,
 				D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */,
 				D860B606299CE58400966683 /* NetworkConfig.swift in Sources */,
 				D820258829A21E2C00892CE8 /* DefaultToolbar.swift in Sources */,
+				D828DA5229BDBD2100B598FE /* SetLocationViewModel.swift in Sources */,
 				D8599ABE299E365700633192 /* UIImage+.swift in Sources */,
 				D850FC9429B5B6C100DC08C6 /* DefaultTextView.swift in Sources */,
 				D868BA7C29B0524D00E80012 /* PopularHeaderView.swift in Sources */,
@@ -1162,6 +1199,7 @@
 				D868BA6229ADCF6500E80012 /* TabBarDIContainer.swift in Sources */,
 				D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */,
 				D8455A1629BB76C4006AF28B /* MatchDetailViewModel.swift in Sources */,
+				D8795E3C29BF3B3D004856EF /* LocationInfo.swift in Sources */,
 				D8455A0429BB301B006AF28B /* MyPageViewModel.swift in Sources */,
 				D868BA9A29B07BE300E80012 /* Match.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
@@ -1187,6 +1225,7 @@
 				D860B622299D19DA00966683 /* DefaultSignupRepository.swift in Sources */,
 				D868BA3829A8A14200E80012 /* FindLocationViewModel.swift in Sources */,
 				D860B5ED299C894600966683 /* CoordinatorType.swift in Sources */,
+				D828DA5029BDBCEF00B598FE /* SetLocationViewController.swift in Sources */,
 				D800291129A5FC5200F75378 /* NicknameViewModel.swift in Sources */,
 				D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */,
 				D8455A0D29BB5CE2006AF28B /* SettingHeaderView.swift in Sources */,
@@ -1232,6 +1271,7 @@
 				D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */,
 				D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */,
 				D868BA7E29B0525700E80012 /* MatchHeaderView.swift in Sources */,
+				D8795E3929BF3AD8004856EF /* LocationResultCell.swift in Sources */,
 				D8599AB6299E349000633192 /* AppDIContainer.swift in Sources */,
 				D8455A1429BB76BB006AF28B /* MatchDetailViewController.swift in Sources */,
 				D860B61F299D199A00966683 /* SignupRepository.swift in Sources */,
@@ -1470,6 +1510,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D828DA4A29BDB84B00B598FE /* XCRemoteSwiftPackageReference "NMapsMap-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jaemyeong/NMapsMap-SPM.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		D84559EC29BA296E006AF28B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1537,6 +1585,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D828DA4B29BDB84B00B598FE /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D828DA4A29BDB84B00B598FE /* XCRemoteSwiftPackageReference "NMapsMap-SPM" */;
+			productName = NMapsMap;
+		};
 		D84559ED29BA296E006AF28B /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D84559EC29BA296E006AF28B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

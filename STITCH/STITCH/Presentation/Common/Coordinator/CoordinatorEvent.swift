@@ -8,11 +8,18 @@
 import Foundation
 
 enum CoordinatorEvent {
+    // default
     case next
-    case findLocation
-    case selectMatchType
-    
-    // Modal
     case dismiss
+    case pop
+    
+    // Sign up
+    case findLocation
+    
+    // Create Match
+    case selectMatchType
+    case setLocation
+    
+    // MyPage
     case setting
 }

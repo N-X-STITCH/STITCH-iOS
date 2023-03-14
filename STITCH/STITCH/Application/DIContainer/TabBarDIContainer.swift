@@ -38,8 +38,16 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     // MARK: - Use Cases
     
+    // MARK: Create Match
+    
     func createMatchUseCase() -> CreateMatchUseCase {
         return DefaultCreateMatchUseCase(matchRepository: matchRepository())
+    }
+    
+    // MARK: Location
+    
+    func findLocationUseCase() -> FindLocationUseCase {
+        return DefaultFindLocationUseCase()
     }
         
     // MARK: - View Models
@@ -48,11 +56,17 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return HomeViewModel()
     }
     
+    // MARK: Create Match
+    
     func makeCreateMatchViewModel() -> CreateMatchViewModel {
         return CreateMatchViewModel(createMatchUseCase: createMatchUseCase())
     }
     
-    // MARK: Create Match
+    // MARK: Location
+    
+    func setLocationViewModel() -> SetLocationViewModel {
+        return SetLocationViewModel(findLocationUseCase: findLocationUseCase())
+    }
     
     // MARK: My Page
     
@@ -91,6 +105,15 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     func createMatchViewController() -> CreateMatchViewController {
         return CreateMatchViewController(createMatchViewModel: createMatchViewModel)
+    }
+    
+    // MARK: Location
+    
+    func setLocationViewController() -> SetLocationViewController {
+        return SetLocationViewController(
+            createMatchViewModel: createMatchViewModel,
+            setLocationViewModel: setLocationViewModel()
+        )
     }
     
     // MARK: My Page

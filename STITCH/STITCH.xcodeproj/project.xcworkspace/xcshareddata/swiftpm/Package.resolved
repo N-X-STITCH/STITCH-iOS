@@ -145,6 +145,15 @@
       }
     },
     {
+      "identity" : "nmapsmap-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jaemyeong/NMapsMap-SPM.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f9850a18d73f9438c622e308623b77709e3cd00a"
+      }
+    },
+    {
       "identity" : "ohhttpstubs",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AliSoftware/OHHTTPStubs.git",

@@ -20,16 +20,9 @@ final class PopularMatchCollectionView: BaseCollectionView {
     
     // MARK: - Initializer
     
-    override init(
-        _ delegate: UICollectionViewDelegate,
-        layout: UICollectionViewLayout
-    ) {
-        super.init(delegate, layout: layout)
-    }
-    
     // MARK: - Methods
     
-    override func configure(delegate: UICollectionViewDelegate) {
+    override func configure(delegate: UICollectionViewDelegate?) {
         register(
             PopularMatchCell.self,
             forCellWithReuseIdentifier: PopularMatchCell.reuseIdentifier

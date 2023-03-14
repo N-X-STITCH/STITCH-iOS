@@ -32,7 +32,7 @@ final class MatchCollectionView: BaseCollectionView {
     
     // MARK: - Methods
     
-    override func configure(delegate: UICollectionViewDelegate) {
+    override func configure(delegate: UICollectionViewDelegate?) {
         register(
             MatchCell.self,
             forCellWithReuseIdentifier: MatchCell.reuseIdentifier

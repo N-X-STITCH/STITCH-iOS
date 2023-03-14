@@ -26,6 +26,7 @@ final class CreateMatchViewController: BaseViewController {
         static let radius10 = 10
         static let titleLabelHeight = 56
         static let matchImageHeight = 96
+        static let matchLocationHeight = 55
         static let titleHeight = 20
         static let textFieldWidth = 200
         static let textFieldHeight = 55
@@ -98,7 +99,14 @@ final class CreateMatchViewController: BaseViewController {
     
     // TODO: 장소 선택 버튼
     private let matchLocationTitleLabel = DefaultTitleLabel(text: "매치 장소", textColor: .gray02, font: .Subhead2_14)
-    
+    private let matchLocationButton = DefaultButton(
+        title: "  매치 장소를 선택하세요",
+        fontColor: .gray09,
+        normalColor: .clear
+    ).then {
+        $0.contentHorizontalAlignment = .left
+    }
+    private let matchLocationRowView = UIView().then { $0.backgroundColor = .gray09 }
     
     private let matchPeopleTitleLabel = DefaultTitleLabel(text: "참가인원", textColor: .gray02, font: .Subhead2_14)
     private let matchPeopleSubTitleLabel = DefaultTitleLabel(text: "(본인을 포함한 총 참여 인원수)", textColor: .gray06, font: .Body2_14)
@@ -157,6 +165,13 @@ final class CreateMatchViewController: BaseViewController {
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.startTimeTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
+        
+        matchLocationButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.setLocation)
             }
             .disposed(by: disposeBag)
     }
@@ -290,7 +305,7 @@ extension CreateMatchViewController {
         contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView])
         contentView.addSubviews([calendarView, startTimeTextField, clockImageView])
         contentView.addSubviews([matchTimeTitleLabel, matchTimeTextField, matchTimeStepper, matchTimeRowView])
-        contentView.addSubviews([matchLocationTitleLabel])
+        contentView.addSubviews([matchLocationTitleLabel, matchLocationButton, matchLocationRowView])
         contentView.addSubviews([
             matchPeopleTitleLabel, matchPeopleSubTitleLabel, matchPeopleTextField, matchPeopleStepper, matchPeopleRowView
         ])
@@ -441,12 +456,23 @@ extension CreateMatchViewController {
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.titleHeight)
         }
+        
+        matchLocationButton.snp.makeConstraints { make in
+            make.top.equalTo(matchLocationTitleLabel.snp.bottom)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.matchLocationHeight)
+        }
+        
+        matchLocationRowView.snp.makeConstraints { make in
+            make.top.equalTo(matchLocationButton.snp.bottom)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.barHeight)
+        }
     }
     
     private func configurePeopleView() {
         matchPeopleTitleLabel.snp.makeConstraints { make in
-            // TODO: 변경
-            make.top.equalTo(matchLocationTitleLabel.snp.bottom).offset(Constant.padding32)
+            make.top.equalTo(matchLocationRowView.snp.bottom).offset(Constant.padding32)
             make.left.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.titleHeight)
         }

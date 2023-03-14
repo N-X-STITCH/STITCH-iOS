@@ -18,16 +18,9 @@ final class MatchTypeCollectionView: BaseCollectionView {
     
     // MARK: - Initializer
     
-    override init(
-        _ delegate: UICollectionViewDelegate,
-        layout: UICollectionViewLayout
-    ) {
-        super.init(delegate, layout: layout)
-    }
-    
     // MARK: - Methods
     
-    override func configure(delegate: UICollectionViewDelegate) {
+    override func configure(delegate: UICollectionViewDelegate?) {
         register(
             MatchTypeCell.self,
             forCellWithReuseIdentifier: MatchTypeCell.reuseIdentifier

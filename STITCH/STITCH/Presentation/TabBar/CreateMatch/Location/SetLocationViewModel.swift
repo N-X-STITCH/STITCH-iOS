@@ -1,19 +1,18 @@
 //
-//  FindLocationViewModel.swift
+//  SetLocationViewModel.swift
 //  STITCH
 //
-//  Created by neuli on 2023/02/24.
+//  Created by neuli on 2023/03/12.
 //
 
 import Foundation
 
-import RxCocoa
 import RxSwift
 
-final class FindLocationViewModel: ViewModel {
+final class SetLocationViewModel: ViewModel {
     
     struct Input {
-        let configureCollectionView: Observable<Void>
+        let viewDidLoad: Observable<Void>
     }
     
     struct Output {
@@ -34,7 +33,7 @@ final class FindLocationViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         
-        let configureCollectionViewData = input.configureCollectionView
+        let configureCollectionViewData = input.viewDidLoad
             .flatMap { _ in
                 return Observable.just([
                     LocationInfo(address: "경기도 수원시 영통구 광교2동"),
