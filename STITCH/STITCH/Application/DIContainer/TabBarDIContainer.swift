@@ -11,17 +11,20 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     struct Dependencies {
         let urlsessionNetworkService: URLSessionNetworkService
+        let userUseCase: UserUseCase
     }
     
     // MARK: - Properties
     
     private let dependencies: Dependencies
+    private let userUseCase: UserUseCase
     private var createMatchViewModel: CreateMatchViewModel!
     
     // MARK: - Initializer
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
+        self.userUseCase = dependencies.userUseCase
     }
     
     // MARK: - Coordinator

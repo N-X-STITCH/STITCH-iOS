@@ -12,17 +12,26 @@ final class AuthDIContainer {
     struct Dependencies {
         let urlsessionNetworkService: URLSessionNetworkService
         let userDefaultsService: UserDefaultsService
+        let userUseCase: UserUseCase
     }
     
     // MARK: - Properties
     
     private let dependencies: Dependencies
-    private lazy var signupViewModel = SignupViewModel(signupUseCase: signupUseCase())
+    private let userUseCase: UserUseCase
+    
+    private lazy var signupViewModel = SignupViewModel(
+        signupUseCase: signupUseCase(),
+        userUseCase: userUseCase
+    )
     
     // MARK: - Initializer
     
-    init(dependencies: Dependencies) {
+    init(
+        dependencies: Dependencies
+    ) {
         self.dependencies = dependencies
+        self.userUseCase = dependencies.userUseCase
     }
     
     // MARK: - Coordinator
@@ -34,13 +43,12 @@ final class AuthDIContainer {
     // MARK: - Repositories
     
     func signupRepository() -> SignupRepository {
-        return DefaultSignupRepository(
-            urlSessionNetworkService: dependencies.urlsessionNetworkService,
-            userDefaultsService: dependencies.userDefaultsService
-        )
+        return DefaultSignupRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
     }
     
     // MARK: - Use Cases
+    
+    // MARK: Auth
     
     func signupUseCase() -> SignupUseCase {
         return DefaultSignupUseCase(signupRepository: signupRepository())
@@ -49,10 +57,6 @@ final class AuthDIContainer {
     func nicknameUseCase() -> NicknameUseCase {
         return DefaultNicknameUseCase()
     }
-    
-//    func profileUseCase() -> ProfileUseCase {
-//        return DefaultProfileUseCase()
-//    }
     
     func findLocationUseCase() -> FindLocationUseCase {
         return DefaultFindLocationUseCase()
@@ -63,14 +67,6 @@ final class AuthDIContainer {
     func loginViewModel() -> LoginViewModel {
         return LoginViewModel(signupUseCase: signupUseCase())
     }
-    
-    func nicknameViewModel() -> NicknameViewModel {
-        return NicknameViewModel(nicknameUseCase: nicknameUseCase())
-    }
-    
-//    func profileViewModel() -> ProfileViewModel {
-//        return ProfileViewModel(profileUseCase: profileUseCase())
-//    }
     
     func findLocationViewModel() -> FindLocationViewModel {
         return FindLocationViewModel(findLocationUseCase: findLocationUseCase())
@@ -88,20 +84,6 @@ final class AuthDIContainer {
             signupViewModel: signupViewModel
         )
     }
-    
-    func nicknameViewController() -> NicknameViewController {
-        return NicknameViewController(
-            nicknameViewModel: nicknameViewModel(),
-            signupViewModel: signupViewModel
-        )
-    }
-    
-//    func profileViewController() -> ProfileViewController {
-//        return ProfileViewController(
-//            profileViewModel: profileViewModel(),
-//            signupViewModel: signupViewModel
-//        )
-//    }
     
     func locationViewController() -> LocationViewController {
         return LocationViewController(signupViewModel: signupViewModel)

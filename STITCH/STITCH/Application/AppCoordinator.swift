@@ -25,6 +25,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     var disposeBag = DisposeBag()
     
     private let appDIContainer: AppDIContainer
+    private let userUseCase: UserUseCase
     
     // MARK: - Initializer
     
@@ -34,14 +35,24 @@ final class AppCoordinator: AppCoordinatorProtocol {
     ) {
         self.navigationController = navigationController
         self.appDIContainer = appDIContainer
+        self.userUseCase = appDIContainer.userUseCase
         childCoordinators = []
     }
     
     // MARK: - Methods
     
     func start() {
-        // TODO: Login 분기처리 (자동로그인)
-        showTabFlow()
+        userUseCase.savedUser()
+            .take(1)
+            .asDriver(onErrorJustReturn: nil)
+            .drive { user in
+                if let _ = user {
+                    self.showTabFlow()
+                } else {
+                    self.showAuthFlow()
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     func showAuthFlow() {

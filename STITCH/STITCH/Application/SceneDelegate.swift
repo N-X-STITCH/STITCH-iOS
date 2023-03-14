@@ -41,9 +41,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         appCoordinator = AppCoordinator(navigationController, appDIContainer: appDIContainer)
         appCoordinator?.start()
-        
-        // TODO: appCoordinator 추가
-        // appCoordinator start
     }
     
     func setDarkMode() {

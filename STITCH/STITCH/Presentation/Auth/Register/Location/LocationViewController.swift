@@ -93,11 +93,10 @@ final class LocationViewController: BaseViewController {
         signupOutput.signupResult
             .withUnretained(self)
             .subscribe(on: MainScheduler.asyncInstance)
-            .subscribe (onNext: { owner, data in
-                print(data)
+            .subscribe (onNext: { owner, _ in
                 owner.coordinatorPublisher.onNext(.next)
-            }, onError: { error in
-                print("통신 실패: ", error)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
             })
             .disposed(by: disposeBag)
     }

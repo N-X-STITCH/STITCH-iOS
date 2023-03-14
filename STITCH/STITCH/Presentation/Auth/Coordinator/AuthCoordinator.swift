@@ -47,7 +47,17 @@ final class AuthCoordinator: Coordinator {
     
     private func showLoginViewController() {
         let loginViewController = dependencies.loginViewController()
-        addNextEvent(loginViewController, showInterestedInSportsViewController)
+        loginViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .next)
+            .withUnretained(self)
+            .emit { owner, event in
+                if case .next = event {
+                    owner.showInterestedInSportsViewController()
+                } else if case .showHome = event {
+                    owner.finish()
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(loginViewController, animated: true)
     }
     
@@ -60,17 +70,13 @@ final class AuthCoordinator: Coordinator {
     private func showLocationViewController() {
         let locationViewController = dependencies.locationViewController()
         locationViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .next)
             .withUnretained(self)
-            .subscribe { owner, event in
+            .emit { owner, event in
                 if case .next = event {
-                    DispatchQueue.main.async {
-                        owner.showCompleteSignupViewController()
-                    }
-                }
-                if case .findLocation = event {
-                    DispatchQueue.main.async {
-                        owner.showFindLocationViewController()
-                    }
+                    owner.showCompleteSignupViewController()
+                } else if case .findLocation = event {
+                    owner.showFindLocationViewController()
                 }
             }
             .disposed(by: disposeBag)

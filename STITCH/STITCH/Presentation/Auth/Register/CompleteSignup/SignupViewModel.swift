@@ -23,15 +23,20 @@ final class SignupViewModel {
     }
     
     struct Output {
-        let signupResult: Observable<Data>
+        let signupResult: Observable<Void>
     }
     
     private let signupUseCase: SignupUseCase
+    private let userUseCase: UserUseCase
     
     // MARK: - Initializer
     
-    init(signupUseCase: SignupUseCase) {
+    init(
+        signupUseCase: SignupUseCase,
+        userUseCase: UserUseCase
+    ) {
         self.signupUseCase = signupUseCase
+        self.userUseCase = userUseCase
     }
     
     // MARK: - Methods
@@ -39,10 +44,15 @@ final class SignupViewModel {
     func transform(_ input: Input) -> Output {
         let signupResult = input.signupButtonTap
             .withUnretained(self)
-            .flatMap { owner, _ -> Observable<Data> in
+            .flatMap { owner, _ -> Observable<User> in
                 let user = owner.makeUser()
                 return owner.signupUseCase.signup(user: user)
             }
+            .withUnretained(self)
+            .flatMap { owner, user in
+                return owner.userUseCase.save(user: user)
+            }
+        
         return Output(signupResult: signupResult)
     }
     

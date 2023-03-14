@@ -10,8 +10,8 @@ import Foundation
 import RxSwift
 
 protocol UserDefaultsService {
-    func save<T>(value: T, forKey key: String)
-    func value<T>(valueType: T.Type, forKey key: String) -> Observable<T?>
+    func save<T: Codable>(value: T, forKey key: String)
+    func value<T: Codable>(valueType: T.Type, forKey key: String) -> Observable<T?>
     func stringValue(forKey key: String) -> Observable<String?>
     func delete(forKey key: String)
 }
@@ -24,12 +24,17 @@ final class DefaultUserDefaultsService: UserDefaultsService {
 
     // MARK: - Methods
 
-    func save<T>(value: T, forKey key: String) {
-        standard.set(value, forKey: key)
+    func save<T: Codable>(value: T, forKey key: String) {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(value) {
+            standard.set(data, forKey: key)
+        }
     }
 
-    func value<T>(valueType: T.Type, forKey key: String) -> Observable<T?> {
-        guard let value = standard.object(forKey: key) as? T else {
+    func value<T: Codable>(valueType: T.Type, forKey key: String) -> Observable<T?> {
+        let decoder = JSONDecoder()
+        guard let data = standard.object(forKey: key) as? Data,
+              let value = try? decoder.decode(T.self, from: data) else {
             return Single<T?>.just(nil).asObservable()
         }
         return Single<T?>.just(value).asObservable()

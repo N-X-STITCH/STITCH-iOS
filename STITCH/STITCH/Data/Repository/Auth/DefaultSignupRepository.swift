@@ -14,33 +14,33 @@ final class DefaultSignupRepository: SignupRepository {
     // MARK: - Properties
     
     private let urlSessionNetworkService: URLSessionNetworkService
-    private let userDefaultsService: UserDefaultsService
-    
-    private let userIDKey = "userIDKey"
     
     // MARK: - Initializer
     
-    init(
-        urlSessionNetworkService: URLSessionNetworkService,
-        userDefaultsService: UserDefaultsService
-    ) {
+    init(urlSessionNetworkService: URLSessionNetworkService) {
         self.urlSessionNetworkService = urlSessionNetworkService
-        self.userDefaultsService = userDefaultsService
     }
     
     // MARK: - Methods
     
-    func create(user: User) -> Observable<Data> {
+    func create(user: User) -> Observable<User> {
         let userDTO = UserDTO(user: user)
-        let endpoint = APIEndpoints.createUser(userDTO: userDTO)
+        let endpoint = UserAPIEndpoints.createUser(userDTO: userDTO)
         return urlSessionNetworkService.request(with: endpoint)
+            .map(UserDTO.self)
+            .map { User(userDTO: $0) }
     }
     
-    func save(userID: String) {
-        userDefaultsService.save(value: userID, forKey: userIDKey)
+    func isUser(userID: String) -> Observable<Bool> {
+        let endpoint = UserAPIEndpoints.isUser(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(Bool.self)
     }
     
-    func fetchUserIDInUserDefaults() -> Observable<String?> {
-        return userDefaultsService.stringValue(forKey: userIDKey)
+    func fetchUser(userID: String) -> Observable<User> {
+        let endpoint = UserAPIEndpoints.fetchUser(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(UserDTO.self)
+            .map { User(userDTO: $0) }
     }
 }
