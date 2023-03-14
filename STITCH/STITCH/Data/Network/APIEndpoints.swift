@@ -18,17 +18,15 @@ struct UserAPIEndpoints {
     
     static func isUser(userID: String) -> Endpoint {
         return Endpoint(
-            path: "member/isMember",
-            method: .GET,
-            queryParameters: ["": userID]
+            path: "member/isMember/id=\(userID)",
+            method: .GET
         )
     }
     
     static func fetchUser(userID: String) -> Endpoint {
         return Endpoint(
-            path: "member/info",
-            method: .GET,
-            queryParameters: ["": userID]
+            path: "member/info/id=\(userID)",
+            method: .GET
         )
     }
 }
