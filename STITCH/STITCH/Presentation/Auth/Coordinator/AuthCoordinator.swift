@@ -47,7 +47,21 @@ final class AuthCoordinator: Coordinator {
     
     private func showLoginViewController() {
         let loginViewController = dependencies.loginViewController()
-        addNextEvent(loginViewController, showInterestedInSportsViewController)
+        loginViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .next = event {
+                    DispatchQueue.main.async {
+                        owner.showInterestedInSportsViewController()
+                    }
+                }
+                if case .showHome = event {
+                    DispatchQueue.main.async {
+                        owner.finish()
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(loginViewController, animated: true)
     }
     
