@@ -28,6 +28,7 @@ final class SportCategoryCell: BaseCollectionViewCell {
     private let sportTitleLabel = UILabel().then {
         $0.font = .Body2_14
         $0.textColor = .white
+        $0.textAlignment = .center
     }
     
     // MARK: - Initializer
@@ -43,7 +44,7 @@ final class SportCategoryCell: BaseCollectionViewCell {
         sportImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.width.height.equalTo(Constant.imageWidth)
-            make.centerY.equalTo(contentView.snp.centerY)
+            make.centerX.equalTo(contentView.snp.centerX)
         }
         
         sportTitleLabel.snp.makeConstraints { make in
@@ -55,6 +56,7 @@ final class SportCategoryCell: BaseCollectionViewCell {
     
     func set(sport: Sport) {
         sportImageView.image = sport.image
+        sportTitleLabel.text = sport.name
     }
     
     func configure(_ isSelected: Bool) {
