@@ -7,9 +7,27 @@
 
 import UIKit
 
-enum Sport: CaseIterable, Codable {
+enum Sport: String, CaseIterable, Codable {
     case all, tennis, badminton, pingPong, soccer, running, mountainClimbing
     case health, basketball, baseball, golf, etc
+    
+    init?(_ name: String) {
+        switch name {
+        case "전체": self = .all
+        case "테니스": self = .tennis
+        case "배드민턴": self = .badminton
+        case "탁구": self = .pingPong
+        case "축구": self = .soccer
+        case "런닝": self = .running
+        case "등산": self = .mountainClimbing
+        case "헬스": self = .health
+        case "농구": self = .basketball
+        case "야구": self = .baseball
+        case "골프": self = .golf
+        case "기타": self = .etc
+        default: self = .etc
+        }
+    }
     
     var name: String {
         switch self {

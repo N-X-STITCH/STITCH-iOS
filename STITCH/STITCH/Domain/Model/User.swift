@@ -47,4 +47,14 @@ struct User: Hashable, Codable {
         self.token = ""
         self.introduce = ""
     }
+    
+    init(userDTO: UserDTO) {
+        self.id = userDTO.id
+        self.nickname = userDTO.name
+        self.profileImageURL = userDTO.imageUrl
+        self.interestedSports = userDTO.sports.compactMap { Sport($0) }
+        self.address = userDTO.location
+        self.token = userDTO.token
+        self.introduce = userDTO.intro
+    }
 }
