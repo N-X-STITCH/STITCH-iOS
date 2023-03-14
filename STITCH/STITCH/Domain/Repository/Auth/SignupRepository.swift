@@ -11,6 +11,6 @@ import RxSwift
 
 protocol SignupRepository {
     func create(user: User) -> Observable<Data>
-    func save(userID: String)
-    func fetchUserIDInUserDefaults() -> Observable<String?>
+    func isUser(userID: String) -> Observable<Data>
+    func fetchUser(userID: String) -> Observable<Data>
 }

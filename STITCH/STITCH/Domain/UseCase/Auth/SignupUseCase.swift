@@ -11,6 +11,8 @@ import RxSwift
 
 protocol SignupUseCase {
     func signup(user: User) -> Observable<Data>
+    func isSignuped(userID: String) -> Observable<Bool>
+    func user(userID: String) -> Observable<User>
 }
 
 final class DefaultSignupUseCase: SignupUseCase {
@@ -29,5 +31,15 @@ final class DefaultSignupUseCase: SignupUseCase {
     
     func signup(user: User) -> Observable<Data> {
         return signupRepository.create(user: user)
+    }
+    
+    func isSignuped(userID: String) -> Observable<Bool> {
+        return signupRepository.isUser(userID: userID)
+            .map(Bool.self)
+    }
+    
+    func user(userID: String) -> Observable<User> {
+        return signupRepository.fetchUser(userID: userID)
+            .map(User.self)
     }
 }

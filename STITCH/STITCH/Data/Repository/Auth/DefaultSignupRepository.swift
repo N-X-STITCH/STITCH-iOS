@@ -14,33 +14,28 @@ final class DefaultSignupRepository: SignupRepository {
     // MARK: - Properties
     
     private let urlSessionNetworkService: URLSessionNetworkService
-    private let userDefaultsService: UserDefaultsService
-    
-    private let userIDKey = "userIDKey"
     
     // MARK: - Initializer
     
-    init(
-        urlSessionNetworkService: URLSessionNetworkService,
-        userDefaultsService: UserDefaultsService
-    ) {
+    init(urlSessionNetworkService: URLSessionNetworkService) {
         self.urlSessionNetworkService = urlSessionNetworkService
-        self.userDefaultsService = userDefaultsService
     }
     
     // MARK: - Methods
     
     func create(user: User) -> Observable<Data> {
         let userDTO = UserDTO(user: user)
-        let endpoint = APIEndpoints.createUser(userDTO: userDTO)
+        let endpoint = UserAPIEndpoints.createUser(userDTO: userDTO)
         return urlSessionNetworkService.request(with: endpoint)
     }
     
-    func save(userID: String) {
-        userDefaultsService.save(value: userID, forKey: userIDKey)
+    func isUser(userID: String) -> Observable<Data> {
+        let endpoint = UserAPIEndpoints.isUser(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
     }
     
-    func fetchUserIDInUserDefaults() -> Observable<String?> {
-        return userDefaultsService.stringValue(forKey: userIDKey)
+    func fetchUser(userID: String) -> Observable<Data> {
+        let endpoint = UserAPIEndpoints.fetchUser(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
     }
 }
