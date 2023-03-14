@@ -59,4 +59,17 @@ extension UIImage {
     static let menu = UIImage(named: "menu")
     static let finish = UIImage(named: "finish")
     static let xmark = UIImage(systemName: "xmark")
+    
+    static let all = UIImage(named: "all")
+    static let soccer = UIImage(named: "soccer")
+    static let mountainClimbing = UIImage(named: "mountainClimbing")
+    static let golf = UIImage(named: "golf")
+    static let tennis = UIImage(named: "tennis")
+    static let baseball = UIImage(named: "baseball")
+    static let running = UIImage(named: "running")
+    static let badminton = UIImage(named: "badminton")
+    static let pingpong = UIImage(named: "pingpong")
+    static let health = UIImage(named: "health")
+    static let basketball = UIImage(named: "basketball")
+    static let etc = UIImage(named: "etc")
 }
