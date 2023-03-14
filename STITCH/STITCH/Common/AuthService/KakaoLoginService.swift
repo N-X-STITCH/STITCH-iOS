@@ -30,9 +30,9 @@ final class KakaoLoginService: SocialLoginService {
         return UserApi.shared.rx.me()
             .subscribe { user in
                 let loginInfo = LoginInfo(
-                    id: "\(String(describing: user.id))",
+                    id: "\(String(describing: user.id!))",
                     nickname: user.kakaoAccount?.profile?.nickname ?? "User\(Int.random(in: 0...999))",
-                    profileImageURL: user.kakaoAccount?.profile?.profileImageUrl?.absoluteString
+                    profileImageURL: user.kakaoAccount?.profile?.profileImageUrl?.absoluteString ?? ""
                 )
                 self.loginInfo.onNext(loginInfo)
             }
