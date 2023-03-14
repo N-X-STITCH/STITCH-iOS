@@ -22,16 +22,6 @@ final class DefaultProfileImageView: UIImageView {
         }
     }
     
-    private lazy var gradientLayer = CAGradientLayer().then {
-        $0.colors = [UIColor.yellow05_primary, UIColor.yellow07]
-    }
-    
-    private lazy var shapeLayer = CAShapeLayer().then {
-        $0.lineWidth = CGFloat(Constant.lineWidth)
-        $0.strokeColor = UIColor.black.cgColor
-        $0.fillColor = UIColor.cyan.cgColor
-    }
-    
     // MARK: - Initializer
 
     init(_ isGradient: Bool = false) {
@@ -41,6 +31,8 @@ final class DefaultProfileImageView: UIImageView {
             .withTintColor(.white, renderingMode: .alwaysOriginal)
         contentMode = .scaleAspectFill
         backgroundColor = .clear
+        layer.borderColor = UIColor.yellow05_primary.cgColor
+        
         self.isGradient = isGradient
         set(isLayer: isGradient)
     }
@@ -49,17 +41,6 @@ final class DefaultProfileImageView: UIImageView {
         super.layoutSubviews()
         let cornerRadius = frame.height / 2
         layer.cornerRadius = cornerRadius
-        
-        if isGradient {
-            gradientLayer.frame = bounds
-            shapeLayer.path = UIBezierPath(
-                roundedRect: bounds.insetBy(
-                    dx: CGFloat(Constant.gradationWidth),
-                    dy: CGFloat(Constant.gradationWidth)
-                ),
-                cornerRadius: bounds.height / 2.0
-              ).cgPath
-        }
     }
 
     required init?(coder: NSCoder) {
@@ -71,8 +52,7 @@ final class DefaultProfileImageView: UIImageView {
     private func set(isLayer: Bool) {
         if isLayer {
             layer.borderWidth = 1
-            layer.borderColor = UIColor.yellow05_primary.cgColor
-        } else {
+        } else if layer.superlayer != nil {
             layer.borderWidth = 0
         }
     }
