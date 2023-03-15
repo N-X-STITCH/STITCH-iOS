@@ -11,6 +11,7 @@ final class AuthDIContainer {
     
     struct Dependencies {
         let urlsessionNetworkService: URLSessionNetworkService
+        let naverCloudAPIService: URLSessionNetworkService
         let userDefaultsService: UserDefaultsService
         let userUseCase: UserUseCase
     }

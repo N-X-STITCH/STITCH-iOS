@@ -11,6 +11,8 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     struct Dependencies {
         let urlsessionNetworkService: URLSessionNetworkService
+        let naverCloudAPIService: URLSessionNetworkService
+        let naverOpenAPIService: URLSessionNetworkService
         let userUseCase: UserUseCase
     }
     
