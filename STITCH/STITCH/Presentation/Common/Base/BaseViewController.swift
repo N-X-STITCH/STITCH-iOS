@@ -95,12 +95,6 @@ extension BaseViewController {
     }
 }
 
-extension BaseViewController {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        generateImpactHaptic()
-    }
-}
-
 // MARK: - ToastMessage
 
 extension BaseViewController {
@@ -171,7 +165,7 @@ extension UIResponder {
         }
         
         viewController.showToastMessage(
-            text: "에러: \(error.localizedDescription)",
+            text: "\(error.localizedDescription)",
             icon: UIImage(systemName: "xmark.circle.fill")?.withTintColor(.gray04, renderingMode: .alwaysOriginal)
         )
     }
