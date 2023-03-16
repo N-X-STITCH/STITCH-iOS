@@ -22,6 +22,7 @@ final class CreateMatchViewModel {
     var startDate: Date? = nil
     var startTime: (hour: Int, minute: Int)? = nil
     var duration: Int = 30
+    var maxHeadCount: Int = 1
     var fee: Int = 0
     
     // MARK: - Properties
