@@ -59,8 +59,6 @@ final class TabBarCoordinator: Coordinator {
         let controllers: [UINavigationController] = pages.map { tabController($0) }
         prepareTabBarController(with: controllers)
     }
-    
-    
 }
 
 extension TabBarCoordinator {

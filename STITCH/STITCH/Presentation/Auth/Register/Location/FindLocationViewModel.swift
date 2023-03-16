@@ -13,39 +13,45 @@ import RxSwift
 final class FindLocationViewModel: ViewModel {
     
     struct Input {
-        let configureCollectionView: Observable<Void>
+        let searchTextFieldChange: Observable<String>
+        let firstLocation: Observable<LocationInfo>
+        let location: Observable<LocationInfo>
     }
     
     struct Output {
-        let configureCollectionViewData: Observable<[LocationInfo]>
+        let nearLocations: Observable<[LocationInfo]>
+        let searchLocationResult: Observable<[LocationInfo]>
     }
     
     // MARK: - Properties
     
-    private let findLocationUseCase: FindLocationUseCase
+    private let nearAddressUseCase: NearAddressUseCase
     
     // MARK: - Initializer
     
-    init(findLocationUseCase: FindLocationUseCase) {
-        self.findLocationUseCase = findLocationUseCase
+    init(nearAddressUseCase: NearAddressUseCase) {
+        self.nearAddressUseCase = nearAddressUseCase
     }
     
     // MARK: - Methods
     
     func transform(input: Input) -> Output {
         
-        let configureCollectionViewData = input.configureCollectionView
-            .flatMap { _ in
-                return Observable.just([
-                    LocationInfo(address: "경기도 수원시 영통구 광교2동"),
-                    LocationInfo(address: "경기도 수원시 영통구 광교3동"),
-                    LocationInfo(address: "경기도 수원시 영통구 광교4동"),
-                    LocationInfo(address: "경기도 수원시 영통구 광교5동")
-                ])
+        let nearLocations = Observable.of(input.firstLocation, input.location).merge()
+            .withUnretained(self)
+            .flatMap { owner, location in
+                return owner.nearAddressUseCase.fetchNearAddresses(location: location)
             }
-            .asObservable()
-            
         
-        return Output(configureCollectionViewData: configureCollectionViewData)
+        let searchLocationResult = input.searchTextFieldChange
+            .withUnretained(self)
+            .flatMap { owner, text in
+                return owner.nearAddressUseCase.fetchNearAddresses(searchText: text)
+            }
+        
+        return Output(
+            nearLocations: nearLocations,
+            searchLocationResult: searchLocationResult
+        )
     }
 }

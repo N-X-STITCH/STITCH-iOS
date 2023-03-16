@@ -24,4 +24,10 @@ extension UIView {
         mask.path = path.cgPath
         layer.mask = mask
     }
+    
+    func updateBackgroundColor(isEditing: Bool) {
+        DispatchQueue.main.async {
+            self.backgroundColor = isEditing ? .yellow05_primary : .gray09
+        }
+    }
 }

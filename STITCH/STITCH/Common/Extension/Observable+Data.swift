@@ -18,7 +18,7 @@ extension Observable where Element == Data {
                         let model = try decoder.decode(T.self, from: element)
                         observer.onNext(model)
                     } catch {
-                        observer.onError(NSError())
+                        observer.onError(NetworkError.responseDecoingError)
                     }
                     return Disposables.create()
                 }

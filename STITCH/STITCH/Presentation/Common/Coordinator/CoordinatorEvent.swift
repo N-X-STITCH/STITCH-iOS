@@ -7,11 +7,12 @@
 
 import Foundation
 
-enum CoordinatorEvent {
+enum CoordinatorEvent: Equatable {
     // default
     case next
     case dismiss
     case pop
+    case send(locationInfo: LocationInfo)
     
     // login
     case showHome

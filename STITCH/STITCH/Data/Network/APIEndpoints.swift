@@ -30,3 +30,38 @@ struct UserAPIEndpoints {
         )
     }
 }
+
+struct LocationAPIEndpoints {
+    static func fetchGeoCodingAddress(query: String) -> Endpoint {
+        return Endpoint(
+            path: "map-geocode/v2/geocode",
+            method: .GET,
+            queryParameters: ["query": query]
+        )
+    }
+    
+    static func fetchReverseGeoCodingAddress(location: LocationInfo) -> Endpoint {
+        guard let latitude = location.latitude,
+              let longitude = location.longitude
+        else { return Endpoint(path: "", method: .GET) }
+        
+        return Endpoint(
+            path: "map-reversegeocode/v2/gc",
+            method: .GET,
+            queryParameters: [
+                "request": "coordsToaddr",
+                "coords": "\(longitude),\(latitude)",
+                "sourcecrs": "epsg:4326",
+                "output": "json",
+                "orders": "legalcode,admcode"
+            ]
+        )
+    }
+    
+    static func fetchNearAddresses(location: LocationInfo) -> Endpoint {
+        return Endpoint(
+            path: "view/getNearAddress/address=\(location.address)",
+            method: .GET
+        )
+    }
+}
