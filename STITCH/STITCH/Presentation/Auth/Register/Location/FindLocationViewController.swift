@@ -79,6 +79,20 @@ final class FindLocationViewController: BaseViewController {
     }
     
     override func bind() {
+        searchTextField.rx.controlEvent(.editingDidBegin)
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.textFieldRowView.updateBackgroundColor(isEditing: true)
+            }
+            .disposed(by: disposeBag)
+        
+        searchTextField.rx.controlEvent(.editingDidEnd)
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.textFieldRowView.updateBackgroundColor(isEditing: false)
+            }
+            .disposed(by: disposeBag)
+        
         locationManager.rx.didChangeAuthorization.asObservable()
             .filter { $0 == .authorizedAlways || $0 == .authorizedWhenInUse }
             .subscribe { authorizationStatus in
@@ -86,31 +100,59 @@ final class FindLocationViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        locationManager.rx.didChangeLocation.asObservable()
-            .take(1)
-            .subscribe { location in
-                print(location.coordinate.longitude, location.coordinate.latitude)
-            }
-            .disposed(by: disposeBag)
-        
         locationManager.rx.didFailWithError.asObservable()
-            .subscribe { error in
-                print("locationManager Failed: \(error.debugDescription)")
+            .withUnretained(self)
+            .subscribe { owner, error in
+                owner.handle(error: error)
             }
             .disposed(by: disposeBag)
         
+        let didChangeLocation = locationManager.rx.didChangeLocation.asObservable().share()
+            .map { location in
+                return LocationInfo(
+                    address: "",
+                    latitude: "\(location.coordinate.latitude)",
+                    longitude: "\(location.coordinate.longitude)"
+                )
+            }
+        
+        let searchTextFieldChange = searchTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .skip(1)
+            .map { [weak self] searchText in
+                self?.updateSearchResultTitleLabel(text: searchText)
+                return searchText
+            }
+        
+        let searchButtonTap = searchButton.rx.tap
+            .withLatestFrom(didChangeLocation)
         
         let input = FindLocationViewModel.Input(
-            configureCollectionView: Single<Void>.just(()).asObservable()
+            searchTextFieldChange: searchTextFieldChange,
+            firstLocation: didChangeLocation.take(1),
+            location: searchButtonTap
         )
         
         let output = findLocationViewModel.transform(input: input)
         
-        output.configureCollectionViewData
+        output.nearLocations
             .withUnretained(self)
-            .subscribe { owner, locations in
+            .subscribe(onNext: { owner, locations in
+                owner.updateSearchResultTitleLabel()
                 owner.locationResultCollectionView.setData(locations)
-            }
+            }, onError: { error in
+                self.handle(error: LocationError.failGetLocations)
+            })
+            .disposed(by: disposeBag)
+        
+        output.searchLocationResult
+            .withUnretained(self)
+            .subscribe(onNext: { owner, locations in
+                owner.locationResultCollectionView.setData(locations)
+            }, onError: { error in
+                self.handle(error: LocationError.failGetLocations)
+            })
             .disposed(by: disposeBag)
     }
     
@@ -152,6 +194,20 @@ final class FindLocationViewController: BaseViewController {
             make.right.bottom.equalToSuperview().inset(Constant.padding16)
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hideKeyboard()
+    }
+    
+    private func updateSearchResultTitleLabel(text: String? = nil) {
+        DispatchQueue.main.async {
+            if let text {
+                self.searchResultTitleLabel.text = "\'\(text)\' 검색 결과"
+            } else {
+                self.searchResultTitleLabel.text = "근처동네"
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -163,26 +219,4 @@ extension FindLocationViewController: UICollectionViewDelegate {
 // MARK: - CLLocationManagerDelegate
 
 extension FindLocationViewController: CLLocationManagerDelegate {
-    func findAddress(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        let geocoder = CLGeocoder()
-        let locale = Locale(identifier: "Ko-kr")
-        
-        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) {
-            marks, error in
-            if let error {
-                print("주소 geocode 에러: \(error.localizedDescription)")
-                return
-            }
-            if let mark: CLPlacemark = marks?.last {
-                print("== CoreLocation Framework ==")
-                print("subThoroughfare : \(mark.subThoroughfare ?? "")")
-                print("country : \(mark.country ?? "")")
-                print("administrativeArea : \(mark.administrativeArea ?? "")")
-                print("locality : \(mark.locality ?? "")")
-                print("name : \(mark.name ?? "")")
-                print("description : \(mark.description)")
-            }
-        }
-    }
 }
