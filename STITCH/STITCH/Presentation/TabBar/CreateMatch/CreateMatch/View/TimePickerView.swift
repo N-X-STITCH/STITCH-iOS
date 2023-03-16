@@ -12,7 +12,7 @@ enum Meridiem: String, CaseIterable {
 }
 
 enum Minute: Int, CaseIterable {
-    case ten = 10, twenty = 20, thirty = 30, fourty = 40, fifty = 50
+    case zero = 0, ten = 10, twenty = 20, thirty = 30, fourty = 40, fifty = 50
 }
 
 enum Hour: Int, CaseIterable {
