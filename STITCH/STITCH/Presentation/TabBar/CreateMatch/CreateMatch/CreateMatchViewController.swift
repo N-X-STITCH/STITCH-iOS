@@ -51,12 +51,19 @@ final class CreateMatchViewController: BaseViewController {
         static let contentValidation = 1000
     }
     
+    // MARK: ScrollView
+    
     private let scrollView = UIScrollView().then {
         $0.keyboardDismissMode = .interactive
     }
     private let contentView = UIView()
     
+    // MARK: Title
+    
     private let titleLabel = DefaultTitleLabel(text: "즐거운 매치를 위한\n상세 설명을 등록해볼까요?")
+    
+    // MARK: Match Image
+    
     private let matchImageView = SelectPhotoView()
     private let matchImageButton = UIButton().then {
         $0.backgroundColor = .clear
@@ -65,15 +72,21 @@ final class CreateMatchViewController: BaseViewController {
         $0.setImage(.xmarkCircle?.withTintColor(.gray06, renderingMode: .alwaysOriginal), for: .normal)
     }
     
+    // MARK: Match Title
+    
     private let matchTitleLabel = DefaultTitleLabel(text: "매치 제목", textColor: .gray02, font: .Subhead2_14)
     private let matchTitleTextField = DefaultTextField(placeholder: "매치 제목을 설정해주세요 (30자 이내)")
     private let matchTitleRowView = UIView().then { $0.backgroundColor  = .gray09 }
     private let matchTitleCountLabel = DefaultTitleLabel(text: "0 / 30", textColor: .gray09, font: .Caption1_12)
     
+    // MARK: Match Content
+    
     private let matchDetailTitleLabel = DefaultTitleLabel(text: "상세 내용", textColor: .gray02, font: .Subhead2_14)
     private let matchDetailTextView = DefaultTextView(placeholder: "매치 소개글을 입력해 주세요 (선택)")
     private let matchDetailRowView = UIView().then { $0.backgroundColor  = .gray09 }
     private let matchDetailCountLabel = DefaultTitleLabel(text: "0 / 1000", textColor: .gray09, font: .Caption1_12)
+    
+    // MARK: Match Schedule
     
     private let matchScheduleTitleLabel = DefaultTitleLabel(text: "매치 날짜/시간", textColor: .gray02, font: .Subhead2_14)
     private lazy var matchScheduleTextField = DefaultTextField(placeholder: "날짜와 시간을 설정해주세요").then {
@@ -83,10 +96,15 @@ final class CreateMatchViewController: BaseViewController {
     private let matchScheduleRowView = UIView().then { $0.backgroundColor  = .gray09 }
     private let matchScheduleInfoView = MatchScheduleInfoView(frame: .zero)
     
+    // MARK: Match Schedule - Calendar
+    
     private lazy var calendarView = CalendarView(frame: .zero)
     private let clockImageView = UIImageView(
         image: .clock?.withTintColor(.gray02, renderingMode: .alwaysOriginal)
     )
+    
+    // MARK: Match Schedule - Time
+    
     private lazy var startTimeTextField = UITextField().then {
         $0.delegate = self
         $0.text = "오전 1:00"
@@ -113,6 +131,8 @@ final class CreateMatchViewController: BaseViewController {
         $0.set(corners: [.topLeft, .topRight], radius: CGFloat(Constant.radius10))
     }
     
+    // MARK: Match Time
+    
     private let matchTimeTitleLabel = DefaultTitleLabel(text: "소요시간", textColor: .gray02, font: .Subhead2_14)
     private lazy var matchTimeTextField = DefaultTextField(placeholder: "플레이 시간 설정").then {
         $0.delegate = self
@@ -121,6 +141,8 @@ final class CreateMatchViewController: BaseViewController {
     }
     private let matchTimeStepper = Stepper(defaultText: "30분", defaultValue: Constant.defaultTime)
     private let matchTimeRowView = UIView().then { $0.backgroundColor  = .gray09 }
+    
+    // MARK: Match Location
     
     private let matchLocationTitleLabel = DefaultTitleLabel(text: "매치 장소", textColor: .gray02, font: .Subhead2_14)
     private let matchLocationButton = DefaultButton(
@@ -135,6 +157,8 @@ final class CreateMatchViewController: BaseViewController {
     }
     private let matchLocationRowView = UIView().then { $0.backgroundColor = .gray09 }
     
+    // MARK: Match People Count
+    
     private let matchPeopleTitleLabel = DefaultTitleLabel(text: "참가인원", textColor: .gray02, font: .Subhead2_14)
     private let matchPeopleSubTitleLabel = DefaultTitleLabel(text: "(본인을 포함한 총 참여 인원수)", textColor: .gray06, font: .Body2_14)
     private lazy var matchPeopleTextField = DefaultTextField(placeholder: "인원수 설정").then {
@@ -144,6 +168,8 @@ final class CreateMatchViewController: BaseViewController {
     }
     private let matchPeopleStepper = Stepper(defaultText: "\(Constant.defaultPeople)명", defaultValue: Constant.defaultPeople)
     private let matchPeopleRowView = UIView().then { $0.backgroundColor  = .gray09 }
+    
+    // MARK: Match Fee
     
     private let matchFeeTitleLabel = DefaultTitleLabel(text: "참가비가 있나요?", textColor: .gray02, font: .Subhead2_14)
     private let matchFeeSubTitleLabel = DefaultTitleLabel(
