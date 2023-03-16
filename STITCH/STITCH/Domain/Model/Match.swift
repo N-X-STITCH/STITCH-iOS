@@ -19,6 +19,7 @@ struct Match: Codable, Hashable {
     let startDate: Date
     let duration: Int
     let headCount: Int
+    let maxHeadCount: Int
     let fee: Int
     
     init(
@@ -33,6 +34,7 @@ struct Match: Codable, Hashable {
         startTime: Date,
         duration: Int,
         headCount: Int = 1,
+        maxHeadCount: Int,
         fee: Int = 0
     ) {
         self.matchID = matchID
@@ -46,6 +48,7 @@ struct Match: Codable, Hashable {
         self.startDate = startTime
         self.duration = duration
         self.headCount = headCount
+        self.maxHeadCount = maxHeadCount
         self.fee = fee
     }
 }
