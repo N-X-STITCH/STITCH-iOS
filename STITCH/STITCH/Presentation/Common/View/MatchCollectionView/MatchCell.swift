@@ -127,7 +127,7 @@ final class MatchCell: BaseCollectionViewCell {
     func setMatch(_ matchInfo: MatchInfo) {
         let match = matchInfo.match
         matchTitleLabel.text = match.title
-        matchInfoLabel.text = "\(match.place) | \(match.startTime)"
+        matchInfoLabel.text = "\(match.place) | \(match.startDate)"
         setBadge(match: match)
         
         guard let url = URL(string: match.matchImageURL) else { return }
