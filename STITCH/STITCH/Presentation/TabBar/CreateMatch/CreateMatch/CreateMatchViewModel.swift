@@ -12,9 +12,23 @@ import RxSwift
 
 final class CreateMatchViewModel {
     
+    private let id = UUID().uuidString
+    var title: String = ""
+    var matchImageURL: String = ""
+    var place: String = ""
+    var contents: String = ""
+    var matchType: MatchType? = nil
+    var sport: Sport? = nil
+    var startDate: Date? = nil
+    var startTime: (hour: Int, minute: Int)? = nil
+    var duration: Int = 30
+    var fee: Int = 0
+    
     // MARK: - Properties
     
     struct Input {
+        let matchImage: Observable<Data>
+        let matchTitle: Observable<String>
         let completeCreateMatchButtom: Observable<Void>
     }
     
@@ -33,6 +47,8 @@ final class CreateMatchViewModel {
     // MARK: - Methods
     
     func transform(_ input: Input) -> Output {
+        let matchImage = input.matchImage
+        
         return Output()
     }
 }

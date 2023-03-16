@@ -41,12 +41,19 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return DefaultMatchRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
     }
     
+    func fireStorageRepository() -> FireStorageRepository {
+        return DefaultFireStorageRepository()
+    }
+    
     // MARK: - Use Cases
     
     // MARK: Create Match
     
     func createMatchUseCase() -> CreateMatchUseCase {
-        return DefaultCreateMatchUseCase(matchRepository: matchRepository())
+        return DefaultCreateMatchUseCase(
+            matchRepository: matchRepository(),
+            fireStorageRepository: fireStorageRepository()
+        )
     }
     
     // MARK: Location

@@ -8,6 +8,8 @@
 import UIKit
 
 import FSCalendar
+import RxCocoa
+import RxSwift
 
 final class CreateMatchViewController: BaseViewController {
     
@@ -17,6 +19,7 @@ final class CreateMatchViewController: BaseViewController {
         static let padding2 = 2
         static let padding8 = 8
         static let padding12 = 12
+        static let padding14 = 14
         static let padding16 = 16
         static let padding20 = 18
         static let padding24 = 24
@@ -26,6 +29,8 @@ final class CreateMatchViewController: BaseViewController {
         static let radius10 = 10
         static let titleLabelHeight = 56
         static let matchImageHeight = 96
+        static let matchCancelButtonWidth = 20
+        static let matchInfoViewHeight = 42
         static let matchLocationHeight = 55
         static let titleHeight = 20
         static let textFieldWidth = 200
@@ -39,6 +44,9 @@ final class CreateMatchViewController: BaseViewController {
         static let stepperHeight = 24
         static let defaultTime = 30
         static let defaultPeople = 2
+        
+        static let titleValidation = 30
+        static let contentValidation = 1000
     }
     
     private let scrollView = UIScrollView()
@@ -46,6 +54,12 @@ final class CreateMatchViewController: BaseViewController {
     
     private let titleLabel = DefaultTitleLabel(text: "즐거운 매치를 위한\n상세 설명을 등록해볼까요?")
     private let matchImageView = SelectPhotoView()
+    private let matchImageButton = UIButton().then {
+        $0.backgroundColor = .clear
+    }
+    private let matchImageCancelButton = UIButton().then {
+        $0.setImage(.xmarkCircle?.withTintColor(.gray06, renderingMode: .alwaysOriginal), for: .normal)
+    }
     
     private let matchTitleLabel = DefaultTitleLabel(text: "매치 제목", textColor: .gray02, font: .Subhead2_14)
     private let matchTitleTextField = DefaultTextField(placeholder: "매치 제목을 설정해주세요 (30자 이내)")
@@ -58,8 +72,12 @@ final class CreateMatchViewController: BaseViewController {
     private let matchDetailCountLabel = DefaultTitleLabel(text: "0 / 1000", textColor: .gray09, font: .Caption1_12)
     
     private let matchScheduleTitleLabel = DefaultTitleLabel(text: "매치 날짜/시간", textColor: .gray02, font: .Subhead2_14)
-    private let matchScheduleTextField = DefaultTextField(placeholder: "날짜와 시간을 설정해주세요")
+    private lazy var matchScheduleTextField = DefaultTextField(placeholder: "날짜와 시간을 설정해주세요").then {
+        $0.delegate = self
+        $0.tintColor = .clear
+    }
     private let matchScheduleRowView = UIView().then { $0.backgroundColor  = .gray09 }
+    private let matchScheduleInfoView = MatchScheduleInfoView(frame: .zero)
     
     private lazy var calendarView = CalendarView(frame: .zero)
     // TODO: 시작 시간 표시
@@ -68,7 +86,7 @@ final class CreateMatchViewController: BaseViewController {
     )
     private lazy var startTimeTextField = UITextField().then {
         $0.delegate = self
-        $0.text = "오전 00:00"
+        $0.text = "오전 1:00"
         $0.textColor = .gray02
         $0.font = .Body1_16
         $0.tintColor = .clear
@@ -125,11 +143,13 @@ final class CreateMatchViewController: BaseViewController {
     
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.dateFormat = "M월 d일 E요일"
         return formatter
     }()
     
     private let createMatchViewModel: CreateMatchViewModel
+    
+    private lazy var imagePickerController = ImagePickerController()
     
     // MARK: - Initializer
     
@@ -151,9 +171,12 @@ final class CreateMatchViewController: BaseViewController {
         calendarView.dataSource = self
         calendarView.delegate = self
         calendarView.isUserInteractionEnabled = true
+        imagePickerController.delegate = self
     }
     
     override func bind() {
+        rowViewUpdates()
+        
         doneButton.rx.tap
             .withUnretained(self)
             .subscribe { owner, _ in
@@ -172,6 +195,50 @@ final class CreateMatchViewController: BaseViewController {
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.coordinatorPublisher.onNext(.setLocation)
+            }
+            .disposed(by: disposeBag)
+        
+        let imageObservable = matchImageButton.rx.tap
+            .withUnretained(self)
+            .flatMapLatest { owner, _ in
+                owner.imagePickerController.pickImage()
+            }
+            .share()
+        
+        imageObservable
+            .bind(to: matchImageView.photoView.rx.image)
+            .disposed(by: disposeBag)
+        
+        let matchTitleTextFieldChange = matchTitleTextField.rx.text.orEmpty
+            .debounce(.milliseconds(10), scheduler: MainScheduler.instance)
+            .share()
+        
+        matchTitleTextFieldChange
+            .withUnretained(self)
+            .subscribe { owner, title in
+                owner.validate(
+                    text: title,
+                    textField: owner.matchTitleTextField,
+                    countLabel: owner.matchTitleCountLabel,
+                    validateCount: Constant.titleValidation
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        let matchContentTextFieldChange = matchDetailTextView.rx.text
+            .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
+            .share()
+        
+        matchContentTextFieldChange
+            .withUnretained(self)
+            .subscribe { owner, content in
+                guard let content else { return }
+                owner.validate(
+                    text: content,
+                    textView: owner.matchDetailTextView,
+                    countLabel: owner.matchDetailCountLabel,
+                    validateCount: Constant.contentValidation
+                )
             }
             .disposed(by: disposeBag)
     }
@@ -202,6 +269,34 @@ final class CreateMatchViewController: BaseViewController {
         
         configureContentView()
     }
+    
+    private func rowViewUpdates() {
+        matchTitleTextField.editingDidBegin(rowView: matchTitleRowView).disposed(by: disposeBag)
+        matchTitleTextField.editingDidEnd(rowView: matchTitleRowView).disposed(by: disposeBag)
+        matchDetailTextView.editingDidBegin(rowView: matchDetailRowView).disposed(by: disposeBag)
+        matchDetailTextView.editingDidEnd(rowView: matchDetailRowView).disposed(by: disposeBag)
+        
+    }
+    
+    private func validate(text: String, textView: UITextView, countLabel: UILabel, validateCount: Int) {
+        let offset = validateCount < text.count ? validateCount : text.count
+        let index = text.index(text.startIndex, offsetBy: offset)
+        let text = String(text[..<index])
+        textView.text = text
+        bindTextCount(text: text, label: countLabel, validateCount: validateCount)
+    }
+    
+    private func validate(text: String, textField: UITextField, countLabel: UILabel, validateCount: Int) {
+        let offset = validateCount < text.count ? validateCount : text.count
+        let index = text.index(text.startIndex, offsetBy: offset)
+        let text = String(text[..<index])
+        textField.text = text
+        bindTextCount(text: text, label: countLabel, validateCount: validateCount)
+    }
+    
+    private func bindTextCount(text: String, label: UILabel, validateCount: Int) {
+        label.text = "\(text.count) / \(validateCount)"
+    }
 }
 
 // MARK: - UIScrollView Delegate
@@ -213,12 +308,15 @@ extension CreateMatchViewController: UIScrollViewDelegate {
 
 extension CreateMatchViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print(date)
-        print("did select date \(self.dateFormatter.string(from: date))")
-        let selectedDates = calendar.selectedDates.map { self.dateFormatter.string(from: $0) }
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
+        print("did select date \(self.dateFormatter.string(from: date))")
+        
+        createMatchViewModel.startDate = date
+        let selectedDateText = dateFormatter.string(from: date)
+        
+        matchScheduleTextField.text = "\(selectedDateText) / \(startTimeTextField.text ?? "")"
     }
     
     func minimumDate(for calendar: FSCalendar) -> Date {
@@ -274,12 +372,27 @@ extension CreateMatchViewController: UIPickerViewDelegate {
         case 0:
             guard let text = startTimeTextField.text else { return }
             let timeText = text.components(separatedBy: " ")[1]
+            let times = timeText.components(separatedBy: ":")
             startTimeTextField.text = "\(Meridiem.allCases[row].rawValue) \(timeText)"
+            createMatchViewModel.startTime = (Int(times[0])!, Int(times[1])!)
         case 1:
-            return
-        default:
-            return
+            guard let text = startTimeTextField.text else { return }
+            let meridiem = text.components(separatedBy: " ")[0]
+            let timeText = text.components(separatedBy: " ")[1]
+            let times = timeText.components(separatedBy: ":")
+            startTimeTextField.text = "\(meridiem) \(Hour.allCases[row].rawValue):\(times[1])"
+            createMatchViewModel.startTime = (Int(times[0])!, Int(times[1])!)
+        case 2:
+            guard let text = startTimeTextField.text else { return }
+            let meridiem = text.components(separatedBy: " ")[0]
+            let timeText = text.components(separatedBy: " ")[1]
+            let times = timeText.components(separatedBy: ":")
+            startTimeTextField.text = "\(meridiem) \(times[0]):\(Minute.allCases[row].rawValue)"
+            createMatchViewModel.startTime = (Int(times[0])!, Int(times[1])!)
+        default: return
         }
+        guard let date = matchScheduleTextField.text else { return }
+        matchScheduleTextField.text = "\(date.components(separatedBy: " / ")[0]) / \(startTimeTextField.text ?? "")"
     }
 }
 
@@ -299,10 +412,10 @@ extension CreateMatchViewController: UITextFieldDelegate {
 
 extension CreateMatchViewController {
     private func configureContentView() {
-        contentView.addSubviews([titleLabel, matchImageView])
+        contentView.addSubviews([titleLabel, matchImageView, matchImageButton])
         contentView.addSubviews([matchTitleLabel, matchTitleTextField, matchTitleRowView, matchTitleCountLabel])
         contentView.addSubviews([matchDetailTitleLabel, matchDetailTextView, matchDetailRowView, matchDetailCountLabel])
-        contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView])
+        contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView, matchScheduleInfoView])
         contentView.addSubviews([calendarView, startTimeTextField, clockImageView])
         contentView.addSubviews([matchTimeTitleLabel, matchTimeTextField, matchTimeStepper, matchTimeRowView])
         contentView.addSubviews([matchLocationTitleLabel, matchLocationButton, matchLocationRowView])
@@ -327,6 +440,12 @@ extension CreateMatchViewController {
         }
         
         matchImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constant.padding32)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.matchImageHeight)
+        }
+        
+        matchImageButton.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constant.padding32)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.matchImageHeight)
@@ -402,8 +521,15 @@ extension CreateMatchViewController {
             make.height.equalTo(Constant.barHeight)
         }
         
+        matchScheduleInfoView.snp.makeConstraints { make in
+            make.top.equalTo(matchScheduleRowView.snp.bottom).offset(Constant.padding12)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.matchInfoViewHeight)
+            
+        }
+        
         calendarView.snp.makeConstraints { make in
-            make.top.equalTo(matchScheduleRowView.snp.bottom).offset(Constant.padding32)
+            make.top.equalTo(matchScheduleInfoView.snp.bottom).offset(Constant.padding32)
             make.height.equalTo(312) // TODO: 미정
             make.left.right.equalToSuperview().inset(Constant.padding16)
         }
