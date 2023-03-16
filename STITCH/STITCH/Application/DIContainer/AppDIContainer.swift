@@ -20,8 +20,8 @@ final class AppDIContainer {
         let config = NetworkConfig(
             baseURL: URL(string: "https://naveropenapi.apigw.ntruss.com/")!,
             headers: [
-                "X-NCP-APIGW-API-KEY-ID": APIKey.naverCloudAPIKey.cloudClientID,
-                "X-NCP-APIGW-API-KEY": APIKey.naverCloudAPIKey.cloudClientSecret
+                "X-NCP-APIGW-API-KEY-ID": APIKey.naverCloudClientID,
+                "X-NCP-APIGW-API-KEY": APIKey.naverCloudClientSecret
             ]
         )
         return DefaultURLSessionNetworkService(config: config)
@@ -31,8 +31,8 @@ final class AppDIContainer {
         let config = NetworkConfig(
             baseURL: URL(string: "https://openapi.naver.com/v1/search/local.json")!,
             headers: [
-                "X-Naver-Client-Id": APIKey.naverAPIKey.clientID,
-                "X-Naver-Client-Secret": APIKey.naverAPIKey.clientSecret
+                "X-Naver-Client-Id": APIKey.naverClientID,
+                "X-Naver-Client-Secret": APIKey.naverClientSecret
             ]
         )
         return DefaultURLSessionNetworkService(config: config)
