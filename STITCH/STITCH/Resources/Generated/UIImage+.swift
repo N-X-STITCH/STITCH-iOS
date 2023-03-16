@@ -46,6 +46,7 @@ extension UIImage {
     static let clock = UIImage(named: "clock")
     static let marker = UIImage(named: "marker")
     static let mapGPS = UIImage(named: "mapGPS")
+    static let infoCircle = UIImage(named: "info-circle")
     
     static let detailBottomGradient = UIImage(named: "detailBottomGradient")
     static let calendar = UIImage(named: "calendar")
@@ -59,6 +60,7 @@ extension UIImage {
     static let menu = UIImage(named: "menu")
     static let finish = UIImage(named: "finish")
     static let xmark = UIImage(systemName: "xmark")
+    static let xmarkCircle = UIImage(systemName: "xmark.circle.fill")
     
     static let all = UIImage(named: "all")
     static let soccer = UIImage(named: "soccer")
