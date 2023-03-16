@@ -73,7 +73,7 @@ final class HomeViewController: BaseViewController {
     
     override func setting() {
         // TODO: 삭제
-        popularMatchCollectionView.setData(MatchInfo.dump())
+        popularMatchCollectionView.setData([])
         
         setScrollViewTop()
         scrollView.delegate = self
@@ -81,7 +81,7 @@ final class HomeViewController: BaseViewController {
     
     override func bind() {
         topScrollView.setImages()
-        matchCollectionView.setData(section: .newMatch, matchInfos: MatchInfo.dump())
+        matchCollectionView.setData(section: .newMatch, matchInfos: [])
         
         floatingButton.rx.tap
             .withUnretained(self)

@@ -94,7 +94,7 @@ final class MatchCategoryViewController: BaseViewController {
     
     override func bind() {
         sportCategoryCollectionView.setData(Sport.allCases)
-        matchCollectionView.setData(section: .none, matchInfos: MatchInfo.dump())
+        matchCollectionView.setData(section: .none, matchInfos: [])
         
         floatingButton.rx.tap
             .withUnretained(self)
