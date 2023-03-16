@@ -76,6 +76,10 @@ final class LocationViewController: BaseViewController {
     
     // MARK: - Methods
     
+    override func setting() {
+        setNextButton(isEnabled: false)
+    }
+    
     override func bind() {
         
         inputButton.rx.tap
@@ -140,5 +144,17 @@ final class LocationViewController: BaseViewController {
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    private func setNextButton(isEnabled: Bool) {
+        nextButton.isEnabled = isEnabled
+        nextButton.setButtonBackgroundColor(isEnabled)
+    }
+    
+    func didReceive(locationInfo: LocationInfo) {
+        signupViewModel.locationInfo = locationInfo
+        inputButton.setTitle(locationInfo.address, for: .normal)
+        inputButton.setTitleColor(.gray02, for: .normal)
+        setNextButton(isEnabled: true)
     }
 }

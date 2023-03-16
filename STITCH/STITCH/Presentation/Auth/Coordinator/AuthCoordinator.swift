@@ -76,15 +76,25 @@ final class AuthCoordinator: Coordinator {
                 if case .next = event {
                     owner.showCompleteSignupViewController()
                 } else if case .findLocation = event {
-                    owner.showFindLocationViewController()
+                    owner.showFindLocationViewController(locationViewController: locationViewController)
                 }
             }
             .disposed(by: disposeBag)
         navigationController.pushViewController(locationViewController, animated: true)
     }
     
-    private func showFindLocationViewController() {
+    private func showFindLocationViewController(locationViewController: LocationViewController) {
         let findLocationViewController = dependencies.findLocationViewController()
+        findLocationViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .withUnretained(self)
+            .emit() { owner, event in
+                if case .send(let locationInfo) = event {
+                    locationViewController.didReceive(locationInfo: locationInfo)
+                    owner.popViewController()
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(findLocationViewController, animated: true)
     }
     

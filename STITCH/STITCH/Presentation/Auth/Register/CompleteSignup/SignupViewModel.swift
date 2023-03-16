@@ -16,7 +16,7 @@ final class SignupViewModel {
     
     var loginInfo: LoginInfo? = nil
     var sports: [Sport] = []
-    var location: String? = nil
+    var locationInfo: LocationInfo? = nil
     
     struct Input {
         let signupButtonTap: Observable<Void>
@@ -61,7 +61,7 @@ final class SignupViewModel {
         let user = User(
             loginInfo: loginInfo,
             sports: sports,
-            address: location ?? ""
+            locationInfo: locationInfo
         )
         return user
     }

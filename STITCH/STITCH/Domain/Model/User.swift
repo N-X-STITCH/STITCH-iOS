@@ -37,13 +37,13 @@ struct User: Hashable, Codable {
     init(
         loginInfo: LoginInfo,
         sports: [Sport],
-        address: String
+        locationInfo: LocationInfo?
     ) {
         self.id = loginInfo.id
         self.nickname = loginInfo.nickname
         self.profileImageURL = loginInfo.profileImageURL
         self.interestedSports = sports
-        self.address = address
+        self.address = locationInfo?.address ?? ""
         self.token = ""
         self.introduce = ""
     }

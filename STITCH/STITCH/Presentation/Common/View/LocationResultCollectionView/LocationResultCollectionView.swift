@@ -25,14 +25,16 @@ final class LocationResultCollectionView: BaseCollectionView {
     }
     
     override func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<LocationResultCell, String> {
-            cell, indexPath, text in
+        let cellRegistration = UICollectionView.CellRegistration<LocationResultCell, LocationInfo> {
+            cell, indexPath, locationInfo in
+            cell.location = locationInfo
+            
             var backgroundConfig = cell.defaultBackgroundConfiguration()
             backgroundConfig.backgroundColor = .clear
             cell.backgroundConfiguration = backgroundConfig
             
             var content = cell.defaultContentConfiguration()
-            content.text = text
+            content.text = locationInfo.address
             content.textProperties.font = .Body1_16 ?? .systemFont(ofSize: 16, weight: .regular)
             content.textProperties.color = .gray02
             cell.contentConfiguration = content
@@ -43,7 +45,7 @@ final class LocationResultCollectionView: BaseCollectionView {
             return collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
                 for: indexPath,
-                item: item.address
+                item: item
             )
         }
     }

@@ -107,6 +107,14 @@ final class FindLocationViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        locationResultCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let selectedCell = owner.locationResultCollectionView.cellForItem(at: indexPath) as? LocationResultCell else { return }
+                owner.coordinatorPublisher.onNext(.send(locationInfo: selectedCell.location))
+            }
+            .disposed(by: disposeBag)
+        
         let didChangeLocation = locationManager.rx.didChangeLocation.asObservable().share()
             .map { location in
                 return LocationInfo(
