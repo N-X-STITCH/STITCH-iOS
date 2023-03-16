@@ -15,7 +15,7 @@ final class Stepper: UIControl {
     enum Constant {
         static let padding8 = 8
         static let iconWidth = 24
-        static let labelWidth = 34
+        static let labelWidth = 72
     }
     
     // MARK: - Properties
@@ -26,7 +26,7 @@ final class Stepper: UIControl {
         $0.setImage(minusImage, for: .normal)
     }
     
-    private let countLabel = UILabel().then {
+    let countLabel = UILabel().then {
         $0.font = .Body1_16
         $0.textColor = .gray09
         $0.textAlignment = .center
@@ -59,7 +59,6 @@ final class Stepper: UIControl {
         minusButton.tag = -defaultValue
         
         configureUI()
-        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -71,36 +70,38 @@ final class Stepper: UIControl {
     private func configureUI() {
         addSubviews([minusButton, countLabel, plusButton])
         
+        plusButton.snp.makeConstraints { make in
+            make.right.equalToSuperview()
+            make.width.height.equalTo(Constant.iconWidth)
+            make.centerY.equalTo(countLabel)
+        }
+        
         countLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalTo(Constant.labelWidth)
+            make.right.equalTo(plusButton.snp.left).offset(-Constant.padding8)
+            make.centerY.equalToSuperview()
             make.height.equalTo(Constant.iconWidth)
         }
         
         minusButton.snp.makeConstraints { make in
             make.right.equalTo(countLabel.snp.left).offset(-Constant.padding8)
-            make.centerY.equalTo(countLabel)
-        }
-        
-        plusButton.snp.makeConstraints { make in
-            make.left.equalTo(countLabel.snp.right).offset(Constant.padding8)
-            make.centerY.equalTo(countLabel)
+            make.width.height.equalTo(Constant.iconWidth)
+            make.centerY.equalToSuperview()
         }
     }
     
-    private func setupBindings() {
+    func valueObservable() -> Observable<Int> {
         plusButton.addTarget(self, action: #selector(valueChanged(_:)), for: .touchUpInside)
+        minusButton.addTarget(self, action: #selector(valueChanged(_:)), for: .touchUpInside)
         
-        let valueObservable = rx.controlEvent(.valueChanged)
-            .map { [unowned self] in self.value }
-        
-        valueObservable
-            .bind(to: rx.value)
-            .disposed(by: disposeBag)
+        return rx.controlEvent(.valueChanged)
+            .map { [unowned self] in
+                0 <= self.value ? self.value : 0
+            }
     }
     
     @objc func valueChanged(_ sender: UIButton) {
         value += sender.tag
+        if value < 0 { value = 0 }
     }
 }
 
