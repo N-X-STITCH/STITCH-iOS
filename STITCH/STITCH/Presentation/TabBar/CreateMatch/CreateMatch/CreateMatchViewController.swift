@@ -32,24 +32,28 @@ final class CreateMatchViewController: BaseViewController {
         static let matchCancelButtonWidth = 20
         static let matchInfoViewHeight = 42
         static let matchLocationHeight = 55
+        static let matchLocationArrowWidth = 24
         static let titleHeight = 20
-        static let textFieldWidth = 200
+        static let textFieldWidth = 120
         static let textFieldHeight = 55
         static let textViewHeight = 158
         static let countLabelHeight = 18
         static let barHeight = 1
         static let clockIconWidth = 18
-        static let contentViewHeight = 3000
-        static let stepperWidth = 100
+        static let contentViewHeight = 1500
+        static let stepperWidth = 136
         static let stepperHeight = 24
         static let defaultTime = 30
-        static let defaultPeople = 2
+        static let defaultPeople = 1
+        static let matchFeeSubTitleHeight = 36
         
         static let titleValidation = 30
         static let contentValidation = 1000
     }
     
-    private let scrollView = UIScrollView()
+    private let scrollView = UIScrollView().then {
+        $0.keyboardDismissMode = .interactive
+    }
     private let contentView = UIView()
     
     private let titleLabel = DefaultTitleLabel(text: "즐거운 매치를 위한\n상세 설명을 등록해볼까요?")
@@ -80,7 +84,6 @@ final class CreateMatchViewController: BaseViewController {
     private let matchScheduleInfoView = MatchScheduleInfoView(frame: .zero)
     
     private lazy var calendarView = CalendarView(frame: .zero)
-    // TODO: 시작 시간 표시
     private let clockImageView = UIImageView(
         image: .clock?.withTintColor(.gray02, renderingMode: .alwaysOriginal)
     )
@@ -111,11 +114,14 @@ final class CreateMatchViewController: BaseViewController {
     }
     
     private let matchTimeTitleLabel = DefaultTitleLabel(text: "소요시간", textColor: .gray02, font: .Subhead2_14)
-    private let matchTimeTextField = DefaultTextField(placeholder: "날짜와 시간을 설정해주세요")
+    private lazy var matchTimeTextField = DefaultTextField(placeholder: "플레이 시간 설정").then {
+        $0.delegate = self
+        $0.text = "플레이 시간 설정"
+        $0.clearButtonMode = .never
+    }
     private let matchTimeStepper = Stepper(defaultText: "30분", defaultValue: Constant.defaultTime)
     private let matchTimeRowView = UIView().then { $0.backgroundColor  = .gray09 }
     
-    // TODO: 장소 선택 버튼
     private let matchLocationTitleLabel = DefaultTitleLabel(text: "매치 장소", textColor: .gray02, font: .Subhead2_14)
     private let matchLocationButton = DefaultButton(
         title: "  매치 장소를 선택하세요",
@@ -124,12 +130,19 @@ final class CreateMatchViewController: BaseViewController {
     ).then {
         $0.contentHorizontalAlignment = .left
     }
+    private let matchLocationArrowButton = UIButton().then {
+        $0.setImage(.arrowRight?.withTintColor(.gray09, renderingMode: .alwaysOriginal), for: .normal)
+    }
     private let matchLocationRowView = UIView().then { $0.backgroundColor = .gray09 }
     
     private let matchPeopleTitleLabel = DefaultTitleLabel(text: "참가인원", textColor: .gray02, font: .Subhead2_14)
     private let matchPeopleSubTitleLabel = DefaultTitleLabel(text: "(본인을 포함한 총 참여 인원수)", textColor: .gray06, font: .Body2_14)
-    private let matchPeopleTextField = DefaultTextField(placeholder: "인원수 설정")
-    private let matchPeopleStepper = Stepper(defaultText: "2명", defaultValue: Constant.defaultPeople)
+    private lazy var matchPeopleTextField = DefaultTextField(placeholder: "인원수 설정").then {
+        $0.delegate = self
+        $0.text = "인원수 설정"
+        $0.clearButtonMode = .never
+    }
+    private let matchPeopleStepper = Stepper(defaultText: "\(Constant.defaultPeople)명", defaultValue: Constant.defaultPeople)
     private let matchPeopleRowView = UIView().then { $0.backgroundColor  = .gray09 }
     
     private let matchFeeTitleLabel = DefaultTitleLabel(text: "참가비가 있나요?", textColor: .gray02, font: .Subhead2_14)
@@ -138,6 +151,15 @@ final class CreateMatchViewController: BaseViewController {
         textColor: .gray06,
         font: .Caption1_12
     )
+    private let matchFeeLabel = UILabel().then {
+        $0.text = "₩"
+        $0.textColor = .gray02
+        $0.font = .Body1_16
+    }
+    private let matchFeeTextField = DefaultTextField(placeholder: "0").then {
+        $0.keyboardType = .numberPad
+    }
+    private let matchFeeRowView = UIView().then { $0.backgroundColor  = .gray09 }
     
     // MARK: Properties
     
@@ -191,7 +213,7 @@ final class CreateMatchViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        matchLocationButton.rx.tap
+        Observable.of(matchLocationButton.rx.tap, matchLocationArrowButton.rx.tap).merge()
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.coordinatorPublisher.onNext(.setLocation)
@@ -241,6 +263,37 @@ final class CreateMatchViewController: BaseViewController {
                 )
             }
             .disposed(by: disposeBag)
+        
+        let matchTimeObservable = matchTimeStepper.valueObservable().share()
+        
+        matchTimeObservable
+            .withUnretained(self)
+            .subscribe { owner, matchTime in
+                owner.createMatchViewModel.duration = matchTime
+                owner.matchTimeStepper.countLabel.text = matchTime.matchTimeString()
+            }
+            .disposed(by: disposeBag)
+        
+        let matchPeopleCountObservable = matchPeopleStepper.valueObservable().share()
+        
+        matchPeopleCountObservable
+            .withUnretained(self)
+            .subscribe { owner, peopleCount in
+                owner.createMatchViewModel.maxHeadCount = peopleCount
+                owner.matchPeopleStepper.countLabel.text = "\(peopleCount)명"
+            }
+            .disposed(by: disposeBag)
+        
+        let matchFeeObservable = matchFeeTextField.rx.text.orEmpty.share()
+        
+        matchFeeObservable
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .subscribe { owner, fee in
+                owner.createMatchViewModel.fee = fee.feeInt()
+                owner.matchFeeTextField.text = fee.feeString()
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
@@ -275,7 +328,8 @@ final class CreateMatchViewController: BaseViewController {
         matchTitleTextField.editingDidEnd(rowView: matchTitleRowView).disposed(by: disposeBag)
         matchDetailTextView.editingDidBegin(rowView: matchDetailRowView).disposed(by: disposeBag)
         matchDetailTextView.editingDidEnd(rowView: matchDetailRowView).disposed(by: disposeBag)
-        
+        matchFeeTextField.editingDidBegin(rowView: matchFeeRowView).disposed(by: disposeBag)
+        matchFeeTextField.editingDidEnd(rowView: matchFeeRowView).disposed(by: disposeBag)
     }
     
     private func validate(text: String, textView: UITextView, countLabel: UILabel, validateCount: Int) {
@@ -302,6 +356,9 @@ final class CreateMatchViewController: BaseViewController {
 // MARK: - UIScrollView Delegate
 
 extension CreateMatchViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        hideKeyboard()
+    }
 }
 
 // MARK: - FSCalendar Delegate
@@ -311,7 +368,6 @@ extension CreateMatchViewController: FSCalendarDelegate, FSCalendarDataSource {
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
-        print("did select date \(self.dateFormatter.string(from: date))")
         
         createMatchViewModel.startDate = date
         let selectedDateText = dateFormatter.string(from: date)
@@ -399,6 +455,9 @@ extension CreateMatchViewController: UIPickerViewDelegate {
 // MARK: - UITextFieldDelegate
 
 extension CreateMatchViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return false
+    }
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
@@ -418,11 +477,11 @@ extension CreateMatchViewController {
         contentView.addSubviews([matchScheduleTitleLabel, matchScheduleTextField, matchScheduleRowView, matchScheduleInfoView])
         contentView.addSubviews([calendarView, startTimeTextField, clockImageView])
         contentView.addSubviews([matchTimeTitleLabel, matchTimeTextField, matchTimeStepper, matchTimeRowView])
-        contentView.addSubviews([matchLocationTitleLabel, matchLocationButton, matchLocationRowView])
+        contentView.addSubviews([matchLocationTitleLabel, matchLocationButton, matchLocationRowView, matchLocationArrowButton])
         contentView.addSubviews([
             matchPeopleTitleLabel, matchPeopleSubTitleLabel, matchPeopleTextField, matchPeopleStepper, matchPeopleRowView
         ])
-        contentView.addSubviews([matchFeeTitleLabel, matchFeeSubTitleLabel])
+        contentView.addSubviews([matchFeeTitleLabel, matchFeeSubTitleLabel, matchFeeLabel, matchFeeTextField, matchFeeRowView])
         
         configureTitleView()
         configureDetailView()
@@ -430,6 +489,7 @@ extension CreateMatchViewController {
         configureTimeView()
         configureLocationView()
         configurePeopleView()
+        configureFeeView()
     }
     
     private func configureTitleView() {
@@ -589,6 +649,12 @@ extension CreateMatchViewController {
             make.height.equalTo(Constant.matchLocationHeight)
         }
         
+        matchLocationArrowButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(Constant.padding24)
+            make.centerY.equalTo(matchLocationButton)
+            make.width.height.equalTo(Constant.matchLocationArrowWidth)
+        }
+        
         matchLocationRowView.snp.makeConstraints { make in
             make.top.equalTo(matchLocationButton.snp.bottom)
             make.left.right.equalToSuperview().inset(Constant.padding16)
@@ -624,6 +690,39 @@ extension CreateMatchViewController {
         
         matchPeopleRowView.snp.makeConstraints { make in
             make.top.equalTo(matchPeopleTextField.snp.bottom)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.barHeight)
+        }
+    }
+    
+    private func configureFeeView() {
+        matchFeeTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(matchPeopleRowView.snp.bottom).offset(Constant.padding32)
+            make.left.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.titleHeight)
+        }
+        
+        matchFeeSubTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(matchFeeTitleLabel.snp.bottom).offset(Constant.padding2)
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.matchFeeSubTitleHeight)
+        }
+        
+        matchFeeLabel.snp.makeConstraints { make in
+            make.top.equalTo(matchFeeSubTitleLabel.snp.bottom)
+            make.left.equalToSuperview().offset(Constant.padding24)
+            make.height.equalTo(Constant.textFieldHeight)
+        }
+        
+        matchFeeTextField.snp.makeConstraints { make in
+            make.top.equalTo(matchFeeSubTitleLabel.snp.bottom)
+            make.left.equalTo(matchFeeLabel.snp.right).offset(Constant.padding2)
+            make.right.equalToSuperview().inset(Constant.padding16)
+            make.height.equalTo(Constant.textFieldHeight)
+        }
+        
+        matchFeeRowView.snp.makeConstraints { make in
+            make.top.equalTo(matchFeeTextField.snp.bottom)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.barHeight)
         }

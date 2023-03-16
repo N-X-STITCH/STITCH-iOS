@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D800291429A5FF1C00F75378 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800291329A5FF1C00F75378 /* ViewModel.swift */; };
 		D800291629A600A300F75378 /* NicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800291529A600A300F75378 /* NicknameUseCase.swift */; };
+		D8038B3029C36919006C1BF8 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B2F29C36919006C1BF8 /* String+.swift */; };
 		D805FDD629A5B2980007E63D /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDD529A5B2980007E63D /* Sport.swift */; };
 		D805FDDC29A5B4AD0007E63D /* SportsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */; };
 		D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDD29A5B4B60007E63D /* SportsCell.swift */; };
@@ -18,6 +19,7 @@
 		D81115D229C30E2300124590 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81115D129C30E2300124590 /* UITextField+.swift */; };
 		D81115D429C30EB800124590 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81115D329C30EB800124590 /* UITextView+.swift */; };
 		D81115D629C310C000124590 /* MatchScheduleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81115D529C310C000124590 /* MatchScheduleInfoView.swift */; };
+		D81115D829C3501200124590 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81115D729C3501200124590 /* Int+.swift */; };
 		D820258829A21E2C00892CE8 /* DefaultToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258729A21E2B00892CE8 /* DefaultToolbar.swift */; };
 		D820258C29A220CC00892CE8 /* DefaultProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */; };
 		D820259929A22EC800892CE8 /* ProfileTextCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820259829A22EC800892CE8 /* ProfileTextCollectionView.swift */; };
@@ -183,6 +185,7 @@
 /* Begin PBXFileReference section */
 		D800291329A5FF1C00F75378 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		D800291529A600A300F75378 /* NicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUseCase.swift; sourceTree = "<group>"; };
+		D8038B2F29C36919006C1BF8 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D805FDD529A5B2980007E63D /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
 		D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCollectionView.swift; sourceTree = "<group>"; };
 		D805FDDD29A5B4B60007E63D /* SportsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCell.swift; sourceTree = "<group>"; };
@@ -190,6 +193,7 @@
 		D81115D129C30E2300124590 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		D81115D329C30EB800124590 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		D81115D529C310C000124590 /* MatchScheduleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScheduleInfoView.swift; sourceTree = "<group>"; };
+		D81115D729C3501200124590 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		D820258729A21E2B00892CE8 /* DefaultToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToolbar.swift; sourceTree = "<group>"; };
 		D820258B29A220CC00892CE8 /* DefaultProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileImageView.swift; sourceTree = "<group>"; };
 		D820259829A22EC800892CE8 /* ProfileTextCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextCollectionView.swift; sourceTree = "<group>"; };
@@ -874,6 +878,8 @@
 				D863D95929C071B4006E99B6 /* Observable+Data.swift */,
 				D81115D129C30E2300124590 /* UITextField+.swift */,
 				D81115D329C30EB800124590 /* UITextView+.swift */,
+				D81115D729C3501200124590 /* Int+.swift */,
+				D8038B2F29C36919006C1BF8 /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1345,6 +1351,7 @@
 				D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */,
 				D850FC8929B4D3DC00DC08C6 /* MatchRepository.swift in Sources */,
 				D81115D429C30EB800124590 /* UITextView+.swift in Sources */,
+				D81115D829C3501200124590 /* Int+.swift in Sources */,
 				D820259E29A236AB00892CE8 /* CollectionViewLayout.swift in Sources */,
 				D868BA8029B05C5600E80012 /* PopularMatchCell.swift in Sources */,
 				D8455A0F29BB5F4B006AF28B /* SettingSection.swift in Sources */,
@@ -1360,6 +1367,7 @@
 				D850FCA729B72EC200DC08C6 /* TimePickerView.swift in Sources */,
 				D8455A1129BB6B70006AF28B /* SettingFooterView.swift in Sources */,
 				D8599AB8299E349C00633192 /* AuthDIContainer.swift in Sources */,
+				D8038B3029C36919006C1BF8 /* String+.swift in Sources */,
 				D863D95A29C071B4006E99B6 /* Observable+Data.swift in Sources */,
 				D868BA4029A8FAA400E80012 /* SignupViewModel.swift in Sources */,
 				D85E1BE429C2E4E700AF1FCA /* FireStorageRepository.swift in Sources */,
