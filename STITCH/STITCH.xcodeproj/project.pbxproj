@@ -10,6 +10,7 @@
 		D800291429A5FF1C00F75378 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800291329A5FF1C00F75378 /* ViewModel.swift */; };
 		D800291629A600A300F75378 /* NicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800291529A600A300F75378 /* NicknameUseCase.swift */; };
 		D8038B3029C36919006C1BF8 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B2F29C36919006C1BF8 /* String+.swift */; };
+		D8038B3429C40514006C1BF8 /* CLGeocoder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B3329C40514006C1BF8 /* CLGeocoder+Rx.swift */; };
 		D805FDD629A5B2980007E63D /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDD529A5B2980007E63D /* Sport.swift */; };
 		D805FDDC29A5B4AD0007E63D /* SportsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */; };
 		D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDD29A5B4B60007E63D /* SportsCell.swift */; };
@@ -186,6 +187,7 @@
 		D800291329A5FF1C00F75378 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		D800291529A600A300F75378 /* NicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUseCase.swift; sourceTree = "<group>"; };
 		D8038B2F29C36919006C1BF8 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		D8038B3329C40514006C1BF8 /* CLGeocoder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLGeocoder+Rx.swift"; sourceTree = "<group>"; };
 		D805FDD529A5B2980007E63D /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
 		D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCollectionView.swift; sourceTree = "<group>"; };
 		D805FDDD29A5B4B60007E63D /* SportsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCell.swift; sourceTree = "<group>"; };
@@ -880,6 +882,7 @@
 				D81115D329C30EB800124590 /* UITextView+.swift */,
 				D81115D729C3501200124590 /* Int+.swift */,
 				D8038B2F29C36919006C1BF8 /* String+.swift */,
+				D8038B3329C40514006C1BF8 /* CLGeocoder+Rx.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1346,6 +1349,7 @@
 				D850FC8D29B5A60000DC08C6 /* SelectSportViewController.swift in Sources */,
 				D850FC7029B4BFA100DC08C6 /* FloatingButton.swift in Sources */,
 				D850FC9F29B6021200DC08C6 /* CalendarView.swift in Sources */,
+				D8038B3429C40514006C1BF8 /* CLGeocoder+Rx.swift in Sources */,
 				D868BA5029AC871700E80012 /* KakaoLoginService.swift in Sources */,
 				D860B5EB299C88B900966683 /* AppCoordinator.swift in Sources */,
 				D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */,
