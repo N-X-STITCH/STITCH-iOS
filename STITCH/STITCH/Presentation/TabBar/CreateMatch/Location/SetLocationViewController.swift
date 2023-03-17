@@ -21,11 +21,21 @@ final class SetLocationViewController: BaseViewController {
         static let padding20 = 20
         static let padding24 = 24
         static let padding32 = 32
+        static let locationHeight = 40
         static let gpsBottomPadding = 130
-        static let bottomPadding = 210
+        static let bottomPadding = 200
+        static let alpha = 0.7
     }
     
     private lazy var mapView = NMFMapView(frame: view.frame)
+    
+    private let locationLabel = UILabel().then {
+        $0.text = "동작구"
+        $0.textColor = .white
+        $0.font = .Body2_14
+        $0.textAlignment = .center
+        $0.backgroundColor = .black.withAlphaComponent(Constant.alpha)
+    }
     
     private let gpsButton = UIButton().then {
         $0.setImage(.mapGPS, for: .normal)
@@ -35,13 +45,17 @@ final class SetLocationViewController: BaseViewController {
     
     // MARK: Properties
     
+    private let mapLocationObservable = PublishRelay<LocationInfo>()
+    
     private var marker: NMFMarker?
     private var currentLocation: NMGLatLng?
+    
     private lazy var locationManager = CLLocationManager().then {
         $0.delegate = self
         $0.desiredAccuracy = kCLLocationAccuracyBest
         $0.distanceFilter = kCLDistanceFilterNone
     }
+    private let geocoder = CLGeocoder()
     
     private var panGestureRecognizer: UIPanGestureRecognizer!
     private var searchPlaceViewHeightConstraint: NSLayoutConstraint!
@@ -92,6 +106,29 @@ final class SetLocationViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        let mapPlacemarkObservable = mapLocationObservable
+            .asObservable()
+            .map { locationInfo in
+                guard let latitude = locationInfo.latitude,
+                      let latitude = CLLocationDegrees(latitude),
+                      let longitude = locationInfo.longitude,
+                      let longitude = CLLocationDegrees(longitude)
+                else { return CLLocation() }
+                return CLLocation(latitude: latitude, longitude: longitude)
+            }
+            .withUnretained(self)
+            .flatMap { owner, location -> Observable<[CLPlacemark]> in
+                return owner.geocoder.rx.reverseGeocodeLocation(location)
+            }
+            .compactMap { $0.last }
+            
+        mapPlacemarkObservable
+            .withUnretained(self)
+            .subscribe { owner, placemark in
+                owner.locationLabel.text = placemark.name ?? ""
+            }
+            .disposed(by: disposeBag)
+        
         let input = SetLocationViewModel.Input(
             viewDidLoad: Single<Void>.just(()).asObservable()
         )
@@ -110,12 +147,19 @@ final class SetLocationViewController: BaseViewController {
         view.backgroundColor = .background
         
         view.addSubview(mapView)
+        view.addSubview(locationLabel)
         view.addSubview(gpsButton)
         view.addSubview(searchPlaceView)
         
         mapView.snp.updateConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide)
             make.left.right.bottom.equalToSuperview()
+        }
+        
+        locationLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(Constant.locationHeight)
         }
         
         gpsButton.snp.makeConstraints { make in
@@ -232,9 +276,12 @@ extension SetLocationViewController: NMFMapViewCameraDelegate {
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        // TODO: 위치 정보 가져오기, 근데 움직일때 말고 멈췄을때
+        // 멈췄을 때
         let center = mapView.projection.latlng(from: CGPoint(
             x: view.frame.midX, y: view.frame.midY - 50)
+        )
+        mapLocationObservable.accept(
+            LocationInfo(address: "", latitude: String(center.lat), longitude: String(center.lng))
         )
     }
 }

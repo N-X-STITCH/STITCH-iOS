@@ -42,7 +42,7 @@ final class SearchPlaceView: UIView {
     }
     
     let searchResultTitleLabel = UILabel().then {
-        $0.text = "근처동네 결과"
+        $0.text = "검색 결과"
         $0.textColor = .white
         $0.font = .Subhead_16
     }
