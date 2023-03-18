@@ -164,19 +164,32 @@ extension TabBarCoordinator {
     private func showCreateMatchViewController(_ navigationController: UINavigationController) {
         let createMatchViewController = dependencies.createMatchViewController()
         createMatchViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
             .withUnretained(self)
-            .subscribe { owner, event in
+            .emit() { owner, event in
                 if case .setLocation = event {
-                    owner.showSetLocationViewController(navigationController)
+                    owner.showSetLocationViewController(navigationController, createMatchViewController)
                 }
             }
             .disposed(by: disposeBag)
         navigationController.pushViewController(createMatchViewController, animated: true)
     }
     
-    private func showSetLocationViewController(_ navigationController: UINavigationController) {
+    private func showSetLocationViewController(
+        _ navigationController: UINavigationController,
+        _ createMatchViewController: CreateMatchViewController
+    ) {
         let setLocationViewController = dependencies.setLocationViewController()
-        addPopEvent(setLocationViewController)
+        setLocationViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .withUnretained(self)
+            .emit() { owner, event in
+                if case .send(let locationInfo) = event {
+                    createMatchViewController.didReceive(locationInfo: locationInfo)
+                    navigationController.popViewController(animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(setLocationViewController, animated: true)
     }
 }

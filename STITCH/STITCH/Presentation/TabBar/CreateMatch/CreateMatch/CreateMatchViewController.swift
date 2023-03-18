@@ -40,7 +40,7 @@ final class CreateMatchViewController: BaseViewController {
         static let countLabelHeight = 18
         static let barHeight = 1
         static let clockIconWidth = 18
-        static let contentViewHeight = 1500
+        static let contentViewHeight = 1700
         static let stepperWidth = 136
         static let stepperHeight = 24
         static let defaultTime = 30
@@ -49,6 +49,14 @@ final class CreateMatchViewController: BaseViewController {
         
         static let titleValidation = 30
         static let contentValidation = 1000
+    }
+    
+    private let finishButton = UIButton().then {
+        $0.titleLabel?.font = .Subhead_16
+        $0.setTitle("완료", for: .normal)
+        $0.setTitle("완료", for: .disabled)
+        $0.setTitleColor(.yellow05_primary, for: .normal)
+        $0.setTitleColor(.gray10, for: .disabled)
     }
     
     // MARK: ScrollView
@@ -208,12 +216,16 @@ final class CreateMatchViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollView.updateContentSize()
+        let rect = scrollView.recursiveUnionInDepthFor(view: scrollView)
+        scrollView.contentLayoutGuide.snp.updateConstraints { make in
+            make.height.equalTo(rect.height)
+        }
     }
     
     // MARK: - Methods
     
     override func setting() {
+        changeButton(isEnabled: false)
         // TODO: 삭제
         scrollView.delegate = self
         calendarView.dataSource = self
@@ -223,7 +235,21 @@ final class CreateMatchViewController: BaseViewController {
     }
     
     override func bind() {
-        rowViewUpdates()
+        bindRowViewUpdates()
+        bindTextFieldScroll()
+        
+        finishButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                if (owner.matchTitleTextField.text ?? "") == "" {
+                    owner.matchTitleTextField.becomeFirstResponder()
+                } else if (owner.matchScheduleTextField.text ?? "") == "" {
+                    owner.moveScrollView(owner.matchScheduleTitleLabel)
+                } else {
+                    owner.hideKeyboard()
+                }
+            }
+            .disposed(by: disposeBag)
         
         doneButton.rx.tap
             .withUnretained(self)
@@ -323,7 +349,11 @@ final class CreateMatchViewController: BaseViewController {
     }
     
     override func configureNavigation() {
+        navigationController?.navigationBar.backgroundColor = .background
+        navigationItem.title = "매치 개설하기"
         
+        let rightBarButton = UIBarButtonItem(customView: finishButton)
+        navigationItem.rightBarButtonItem = rightBarButton
     }
     
     override func configureUI() {
@@ -333,7 +363,8 @@ final class CreateMatchViewController: BaseViewController {
         scrollView.addSubview(contentView)
         
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.layoutMarginsGuide.snp.top)
+            make.left.right.bottom.equalToSuperview()
         }
         
         scrollView.contentLayoutGuide.snp.makeConstraints { make in
@@ -349,13 +380,37 @@ final class CreateMatchViewController: BaseViewController {
         configureContentView()
     }
     
-    private func rowViewUpdates() {
-        matchTitleTextField.editingDidBegin(rowView: matchTitleRowView).disposed(by: disposeBag)
+    private func bindRowViewUpdates() {
         matchTitleTextField.editingDidEnd(rowView: matchTitleRowView).disposed(by: disposeBag)
-        matchDetailTextView.editingDidBegin(rowView: matchDetailRowView).disposed(by: disposeBag)
         matchDetailTextView.editingDidEnd(rowView: matchDetailRowView).disposed(by: disposeBag)
-        matchFeeTextField.editingDidBegin(rowView: matchFeeRowView).disposed(by: disposeBag)
         matchFeeTextField.editingDidEnd(rowView: matchFeeRowView).disposed(by: disposeBag)
+    }
+    
+    private func bindTextFieldScroll() {
+        matchTitleTextField.rx.controlEvent(.editingDidBegin)
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.moveScrollView(owner.matchTitleLabel, rowView: owner.matchTitleRowView)
+            }
+            .disposed(by: disposeBag)
+        
+        matchDetailTextView.rx.didBeginEditing
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.moveScrollView(owner.matchDetailTitleLabel, rowView: owner.matchDetailRowView)
+            }
+            .disposed(by: disposeBag)
+        
+        matchFeeTextField.rx.controlEvent(.editingDidBegin)
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.moveScrollView(owner.matchFeeTitleLabel, rowView: owner.matchFeeRowView)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func changeButton(isEnabled: Bool) {
+        finishButton.isEnabled = isEnabled
     }
     
     private func validate(text: String, textView: UITextView, countLabel: UILabel, validateCount: Int) {
@@ -376,6 +431,22 @@ final class CreateMatchViewController: BaseViewController {
     
     private func bindTextCount(text: String, label: UILabel, validateCount: Int) {
         label.text = "\(text.count) / \(validateCount)"
+    }
+    
+    private func moveScrollView(_ view: UIView, rowView: UIView? = nil) {
+        if view == matchFeeTitleLabel {
+            scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 240), animated: true)
+        } else {
+            scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 20), animated: true)
+        }
+        if let rowView {
+            rowView.updateBackgroundColor(isEditing: true)
+        }
+    }
+    
+    func didReceive(locationInfo: LocationInfo) {
+        matchLocationButton.setTitle("  \(locationInfo.address)", for: .normal)
+        matchLocationButton.setTitleColor(.gray02, for: .normal)
     }
 }
 

@@ -15,7 +15,7 @@ final class CreateMatchViewModel {
     private let id = UUID().uuidString
     var title: String = ""
     var matchImageURL: String = ""
-    var place: String = ""
+    var place: LocationInfo? = nil
     var contents: String = ""
     var matchType: MatchType? = nil
     var sport: Sport? = nil
