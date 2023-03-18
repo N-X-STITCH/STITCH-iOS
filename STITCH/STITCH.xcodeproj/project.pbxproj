@@ -11,6 +11,9 @@
 		D800291629A600A300F75378 /* NicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800291529A600A300F75378 /* NicknameUseCase.swift */; };
 		D8038B3029C36919006C1BF8 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B2F29C36919006C1BF8 /* String+.swift */; };
 		D8038B3429C40514006C1BF8 /* CLGeocoder+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B3329C40514006C1BF8 /* CLGeocoder+Rx.swift */; };
+		D8038B3629C416AD006C1BF8 /* SearchLocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B3529C416AD006C1BF8 /* SearchLocationRepository.swift */; };
+		D8038B3829C416DB006C1BF8 /* DefaultSearchLocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B3729C416DB006C1BF8 /* DefaultSearchLocationRepository.swift */; };
+		D8038B3A29C41929006C1BF8 /* SearchLocationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8038B3929C41929006C1BF8 /* SearchLocationDTO.swift */; };
 		D805FDD629A5B2980007E63D /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDD529A5B2980007E63D /* Sport.swift */; };
 		D805FDDC29A5B4AD0007E63D /* SportsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */; };
 		D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D805FDDD29A5B4B60007E63D /* SportsCell.swift */; };
@@ -180,6 +183,7 @@
 		D87BD888299E730D003A1B76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD887299E730D003A1B76 /* DefaultButton.swift */; };
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
 		D87BD88C299E77C7003A1B76 /* DefaultTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */; };
+		D8CE788F29C5635E0028F2AE /* KatechConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE788E29C5635E0028F2AE /* KatechConverter.swift */; };
 		D8E1113029A3222500A3CE6A /* FindLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -188,6 +192,9 @@
 		D800291529A600A300F75378 /* NicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUseCase.swift; sourceTree = "<group>"; };
 		D8038B2F29C36919006C1BF8 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		D8038B3329C40514006C1BF8 /* CLGeocoder+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLGeocoder+Rx.swift"; sourceTree = "<group>"; };
+		D8038B3529C416AD006C1BF8 /* SearchLocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationRepository.swift; sourceTree = "<group>"; };
+		D8038B3729C416DB006C1BF8 /* DefaultSearchLocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSearchLocationRepository.swift; sourceTree = "<group>"; };
+		D8038B3929C41929006C1BF8 /* SearchLocationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationDTO.swift; sourceTree = "<group>"; };
 		D805FDD529A5B2980007E63D /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
 		D805FDDB29A5B4AD0007E63D /* SportsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCollectionView.swift; sourceTree = "<group>"; };
 		D805FDDD29A5B4B60007E63D /* SportsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCell.swift; sourceTree = "<group>"; };
@@ -346,6 +353,7 @@
 		D87BD887299E730D003A1B76 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextField.swift; sourceTree = "<group>"; };
+		D8CE788E29C5635E0028F2AE /* KatechConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KatechConverter.swift; sourceTree = "<group>"; };
 		D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -807,6 +815,7 @@
 				D863D96E29C27A0B006E99B6 /* NearAddressesDTO.swift */,
 				D863D97829C28593006E99B6 /* ReverseGeoCodingResultDTO.swift */,
 				D863D97C29C2AA88006E99B6 /* GeoCodingResultDTO.swift */,
+				D8038B3929C41929006C1BF8 /* SearchLocationDTO.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -949,6 +958,7 @@
 			children = (
 				D868BA2A29A7B4DF00E80012 /* ProfileText.swift */,
 				D863D96929C1B7CA006E99B6 /* APIKey.swift */,
+				D8CE788E29C5635E0028F2AE /* KatechConverter.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -992,8 +1002,8 @@
 		D863D96B29C27929006E99B6 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				D868BA3929A8A32C00E80012 /* FindLocationUseCase.swift */,
 				D863D96C29C279B1006E99B6 /* NearAddressUseCase.swift */,
+				D868BA3929A8A32C00E80012 /* FindLocationUseCase.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -1002,6 +1012,7 @@
 			isa = PBXGroup;
 			children = (
 				D863D97129C27A8E006E99B6 /* DefaultNearAddressRespository.swift */,
+				D8038B3729C416DB006C1BF8 /* DefaultSearchLocationRepository.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -1010,6 +1021,7 @@
 			isa = PBXGroup;
 			children = (
 				D863D97429C27ABF006E99B6 /* NearAddressRepository.swift */,
+				D8038B3529C416AD006C1BF8 /* SearchLocationRepository.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -1317,9 +1329,11 @@
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
 				D850FC8F29B5ADFC00DC08C6 /* CreateMatchViewController.swift in Sources */,
 				D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */,
+				D8038B3829C416DB006C1BF8 /* DefaultSearchLocationRepository.swift in Sources */,
 				D860B60D299CE7AC00966683 /* Dictionary+queryString.swift in Sources */,
 				D868BA5B29AC908E00E80012 /* LoginInfo.swift in Sources */,
 				D863D97D29C2AA88006E99B6 /* GeoCodingResultDTO.swift in Sources */,
+				D8038B3A29C41929006C1BF8 /* SearchLocationDTO.swift in Sources */,
 				D8599AB0299E2EE100633192 /* UIFont+.swift in Sources */,
 				D860B601299C956200966683 /* TabBarCoordinator.swift in Sources */,
 				D82025A029A24A7C00892CE8 /* LocationViewController.swift in Sources */,
@@ -1327,6 +1341,7 @@
 				D85E1BE629C2E69100AF1FCA /* DefaultFireStorageRepository.swift in Sources */,
 				D850FC9229B5B36300DC08C6 /* SelectPhotoView.swift in Sources */,
 				D820259B29A2309000892CE8 /* ProfileTextCell.swift in Sources */,
+				D8038B3629C416AD006C1BF8 /* SearchLocationRepository.swift in Sources */,
 				D860B5FC299C912B00966683 /* AuthCoordinator.swift in Sources */,
 				D868BA6D29AE3F4700E80012 /* HomeViewModel.swift in Sources */,
 				D84559FC29BB13B4006AF28B /* SettingViewController.swift in Sources */,
@@ -1360,6 +1375,7 @@
 				D868BA8029B05C5600E80012 /* PopularMatchCell.swift in Sources */,
 				D8455A0F29BB5F4B006AF28B /* SettingSection.swift in Sources */,
 				D868BA3629A89C6100E80012 /* BaseCollectionView.swift in Sources */,
+				D8CE788F29C5635E0028F2AE /* KatechConverter.swift in Sources */,
 				D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */,
 				D8599AA7299E2B9D00633192 /* Assets+Generated.swift in Sources */,
 				D868BA4A29AC7DAE00E80012 /* SocialLoginService.swift in Sources */,

@@ -37,12 +37,22 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     // MARK: - Repositories
     
+    // MARK: Match
+    
     func matchRepository() -> MatchRepository {
         return DefaultMatchRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
     }
     
+    // MARK: Storage
+    
     func fireStorageRepository() -> FireStorageRepository {
         return DefaultFireStorageRepository()
+    }
+    
+    // MARK: Location
+    
+    func searchLocationRepository() -> SearchLocationRepository {
+        return DefaultSearchLocationRepository(naverAPINetworkService: dependencies.naverOpenAPIService)
     }
     
     // MARK: - Use Cases
@@ -59,7 +69,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: Location
     
     func findLocationUseCase() -> FindLocationUseCase {
-        return DefaultFindLocationUseCase()
+        return DefaultFindLocationUseCase(searchLocationRepository: searchLocationRepository())
     }
         
     // MARK: - View Models

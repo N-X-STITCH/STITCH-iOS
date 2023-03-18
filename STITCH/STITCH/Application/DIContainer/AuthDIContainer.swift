@@ -72,10 +72,6 @@ final class AuthDIContainer {
     
     // MARK: Location
     
-    func findLocationUseCase() -> FindLocationUseCase {
-        return DefaultFindLocationUseCase()
-    }
-    
     func nearAddressesUseCase() -> NearAddressUseCase {
         return DefaultNearAddressUseCase(nearAddressRepository: nearAddressesRepository())
     }
