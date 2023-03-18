@@ -28,7 +28,7 @@ final class Stepper: UIControl {
     
     let countLabel = UILabel().then {
         $0.font = .Body1_16
-        $0.textColor = .gray09
+        $0.textColor = .gray02
         $0.textAlignment = .center
     }
     
