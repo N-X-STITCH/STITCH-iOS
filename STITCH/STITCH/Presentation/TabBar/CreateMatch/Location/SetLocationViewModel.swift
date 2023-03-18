@@ -12,11 +12,11 @@ import RxSwift
 final class SetLocationViewModel: ViewModel {
     
     struct Input {
-        let viewDidLoad: Observable<Void>
+        let searchTextObservable: Observable<String>
     }
     
     struct Output {
-        let configureCollectionViewData: Observable<[LocationInfo]>
+        let searchResultObservable: Observable<[LocationInfo]>
     }
     
     // MARK: - Properties
@@ -33,18 +33,12 @@ final class SetLocationViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         
-        let configureCollectionViewData = input.viewDidLoad
-            .flatMap { _ in
-                return Observable.just([
-                    LocationInfo(address: "경기도 수원시 영통구 광교2동"),
-                    LocationInfo(address: "경기도 수원시 영통구 광교3동"),
-                    LocationInfo(address: "경기도 수원시 영통구 광교4동"),
-                    LocationInfo(address: "경기도 수원시 영통구 광교5동")
-                ])
+        let searchResultObservable = input.searchTextObservable
+            .withUnretained(self)
+            .flatMap { owner, searchText -> Observable<[LocationInfo]> in
+                return owner.findLocationUseCase.fetchSearchLocations(searchText: searchText)
             }
-            .asObservable()
-            
         
-        return Output(configureCollectionViewData: configureCollectionViewData)
+        return Output(searchResultObservable: searchResultObservable)
     }
 }

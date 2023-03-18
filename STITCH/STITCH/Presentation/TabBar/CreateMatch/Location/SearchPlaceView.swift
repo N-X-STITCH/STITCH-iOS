@@ -47,18 +47,20 @@ final class SearchPlaceView: UIView {
         $0.font = .Subhead_16
     }
     
-    lazy var locationResultCollectionView = LocationResultCollectionView(
-        layout: LocationResultCollectionViewLayout.layout()
-    )
+    var locationResultCollectionView: LocationResultCollectionView!
     
     // MARK: - Initializer
     
-    init() {
+    init(viewController: UICollectionViewDelegate) {
         super.init(frame: .zero)
         backgroundColor = .gray12
         layer.cornerRadius = 17
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         clipsToBounds = true
+        locationResultCollectionView = LocationResultCollectionView(
+            viewController,
+            layout: LocationResultCollectionViewLayout.layout()
+        )
         
         configureUI()
     }
