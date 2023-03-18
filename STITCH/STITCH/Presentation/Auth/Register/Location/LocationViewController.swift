@@ -100,6 +100,7 @@ final class LocationViewController: BaseViewController {
             .subscribe (onNext: { owner, _ in
                 owner.coordinatorPublisher.onNext(.next)
             }, onError: { [weak self] error in
+                // TODO: 에러 확인 필요
                 self?.handle(error: error)
             })
             .disposed(by: disposeBag)
