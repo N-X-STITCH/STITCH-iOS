@@ -64,4 +64,16 @@ struct LocationAPIEndpoints {
             method: .GET
         )
     }
+    
+    static func fetchSearchLocations(query: String) -> Endpoint {
+        return Endpoint(
+            path: "",
+            method: .GET,
+            queryParameters: [
+                "query": query,
+                "display": 5,
+                "sort": "random"
+            ]
+        )
+    }
 }
