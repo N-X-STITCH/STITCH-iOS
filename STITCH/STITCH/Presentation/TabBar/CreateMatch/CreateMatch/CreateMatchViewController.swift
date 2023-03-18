@@ -83,7 +83,9 @@ final class CreateMatchViewController: BaseViewController {
     // MARK: Match Title
     
     private let matchTitleLabel = DefaultTitleLabel(text: "매치 제목", textColor: .gray02, font: .Subhead2_14)
-    private let matchTitleTextField = DefaultTextField(placeholder: "매치 제목을 설정해주세요 (30자 이내)")
+    private lazy var matchTitleTextField = DefaultTextField(placeholder: "매치 제목을 설정해주세요 (30자 이내)").then {
+        $0.delegate = self
+    }
     private let matchTitleRowView = UIView().then { $0.backgroundColor  = .gray09 }
     private let matchTitleCountLabel = DefaultTitleLabel(text: "0 / 30", textColor: .gray09, font: .Caption1_12)
     
@@ -407,6 +409,13 @@ final class CreateMatchViewController: BaseViewController {
                 owner.moveScrollView(owner.matchFeeTitleLabel, rowView: owner.matchFeeRowView)
             }
             .disposed(by: disposeBag)
+        
+        startTimeTextField.rx.controlEvent(.editingDidBegin)
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.moveScrollView(owner.calendarView)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func changeButton(isEnabled: Bool) {
@@ -434,7 +443,7 @@ final class CreateMatchViewController: BaseViewController {
     }
     
     private func moveScrollView(_ view: UIView, rowView: UIView? = nil) {
-        if view == matchFeeTitleLabel {
+        if view == matchFeeTitleLabel || view == calendarView {
             scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 240), animated: true)
         } else {
             scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 20), animated: true)
@@ -553,14 +562,20 @@ extension CreateMatchViewController: UIPickerViewDelegate {
 
 extension CreateMatchViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return false
+        if textField == matchScheduleTextField ||
+           textField == matchTimeTextField || textField == matchPeopleTextField {
+            return false
+        }
+        return true
     }
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        return false
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == matchTitleTextField {
+            matchDetailTextView.becomeFirstResponder()
+        } else if textField == matchDetailTextView {
+            moveScrollView(matchScheduleTitleLabel)
+        }
+        return true
     }
 }
 
