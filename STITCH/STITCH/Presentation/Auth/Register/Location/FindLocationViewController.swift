@@ -151,7 +151,7 @@ final class FindLocationViewController: BaseViewController {
             .subscribe(onNext: { owner, locations in
                 owner.locationResultCollectionView.setData(locations)
             }, onError: { error in
-                self.handle(error: LocationError.failGetLocations)
+                self.handle(error: error)
             })
             .disposed(by: disposeBag)
     }
