@@ -41,13 +41,13 @@ final class MatchCategoryViewController: BaseViewController {
     private let matchButton = UIButton().then {
         $0.setTitle("매치", for: .normal)
         $0.titleLabel?.font = .Body2_14
-        $0.setTitleColor(.gray12, for: .normal)
-        $0.setTitleColor(.white, for: .selected)
+        $0.setTitleColor(.white, for: .normal)
+        $0.setTitleColor(.gray12, for: .selected)
         $0.backgroundColor = .yellow05_primary
         $0.layer.cornerRadius = CGFloat(Constant.radius14)
     }
     
-    private let classMatchButton = UIButton().then {
+    private let teachMatchButton = UIButton().then {
         $0.setTitle("Teach 매치", for: .normal)
         $0.titleLabel?.font = .Body2_14
         $0.setTitleColor(.gray12, for: .selected)
@@ -88,13 +88,19 @@ final class MatchCategoryViewController: BaseViewController {
     // MARK: - Methods
     
     override func setting() {
-        classMatchButton.isSelected = false
-        classMatchButton.setButtonBackgroundColor(false)
+        set(matchButton, isSelected: true)
+        set(teachMatchButton, isSelected: false)
+        sportCategoryCollectionView.setData(Sport.allCases)
+        sportCategoryCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .top)
     }
     
     override func bind() {
-        sportCategoryCollectionView.setData(Sport.allCases)
-        matchCollectionView.setData(section: .none, matchInfos: [])
+        locationButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.findLocation)
+            }
+            .disposed(by: disposeBag)
         
         floatingButton.rx.tap
             .withUnretained(self)
@@ -106,12 +112,14 @@ final class MatchCategoryViewController: BaseViewController {
         
         let selected = sportCategoryCollectionView.rx.itemSelected.share()
         
+        let selectSport = selected
+            .map { Sport.allCases[$0.row] }
+        
         selected
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
             .subscribe { owner, indexPath in
                 owner.sportCategoryCollectionView.update(indexPath)
-                // TODO: 변경
             }
             .disposed(by: disposeBag)
         
@@ -125,11 +133,56 @@ final class MatchCategoryViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        let input = InterestedSportsViewModel.Input(
-            configureCollectionView: Single<Void>.just(()).asObservable(),
-            sportSelected: selected,
-            sportDeselected: deseleted
+        let matchSelected = matchCollectionView.rx.itemSelected.share()
+        
+        let input = MatchCategoryViewModel.Input(
+            viewDidLoad: Observable.just(Void()),
+            selectSport: selectSport
         )
+        
+        let output = matchCategoryViewModel.transform(input: input)
+        
+        let allMatchObservable = output.allMatchObservable.share()
+        
+        allMatchObservable
+            .withUnretained(self)
+            .subscribe { owner, matchs in
+                owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
+                owner.matchCountLabel.text = "\(matchs.count)개"
+            }
+            .disposed(by: disposeBag)
+        
+        let selectSportObservable = output.selectSportObservable.share()
+        
+        selectSportObservable
+            .withUnretained(self)
+            .subscribe { owner, matchs in
+                owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
+                owner.matchCountLabel.text = "\(matchs.count)개"
+            }
+            .disposed(by: disposeBag)
+        
+//        let matchButtonTap = matchButton.rx.tap.share()
+//        
+//        matchButtonTap
+//            .withUnretained(self)
+//            .subscribe { owner, _ in
+//                owner.set(owner.matchButton, isSelected: true)
+//                owner.set(owner.teachMatchButton, isSelected: false)
+//            }
+//            .disposed(by: disposeBag)
+//
+//        let teachMatchButtonTap = teachMatchButton.rx.tap.share()
+//
+//        teachMatchButtonTap
+//            .withUnretained(self)
+//            .subscribe { owner, _ in
+//                owner.set(owner.matchButton, isSelected: false)
+//                owner.set(owner.teachMatchButton, isSelected: true)
+//            }
+//            .disposed(by: disposeBag)
+        
+
     }
     
     override func configureNavigation() {
@@ -141,7 +194,8 @@ final class MatchCategoryViewController: BaseViewController {
         
         view.addSubview(sportCategoryCollectionView)
         view.addSubview(divisionView)
-        view.addSubviews([matchButton, classMatchButton, matchCountLabel])
+        view.addSubviews([matchButton, teachMatchButton])
+        view.addSubview(matchCountLabel)
         view.addSubview(matchCollectionView)
         view.addSubview(floatingButton)
         
@@ -157,19 +211,19 @@ final class MatchCategoryViewController: BaseViewController {
             make.height.equalTo(Constant.barHeight)
         }
         
-        matchButton.snp.makeConstraints { make in
-            make.top.equalTo(divisionView.snp.bottom).offset(Constant.padding32)
-            make.left.equalToSuperview().offset(Constant.padding16)
-            make.width.equalTo(Constant.matchButtonWidth)
-            make.height.equalTo(Constant.buttonHeight)
-        }
-        
-        classMatchButton.snp.makeConstraints { make in
-            make.top.equalTo(divisionView.snp.bottom).offset(Constant.padding32)
-            make.left.equalTo(matchButton.snp.right).offset(Constant.padding16)
-            make.width.equalTo(Constant.classMatchButtonWidth)
-            make.height.equalTo(Constant.buttonHeight)
-        }
+//        matchButton.snp.makeConstraints { make in
+//            make.top.equalTo(divisionView.snp.bottom).offset(Constant.padding32)
+//            make.left.equalToSuperview().offset(Constant.padding16)
+//            make.width.equalTo(Constant.matchButtonWidth)
+//            make.height.equalTo(Constant.buttonHeight)
+//        }
+//
+//        teachMatchButton.snp.makeConstraints { make in
+//            make.top.equalTo(divisionView.snp.bottom).offset(Constant.padding32)
+//            make.left.equalTo(matchButton.snp.right).offset(Constant.padding16)
+//            make.width.equalTo(Constant.classMatchButtonWidth)
+//            make.height.equalTo(Constant.buttonHeight)
+//        }
         
         matchCountLabel.snp.makeConstraints { make in
             make.top.equalTo(divisionView.snp.bottom).offset(Constant.padding36)
@@ -178,7 +232,7 @@ final class MatchCategoryViewController: BaseViewController {
         }
         
         matchCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(matchButton.snp.bottom).offset(Constant.padding24)
+            make.top.equalTo(matchCountLabel.snp.bottom).offset(Constant.padding24)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.bottom.equalToSuperview()
         }
@@ -188,6 +242,16 @@ final class MatchCategoryViewController: BaseViewController {
             make.bottom.equalToSuperview().inset(Constant.padding24)
             make.width.height.equalTo(Constant.floatingButtonWidth)
         }
+    }
+    
+    private func set(_ button: UIButton, isSelected: Bool) {
+        button.isSelected = isSelected
+        button.setButtonBackgroundColor(isSelected: isSelected)
+    }
+    
+    func didReceive(locationInfo: LocationInfo) {
+        // 서버 저장
+        locationButton.setTitle(locationInfo.address, for: .normal)
     }
 }
 
