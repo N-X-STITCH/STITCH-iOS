@@ -45,13 +45,15 @@ final class CreateMatchViewModel {
             .asObservable()
             .withUnretained(self)
             .flatMap { owner, data in
-                owner.createMatchUseCase.uploadImage(data: data, path: owner.newMatch.matchID)
+                print(owner.newMatch.matchID)
+                return owner.createMatchUseCase.uploadImage(data: data, path: owner.newMatch.matchID)
             }
             .share()
         
         let createMatchResult = Observable.combineLatest(input.completeFinishButtom, matchImageURL)
             .flatMap { [weak self] _, matchImageURL -> Observable<User> in
                 guard let self = self else { return .error(NetworkError.unknownError) }
+                print(matchImageURL)
                 self.newMatch.matchImageURL = matchImageURL
                 return self.userUseCase.fetchLocalUser()
             }

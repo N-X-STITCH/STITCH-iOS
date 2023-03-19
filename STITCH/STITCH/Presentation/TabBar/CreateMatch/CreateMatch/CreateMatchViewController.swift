@@ -241,17 +241,24 @@ final class CreateMatchViewController: BaseViewController {
         bindTextFieldScroll()
         
         let finishButtonTapValidate = finishButton.rx.tap
-            .withUnretained(self)
-            .filter { owner, _ in
+            .filter { [weak self] _ in
+                guard let owner = self else { return false }
                 if (owner.matchTitleTextField.text ?? "") == "" {
                     owner.matchTitleTextField.becomeFirstResponder()
+                    return false
+                } else if (owner.matchScheduleTextField.text ?? "") == "" {
+                    owner.hideKeyboard()
+                    owner.moveScrollView(owner.matchScheduleTitleLabel)
+                    return false
+                } else if (owner.matchLocationButton.titleLabel?.text ?? "" ) == "매치 장소를 선택하세요" {
+                    owner.hideKeyboard()
+                    owner.moveScrollView(owner.matchLocationTitleLabel)
                     return false
                 } else {
                     owner.hideKeyboard()
                     return true
                 }
             }
-            .map { _ in Void() }
             
         
         doneButton.rx.tap
