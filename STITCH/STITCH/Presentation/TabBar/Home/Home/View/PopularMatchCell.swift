@@ -72,6 +72,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
     
     // peopleView
     
+    var matchInfo: MatchInfo!
+    
     // MARK: - Initializer
     
     // MARK: - Methods
@@ -156,6 +158,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
     }
     
     func setMatch(_ matchInfo: MatchInfo) {
+        self.matchInfo = matchInfo
+        
         let match = matchInfo.match
         let owner = matchInfo.owner
         

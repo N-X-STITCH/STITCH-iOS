@@ -63,7 +63,7 @@ enum SportsCollectionViewLayout {
                 heightDimension: .absolute(CGFloat(Constant.cellHeight))
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.edgeSpacing = .init(leading: .fixed(8), top: nil, trailing: .fixed(8), bottom: .fixed(16))
+            item.edgeSpacing = .init(leading: .fixed(10), top: nil, trailing: .fixed(10), bottom: .fixed(16))
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
