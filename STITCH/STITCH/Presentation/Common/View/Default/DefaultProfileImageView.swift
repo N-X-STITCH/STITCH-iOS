@@ -27,8 +27,7 @@ final class DefaultProfileImageView: UIImageView {
     init(_ isGradient: Bool = false) {
         super.init(frame: .zero)
         clipsToBounds = true
-        image = UIImage(systemName: "circle.fill")?
-            .withTintColor(.white, renderingMode: .alwaysOriginal)
+        image = .defaultProfileImage
         contentMode = .scaleAspectFill
         backgroundColor = .clear
         layer.borderColor = UIColor.yellow05_primary.cgColor
