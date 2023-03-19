@@ -26,6 +26,7 @@ final class MatchCell: BaseCollectionViewCell {
     // MARK: - Properties
     
     private let matchImageView = UIImageView().then {
+        $0.image = .defaultLogoImageSmall
         $0.layer.cornerRadius = CGFloat(Constant.radius8)
         $0.clipsToBounds = true
         $0.contentMode = .scaleToFill
@@ -56,6 +57,8 @@ final class MatchCell: BaseCollectionViewCell {
         $0.font = .Caption2_10
         $0.textColor = .gray04
     }
+    
+    var match: Match!
     
     // MARK: - Initializer
     
@@ -125,6 +128,8 @@ final class MatchCell: BaseCollectionViewCell {
     }
     
     func setMatch(_ matchInfo: MatchInfo) {
+        self.match = matchInfo.match
+        
         let match = matchInfo.match
         matchTitleLabel.text = match.matchTitle
         matchInfoLabel.text = "\(match.locationInfo) | \(match.startDate.toString())"
