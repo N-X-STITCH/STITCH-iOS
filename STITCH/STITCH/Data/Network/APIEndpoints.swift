@@ -39,6 +39,27 @@ struct MatchAPIEndpoints {
             bodyParameters: matchDTO.toDictionary ?? [:]
         )
     }
+    
+    static func fetchMatch(matchID: String) -> Endpoint {
+        return Endpoint(
+            path: "match/info/id=\(matchID)",
+            method: .GET
+        )
+    }
+    
+    static func fetchAllMatch() -> Endpoint {
+        return Endpoint(
+            path: "match/allMatch",
+            method: .GET
+        )
+    }
+    
+    static func fetchAllTeachMatch() -> Endpoint {
+        return Endpoint(
+            path: "match/allTeach",
+            method: .GET
+        )
+    }
 }
 
 struct LocationAPIEndpoints {
