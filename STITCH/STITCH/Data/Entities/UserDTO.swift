@@ -15,7 +15,7 @@ struct UserDTO: Codable {
     let imageUrl: String
     let sports: [String]
     let token: String
-    let intro: String
+    let introduce: String
     
     init(user: User) {
         self.id = user.id
@@ -25,6 +25,6 @@ struct UserDTO: Codable {
         self.imageUrl = user.profileImageURL ?? ""
         self.sports = user.interestedSports.map { $0.name }
         self.token = user.token
-        self.intro = user.introduce
+        self.introduce = user.introduce
     }
 }
