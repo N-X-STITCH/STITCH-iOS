@@ -10,7 +10,8 @@ import Foundation
 import RxSwift
 
 protocol CreateMatchUseCase {
-    func uploadImage(data: Data, path: String) -> Observable<String>
+    func uploadImage(data: Data?, path: String) -> Observable<String>
+    func createMatch(match: Match) -> Observable<Match>
 }
 
 final class DefaultCreateMatchUseCase: CreateMatchUseCase {
@@ -32,7 +33,15 @@ final class DefaultCreateMatchUseCase: CreateMatchUseCase {
     
     // MARK: - Methods
     
-    func uploadImage(data: Data, path: String) -> Observable<String> {
-        return fireStorageRepository.uploadImage(data: data, path: path)
+    func uploadImage(data: Data?, path: String) -> Observable<String> {
+        if let data {
+            return fireStorageRepository.uploadImage(data: data, path: path)
+        } else {
+            return Single<String>.just("").asObservable()
+        }
+    }
+    
+    func createMatch(match: Match) -> Observable<Match> {
+        return matchRepository.createMatch(match: match)
     }
 }

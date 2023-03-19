@@ -31,6 +31,16 @@ struct UserAPIEndpoints {
     }
 }
 
+struct MatchAPIEndpoints {
+    static func createMatch(matchDTO: MatchDTO) -> Endpoint {
+        return Endpoint(
+            path: "match/create",
+            method: .POST,
+            bodyParameters: matchDTO.toDictionary ?? [:]
+        )
+    }
+}
+
 struct LocationAPIEndpoints {
     static func fetchGeoCodingAddress(query: String) -> Endpoint {
         return Endpoint(

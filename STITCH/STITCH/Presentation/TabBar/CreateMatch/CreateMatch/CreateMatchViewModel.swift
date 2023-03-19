@@ -12,44 +12,57 @@ import RxSwift
 
 final class CreateMatchViewModel {
     
-    private let id = UUID().uuidString
-    var title: String = ""
-    var matchImageURL: String = ""
-    var place: LocationInfo? = nil
-    var contents: String = ""
-    var matchType: MatchType? = nil
-    var sport: Sport? = nil
-    var startDate: Date? = nil
-    var startTime: (hour: Int, minute: Int)? = nil
-    var duration: Int = 30
-    var maxHeadCount: Int = 1
-    var fee: Int = 0
+    var newMatch = Match()
     
     // MARK: - Properties
     
     struct Input {
-        let matchImage: Observable<Data>
-        let matchTitle: Observable<String>
-        let completeCreateMatchButtom: Observable<Void>
+        let matchImage = BehaviorSubject<Data?>(value: nil)
+        let completeFinishButtom: Observable<Void>
     }
     
     struct Output {
-        
+        let createdMatchResult: Observable<Match>
     }
     
     private let createMatchUseCase: CreateMatchUseCase
+    private let userUseCase: UserUseCase
     
     // MARK: - Initializer
     
-    init(createMatchUseCase: CreateMatchUseCase) {
+    init(
+        createMatchUseCase: CreateMatchUseCase,
+        userUseCase: UserUseCase
+    ) {
         self.createMatchUseCase = createMatchUseCase
+        self.userUseCase = userUseCase
     }
     
     // MARK: - Methods
     
     func transform(_ input: Input) -> Output {
-        let matchImage = input.matchImage
+        let matchImageURL = input.matchImage
+            .asObservable()
+            .withUnretained(self)
+            .flatMap { owner, data in
+                owner.createMatchUseCase.uploadImage(data: data, path: owner.newMatch.matchID)
+            }
+            .share()
         
-        return Output()
+        let createMatchResult = Observable.combineLatest(input.completeFinishButtom, matchImageURL)
+            .flatMap { [weak self] _, matchImageURL -> Observable<User> in
+                guard let self = self else { return .error(NetworkError.unknownError) }
+                self.newMatch.matchImageURL = matchImageURL
+                return self.userUseCase.fetchLocalUser()
+            }
+            .flatMap { [weak self] user -> Observable<Match> in
+                guard let self = self else { return .error(NetworkError.unknownError) }
+                self.newMatch.matchHostID = user.id
+                print("===================================")
+                print(self.newMatch)
+                return self.createMatchUseCase.createMatch(match: self.newMatch)
+            }
+        
+        return Output(createdMatchResult: createMatchResult)
     }
 }
