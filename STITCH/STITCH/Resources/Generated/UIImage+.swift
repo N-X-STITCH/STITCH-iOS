@@ -8,6 +8,10 @@
 import UIKit
 
 extension UIImage {
+    static let defaultProfileImage = UIImage(named: "DefaultProfileImage")
+    static let defaultLogoImageSmall = UIImage(named: "DefaultLogoImage_small")
+    static let defaultLogoImageLarge = UIImage(named: "DefaultLogoImage_large")
+    
     static let logo = UIImage(named: "logo")
     static let stitchLogo = UIImage(named: "STITCHLogo")
     static let waveBackground = UIImage(named: "waveBackground")

@@ -187,6 +187,9 @@
 		D8CE789129C627E80028F2AE /* MatchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789029C627E80028F2AE /* MatchDTO.swift */; };
 		D8CE789529C6CC860028F2AE /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789429C6CC860028F2AE /* String+Date.swift */; };
 		D8CE789729C6CCD10028F2AE /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789629C6CCD10028F2AE /* Date+String.swift */; };
+		D8CE789929C6FBE50028F2AE /* MatchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789829C6FBE50028F2AE /* MatchUseCase.swift */; };
+		D8CE789C29C6FF0E0028F2AE /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789B29C6FF0E0028F2AE /* UserRepository.swift */; };
+		D8CE789F29C6FF470028F2AE /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789E29C6FF470028F2AE /* DefaultUserRepository.swift */; };
 		D8E1113029A3222500A3CE6A /* FindLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -360,6 +363,9 @@
 		D8CE789029C627E80028F2AE /* MatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDTO.swift; sourceTree = "<group>"; };
 		D8CE789429C6CC860028F2AE /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		D8CE789629C6CCD10028F2AE /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
+		D8CE789829C6FBE50028F2AE /* MatchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchUseCase.swift; sourceTree = "<group>"; };
+		D8CE789B29C6FF0E0028F2AE /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		D8CE789E29C6FF470028F2AE /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -594,6 +600,7 @@
 			isa = PBXGroup;
 			children = (
 				D850FC8229B4D38100DC08C6 /* CreateMatchUseCase.swift */,
+				D8CE789829C6FBE50028F2AE /* MatchUseCase.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -798,6 +805,7 @@
 		D860B5C7299BD52400966683 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D8CE789D29C6FF3D0028F2AE /* User */,
 				D860B620299D19CC00966683 /* Auth */,
 				D850FC8429B4D3B700DC08C6 /* Match */,
 				D863D97029C27A5A006E99B6 /* Location */,
@@ -830,6 +838,7 @@
 		D860B5CA299BD5AF00966683 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D8CE789A29C6FF040028F2AE /* User */,
 				D860B61D299D198F00966683 /* Auth */,
 				D850FC8729B4D3D400DC08C6 /* Match */,
 				D863D97329C27AA8006E99B6 /* Location */,
@@ -1180,6 +1189,22 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		D8CE789A29C6FF040028F2AE /* User */ = {
+			isa = PBXGroup;
+			children = (
+				D8CE789B29C6FF0E0028F2AE /* UserRepository.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		D8CE789D29C6FF3D0028F2AE /* User */ = {
+			isa = PBXGroup;
+			children = (
+				D8CE789E29C6FF470028F2AE /* DefaultUserRepository.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1319,6 +1344,7 @@
 				D868BA3429A89A2100E80012 /* LocationResultCollectionView.swift in Sources */,
 				D860B5F0299C8D5900966683 /* LoginViewController.swift in Sources */,
 				D8795E4029C01168004856EF /* SportCategoryCell.swift in Sources */,
+				D8CE789929C6FBE50028F2AE /* MatchUseCase.swift in Sources */,
 				D8599AC5299E44DC00633192 /* DefaultTitleLabel.swift in Sources */,
 				D805FDDE29A5B4B60007E63D /* SportsCell.swift in Sources */,
 				D860B5E9299C860C00966683 /* Coordinator.swift in Sources */,
@@ -1421,6 +1447,7 @@
 				D85AA32D29B33B04004B0A8B /* UserDefaultsService.swift in Sources */,
 				D84559F829BB131B006AF28B /* MyPageEditViewController.swift in Sources */,
 				D8576133299BCFF800F1AFEB /* SceneDelegate.swift in Sources */,
+				D8CE789F29C6FF470028F2AE /* DefaultUserRepository.swift in Sources */,
 				D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */,
 				D868BA7E29B0525700E80012 /* MatchHeaderView.swift in Sources */,
 				D863D96829C0C155006E99B6 /* LocationViewModel.swift in Sources */,
@@ -1430,6 +1457,7 @@
 				D8599AB6299E349000633192 /* AppDIContainer.swift in Sources */,
 				D863D97229C27A8E006E99B6 /* DefaultNearAddressRespository.swift in Sources */,
 				D8455A1429BB76BB006AF28B /* MatchDetailViewController.swift in Sources */,
+				D8CE789C29C6FF0E0028F2AE /* UserRepository.swift in Sources */,
 				D860B61F299D199A00966683 /* SignupRepository.swift in Sources */,
 				D81115D229C30E2300124590 /* UITextField+.swift in Sources */,
 				D868BA8D29B05F8600E80012 /* MatchType.swift in Sources */,
