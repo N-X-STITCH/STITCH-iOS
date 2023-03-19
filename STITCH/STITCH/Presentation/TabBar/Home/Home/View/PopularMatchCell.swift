@@ -144,7 +144,7 @@ final class PopularMatchCell: BaseCollectionViewCell {
     private func setBadge(match: Match) {
         sportBadgeView.set(sport: match.sport)
         switch match.matchType {
-        case .classMatch:
+        case .teachMatch:
             let stackView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
                 $0.axis = .horizontal
                 $0.spacing = CGFloat(Constant.padding6)

@@ -14,6 +14,7 @@ protocol TabBarCoordinatorDependencies {
     func homeViewController() -> HomeViewController
     // Category
     func matchCategoryViewController() -> MatchCategoryViewController
+    func matchDetailViewController() -> MatchDetailViewController
     // Create Match
     func selectMatchViewController() -> SelectMatchViewController
     func selectSportViewController() -> SelectSportViewController
@@ -158,6 +159,25 @@ extension TabBarCoordinator {
     }
 }
 
+// MARK: - Match
+extension TabBarCoordinator {
+    private func showMatchDetailViewController(_ navigationController: UINavigationController, match: Match) {
+        let matchDetailViewController = dependencies.matchDetailViewController()
+        matchDetailViewController.hidesBottomBarWhenPushed = true
+        matchDetailViewController.configure(match: match)
+//        matchDetailViewController.coordinatorPublisher
+//            .withUnretained(self)
+//            .subscribe { owner, event in
+//                if case .selectMatchType = event {
+//                    owner.showSelectMatchViewController(navigationController)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        navigationController.pushViewController(matchDetailViewController, animated: true)
+    }
+}
+
+
 // MARK: - Create Match
 
 extension TabBarCoordinator {
@@ -169,6 +189,9 @@ extension TabBarCoordinator {
             .emit() { owner, event in
                 if case .setLocation = event {
                     owner.showSetLocationViewController(navigationController, createMatchViewController)
+                } else if case .created(let match) = event {
+                    navigationController.popToRootViewController(animated: true)
+                    owner.showMatchDetailViewController(navigationController, match: match)
                 }
             }
             .disposed(by: disposeBag)

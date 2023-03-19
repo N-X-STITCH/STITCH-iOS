@@ -23,6 +23,7 @@ protocol Coordinator: AnyObject {
     func start()
     func finish()
     func popViewController()
+    func popToRootViewController()
     func dismissViewController()
     func showAlert()
 }
@@ -35,6 +36,10 @@ extension Coordinator {
     
     func popViewController() {
         navigationController.popViewController(animated: true)
+    }
+    
+    func popToRootViewController() {
+        navigationController.popToRootViewController(animated: true)
     }
     
     func dismissViewController() {

@@ -23,6 +23,7 @@ enum CoordinatorEvent: Equatable {
     // Create Match
     case selectMatchType
     case setLocation
+    case created(match: Match)
     
     // MyPage
     case setting

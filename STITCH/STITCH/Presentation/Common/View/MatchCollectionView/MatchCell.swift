@@ -113,7 +113,7 @@ final class MatchCell: BaseCollectionViewCell {
     private func setBadge(match: Match) {
         sportBadgeView.set(sport: match.sport)
         switch match.matchType {
-        case .classMatch:
+        case .teachMatch:
             let stackView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
                 $0.axis = .horizontal
                 $0.spacing = CGFloat(Constant.padding6)
@@ -126,8 +126,8 @@ final class MatchCell: BaseCollectionViewCell {
     
     func setMatch(_ matchInfo: MatchInfo) {
         let match = matchInfo.match
-        matchTitleLabel.text = match.title
-        matchInfoLabel.text = "\(match.place) | \(match.startDate)"
+        matchTitleLabel.text = match.matchTitle
+        matchInfoLabel.text = "\(match.locationInfo) | \(match.startDate.toString())"
         setBadge(match: match)
         
         guard let url = URL(string: match.matchImageURL) else { return }

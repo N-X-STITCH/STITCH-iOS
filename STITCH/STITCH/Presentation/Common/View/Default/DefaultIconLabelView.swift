@@ -16,7 +16,7 @@ final class DefaultIconLabelView: UIView {
     }
     
     private let iconImageView = UIImageView()
-    private let textLabel = DefaultTitleLabel(text: "", textColor: .gray02, font: .Subhead_16)
+    let textLabel = DefaultTitleLabel(text: "", textColor: .gray02, font: .Subhead_16)
     
     init(
         icon: UIImage?,
@@ -38,7 +38,7 @@ final class DefaultIconLabelView: UIView {
         
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(Constant.iconWidth)
-            make.top.left.bottom.equalToSuperview()
+            make.top.left.equalToSuperview()
         }
         
         textLabel.snp.makeConstraints { make in

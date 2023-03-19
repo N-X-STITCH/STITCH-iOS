@@ -84,10 +84,17 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return MatchCategoryViewModel()
     }
     
+    func matchDetailViewModel() -> MatchDetailViewModel {
+        return MatchDetailViewModel()
+    }
+    
     // MARK: Create Match
     
     func makeCreateMatchViewModel() -> CreateMatchViewModel {
-        return CreateMatchViewModel(createMatchUseCase: createMatchUseCase())
+        return CreateMatchViewModel(
+            createMatchUseCase: createMatchUseCase(),
+            userUseCase: userUseCase
+        )
     }
     
     // MARK: Location
@@ -124,6 +131,10 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     func matchCategoryViewController() -> MatchCategoryViewController {
         return MatchCategoryViewController(matchCategoryViewModel: matchCategoryViewModel())
+    }
+    
+    func matchDetailViewController() -> MatchDetailViewController {
+        return MatchDetailViewController(matchDetailViewModel: matchDetailViewModel())
     }
     
     // MARK: Create Match

@@ -9,7 +9,7 @@ import CoreLocation
 import Foundation
 import MapKit
 
-struct LocationInfo: Hashable {
+struct LocationInfo: Codable, Hashable {
     var address: String
     var roadAddress: String?
     var latitude: String?
