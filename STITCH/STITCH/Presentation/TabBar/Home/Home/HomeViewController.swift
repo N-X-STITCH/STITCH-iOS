@@ -83,11 +83,36 @@ final class HomeViewController: BaseViewController {
         topScrollView.setImages()
         matchCollectionView.setData(section: .newMatch, matchInfos: [])
         
+        locationButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.findLocation)
+            }
+            .disposed(by: disposeBag)
+        
         floatingButton.rx.tap
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.generateImpactHaptic()
                 owner.coordinatorPublisher.onNext(.selectMatchType)
+            }
+            .disposed(by: disposeBag)
+        
+        popularMatchCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let popularMatchCell = owner.popularMatchCollectionView.cellForItem(at: indexPath) as? PopularMatchCell else { return }
+                
+                owner.coordinatorPublisher.onNext(.created(match: popularMatchCell.matchInfo.match))
+            }
+            .disposed(by: disposeBag)
+        
+        matchCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let matchCell = owner.matchCollectionView.cellForItem(at: indexPath) as? MatchCell else { return }
+                
+                owner.coordinatorPublisher.onNext(.created(match: matchCell.match))
             }
             .disposed(by: disposeBag)
     }
@@ -189,6 +214,11 @@ final class HomeViewController: BaseViewController {
         if topGradientLayer.superlayer == nil {
             superView.layer.addSublayer(topGradientLayer)
         }
+    }
+    
+    func didReceive(locationInfo: LocationInfo) {
+        // 서버 저장
+        locationButton.setTitle(locationInfo.address, for: .normal)
     }
 }
 
