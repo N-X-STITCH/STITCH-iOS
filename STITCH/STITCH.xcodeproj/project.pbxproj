@@ -184,6 +184,9 @@
 		D87BD88A299E766D003A1B76 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD889299E766D003A1B76 /* UIButton+.swift */; };
 		D87BD88C299E77C7003A1B76 /* DefaultTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */; };
 		D8CE788F29C5635E0028F2AE /* KatechConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE788E29C5635E0028F2AE /* KatechConverter.swift */; };
+		D8CE789129C627E80028F2AE /* MatchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789029C627E80028F2AE /* MatchDTO.swift */; };
+		D8CE789529C6CC860028F2AE /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789429C6CC860028F2AE /* String+Date.swift */; };
+		D8CE789729C6CCD10028F2AE /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789629C6CCD10028F2AE /* Date+String.swift */; };
 		D8E1113029A3222500A3CE6A /* FindLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -354,6 +357,9 @@
 		D87BD889299E766D003A1B76 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		D87BD88B299E77C7003A1B76 /* DefaultTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextField.swift; sourceTree = "<group>"; };
 		D8CE788E29C5635E0028F2AE /* KatechConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KatechConverter.swift; sourceTree = "<group>"; };
+		D8CE789029C627E80028F2AE /* MatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDTO.swift; sourceTree = "<group>"; };
+		D8CE789429C6CC860028F2AE /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
+		D8CE789629C6CCD10028F2AE /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -816,6 +822,7 @@
 				D863D97829C28593006E99B6 /* ReverseGeoCodingResultDTO.swift */,
 				D863D97C29C2AA88006E99B6 /* GeoCodingResultDTO.swift */,
 				D8038B3929C41929006C1BF8 /* SearchLocationDTO.swift */,
+				D8CE789029C627E80028F2AE /* MatchDTO.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -892,6 +899,8 @@
 				D81115D729C3501200124590 /* Int+.swift */,
 				D8038B2F29C36919006C1BF8 /* String+.swift */,
 				D8038B3329C40514006C1BF8 /* CLGeocoder+Rx.swift */,
+				D8CE789429C6CC860028F2AE /* String+Date.swift */,
+				D8CE789629C6CCD10028F2AE /* Date+String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1290,6 +1299,7 @@
 				D850FC9429B5B6C100DC08C6 /* DefaultTextView.swift in Sources */,
 				D8795E4429C0278A004856EF /* MatchCategoryViewController.swift in Sources */,
 				D868BA7C29B0524D00E80012 /* PopularHeaderView.swift in Sources */,
+				D8CE789129C627E80028F2AE /* MatchDTO.swift in Sources */,
 				D868BA2B29A7B4DF00E80012 /* ProfileText.swift in Sources */,
 				D868BA6F29AE3F4E00E80012 /* HomeViewController.swift in Sources */,
 				D84559FA29BB1326006AF28B /* CreatedMatchViewController.swift in Sources */,
@@ -1346,6 +1356,7 @@
 				D868BA6D29AE3F4700E80012 /* HomeViewModel.swift in Sources */,
 				D84559FC29BB13B4006AF28B /* SettingViewController.swift in Sources */,
 				D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */,
+				D8CE789729C6CCD10028F2AE /* Date+String.swift in Sources */,
 				D85F1D6429C053D9007E0521 /* DefaultUserStorage.swift in Sources */,
 				D850FC8029B4D30200DC08C6 /* CreateMatchViewModel.swift in Sources */,
 				D800291429A5FF1C00F75378 /* ViewModel.swift in Sources */,
@@ -1376,6 +1387,7 @@
 				D8455A0F29BB5F4B006AF28B /* SettingSection.swift in Sources */,
 				D868BA3629A89C6100E80012 /* BaseCollectionView.swift in Sources */,
 				D8CE788F29C5635E0028F2AE /* KatechConverter.swift in Sources */,
+				D8CE789529C6CC860028F2AE /* String+Date.swift in Sources */,
 				D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */,
 				D8599AA7299E2B9D00633192 /* Assets+Generated.swift in Sources */,
 				D868BA4A29AC7DAE00E80012 /* SocialLoginService.swift in Sources */,
