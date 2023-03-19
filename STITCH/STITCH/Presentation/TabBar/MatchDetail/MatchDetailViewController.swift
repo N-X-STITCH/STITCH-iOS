@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import Kingfisher
 
 final class MatchDetailViewController: BaseViewController {
@@ -37,13 +39,13 @@ final class MatchDetailViewController: BaseViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private let sportImageView = UIImageView().then {
+    private let matchImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
     
     private let gradientView = UIImageView(image: .detailBottomGradient)
     
-    private let matchImageView = DefaultProfileImageView()
+    private let matchSportImageView = DefaultProfileImageView()
     
     private let matchTitleLabel = DefaultTitleLabel(
         text: "",
@@ -98,6 +100,8 @@ final class MatchDetailViewController: BaseViewController {
     
     // MARK: Properties
     
+    let matchObservable = PublishSubject<Match>()
+    
     private let matchDetailViewModel: MatchDetailViewModel
     
     // MARK: - Initializer
@@ -113,6 +117,17 @@ final class MatchDetailViewController: BaseViewController {
     }
     
     override func bind() {
+        let match = matchObservable.asObservable().share()
+        
+        let input = MatchDetailViewModel.Input(match: match)
+        let output = matchDetailViewModel.transform(input: input)
+        
+        output.matchInfo
+            .withUnretained(self)
+            .subscribe { owner, matchInfo in
+                owner.configure(matchInfo: matchInfo)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
@@ -150,8 +165,8 @@ final class MatchDetailViewController: BaseViewController {
             make.height.greaterThanOrEqualTo(view.snp.height).priority(.low)
         }
         
-        contentView.addSubviews([sportImageView, gradientView])
-        contentView.addSubviews([matchImageView, matchTitleLabel])
+        contentView.addSubviews([matchImageView, gradientView])
+        contentView.addSubviews([matchSportImageView, matchTitleLabel])
         contentView.addSubviews([locationView, scheduleView, feeView, peopleCountView, miniDivisionView])
         contentView.addSubviews([matchHostProfileImageView, matchHostNicknameLabel, matchContentLabel])
         // TODO: 지도
@@ -164,24 +179,32 @@ final class MatchDetailViewController: BaseViewController {
         configureDetailInfo()
     }
     
-    func configure(match: Match) {
-        print(match)
-        matchImageView.image = match.sport.image
+    func configure(matchInfo: MatchInfo) {
+        let match = matchInfo.match
+        matchSportImageView.image = match.sport.image
         matchTitleLabel.text = match.matchTitle
+        matchContentLabel.text = match.content
         sportBadgeView.set(sport: match.sport)
         locationView.textLabel.text = match.locationInfo.address
         scheduleView.textLabel.text = match.startDate.toString()
         feeView.textLabel.text = "\(String(match.fee).feeString())원"
         peopleCountView.textLabel.text =  "\(match.headCount)/\(match.maxHeadCount)명"
-        
         if let matchImageURL = URL(string: match.matchImageURL) {
-            sportImageView.kf.setImage(with: matchImageURL)
+            print("사진들")
+            print(match.matchImageURL)
+            matchImageView.kf.setImage(with: matchImageURL)
+        } else {
+            print("사진들")
+            print(match.matchImageURL)
+            matchImageView.image = .defaultLogoImageLarge
         }
         
-        // TODO: matchHostProfileImageView
-        // matchHostNicknameLabel
-        
-        matchContentLabel.text = match.content
+        let user = matchInfo.owner
+        matchHostNicknameLabel.text = user.nickname
+        if let profileImageURL = user.profileImageURL,
+           let matchHostImageURL = URL(string: profileImageURL) {
+            matchHostProfileImageView.kf.setImage(with: matchHostImageURL)
+        }
     }
 }
 
@@ -189,34 +212,34 @@ final class MatchDetailViewController: BaseViewController {
 
 extension MatchDetailViewController {
     private func configureTop() {
-        sportImageView.snp.makeConstraints { make in
+        matchImageView.snp.makeConstraints { make in
             make.top.left.right.equalTo(contentView)
             make.height.equalTo(Constant.sportHeight)
         }
         
         gradientView.snp.makeConstraints { make in
-            make.left.right.bottom.equalTo(sportImageView)
+            make.left.right.bottom.equalTo(matchImageView)
             make.height.equalTo(Constant.gradientViewHeight)
         }
     }
     
     private func configureMatchProfileView() {
-        matchImageView.snp.makeConstraints { make in
+        matchSportImageView.snp.makeConstraints { make in
             make.width.height.equalTo(Constant.matchImageHeight)
             make.left.equalToSuperview().offset(Constant.padding16)
-            make.bottom.equalTo(sportImageView.snp.bottom).inset(Constant.padding40)
+            make.bottom.equalTo(matchImageView.snp.bottom).inset(Constant.padding40)
         }
         
         matchTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(matchImageView)
-            make.left.equalTo(matchImageView.snp.right).offset(Constant.padding8)
+            make.top.equalTo(matchSportImageView)
+            make.left.equalTo(matchSportImageView.snp.right).offset(Constant.padding8)
             make.height.equalTo(Constant.matchTitleHeight)
         }
     }
     
     private func configureInfoView() {
         locationView.snp.makeConstraints { make in
-            make.top.equalTo(sportImageView.snp.bottom).offset(Constant.padding24)
+            make.top.equalTo(matchImageView.snp.bottom).offset(Constant.padding24)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.infoHeight)
         }
