@@ -20,7 +20,7 @@ final class SelectSportViewController: BaseViewController {
         static let padding32 = 32
     }
     
-    private let titleLabel = DefaultTitleLabel(text: "()매치를 위한\n운동종목을 선택해주세요")
+    private let titleLabel = DefaultTitleLabel(text: "매치를 위한\n운동종목을 선택해주세요")
     
     private lazy var sportsCollectionView = SportsCollectionView(
         self,
@@ -56,6 +56,7 @@ final class SelectSportViewController: BaseViewController {
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
             .subscribe { owner, indexPath in
+                owner.createMatchViewModel.newMatch.sport = Sport.allCases[indexPath.row + 1]
                 owner.sportsCollectionView.update(indexPath)
                 // TODO: 변경
                 owner.coordinatorPublisher.onNext(.next)
@@ -72,11 +73,6 @@ final class SelectSportViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        let input = InterestedSportsViewModel.Input(
-            configureCollectionView: Single<Void>.just(()).asObservable(),
-            sportSelected: selected,
-            sportDeselected: deseleted
-        )
     }
     
     override func configureUI() {

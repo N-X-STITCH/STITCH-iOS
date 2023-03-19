@@ -240,18 +240,19 @@ final class CreateMatchViewController: BaseViewController {
         bindRowViewUpdates()
         bindTextFieldScroll()
         
-        finishButton.rx.tap
+        let finishButtonTapValidate = finishButton.rx.tap
             .withUnretained(self)
-            .subscribe { owner, _ in
+            .filter { owner, _ in
                 if (owner.matchTitleTextField.text ?? "") == "" {
                     owner.matchTitleTextField.becomeFirstResponder()
-                } else if (owner.matchScheduleTextField.text ?? "") == "" {
-                    owner.moveScrollView(owner.matchScheduleTitleLabel)
+                    return false
                 } else {
                     owner.hideKeyboard()
+                    return true
                 }
             }
-            .disposed(by: disposeBag)
+            .map { _ in Void() }
+            
         
         doneButton.rx.tap
             .withUnretained(self)
@@ -298,6 +299,7 @@ final class CreateMatchViewController: BaseViewController {
                     countLabel: owner.matchTitleCountLabel,
                     validateCount: Constant.titleValidation
                 )
+                owner.createMatchViewModel.newMatch.matchTitle = owner.matchTitleTextField.text ?? ""
             }
             .disposed(by: disposeBag)
         
@@ -315,6 +317,7 @@ final class CreateMatchViewController: BaseViewController {
                     countLabel: owner.matchDetailCountLabel,
                     validateCount: Constant.contentValidation
                 )
+                owner.createMatchViewModel.newMatch.matchTitle = owner.matchDetailTextView.text ?? ""
             }
             .disposed(by: disposeBag)
         
@@ -323,7 +326,7 @@ final class CreateMatchViewController: BaseViewController {
         matchTimeObservable
             .withUnretained(self)
             .subscribe { owner, matchTime in
-                owner.createMatchViewModel.duration = matchTime
+                owner.createMatchViewModel.newMatch.duration = matchTime
                 owner.matchTimeStepper.countLabel.text = matchTime.matchTimeString()
             }
             .disposed(by: disposeBag)
@@ -333,7 +336,7 @@ final class CreateMatchViewController: BaseViewController {
         matchPeopleCountObservable
             .withUnretained(self)
             .subscribe { owner, peopleCount in
-                owner.createMatchViewModel.maxHeadCount = peopleCount
+                owner.createMatchViewModel.newMatch.maxHeadCount = peopleCount
                 owner.matchPeopleStepper.countLabel.text = "\(peopleCount)명"
             }
             .disposed(by: disposeBag)
@@ -344,9 +347,29 @@ final class CreateMatchViewController: BaseViewController {
             .distinctUntilChanged()
             .withUnretained(self)
             .subscribe { owner, fee in
-                owner.createMatchViewModel.fee = fee.feeInt()
+                owner.createMatchViewModel.newMatch.fee = fee.feeInt()
                 owner.matchFeeTextField.text = fee.feeString()
             }
+            .disposed(by: disposeBag)
+        
+        let input = CreateMatchViewModel.Input(completeFinishButtom: finishButtonTapValidate)
+        
+        imageObservable
+            .withUnretained(self)
+            .subscribe { owner, data in
+                input.matchImage.onNext(data.jpegData(compressionQuality: 1.0))
+            }
+            .disposed(by: disposeBag)
+        
+        let output = createMatchViewModel.transform(input)
+        
+        output.createdMatchResult
+            .withUnretained(self)
+            .subscribe (onNext: { owner, match in
+                owner.coordinatorPublisher.onNext(.created(match: match))
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
             .disposed(by: disposeBag)
     }
     
@@ -475,7 +498,7 @@ extension CreateMatchViewController: FSCalendarDelegate, FSCalendarDataSource {
             calendar.setCurrentPage(date, animated: true)
         }
         
-        createMatchViewModel.startDate = date
+        createMatchViewModel.newMatch.startDate = date
         let selectedDateText = dateFormatter.string(from: date)
         
         matchScheduleTextField.text = "\(selectedDateText) / \(startTimeTextField.text ?? "")"
@@ -536,21 +559,24 @@ extension CreateMatchViewController: UIPickerViewDelegate {
             let timeText = text.components(separatedBy: " ")[1]
             let times = timeText.components(separatedBy: ":")
             startTimeTextField.text = "\(Meridiem.allCases[row].rawValue) \(timeText)"
-            createMatchViewModel.startTime = (Int(times[0])!, Int(times[1])!)
+            createMatchViewModel.newMatch.startHour = Int(times[0])!
+            createMatchViewModel.newMatch.startMinute = Int(times[1])!
         case 1:
             guard let text = startTimeTextField.text else { return }
             let meridiem = text.components(separatedBy: " ")[0]
             let timeText = text.components(separatedBy: " ")[1]
             let times = timeText.components(separatedBy: ":")
             startTimeTextField.text = "\(meridiem) \(Hour.allCases[row].rawValue):\(times[1])"
-            createMatchViewModel.startTime = (Int(times[0])!, Int(times[1])!)
+            createMatchViewModel.newMatch.startHour = Int(times[0])!
+            createMatchViewModel.newMatch.startMinute = Int(times[1])!
         case 2:
             guard let text = startTimeTextField.text else { return }
             let meridiem = text.components(separatedBy: " ")[0]
             let timeText = text.components(separatedBy: " ")[1]
             let times = timeText.components(separatedBy: ":")
             startTimeTextField.text = "\(meridiem) \(times[0]):\(Minute.allCases[row].rawValue)"
-            createMatchViewModel.startTime = (Int(times[0])!, Int(times[1])!)
+            createMatchViewModel.newMatch.startHour = Int(times[0])!
+            createMatchViewModel.newMatch.startMinute = Int(times[1])!
         default: return
         }
         guard let date = matchScheduleTextField.text else { return }

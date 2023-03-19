@@ -7,6 +7,8 @@
 
 import Foundation
 
+import RxSwift
+
 protocol MatchRepository {
-    
+    func createMatch(match: Match) -> Observable<Match>
 }

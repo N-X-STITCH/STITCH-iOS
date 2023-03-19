@@ -97,7 +97,7 @@ final class SetLocationViewController: BaseViewController {
         finishButton.rx.tap
             .withUnretained(self)
             .subscribe { owner, _ in
-                guard let locationInfo = owner.createMatchViewModel.place else { return }
+                let locationInfo = owner.createMatchViewModel.newMatch.locationInfo
                 owner.coordinatorPublisher.onNext(.send(locationInfo: locationInfo))
             }
             .disposed(by: disposeBag)
@@ -191,7 +191,7 @@ final class SetLocationViewController: BaseViewController {
             .subscribe { owner, locationInfo in
                 // TODO: LocationInfo가 변화하는 현상
                 if !owner.isEqual(afterLocationInfo: locationInfo) {
-                    owner.createMatchViewModel.place = locationInfo
+                    owner.createMatchViewModel.newMatch.locationInfo = locationInfo
                 }
             }
             .disposed(by: disposeBag)
@@ -260,7 +260,7 @@ final class SetLocationViewController: BaseViewController {
     }
     
     private func update(locationInfo: LocationInfo) {
-        createMatchViewModel.place = locationInfo
+        createMatchViewModel.newMatch.locationInfo = locationInfo
     }
 }
 
@@ -349,8 +349,8 @@ extension SetLocationViewController {
     }
     
     private func isEqual(afterLocationInfo: LocationInfo) -> Bool {
-        guard let beforeLatitude = createMatchViewModel.place?.latitude,
-              let beforeLongitude = createMatchViewModel.place?.longitude,
+        guard let beforeLatitude = createMatchViewModel.newMatch.locationInfo.latitude,
+              let beforeLongitude = createMatchViewModel.newMatch.locationInfo.longitude,
               let afterLatitude = afterLocationInfo.latitude,
               let afterLongitude = afterLocationInfo.longitude
         else { return false }
