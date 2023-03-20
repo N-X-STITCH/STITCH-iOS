@@ -10,4 +10,15 @@ import Foundation
 struct MatchInfo: Hashable {
     let match: Match
     let owner: User
+    let joinedUsers: [User]
+    
+    init(
+        match: Match,
+        owner: User,
+        joinedUsers: [User] = []
+    ) {
+        self.match = match
+        self.owner = owner
+        self.joinedUsers = joinedUsers
+    }
 }

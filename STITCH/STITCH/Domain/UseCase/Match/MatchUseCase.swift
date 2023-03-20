@@ -14,6 +14,7 @@ protocol MatchUseCase {
     func fetchAllMatch() -> Observable<[Match]>
     func fetchAllTeachMatch() -> Observable<[Match]>
     func fetchUser(userID: String) -> Observable<User>
+    func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])>
 }
 
 final class DefaultMatchUseCase: MatchUseCase {
@@ -37,10 +38,10 @@ final class DefaultMatchUseCase: MatchUseCase {
     
     func fetchMatch(matchID: String) -> Observable<MatchInfo> {
         return matchRepository.fetchMatch(matchID: matchID)
-            .flatMap { [weak self] match -> Observable<MatchInfo> in
+            .flatMap { [weak self] matchInfo -> Observable<MatchInfo> in
                 guard let self = self else { return .error(NetworkError.unknownError) }
-                return self.userRepository.fetchUser(userID: match.matchHostID)
-                    .map { MatchInfo(match: match, owner: $0) }
+                return self.userRepository.fetchUser(userID: matchInfo.match.matchHostID)
+                    .map { MatchInfo(match: matchInfo.match, owner: $0, joinedUsers: matchInfo.joinedUsers) }
             }
     }
     
@@ -54,5 +55,9 @@ final class DefaultMatchUseCase: MatchUseCase {
     
     func fetchUser(userID: String) -> Observable<User> {
         return userRepository.fetchUser(userID: userID)
+    }
+    
+    func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])> {
+        return matchRepository.fetchHomeMatch()
     }
 }
