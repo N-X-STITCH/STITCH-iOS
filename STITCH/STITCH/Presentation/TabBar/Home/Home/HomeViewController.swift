@@ -30,6 +30,11 @@ final class HomeViewController: BaseViewController {
     private let topView = UIView()
     private lazy var topGradientLayer = CAGradientLayer()
     private lazy var topScrollView = TopScrollView(delegate: self, view)
+    private let topMessageLabel = DefaultTitleLabel(
+        text: "STITCH와 함께\n최고의 매치를 가져보세요!",
+        textColor: .white,
+        font: .Headline_20
+    )
     
     private lazy var topPageControl = UIPageControl(frame: .zero).then {
         $0.numberOfPages = Constant.pages
@@ -147,6 +152,7 @@ final class HomeViewController: BaseViewController {
         
         contentView.addSubview(topView)
         topView.addSubview(topScrollView)
+        contentView.addSubview(topMessageLabel)
         contentView.addSubview(topPageControl)
         contentView.addSubview(popularMatchCollectionView)
         contentView.addSubview(matchCollectionView)
@@ -154,6 +160,11 @@ final class HomeViewController: BaseViewController {
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(Constant.scrollViewHeight)
+        }
+        
+        topMessageLabel.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.bottom.equalTo(topView.snp.bottom).inset(Constant.padding24)
         }
         
         topScrollView.snp.makeConstraints { make in
