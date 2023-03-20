@@ -616,7 +616,6 @@
 			isa = PBXGroup;
 			children = (
 				D850FC8529B4D3D000DC08C6 /* DefaultMatchRepository.swift */,
-				D85E1BE529C2E69100AF1FCA /* DefaultFireStorageRepository.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -625,7 +624,6 @@
 			isa = PBXGroup;
 			children = (
 				D850FC8829B4D3DC00DC08C6 /* MatchRepository.swift */,
-				D85E1BE329C2E4E700AF1FCA /* FireStorageRepository.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -812,6 +810,7 @@
 		D860B5C7299BD52400966683 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D875371A29C89A6A00CAF5EA /* Firebase */,
 				D8CE789D29C6FF3D0028F2AE /* User */,
 				D860B620299D19CC00966683 /* Auth */,
 				D850FC8429B4D3B700DC08C6 /* Match */,
@@ -845,6 +844,7 @@
 		D860B5CA299BD5AF00966683 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D875371B29C89A8000CAF5EA /* Firebase */,
 				D8CE789A29C6FF040028F2AE /* User */,
 				D860B61D299D198F00966683 /* Auth */,
 				D850FC8729B4D3D400DC08C6 /* Match */,
@@ -1176,6 +1176,22 @@
 				D875371629C85E2B00CAF5EA /* MyPageUseCase.swift */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		D875371A29C89A6A00CAF5EA /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				D85E1BE529C2E69100AF1FCA /* DefaultFireStorageRepository.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		D875371B29C89A8000CAF5EA /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				D85E1BE329C2E4E700AF1FCA /* FireStorageRepository.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		D8795E3A29BF3B17004856EF /* LocationResultCollectionView */ = {
