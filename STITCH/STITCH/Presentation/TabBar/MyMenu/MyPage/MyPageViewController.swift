@@ -98,6 +98,18 @@ final class MyPageViewController: BaseViewController {
                 owner.coordinatorPublisher.onNext(.next)
             }
             .disposed(by: disposeBag)
+        
+        let input = MyPageViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable())
+        
+        let output = myPageViewModel.transform(input: input)
+        
+        output.userObservable
+            .asDriver(onErrorJustReturn: User())
+            .drive { [weak self] user in
+                guard let self else { return }
+                self.configure(user: user)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
@@ -139,6 +151,31 @@ final class MyPageViewController: BaseViewController {
             make.top.equalTo(introduceLabel.snp.bottom).offset(Constant.padding32)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func configure(user: User) {
+        nicknameLabel.text = user.nickname
+        introduceLabel.text = user.introduce
+        if let profileURLString = user.profileImageURL,
+           let profileURL = URL(string: profileURLString) {
+            profileImageView.kf.setImage(with: profileURL)
+        }
+        setBadgeView(sports: user.interestedSports)
+    }
+    
+    private func setBadgeView(sports: [Sport]) {
+        let sportBadges: [UILabel] = sports.map { SportBadge(sport: $0) }
+        let stackView = UIStackView(arrangedSubviews: sportBadges).then {
+            $0.axis = .horizontal
+            $0.spacing = CGFloat(Constant.padding6)
+        }
+        if let subView = sportsBadgeView.subviews.last {
+            subView.removeFromSuperview()
+        }
+        sportsBadgeView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
 }

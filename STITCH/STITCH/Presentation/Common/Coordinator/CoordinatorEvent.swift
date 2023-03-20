@@ -16,6 +16,7 @@ enum CoordinatorEvent: Equatable {
     
     // login
     case showHome
+    case showLogin
     
     // Sign up
     case findLocation
@@ -27,4 +28,5 @@ enum CoordinatorEvent: Equatable {
     
     // MyPage
     case setting
+    case version
 }

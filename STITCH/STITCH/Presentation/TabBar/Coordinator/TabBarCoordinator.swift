@@ -26,6 +26,7 @@ protocol TabBarCoordinatorDependencies {
     func myPageEditViewController() -> MyPageEditViewController
     func createdMatchViewController() -> CreatedMatchViewController
     func settingViewController() -> SettingViewController
+    func versionViewController() -> VersionViewController
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -277,6 +278,21 @@ extension TabBarCoordinator {
     
     private func showSettingViewController(_ navigationController: UINavigationController) {
         let settingViewController = dependencies.settingViewController()
+        settingViewController.coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .showLogin = event {
+                    owner.finish()
+                } else if case .version = event {
+                    owner.showVersionViewController(navigationController)
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(settingViewController, animated: true)
+    }
+    
+    private func showVersionViewController(_ navigationController: UINavigationController) {
+        let versionViewController = dependencies.versionViewController()
+        navigationController.pushViewController(versionViewController, animated: true)
     }
 }
