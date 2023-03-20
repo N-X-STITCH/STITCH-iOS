@@ -24,7 +24,10 @@ final class HomeViewController: BaseViewController {
         static let pages = 3
     }
     
-    private let scrollView = UIScrollView()
+    private let refreshControl = UIRefreshControl()
+    private lazy var scrollView = UIScrollView().then {
+        $0.refreshControl = refreshControl
+    }
     private let contentView = UIView()
     
     private let topView = UIView()
@@ -86,7 +89,6 @@ final class HomeViewController: BaseViewController {
     
     override func bind() {
         topScrollView.setImages()
-        matchCollectionView.setData(section: .newMatch, matchInfos: [])
         
         locationButton.rx.tap
             .withUnretained(self)
@@ -118,6 +120,32 @@ final class HomeViewController: BaseViewController {
                 guard let matchCell = owner.matchCollectionView.cellForItem(at: indexPath) as? MatchCell else { return }
                 
                 owner.coordinatorPublisher.onNext(.created(match: matchCell.match))
+            }
+            .disposed(by: disposeBag)
+        
+        let refreshObservalble = refreshControl.rx.controlEvent(.valueChanged).asObservable().share()
+        
+        let input = HomeViewModel.Input(
+            viewWillAppear: rx.viewWillAppear.map { _ in () }.asObservable(),
+            refreshControl: refreshObservalble
+        )
+        
+        let output = homeViewModel.transform(input: input)
+        
+        output.userObservable
+            .asDriver(onErrorJustReturn: User())
+            .drive { [weak self] user in
+                guard let owner = self else { return }
+                owner.locationButton.setTitle(user.address, for: .normal)
+                owner.locationButton.titleLabel?.font = .Headline_20
+            }
+            .disposed(by: disposeBag)
+        
+        output.homeMatches
+            .asDriver(onErrorJustReturn: ([], []))
+            .drive { [weak self] matches in
+                guard let owner = self else { return }
+                owner.configure(matches: matches)
             }
             .disposed(by: disposeBag)
     }
@@ -185,7 +213,7 @@ final class HomeViewController: BaseViewController {
         
         matchCollectionView.snp.makeConstraints { make in
             make.top.equalTo(popularMatchCollectionView.snp.bottom).offset(Constant.padding40)
-            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.left.right.equalToSuperview()
             make.height.equalTo(Constant.matchCollectionViewHeight)
             make.bottom.equalToSuperview()
         }
@@ -227,9 +255,22 @@ final class HomeViewController: BaseViewController {
         }
     }
     
+    private func configure(matches: (recommendedMatches: [Match], newMatches: [Match])) {
+        matchCollectionView.setData(
+            section: .newMatch,
+            matchInfos: matches.newMatches.map { MatchInfo(match: $0, owner: User()) }
+        )
+    }
+    
     func didReceive(locationInfo: LocationInfo) {
-        // 서버 저장
         locationButton.setTitle(locationInfo.address, for: .normal)
+        homeViewModel.userUpdate(address: locationInfo.address)
+            .withUnretained(self)
+            .subscribe { owner, user in
+                owner.locationButton.setTitle(user.address, for: .normal)
+                owner.locationButton.titleLabel?.font = .Headline_20
+            }
+            .disposed(by: disposeBag)
     }
 }
 

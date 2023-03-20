@@ -115,7 +115,11 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: - View Models
     
     func homeViewModel() -> HomeViewModel {
-        return HomeViewModel()
+        return HomeViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            matchUseCase: matchUseCase()
+        )
     }
     
     func findLocationViewModel() -> FindLocationViewModel {
@@ -129,7 +133,10 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     }
     
     func matchDetailViewModel() -> MatchDetailViewModel {
-        return MatchDetailViewModel(matchUseCase: matchUseCase())
+        return MatchDetailViewModel(
+            userUseCase: userUseCase,
+            matchUseCase: matchUseCase()
+        )
     }
     
     // MARK: Create Match
