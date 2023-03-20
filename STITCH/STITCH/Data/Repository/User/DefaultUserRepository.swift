@@ -26,6 +26,7 @@ final class DefaultUserRepository: UserRepository {
     func fetchUser(userID: String) -> Observable<User> {
         let endpoint = UserAPIEndpoints.fetchUser(userID: userID)
         return urlSessionNetworkService.request(with: endpoint)
-            .map(User.self)
+            .map(UserDTO.self)
+            .map { User(userDTO: $0) }
     }
 }
