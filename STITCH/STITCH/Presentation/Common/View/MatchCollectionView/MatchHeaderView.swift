@@ -13,6 +13,7 @@ final class MatchHeaderView: BaseCollectionReusableView {
     
     enum Constant {
         static let lineHeight = 8
+        static let padding16 = 16
         static let padding24 = 24
     }
     
@@ -22,7 +23,7 @@ final class MatchHeaderView: BaseCollectionReusableView {
         $0.backgroundColor = .gray12
     }
     
-    private let titleLabel = UILabel().then {
+    let titleLabel = UILabel().then {
         $0.text = "새롭게 열린 매치"
         $0.textColor = .white
         $0.font = .Headline_20
@@ -41,7 +42,7 @@ final class MatchHeaderView: BaseCollectionReusableView {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(Constant.padding24)
-            make.left.equalToSuperview()
+            make.left.equalToSuperview().offset(Constant.padding16)
         }
     }
     

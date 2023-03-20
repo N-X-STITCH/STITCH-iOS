@@ -149,7 +149,7 @@ final class MyPageViewController: BaseViewController {
         
         createdMatchCollectionView.snp.makeConstraints { make in
             make.top.equalTo(introduceLabel.snp.bottom).offset(Constant.padding32)
-            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
@@ -162,6 +162,7 @@ final class MyPageViewController: BaseViewController {
             profileImageView.kf.setImage(with: profileURL)
         }
         setBadgeView(sports: user.interestedSports)
+        createdMatchCollectionView.setHeader(nickname: user.nickname)
     }
     
     private func setBadgeView(sports: [Sport]) {

@@ -264,7 +264,8 @@ final class MatchCategoryViewController: BaseViewController {
         
         matchCollectionView.snp.makeConstraints { make in
             make.top.equalTo(matchCountLabel.snp.bottom).offset(Constant.padding8)
-            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview().inset(Constant.padding16)
             make.bottom.equalToSuperview()
         }
         

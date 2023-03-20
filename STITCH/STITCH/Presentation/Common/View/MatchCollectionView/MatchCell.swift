@@ -15,6 +15,7 @@ final class MatchCell: BaseCollectionViewCell {
         static let padding4 = 4
         static let padding6 = 6
         static let padding12 = 12
+        static let padding16 = 16
         static let padding24 = 24
         static let radius8 = 8
         static let imageWidth = 88
@@ -77,7 +78,8 @@ final class MatchCell: BaseCollectionViewCell {
         contentView.addSubview(peopleCountLabel)
         
         matchImageView.snp.makeConstraints { make in
-            make.top.left.equalToSuperview()
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(Constant.padding16)
             make.width.height.equalTo(Constant.imageWidth)
         }
         
