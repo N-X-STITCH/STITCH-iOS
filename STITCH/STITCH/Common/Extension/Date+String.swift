@@ -14,6 +14,27 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func toDisplay() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM.dd(E) a h:mm"
+        return dateFormatter.string(from: self)
+    }
+    
+    func toDisplayHour24() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM.dd(E) H:mm"
+        return dateFormatter.string(from: self)
+    }
+    
+    func toDisplay(startDate: Date, duration: Int) -> String {
+        let calendar = Calendar.current
+        guard let updatedDate = calendar.date(byAdding: .minute, value: duration, to: startDate) else { return "" }
+        let startDateString = startDate.toDisplayHour24()
+        let updateDateString = updatedDate.toDisplayHour24().components(separatedBy: " ")[1]
+        
+        return "\(startDateString)~\(updateDateString)"
+    }
+    
     func addTime(hour: Int, minute: Int) -> Date {
         let calendar = Calendar.current
         var dateComponents = DateComponents()
