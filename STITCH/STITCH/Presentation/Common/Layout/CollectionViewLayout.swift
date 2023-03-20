@@ -158,7 +158,7 @@ enum MatchCollectionViewLayout {
         static let padding16 = 16
         static let padding24 = 24
         static let headerHeight = 84
-        static let groupHeight = 112
+        static let groupHeight = 88
     }
     
     static func layout(matchSection: MatchSection) -> UICollectionViewLayout {
@@ -167,7 +167,7 @@ enum MatchCollectionViewLayout {
             -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(1.0)
+                heightDimension: .absolute(CGFloat(Constant.groupHeight))
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
@@ -178,12 +178,6 @@ enum MatchCollectionViewLayout {
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
                 subitems: [item]
-            )
-            group.contentInsets = NSDirectionalEdgeInsets(
-                top: 0,
-                leading: 0,
-                bottom: CGFloat(Constant.padding24),
-                trailing: 0
             )
             
             if matchSection != .none {
@@ -197,7 +191,7 @@ enum MatchCollectionViewLayout {
                     alignment: .top
                 )
                 let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = CGFloat(Constant.padding24)
+                section.interGroupSpacing = CGFloat(Constant.padding16)
                 section.boundarySupplementaryItems = [sectionHeader]
                 return section
             } else {
