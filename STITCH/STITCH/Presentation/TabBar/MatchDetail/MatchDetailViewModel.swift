@@ -34,6 +34,7 @@ final class MatchDetailViewModel: ViewModel {
     func transform(input: Input) -> Output {
         
         let matchInfo = input.match
+            .debug("asdasdasdaasdasd")
             .flatMap { [weak self] match -> Observable<MatchInfo> in
                 guard let self else { return .error(NetworkError.unknownError) }
                 return self.matchUseCase.fetchUser(userID: match.matchHostID)
