@@ -79,4 +79,21 @@ enum Sport: String, CaseIterable, Codable {
         case .etc: return .etc
         }
     }
+    
+    var indexPath: IndexPath {
+        switch self {
+        case .all: return IndexPath(row: 0, section: 0)
+        case .tennis: return IndexPath(row: 0, section: 0)
+        case .badminton: return IndexPath(row: 1, section: 0)
+        case .pingPong: return IndexPath(row: 2, section: 0)
+        case .soccer: return IndexPath(row: 3, section: 0)
+        case .running: return IndexPath(row: 4, section: 0)
+        case .mountainClimbing: return IndexPath(row: 5, section: 0)
+        case .health: return IndexPath(row: 6, section: 0)
+        case .basketball: return IndexPath(row: 7, section: 0)
+        case .baseball: return IndexPath(row: 8, section: 0)
+        case .golf: return IndexPath(row: 9, section: 0)
+        case .etc: return IndexPath(row: 10, section: 0)
+        }
+    }
 }
