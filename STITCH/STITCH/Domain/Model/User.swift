@@ -9,12 +9,12 @@ import Foundation
 
 struct User: Hashable, Codable {
     let id: String
-    let nickname: String
-    let profileImageURL: String?
-    let interestedSports: [Sport]
-    let address: String
-    let token: String
-    let introduce: String
+    var nickname: String
+    var profileImageURL: String?
+    var interestedSports: [Sport]
+    var address: String
+    var token: String
+    var introduce: String
     
     init() {
         self.id = ""
