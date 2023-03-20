@@ -133,4 +133,13 @@ final class IconButton: UIButton {
     func set(backgroundColor: UIColor?) {
         configuration?.baseBackgroundColor = backgroundColor
     }
+    
+    func changeButtonInMatchDetail(type: IconButtonType) {
+        set(iconButtonType: type)
+        if type == .matchJoin {
+            isEnabled = true
+        } else {
+            isEnabled = false
+        }
+    }
 }
