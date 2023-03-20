@@ -183,6 +183,8 @@ extension TabBarCoordinator {
                     owner.showSelectMatchViewController(navigationController)
                 } else if case .findLocation = event {
                     owner.showFindLocationViewController(navigationController, nil, matchCategoryViewController)
+                } else if case .created(let match) = event {
+                    owner.showMatchDetailViewController(navigationController, match: match)
                 }
             }
             .disposed(by: disposeBag)
