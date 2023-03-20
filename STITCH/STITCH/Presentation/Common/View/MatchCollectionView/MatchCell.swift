@@ -130,13 +130,15 @@ final class MatchCell: BaseCollectionViewCell {
     func setMatch(_ matchInfo: MatchInfo) {
         self.match = matchInfo.match
         
-        let match = matchInfo.match
         matchTitleLabel.text = match.matchTitle
-        matchInfoLabel.text = "\(match.locationInfo) | \(match.startDate.toString())"
+        if match.locationInfo.address == "" || match.locationInfo.address == " " {
+            matchInfoLabel.text = match.startDate.toDisplay()
+        } else {
+            matchInfoLabel.text = "\(match.locationInfo.address) | \(match.startDate.toDisplay())"
+        }
+        peopleCountLabel.text = "\(match.headCount)/\(match.maxHeadCount)명"
         setBadge(match: match)
-        
         guard let url = URL(string: match.matchImageURL) else { return }
         matchImageView.kf.setImage(with: url)
-        // TODO: 추가 인원수?
     }
 }
