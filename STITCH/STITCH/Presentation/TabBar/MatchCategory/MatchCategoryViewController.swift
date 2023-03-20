@@ -16,6 +16,7 @@ final class MatchCategoryViewController: BaseViewController {
     
     enum Constant {
         static let padding2 = 2
+        static let padding8 = 8
         static let padding12 = 12
         static let padding16 = 16
         static let padding24 = 24
@@ -62,11 +63,14 @@ final class MatchCategoryViewController: BaseViewController {
         $0.textColor = .gray02
     }
     
+    private let refreshControl = UIRefreshControl()
     private lazy var matchCollectionView = MatchCollectionView(
         self,
         layout: MatchCollectionViewLayout.layout(matchSection: .none),
         matchSection: .none
-    )
+    ).then {
+        $0.refreshControl = self.refreshControl
+    }
     
     private let locationButton = IconButton(iconButtonType: .location)
     
@@ -135,9 +139,20 @@ final class MatchCategoryViewController: BaseViewController {
         
         let matchSelected = matchCollectionView.rx.itemSelected.share()
         
+        matchSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let matchCell = owner.matchCollectionView.cellForItem(at: indexPath) as? MatchCell else { return }
+                owner.coordinatorPublisher.onNext(.created(match: matchCell.match))
+            }
+            .disposed(by: disposeBag)
+
+        let refreshObservalble = refreshControl.rx.controlEvent(.valueChanged).asObservable().share()
+        
         let input = MatchCategoryViewModel.Input(
             viewDidLoad: Observable.just(Void()),
-            selectSport: selectSport
+            selectSport: selectSport,
+            refreshObservalble: refreshObservalble
         )
         
         let output = matchCategoryViewModel.transform(input: input)
@@ -145,8 +160,9 @@ final class MatchCategoryViewController: BaseViewController {
         let allMatchObservable = output.allMatchObservable.share()
         
         allMatchObservable
-            .withUnretained(self)
-            .subscribe { owner, matchs in
+            .asDriver(onErrorJustReturn: [])
+            .drive { [weak self] matchs in
+                guard let owner = self else { return }
                 owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
                 owner.matchCountLabel.text = "\(matchs.count)개"
             }
@@ -157,6 +173,21 @@ final class MatchCategoryViewController: BaseViewController {
         selectSportObservable
             .withUnretained(self)
             .subscribe { owner, matchs in
+                owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
+                owner.matchCountLabel.text = "\(matchs.count)개"
+            }
+            .disposed(by: disposeBag)
+        
+        let refreshMatchObservable = output.refreshMatchObservable.share()
+        
+        refreshMatchObservable
+            .asDriver(onErrorJustReturn: [])
+            .drive { [weak self] matchs in
+                guard let owner = self else { return }
+                owner.refreshControl.endRefreshing()
+                owner.sportCategoryCollectionView.selectItem(
+                    at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .top
+                )
                 owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
                 owner.matchCountLabel.text = "\(matchs.count)개"
             }
@@ -226,13 +257,13 @@ final class MatchCategoryViewController: BaseViewController {
 //        }
         
         matchCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(divisionView.snp.bottom).offset(Constant.padding36)
+            make.top.equalTo(divisionView.snp.bottom).offset(Constant.padding16)
             make.right.equalToSuperview().inset(Constant.padding16)
             make.height.equalTo(Constant.peopleCountLabelHeight)
         }
         
         matchCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(matchCountLabel.snp.bottom).offset(Constant.padding24)
+            make.top.equalTo(matchCountLabel.snp.bottom).offset(Constant.padding8)
             make.left.right.equalToSuperview().inset(Constant.padding16)
             make.bottom.equalToSuperview()
         }

@@ -14,12 +14,14 @@ final class MatchCategoryViewModel: ViewModel {
     struct Input {
         let viewDidLoad: Observable<Void>
         let selectSport: Observable<Sport>
+        let refreshObservalble: Observable<Void>
     }
     
     struct Output {
         let allMatchObservable: Observable<[Match]>
         let teachMatchObservable: Observable<[Match]>
         let selectSportObservable: Observable<[Match]>
+        let refreshMatchObservable: Observable<[Match]>
     }
     
     // MARK: - Properties
@@ -53,13 +55,23 @@ final class MatchCategoryViewModel: ViewModel {
         
         let selectSportObservable = Observable.combineLatest(allMatchObservable, input.selectSport)
             .flatMap { (matchs, sport) -> Observable<[Match]> in
+                if sport == .all {
+                    return Single<[Match]>.just(matchs).asObservable()
+                }
                 return Single<[Match]>.just(matchs.filter { $0.sport == sport }).asObservable()
+            }
+        
+        let refreshMatchObservable = input.refreshObservalble
+            .flatMap { [weak self] _ -> Observable<[Match]> in
+                guard let self else { return .error(NetworkError.unknownError) }
+                return self.matchUseCase.fetchAllMatch()
             }
         
         return Output(
             allMatchObservable: allMatchObservable,
             teachMatchObservable: teachMatchObservable,
-            selectSportObservable: selectSportObservable
+            selectSportObservable: selectSportObservable,
+            refreshMatchObservable: refreshMatchObservable
         )
     }
 }
