@@ -11,6 +11,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     struct Dependencies {
         let urlsessionNetworkService: URLSessionNetworkService
+        let userDefaultsService: UserDefaultsService
         let naverCloudAPIService: URLSessionNetworkService
         let naverOpenAPIService: URLSessionNetworkService
         let userUseCase: UserUseCase
@@ -60,6 +61,10 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     // MARK: Storage
     
+    func userStorage() -> UserStorage {
+        return DefaultUserStorage(userDefaultsService: dependencies.userDefaultsService)
+    }
+    
     func fireStorageRepository() -> FireStorageRepository {
         return DefaultFireStorageRepository()
     }
@@ -95,6 +100,16 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     func findLocationUseCase() -> FindLocationUseCase {
         return DefaultFindLocationUseCase(searchLocationRepository: searchLocationRepository())
+    }
+    
+    // MARK: My Page
+    
+    func myPageUseCase() -> MyPageUseCase {
+        return DefaultMyPageUseCase(
+            userRepository: userRepository(),
+            userStorage: userStorage(),
+            fireStorageRepository: fireStorageRepository()
+        )
     }
         
     // MARK: - View Models
@@ -135,11 +150,14 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: My Page
     
     func myPageViewModel() -> MyPageViewModel {
-        return MyPageViewModel()
+        return MyPageViewModel(userUseCase: userUseCase)
     }
     
     func myPageEditViewModel() -> MyPageEditViewModel {
-        return MyPageEditViewModel()
+        return MyPageEditViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase()
+        )
     }
     
     func createdMatchViewModel() -> CreatedMatchViewModel {
@@ -147,7 +165,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     }
     
     func settingViewModel() -> SettingViewModel {
-        return SettingViewModel()
+        return SettingViewModel(userUseCase: userUseCase, myPageUseCase: myPageUseCase())
     }
     
     // MARK: - ViewControllers
@@ -211,5 +229,9 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     func settingViewController() -> SettingViewController {
         return SettingViewController(settingViewModel: settingViewModel())
+    }
+    
+    func versionViewController() -> VersionViewController {
+        return VersionViewController()
     }
 }

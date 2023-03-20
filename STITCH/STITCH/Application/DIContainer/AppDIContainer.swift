@@ -60,6 +60,7 @@ final class AppDIContainer {
     func makeTabBarDIContainer() -> TabBarDIContainer {
         let dependencies = TabBarDIContainer.Dependencies(
             urlsessionNetworkService: urlsessionNetworkService,
+            userDefaultsService: userDefaultsService,
             naverCloudAPIService: naverCloudAPIService,
             naverOpenAPIService: naverOpenAPIService,
             userUseCase: userUseCase

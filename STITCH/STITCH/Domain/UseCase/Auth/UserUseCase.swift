@@ -13,6 +13,7 @@ protocol UserUseCase {
     func fetchLocalUser() -> Observable<User>
     func save(user: User) -> Observable<Void>
     func savedUser() -> Observable<User?>
+    func logout() -> Observable<Void>
 }
 
 final class DefaultUserUseCase: UserUseCase {
@@ -39,5 +40,9 @@ final class DefaultUserUseCase: UserUseCase {
     
     func savedUser() -> Observable<User?> {
         return userStorage.fetchUser()
+    }
+    
+    func logout() -> Observable<Void> {
+        return userStorage.logout()
     }
 }
