@@ -29,4 +29,18 @@ final class DefaultUserRepository: UserRepository {
             .map(UserDTO.self)
             .map { User(userDTO: $0) }
     }
+    
+    func updateUser(user: User) -> Observable<User> {
+        let userDTO = UserDTO(user: user)
+        let endpoint = UserAPIEndpoints.updateUser(userDTO: userDTO)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(UserDTO.self)
+            .map { User(userDTO: $0) }
+    }
+    
+    func deleteUser(userID: String) -> Observable<String> {
+        let endpoint = UserAPIEndpoints.deleteUser(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(String.self)
+    }
 }

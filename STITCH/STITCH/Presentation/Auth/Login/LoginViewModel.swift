@@ -22,13 +22,18 @@ final class LoginViewModel: ViewModel {
     // MARK: - Properties
     
     private let signupUseCase: SignupUseCase
+    private let userUseCase: UserUseCase
     
     let disposeBag = DisposeBag()
     
     // MARK: - Initializer
     
-    init(signupUseCase: SignupUseCase) {
+    init(
+        signupUseCase: SignupUseCase,
+        userUseCase: UserUseCase
+    ) {
         self.signupUseCase = signupUseCase
+        self.userUseCase = userUseCase
     }
     
     // MARK: - Methods
@@ -42,6 +47,12 @@ final class LoginViewModel: ViewModel {
                 return owner.signupUseCase.isSignuped(userID: loginInfo.id)
             }
         
-        return Output(signupedUser: signupedUser)
+        let isSign = signupedUser
+            .flatMap { [weak self] user in
+                guard let self else { return Observable<Bool>.just(true).asObservable() }
+                return self.userUseCase.save(user: user).map { true }
+            }
+        
+        return Output(signupedUser: isSign)
     }
 }

@@ -79,7 +79,10 @@ final class AuthDIContainer {
     // MARK: - View Models
     
     func loginViewModel() -> LoginViewModel {
-        return LoginViewModel(signupUseCase: signupUseCase())
+        return LoginViewModel(
+            signupUseCase: signupUseCase(),
+            userUseCase: userUseCase
+        )
     }
     
     func findLocationViewModel() -> FindLocationViewModel {

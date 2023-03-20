@@ -11,7 +11,7 @@ import RxSwift
 
 protocol SignupUseCase {
     func signup(user: User) -> Observable<User>
-    func isSignuped(userID: String) -> Observable<Bool>
+    func isSignuped(userID: String) -> Observable<User>
     func user(userID: String) -> Observable<User>
 }
 
@@ -33,8 +33,16 @@ final class DefaultSignupUseCase: SignupUseCase {
         return signupRepository.create(user: user)
     }
     
-    func isSignuped(userID: String) -> Observable<Bool> {
+    func isSignuped(userID: String) -> Observable<User> {
         return signupRepository.isUser(userID: userID)
+            .flatMap { [weak self] isSignuped -> Observable<User> in
+                guard let self else { return .error(SocialLoginError.unknown) }
+                if isSignuped {
+                    return self.signupRepository.fetchUser(userID: userID)
+                } else {
+                    return .error(SocialLoginError.unknown)
+                }
+            }
     }
     
     func user(userID: String) -> Observable<User> {

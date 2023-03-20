@@ -33,4 +33,9 @@ final class DefaultUserStorage: UserStorage {
     func fetchUser() -> Observable<User?> {
         return userDefaultsService.value(valueType: User.self, forKey: userIDKey)
     }
+    
+    func logout() -> Observable<Void> {
+        userDefaultsService.delete(forKey: userIDKey)
+        return Single<Void>.just(()).asObservable()
+    }
 }

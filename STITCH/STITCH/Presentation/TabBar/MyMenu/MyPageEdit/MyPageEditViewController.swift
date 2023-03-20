@@ -31,6 +31,8 @@ final class MyPageEditViewController: BaseViewController {
         static let cameraButtonWidth = 36
         static let collectionViewWidth = 336
         static let collectionViewHeight = 416
+        static let nicknameValidation = 20
+        static let introduceValidation = 300
     }
     
     private let xButton = UIButton().then {
@@ -63,12 +65,12 @@ final class MyPageEditViewController: BaseViewController {
     }
     
     private let nicknameLabel = DefaultTitleLabel(text: "이름", textColor: .gray02, font: .Subhead2_14)
-    private let nicknameTextField = DefaultTextField(placeholder: "이름 validation")
+    private let nicknameTextField = DefaultTextField(placeholder: "닉네임을 입력해주세요")
     private let nicknameRowView = UIView().then { $0.backgroundColor  = .gray09 }
     private let nicknameCountLabel = DefaultTitleLabel(text: "0 / 20", textColor: .gray09, font: .Caption1_12)
     
     private let introduceLabel = DefaultTitleLabel(text: "자기소개", textColor: .gray02, font: .Subhead2_14)
-    private let introduceTextField = DefaultTextField(placeholder: "자기소개 validation")
+    private let introduceTextField = DefaultTextField(placeholder: "자기소개를 입력해주세요")
     private let introduceRowView = UIView().then { $0.backgroundColor  = .gray09 }
     private let introduceCountLabel = DefaultTitleLabel(text: "0 / 300", textColor: .gray09, font: .Caption1_12)
     
@@ -108,6 +110,41 @@ final class MyPageEditViewController: BaseViewController {
     }
     
     override func bind() {
+        
+        let nicknameTextFieldChange = nicknameTextField.rx.text.orEmpty
+            .skip(1)
+            .share()
+        
+        nicknameTextFieldChange
+            .withUnretained(self)
+            .subscribe { owner, nickname in
+                owner.validate(
+                    text: nickname,
+                    textField: owner.nicknameTextField,
+                    countLabel: owner.nicknameCountLabel,
+                    validateCount: Constant.nicknameValidation
+                )
+                owner.myPageEditViewModel.user.nickname = owner.nicknameTextField.text ?? ""
+            }
+            .disposed(by: disposeBag)
+        
+        let introduceTextFieldChange = introduceTextField.rx.text.orEmpty
+            .skip(1)
+            .share()
+        
+        introduceTextFieldChange
+            .withUnretained(self)
+            .subscribe { owner, introduce in
+                owner.validate(
+                    text: introduce,
+                    textField: owner.introduceTextField,
+                    countLabel: owner.introduceCountLabel,
+                    validateCount: Constant.introduceValidation
+                )
+                owner.myPageEditViewModel.user.introduce = owner.introduceTextField.text ?? ""
+            }
+            .disposed(by: disposeBag)
+        
         let imageObservable = cameraButton.rx.tap
             .withUnretained(self)
             .flatMapLatest { owner, _ in
@@ -143,6 +180,36 @@ final class MyPageEditViewController: BaseViewController {
                 owner.sportsCollectionView.update(indexPath)
             }
             .disposed(by: disposeBag)
+        
+        let input = MyPageEditViewModel.Input(
+            matchImage: imageObservable.compactMap { $0.jpegData(compressionQuality: 1.0) },
+            viewWillAppear: rx.viewWillAppear.asObservable(),
+            sportSelected: selected,
+            sportDeselected: deseleted,
+            completeButtonTap: finishButton.rx.tap.asObservable()
+        )
+        
+        let output = myPageEditViewModel.transform(input: input)
+        
+        output.userObservable
+            .asDriver(onErrorJustReturn: User())
+            .drive { [weak self] user in
+                guard let self else { return }
+                self.configure(user: user)
+            }
+            .disposed(by: disposeBag)
+        
+        output.completeUpdateUser
+            .asDriver(onErrorJustReturn: User())
+            .drive { [weak self] user in
+                guard let self else { return }
+                self.coordinatorPublisher.onNext(.dismiss)
+            }
+            .disposed(by: disposeBag)
+        
+        output.imageURLDisposable.disposed(by: disposeBag)
+        output.selectDisposable.disposed(by: disposeBag)
+        output.deselectDisposable.disposed(by: disposeBag)
     }
     
     override func configureUI() {
@@ -194,6 +261,39 @@ final class MyPageEditViewController: BaseViewController {
         configureNicknameView()
         configureIntroduceLabel()
         configureSportsCollectionView()
+    }
+    
+    private func configure(user: User) {
+        nicknameTextField.text = user.nickname
+        nicknameCountLabel.text = "\(user.nickname.count) / \(20)"
+        introduceTextField.text = user.introduce
+        introduceCountLabel.text = "\(user.introduce.count) / \(300)"
+        if let profileURLString = user.profileImageURL,
+           let profileURL = URL(string: profileURLString) {
+            profileImageView.kf.setImage(with: profileURL)
+        } else {
+            profileImageView.image = .defaultProfileImage
+        }
+        
+        user.interestedSports.forEach {
+            sportsCollectionView.selectItem(
+                at: $0.indexPath,
+                animated: false,
+                scrollPosition: .top
+            )
+        }
+    }
+    
+    private func validate(text: String, textField: UITextField, countLabel: UILabel, validateCount: Int) {
+        let offset = validateCount < text.count ? validateCount : text.count
+        let index = text.index(text.startIndex, offsetBy: offset)
+        let text = String(text[..<index])
+        textField.text = text
+        bindTextCount(text: text, label: countLabel, validateCount: validateCount)
+    }
+    
+    private func bindTextCount(text: String, label: UILabel, validateCount: Int) {
+        label.text = "\(text.count) / \(validateCount)"
     }
 }
 

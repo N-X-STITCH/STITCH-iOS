@@ -12,4 +12,5 @@ import RxSwift
 protocol UserStorage {
     func save(user: User) -> Observable<Void>
     func fetchUser() -> Observable<User?>
+    func logout() -> Observable<Void>
 }
