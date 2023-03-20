@@ -175,6 +175,8 @@
 		D875371429C850D800CAF5EA /* UIViewController+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875371329C850D800CAF5EA /* UIViewController+RxSwift.swift */; };
 		D875371729C85E2B00CAF5EA /* MyPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875371629C85E2B00CAF5EA /* MyPageUseCase.swift */; };
 		D875371929C88FCC00CAF5EA /* VersionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875371829C88FCC00CAF5EA /* VersionViewController.swift */; };
+		D875371F29C8A2F600CAF5EA /* HomeMatchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875371E29C8A2F600CAF5EA /* HomeMatchDTO.swift */; };
+		D875372129C8C35E00CAF5EA /* MatchDetailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875372029C8C35E00CAF5EA /* MatchDetailDTO.swift */; };
 		D8795E3429BEFC5A004856EF /* CLLocationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3329BEFC5A004856EF /* CLLocationDelegateProxy.swift */; };
 		D8795E3629BF173E004856EF /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3529BF173E004856EF /* SearchPlaceView.swift */; };
 		D8795E3929BF3AD8004856EF /* LocationResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3829BF3AD8004856EF /* LocationResultCell.swift */; };
@@ -354,6 +356,8 @@
 		D875371329C850D800CAF5EA /* UIViewController+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxSwift.swift"; sourceTree = "<group>"; };
 		D875371629C85E2B00CAF5EA /* MyPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUseCase.swift; sourceTree = "<group>"; };
 		D875371829C88FCC00CAF5EA /* VersionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionViewController.swift; sourceTree = "<group>"; };
+		D875371E29C8A2F600CAF5EA /* HomeMatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMatchDTO.swift; sourceTree = "<group>"; };
+		D875372029C8C35E00CAF5EA /* MatchDetailDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailDTO.swift; sourceTree = "<group>"; };
 		D8795E3329BEFC5A004856EF /* CLLocationDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationDelegateProxy.swift; sourceTree = "<group>"; };
 		D8795E3529BF173E004856EF /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D8795E3829BF3AD8004856EF /* LocationResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultCell.swift; sourceTree = "<group>"; };
@@ -837,6 +841,8 @@
 				D863D97C29C2AA88006E99B6 /* GeoCodingResultDTO.swift */,
 				D8038B3929C41929006C1BF8 /* SearchLocationDTO.swift */,
 				D8CE789029C627E80028F2AE /* MatchDTO.swift */,
+				D875371E29C8A2F600CAF5EA /* HomeMatchDTO.swift */,
+				D875372029C8C35E00CAF5EA /* MatchDetailDTO.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1416,6 +1422,7 @@
 				D84559FC29BB13B4006AF28B /* SettingViewController.swift in Sources */,
 				D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */,
 				D8CE789729C6CCD10028F2AE /* Date+String.swift in Sources */,
+				D875372129C8C35E00CAF5EA /* MatchDetailDTO.swift in Sources */,
 				D85F1D6429C053D9007E0521 /* DefaultUserStorage.swift in Sources */,
 				D850FC8029B4D30200DC08C6 /* CreateMatchViewModel.swift in Sources */,
 				D800291429A5FF1C00F75378 /* ViewModel.swift in Sources */,
@@ -1476,6 +1483,7 @@
 				D850FC8629B4D3D000DC08C6 /* DefaultMatchRepository.swift in Sources */,
 				D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */,
 				D860B5FE299C948400966683 /* TabBarPage.swift in Sources */,
+				D875371F29C8A2F600CAF5EA /* HomeMatchDTO.swift in Sources */,
 				D805FDD629A5B2980007E63D /* Sport.swift in Sources */,
 				D868BA7829B0516600E80012 /* PopularMatchCollectionView.swift in Sources */,
 				D868BA5629AC88EE00E80012 /* SocialLogin.swift in Sources */,
