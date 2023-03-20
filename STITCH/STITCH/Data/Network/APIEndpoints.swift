@@ -44,6 +44,20 @@ struct UserAPIEndpoints {
             method: .DELETE
         )
     }
+    
+    static func fetchMyPage(userID: String) -> Endpoint {
+        return Endpoint(
+            path: "view/myPage/id=\(userID)",
+            method: .GET
+        )
+    }
+    
+    static func fetchMyMatch(userID: String) -> Endpoint {
+        return Endpoint(
+            path: "view/myMatch/id=\(userID)",
+            method: .GET
+        )
+    }
 }
 
 struct MatchAPIEndpoints {
@@ -73,6 +87,20 @@ struct MatchAPIEndpoints {
         return Endpoint(
             path: "match/allTeach",
             method: .GET
+        )
+    }
+    
+    static func fetchHomeMatch() -> Endpoint {
+        return Endpoint(
+            path: "match/home",
+            method: .GET
+        )
+    }
+    
+    static func deleteMatch(matchID: String) -> Endpoint {
+        return Endpoint(
+            path: "match/delete/\(matchID)",
+            method: .DELETE
         )
     }
 }
