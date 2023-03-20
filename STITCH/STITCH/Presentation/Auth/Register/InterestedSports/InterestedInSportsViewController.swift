@@ -16,11 +16,11 @@ final class InterestedInSportsViewController: BaseViewController {
     enum Constant {
         static let barHeight = 4
         static let buttonHeight = 48
-        static let collectionViewHeight = 312
         static let bottomGradientViewHeight = 116
         static let padding16 = 16
         static let padding24 = 24
         static let padding40 = 40
+        static let collectionViewWidth = 336
     }
     
     private let bottomGradientView = UIImageView(image: .bottomGridientView)
@@ -138,8 +138,8 @@ final class InterestedInSportsViewController: BaseViewController {
         
         sportsCollectionView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constant.padding40)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(Constant.collectionViewHeight)
+            make.centerX.equalToSuperview().offset(10)
+            make.width.equalTo(Constant.collectionViewWidth)
             make.bottom.equalTo(nextButton.snp.top)
         }
         

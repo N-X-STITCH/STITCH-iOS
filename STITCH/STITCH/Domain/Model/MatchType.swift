@@ -8,5 +8,17 @@
 import Foundation
 
 enum MatchType: String, Codable {
-    case match, crewMatch, classMatch
+    case match, teachMatch
+    
+    var isTeach: Bool {
+        switch self {
+        case .match: return false
+        case .teachMatch: return true
+        }
+    }
+    
+    init(_ teach: Bool) {
+        if teach { self = .teachMatch  }
+        else { self = .match }
+    }
 }

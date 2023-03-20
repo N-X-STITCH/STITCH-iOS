@@ -31,6 +31,37 @@ struct UserAPIEndpoints {
     }
 }
 
+struct MatchAPIEndpoints {
+    static func createMatch(matchDTO: MatchDTO) -> Endpoint {
+        return Endpoint(
+            path: "match/create",
+            method: .POST,
+            bodyParameters: matchDTO.toDictionary ?? [:]
+        )
+    }
+    
+    static func fetchMatch(matchID: String) -> Endpoint {
+        return Endpoint(
+            path: "match/info/id=\(matchID)",
+            method: .GET
+        )
+    }
+    
+    static func fetchAllMatch() -> Endpoint {
+        return Endpoint(
+            path: "match/allMatch",
+            method: .GET
+        )
+    }
+    
+    static func fetchAllTeachMatch() -> Endpoint {
+        return Endpoint(
+            path: "match/allTeach",
+            method: .GET
+        )
+    }
+}
+
 struct LocationAPIEndpoints {
     static func fetchGeoCodingAddress(query: String) -> Endpoint {
         return Endpoint(
@@ -62,6 +93,18 @@ struct LocationAPIEndpoints {
         return Endpoint(
             path: "view/getNearAddress/address=\(location.address)",
             method: .GET
+        )
+    }
+    
+    static func fetchSearchLocations(query: String) -> Endpoint {
+        return Endpoint(
+            path: "",
+            method: .GET,
+            queryParameters: [
+                "query": query,
+                "display": 5,
+                "sort": "random"
+            ]
         )
     }
 }

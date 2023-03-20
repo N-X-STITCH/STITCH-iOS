@@ -21,27 +21,47 @@ final class SetLocationViewController: BaseViewController {
         static let padding20 = 20
         static let padding24 = 24
         static let padding32 = 32
+        static let locationHeight = 40
         static let gpsBottomPadding = 130
-        static let bottomPadding = 210
+        static let bottomPadding = 200
+        static let alpha = 0.7
     }
     
     private lazy var mapView = NMFMapView(frame: view.frame)
+    
+    private let locationLabel = UILabel().then {
+        $0.text = "동작구"
+        $0.textColor = .white
+        $0.font = .Body2_14
+        $0.textAlignment = .center
+        $0.backgroundColor = .black.withAlphaComponent(Constant.alpha)
+    }
     
     private let gpsButton = UIButton().then {
         $0.setImage(.mapGPS, for: .normal)
     }
     
-    private let searchPlaceView = SearchPlaceView()
+    private lazy var searchPlaceView = SearchPlaceView(viewController: self)
+    
+    private let finishButton = UIButton().then {
+        $0.titleLabel?.font = .Subhead_16
+        $0.setTitle("완료", for: .normal)
+        $0.setTitleColor(.yellow05_primary, for: .normal)
+    }
     
     // MARK: Properties
     
+    private let mapLocationObservable = PublishRelay<LocationInfo>()
+    
     private var marker: NMFMarker?
     private var currentLocation: NMGLatLng?
+    
     private lazy var locationManager = CLLocationManager().then {
         $0.delegate = self
         $0.desiredAccuracy = kCLLocationAccuracyBest
         $0.distanceFilter = kCLDistanceFilterNone
     }
+    private let geocoder = CLGeocoder()
     
     private var panGestureRecognizer: UIPanGestureRecognizer!
     private var searchPlaceViewHeightConstraint: NSLayoutConstraint!
@@ -74,6 +94,14 @@ final class SetLocationViewController: BaseViewController {
     }
     
     override func bind() {
+        finishButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                let locationInfo = owner.createMatchViewModel.newMatch.locationInfo
+                owner.coordinatorPublisher.onNext(.send(locationInfo: locationInfo))
+            }
+            .disposed(by: disposeBag)
+        
         gpsButton.rx.tap
             .withLatestFrom(locationManager.rx.didChangeLocation.asObservable())
             .withUnretained(self)
@@ -92,13 +120,89 @@ final class SetLocationViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        let mapPlacemarkObservable = mapLocationObservable
+            .share()
+            .asObservable()
+            .map { locationInfo in
+                guard let latitude = locationInfo.latitude,
+                      let latitude = CLLocationDegrees(latitude),
+                      let longitude = locationInfo.longitude,
+                      let longitude = CLLocationDegrees(longitude)
+                else { return CLLocation() }
+                return CLLocation(latitude: latitude, longitude: longitude)
+            }
+            .withUnretained(self)
+            .flatMap { owner, location -> Observable<[CLPlacemark]> in
+                return owner.geocoder.rx.reverseGeocodeLocation(location)
+            }
+            .compactMap { $0.last }
+            .map { LocationInfo(
+                address: $0.name ?? "",
+                latitude: "\($0.location?.coordinate.latitude ?? 0)",
+                longitude: "\($0.location?.coordinate.longitude ?? 0)"
+            ) }
+            
+        mapPlacemarkObservable
+            .withUnretained(self)
+            .subscribe { owner, locationInfo in
+                owner.locationLabel.text = "\(locationInfo.address)"
+            }
+            .disposed(by: disposeBag)
+        
+        let searchTextObservable = searchPlaceView.searchTextField.rx.text.orEmpty
+            .filter { !$0.isEmpty }
+            .distinctUntilChanged()
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .share()
+        
+        searchTextObservable
+            .withUnretained(self)
+            .subscribe { owner, text in
+                owner.updateSearchResultTitleLabel(text: text)
+            }
+            .disposed(by: disposeBag)
+        
+        let locationSelected = searchPlaceView.locationResultCollectionView.rx.itemSelected
+            .share()
+            .withUnretained(self)
+            .map { owner, indexPath in
+                guard let locationResultCell = owner.searchPlaceView.locationResultCollectionView.cellForItem(at: indexPath)
+                        as? LocationResultCell else { return LocationInfo(address: "") }
+                guard var locationInfo = locationResultCell.location else { return LocationInfo(address: "") }
+                
+                locationInfo.convertKatechToGEO()
+                
+                guard let latitude = locationInfo.latitude,
+                      let latitude = Double(latitude),
+                      let longitude = locationInfo.longitude,
+                      let longitude = Double(longitude)
+                else { return LocationInfo(address: "") }
+                let location = NMGLatLng(lat: latitude, lng: longitude)
+                owner.currentLocation = location
+                owner.moveMarker(to: location)
+                owner.moveCamera(to: location)
+                owner.hideBottomSheetView()
+                
+                return locationInfo
+            }
+        
+        Observable.of(mapPlacemarkObservable, locationSelected).merge()
+            .withUnretained(self)
+            .subscribe { owner, locationInfo in
+                // TODO: LocationInfo가 변화하는 현상
+                if !owner.isEqual(afterLocationInfo: locationInfo) {
+                    owner.createMatchViewModel.newMatch.locationInfo = locationInfo
+                }
+            }
+            .disposed(by: disposeBag)
+        
         let input = SetLocationViewModel.Input(
-            viewDidLoad: Single<Void>.just(()).asObservable()
+            searchTextObservable: searchTextObservable
         )
         
         let output = setLocationViewModel.transform(input: input)
         
-        output.configureCollectionViewData
+        output.searchResultObservable
             .withUnretained(self)
             .subscribe { owner, locations in
                 owner.searchPlaceView.locationResultCollectionView.setData(locations)
@@ -110,12 +214,19 @@ final class SetLocationViewController: BaseViewController {
         view.backgroundColor = .background
         
         view.addSubview(mapView)
+        view.addSubview(locationLabel)
         view.addSubview(gpsButton)
         view.addSubview(searchPlaceView)
         
         mapView.snp.updateConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide)
             make.left.right.bottom.equalToSuperview()
+        }
+        
+        locationLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(Constant.locationHeight)
         }
         
         gpsButton.snp.makeConstraints { make in
@@ -128,10 +239,28 @@ final class SetLocationViewController: BaseViewController {
     
     override func configureNavigation() {
         navigationController?.navigationBar.barTintColor = .background
+        navigationItem.title = "장소 설정"
+        
+        let rightBarButton = UIBarButtonItem(customView: finishButton)
+        navigationItem.rightBarButtonItem = rightBarButton
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         hideKeyboard()
+    }
+    
+    private func updateSearchResultTitleLabel(text: String? = nil) {
+        DispatchQueue.main.async {
+            if let text {
+                self.searchPlaceView.searchResultTitleLabel.text = "\'\(text)\' 검색 결과"
+            } else {
+                self.searchPlaceView.searchResultTitleLabel.text = "검색 결과가 없어요"
+            }
+        }
+    }
+    
+    private func update(locationInfo: LocationInfo) {
+        createMatchViewModel.newMatch.locationInfo = locationInfo
     }
 }
 
@@ -218,6 +347,15 @@ extension SetLocationViewController {
         }
         hideKeyboard()
     }
+    
+    private func isEqual(afterLocationInfo: LocationInfo) -> Bool {
+        guard let beforeLatitude = createMatchViewModel.newMatch.locationInfo.latitude,
+              let beforeLongitude = createMatchViewModel.newMatch.locationInfo.longitude,
+              let afterLatitude = afterLocationInfo.latitude,
+              let afterLongitude = afterLocationInfo.longitude
+        else { return false }
+        return beforeLatitude == afterLatitude && beforeLongitude == afterLongitude
+    }
 }
 
 // MARK: - NMFMapViewCameraDelegate
@@ -232,9 +370,12 @@ extension SetLocationViewController: NMFMapViewCameraDelegate {
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        // TODO: 위치 정보 가져오기, 근데 움직일때 말고 멈췄을때
+        // 멈췄을 때
         let center = mapView.projection.latlng(from: CGPoint(
             x: view.frame.midX, y: view.frame.midY - 50)
+        )
+        mapLocationObservable.accept(
+            LocationInfo(address: "", latitude: String(center.lat), longitude: String(center.lng))
         )
     }
 }

@@ -26,6 +26,7 @@ final class MatchCell: BaseCollectionViewCell {
     // MARK: - Properties
     
     private let matchImageView = UIImageView().then {
+        $0.image = .defaultLogoImageSmall
         $0.layer.cornerRadius = CGFloat(Constant.radius8)
         $0.clipsToBounds = true
         $0.contentMode = .scaleToFill
@@ -56,6 +57,8 @@ final class MatchCell: BaseCollectionViewCell {
         $0.font = .Caption2_10
         $0.textColor = .gray04
     }
+    
+    var match: Match!
     
     // MARK: - Initializer
     
@@ -113,7 +116,7 @@ final class MatchCell: BaseCollectionViewCell {
     private func setBadge(match: Match) {
         sportBadgeView.set(sport: match.sport)
         switch match.matchType {
-        case .classMatch:
+        case .teachMatch:
             let stackView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
                 $0.axis = .horizontal
                 $0.spacing = CGFloat(Constant.padding6)
@@ -125,13 +128,17 @@ final class MatchCell: BaseCollectionViewCell {
     }
     
     func setMatch(_ matchInfo: MatchInfo) {
-        let match = matchInfo.match
-        matchTitleLabel.text = match.title
-        matchInfoLabel.text = "\(match.place) | \(match.startTime)"
-        setBadge(match: match)
+        self.match = matchInfo.match
         
+        matchTitleLabel.text = match.matchTitle
+        if match.locationInfo.address == "" || match.locationInfo.address == " " {
+            matchInfoLabel.text = match.startDate.toDisplay()
+        } else {
+            matchInfoLabel.text = "\(match.locationInfo.address) | \(match.startDate.toDisplay())"
+        }
+        peopleCountLabel.text = "\(match.headCount)/\(match.maxHeadCount)명"
+        setBadge(match: match)
         guard let url = URL(string: match.matchImageURL) else { return }
         matchImageView.kf.setImage(with: url)
-        // TODO: 추가 인원수?
     }
 }

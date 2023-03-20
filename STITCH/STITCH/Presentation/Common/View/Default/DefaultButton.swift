@@ -44,4 +44,8 @@ extension UIButton {
     func setButtonBackgroundColor(_ isEnabled: Bool) {
         backgroundColor = isEnabled ? .yellow05_primary : .gray12
     }
+    
+    func setButtonBackgroundColor(isSelected: Bool) {
+        backgroundColor = isSelected ? .yellow05_primary : .gray12
+    }
 }

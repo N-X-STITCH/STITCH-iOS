@@ -42,23 +42,25 @@ final class SearchPlaceView: UIView {
     }
     
     let searchResultTitleLabel = UILabel().then {
-        $0.text = "근처동네 결과"
+        $0.text = "검색 결과"
         $0.textColor = .white
         $0.font = .Subhead_16
     }
     
-    lazy var locationResultCollectionView = LocationResultCollectionView(
-        layout: LocationResultCollectionViewLayout.layout()
-    )
+    var locationResultCollectionView: LocationResultCollectionView!
     
     // MARK: - Initializer
     
-    init() {
+    init(viewController: UICollectionViewDelegate) {
         super.init(frame: .zero)
         backgroundColor = .gray12
         layer.cornerRadius = 17
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         clipsToBounds = true
+        locationResultCollectionView = LocationResultCollectionView(
+            viewController,
+            layout: LocationResultCollectionViewLayout.layout()
+        )
         
         configureUI()
     }

@@ -29,7 +29,7 @@ final class MyPageEditViewController: BaseViewController {
         static let navigationButtonWidth = 48
         static let imageWidth = 108
         static let cameraButtonWidth = 36
-        static let collectionViewWidth = 312
+        static let collectionViewWidth = 336
         static let collectionViewHeight = 416
     }
     

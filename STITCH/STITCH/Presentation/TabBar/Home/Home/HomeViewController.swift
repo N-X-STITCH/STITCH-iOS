@@ -30,6 +30,11 @@ final class HomeViewController: BaseViewController {
     private let topView = UIView()
     private lazy var topGradientLayer = CAGradientLayer()
     private lazy var topScrollView = TopScrollView(delegate: self, view)
+    private let topMessageLabel = DefaultTitleLabel(
+        text: "STITCH와 함께\n최고의 매치를 가져보세요!",
+        textColor: .white,
+        font: .Headline_20
+    )
     
     private lazy var topPageControl = UIPageControl(frame: .zero).then {
         $0.numberOfPages = Constant.pages
@@ -73,7 +78,7 @@ final class HomeViewController: BaseViewController {
     
     override func setting() {
         // TODO: 삭제
-        popularMatchCollectionView.setData(MatchInfo.dump())
+        popularMatchCollectionView.setData([])
         
         setScrollViewTop()
         scrollView.delegate = self
@@ -81,13 +86,38 @@ final class HomeViewController: BaseViewController {
     
     override func bind() {
         topScrollView.setImages()
-        matchCollectionView.setData(section: .newMatch, matchInfos: MatchInfo.dump())
+        matchCollectionView.setData(section: .newMatch, matchInfos: [])
+        
+        locationButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.coordinatorPublisher.onNext(.findLocation)
+            }
+            .disposed(by: disposeBag)
         
         floatingButton.rx.tap
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.generateImpactHaptic()
                 owner.coordinatorPublisher.onNext(.selectMatchType)
+            }
+            .disposed(by: disposeBag)
+        
+        popularMatchCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let popularMatchCell = owner.popularMatchCollectionView.cellForItem(at: indexPath) as? PopularMatchCell else { return }
+                
+                owner.coordinatorPublisher.onNext(.created(match: popularMatchCell.matchInfo.match))
+            }
+            .disposed(by: disposeBag)
+        
+        matchCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let matchCell = owner.matchCollectionView.cellForItem(at: indexPath) as? MatchCell else { return }
+                
+                owner.coordinatorPublisher.onNext(.created(match: matchCell.match))
             }
             .disposed(by: disposeBag)
     }
@@ -122,6 +152,7 @@ final class HomeViewController: BaseViewController {
         
         contentView.addSubview(topView)
         topView.addSubview(topScrollView)
+        contentView.addSubview(topMessageLabel)
         contentView.addSubview(topPageControl)
         contentView.addSubview(popularMatchCollectionView)
         contentView.addSubview(matchCollectionView)
@@ -129,6 +160,11 @@ final class HomeViewController: BaseViewController {
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(Constant.scrollViewHeight)
+        }
+        
+        topMessageLabel.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.bottom.equalTo(topView.snp.bottom).inset(Constant.padding24)
         }
         
         topScrollView.snp.makeConstraints { make in
@@ -189,6 +225,11 @@ final class HomeViewController: BaseViewController {
         if topGradientLayer.superlayer == nil {
             superView.layer.addSublayer(topGradientLayer)
         }
+    }
+    
+    func didReceive(locationInfo: LocationInfo) {
+        // 서버 저장
+        locationButton.setTitle(locationInfo.address, for: .normal)
     }
 }
 

@@ -37,22 +37,64 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     // MARK: - Repositories
     
+    // MARK: Home
+    
+    func nearAddressRepository() -> NearAddressRepository {
+        return DefaultNearAddressRepository(
+            urlSessionNetworkService: dependencies.urlsessionNetworkService,
+            naverCloudNetworkService: dependencies.naverCloudAPIService
+        )
+    }
+    
+    // MARK: User
+    
+    func userRepository() -> UserRepository {
+        return DefaultUserRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
+    }
+    
+    // MARK: Match
+    
     func matchRepository() -> MatchRepository {
         return DefaultMatchRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
     }
     
+    // MARK: Storage
+    
+    func fireStorageRepository() -> FireStorageRepository {
+        return DefaultFireStorageRepository()
+    }
+    
+    // MARK: Location
+    
+    func searchLocationRepository() -> SearchLocationRepository {
+        return DefaultSearchLocationRepository(naverAPINetworkService: dependencies.naverOpenAPIService)
+    }
+    
     // MARK: - Use Cases
+    
+    // MARK: Home
+    
+    func nearAddressUseCase() -> NearAddressUseCase {
+        return DefaultNearAddressUseCase(nearAddressRepository: nearAddressRepository())
+    }
     
     // MARK: Create Match
     
     func createMatchUseCase() -> CreateMatchUseCase {
-        return DefaultCreateMatchUseCase(matchRepository: matchRepository())
+        return DefaultCreateMatchUseCase(
+            matchRepository: matchRepository(),
+            fireStorageRepository: fireStorageRepository()
+        )
+    }
+    
+    func matchUseCase() -> MatchUseCase {
+        return DefaultMatchUseCase(matchRepository: matchRepository(), userRepository: userRepository())
     }
     
     // MARK: Location
     
     func findLocationUseCase() -> FindLocationUseCase {
-        return DefaultFindLocationUseCase()
+        return DefaultFindLocationUseCase(searchLocationRepository: searchLocationRepository())
     }
         
     // MARK: - View Models
@@ -61,16 +103,27 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return HomeViewModel()
     }
     
+    func findLocationViewModel() -> FindLocationViewModel {
+        return FindLocationViewModel(nearAddressUseCase: nearAddressUseCase())
+    }
+    
     // MARK: Match
     
     func matchCategoryViewModel() -> MatchCategoryViewModel {
-        return MatchCategoryViewModel()
+        return MatchCategoryViewModel(matchUseCase: matchUseCase())
+    }
+    
+    func matchDetailViewModel() -> MatchDetailViewModel {
+        return MatchDetailViewModel(matchUseCase: matchUseCase())
     }
     
     // MARK: Create Match
     
     func makeCreateMatchViewModel() -> CreateMatchViewModel {
-        return CreateMatchViewModel(createMatchUseCase: createMatchUseCase())
+        return CreateMatchViewModel(
+            createMatchUseCase: createMatchUseCase(),
+            userUseCase: userUseCase
+        )
     }
     
     // MARK: Location
@@ -103,10 +156,19 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return HomeViewController(homeViewModel: homeViewModel())
     }
     
+    func findLocationViewController() -> FindLocationViewController {
+        return FindLocationViewController(findLocationViewModel: findLocationViewModel())
+    }
+    
+    
     // MARK: Match
     
     func matchCategoryViewController() -> MatchCategoryViewController {
         return MatchCategoryViewController(matchCategoryViewModel: matchCategoryViewModel())
+    }
+    
+    func matchDetailViewController() -> MatchDetailViewController {
+        return MatchDetailViewController(matchDetailViewModel: matchDetailViewModel())
     }
     
     // MARK: Create Match

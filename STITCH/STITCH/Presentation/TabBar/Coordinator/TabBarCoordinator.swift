@@ -12,8 +12,10 @@ import RxSwift
 protocol TabBarCoordinatorDependencies {
     // Home
     func homeViewController() -> HomeViewController
+    func findLocationViewController() -> FindLocationViewController
     // Category
     func matchCategoryViewController() -> MatchCategoryViewController
+    func matchDetailViewController() -> MatchDetailViewController
     // Create Match
     func selectMatchViewController() -> SelectMatchViewController
     func selectSportViewController() -> SelectSportViewController
@@ -113,6 +115,10 @@ extension TabBarCoordinator {
             .subscribe { owner, event in
                 if case .selectMatchType = event {
                     owner.showSelectMatchViewController(navigationController)
+                } else if case .findLocation = event {
+                    owner.showFindLocationViewController(navigationController, homeViewController)
+                } else if case .created(let match) = event {
+                    owner.showMatchDetailViewController(navigationController, match: match)
                 }
             }
             .disposed(by: disposeBag)
@@ -139,6 +145,30 @@ extension TabBarCoordinator {
         )
         navigationController.pushViewController(selectSportViewController, animated: true)
     }
+    
+    private func showFindLocationViewController(
+        _ navigationController: UINavigationController,
+        _ homeViewController: HomeViewController? = nil,
+        _ matchCategoryViewController: MatchCategoryViewController? = nil
+    ) {
+        let findLocationViewController = dependencies.findLocationViewController()
+        findLocationViewController.hidesBottomBarWhenPushed = true
+        findLocationViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .withUnretained(self)
+            .emit() { owner, event in
+                if case .send(let locationInfo) = event {
+                    if let homeViewController {
+                        homeViewController.didReceive(locationInfo: locationInfo)
+                    } else if let matchCategoryViewController {
+                        matchCategoryViewController.didReceive(locationInfo: locationInfo)
+                    }
+                    owner.popViewController()
+                }
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(findLocationViewController, animated: true)
+    }
 }
 
 // MARK: - Match Category
@@ -151,6 +181,10 @@ extension TabBarCoordinator {
             .subscribe { owner, event in
                 if case .selectMatchType = event {
                     owner.showSelectMatchViewController(navigationController)
+                } else if case .findLocation = event {
+                    owner.showFindLocationViewController(navigationController, nil, matchCategoryViewController)
+                } else if case .created(let match) = event {
+                    owner.showMatchDetailViewController(navigationController, match: match)
                 }
             }
             .disposed(by: disposeBag)
@@ -158,25 +192,60 @@ extension TabBarCoordinator {
     }
 }
 
+// MARK: - Match
+extension TabBarCoordinator {
+    private func showMatchDetailViewController(_ navigationController: UINavigationController, match: Match) {
+        let matchDetailViewController = dependencies.matchDetailViewController()
+        matchDetailViewController.hidesBottomBarWhenPushed = true
+        matchDetailViewController.matchObservable.onNext(match)
+//        matchDetailViewController.coordinatorPublisher
+//            .withUnretained(self)
+//            .subscribe { owner, event in
+//                if case .selectMatchType = event {
+//                    owner.showSelectMatchViewController(navigationController)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        navigationController.pushViewController(matchDetailViewController, animated: true)
+    }
+}
+
+
 // MARK: - Create Match
 
 extension TabBarCoordinator {
     private func showCreateMatchViewController(_ navigationController: UINavigationController) {
         let createMatchViewController = dependencies.createMatchViewController()
         createMatchViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
             .withUnretained(self)
-            .subscribe { owner, event in
+            .emit() { owner, event in
                 if case .setLocation = event {
-                    owner.showSetLocationViewController(navigationController)
+                    owner.showSetLocationViewController(navigationController, createMatchViewController)
+                } else if case .created(let match) = event {
+                    navigationController.popToRootViewController(animated: true)
+                    owner.showMatchDetailViewController(navigationController, match: match)
                 }
             }
             .disposed(by: disposeBag)
         navigationController.pushViewController(createMatchViewController, animated: true)
     }
     
-    private func showSetLocationViewController(_ navigationController: UINavigationController) {
+    private func showSetLocationViewController(
+        _ navigationController: UINavigationController,
+        _ createMatchViewController: CreateMatchViewController
+    ) {
         let setLocationViewController = dependencies.setLocationViewController()
-        addPopEvent(setLocationViewController)
+        setLocationViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .withUnretained(self)
+            .emit() { owner, event in
+                if case .send(let locationInfo) = event {
+                    createMatchViewController.didReceive(locationInfo: locationInfo)
+                    navigationController.popViewController(animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(setLocationViewController, animated: true)
     }
 }

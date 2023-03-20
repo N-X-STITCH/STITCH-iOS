@@ -10,11 +10,24 @@ import Foundation
 import RxSwift
 
 protocol FindLocationUseCase {
-//    func currentLocationInfo() -> Observable<[String]>
+    func fetchSearchLocations(searchText: String) -> Observable<[LocationInfo]>
 }
 
 final class DefaultFindLocationUseCase: FindLocationUseCase {
-//    func currentLocationInfo() -> RxSwift.Observable<[String]> {
-//        <#code#>
-//    }
+    
+    // MARK: - Properties
+    
+    private let searchLocationRepository: SearchLocationRepository
+    
+    // MARK: - Initializer
+    
+    init(searchLocationRepository: SearchLocationRepository) {
+        self.searchLocationRepository = searchLocationRepository
+    }
+    
+    // MARK: - Methods
+    
+    func fetchSearchLocations(searchText: String) -> Observable<[LocationInfo]> {
+        return searchLocationRepository.fetchSearchLocations(query: searchText)
+    }
 }

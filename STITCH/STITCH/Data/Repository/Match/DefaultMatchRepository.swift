@@ -24,4 +24,36 @@ final class DefaultMatchRepository: MatchRepository {
     }
     
     // MARK: - Methods
+    
+    func createMatch(match: Match) -> Observable<Match> {
+        let matchDTO = MatchDTO(match: match)
+        let endpoint = MatchAPIEndpoints.createMatch(matchDTO: matchDTO)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(MatchDTO.self)
+            .map { Match(matchDTO: $0) }
+    }
+    
+    func fetchMatch(matchID: String) -> Observable<Match> {
+        let endpoint = MatchAPIEndpoints.fetchMatch(matchID: matchID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(MatchDTO.self)
+            .map { Match(matchDTO: $0) }
+    }
+    
+    func fetchAllMatch() -> Observable<[Match]> {
+        let endpoint = MatchAPIEndpoints.fetchAllMatch()
+        return urlSessionNetworkService.request(with: endpoint)
+            .map([MatchDTO].self)
+            .map {
+                $0.map { Match(matchDTO: $0) }
+                
+            }
+    }
+    
+    func fetchAllTeachMatch() -> Observable<[Match]> {
+        let endpoint = MatchAPIEndpoints.fetchAllTeachMatch()
+        return urlSessionNetworkService.request(with: endpoint)
+            .map([MatchDTO].self)
+            .map { $0.map { Match(matchDTO: $0) } }
+    }
 }

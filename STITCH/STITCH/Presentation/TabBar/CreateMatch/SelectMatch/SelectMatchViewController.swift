@@ -50,7 +50,7 @@ final class SelectMatchViewController: BaseViewController {
     }
     
     override func setting() {
-        setNextButton(isEnabled: true)
+        setNextButton(isEnabled: false)
     }
     
     override func bind() {
@@ -70,7 +70,13 @@ final class SelectMatchViewController: BaseViewController {
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
             .subscribe { owner, indexPath in
+                if indexPath.row == 0 {
+                    owner.createMatchViewModel.newMatch.matchType = .match
+                } else {
+                    owner.createMatchViewModel.newMatch.matchType = .teachMatch
+                }
                 owner.matchTypeCollectionView.update(indexPath)
+                owner.setNextButton(isEnabled: true)
             }
             .disposed(by: disposeBag)
         

@@ -20,7 +20,7 @@ final class SelectPhotoView: UIControl {
     
     // MARK: - Properties
     
-    private lazy var photoView = UIImageView().then {
+    lazy var photoView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
     }
     
@@ -69,8 +69,8 @@ final class SelectPhotoView: UIControl {
             make.height.equalTo(Constant.labelHeight)
         }
         
-//        photoView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
+        photoView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }

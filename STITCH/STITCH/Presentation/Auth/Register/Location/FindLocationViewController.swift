@@ -79,18 +79,10 @@ final class FindLocationViewController: BaseViewController {
     }
     
     override func bind() {
-        searchTextField.rx.controlEvent(.editingDidBegin)
-            .withUnretained(self)
-            .subscribe { owner, _ in
-                owner.textFieldRowView.updateBackgroundColor(isEditing: true)
-            }
+        searchTextField.editingDidBegin(rowView: textFieldRowView)
             .disposed(by: disposeBag)
         
-        searchTextField.rx.controlEvent(.editingDidEnd)
-            .withUnretained(self)
-            .subscribe { owner, _ in
-                owner.textFieldRowView.updateBackgroundColor(isEditing: false)
-            }
+        searchTextField.editingDidEnd(rowView: textFieldRowView)
             .disposed(by: disposeBag)
         
         locationManager.rx.didChangeAuthorization.asObservable()
@@ -159,7 +151,7 @@ final class FindLocationViewController: BaseViewController {
             .subscribe(onNext: { owner, locations in
                 owner.locationResultCollectionView.setData(locations)
             }, onError: { error in
-                self.handle(error: LocationError.failGetLocations)
+                self.handle(error: error)
             })
             .disposed(by: disposeBag)
     }

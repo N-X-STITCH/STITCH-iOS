@@ -81,7 +81,7 @@ final class MyPageViewController: BaseViewController {
     
     override func setting() {
         let section = MatchSection.createdMatchList(nickname: "비니킴")
-        createdMatchCollectionView.setData(section: section, matchInfos: MatchInfo.dump())
+        createdMatchCollectionView.setData(section: section, matchInfos: [])
     }
     
     override func bind() {

@@ -8,14 +8,14 @@
 import Foundation
 
 struct UserDTO: Codable {
-    let id: String
-    let type: String
-    let name: String
-    let location: String
-    let imageUrl: String
-    let sports: [String]
-    let token: String
-    let intro: String
+    let id: String?
+    let type: String?
+    let name: String?
+    let location: String?
+    let imageUrl: String?
+    let sports: [String]?
+    let token: String?
+    let introduce: String?
     
     init(user: User) {
         self.id = user.id
@@ -25,6 +25,6 @@ struct UserDTO: Codable {
         self.imageUrl = user.profileImageURL ?? ""
         self.sports = user.interestedSports.map { $0.name }
         self.token = user.token
-        self.intro = user.introduce
+        self.introduce = user.introduce
     }
 }

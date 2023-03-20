@@ -23,8 +23,8 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        bind()
         setting()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {

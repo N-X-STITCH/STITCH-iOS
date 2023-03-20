@@ -72,6 +72,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
     
     // peopleView
     
+    var matchInfo: MatchInfo!
+    
     // MARK: - Initializer
     
     // MARK: - Methods
@@ -144,7 +146,7 @@ final class PopularMatchCell: BaseCollectionViewCell {
     private func setBadge(match: Match) {
         sportBadgeView.set(sport: match.sport)
         switch match.matchType {
-        case .classMatch:
+        case .teachMatch:
             let stackView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
                 $0.axis = .horizontal
                 $0.spacing = CGFloat(Constant.padding6)
@@ -156,6 +158,8 @@ final class PopularMatchCell: BaseCollectionViewCell {
     }
     
     func setMatch(_ matchInfo: MatchInfo) {
+        self.matchInfo = matchInfo
+        
         let match = matchInfo.match
         let owner = matchInfo.owner
         
