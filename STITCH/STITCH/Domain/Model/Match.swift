@@ -36,9 +36,9 @@ struct Match: Codable, Hashable {
         self.startDate = Date()
         self.startHour = 0
         self.startMinute = 0
-        self.duration = 0
-        self.headCount = 0
-        self.maxHeadCount = 0
+        self.duration = 30
+        self.headCount = 1
+        self.maxHeadCount = 1
         self.fee = 0
     }
     
@@ -78,24 +78,24 @@ struct Match: Codable, Hashable {
     
     init(matchDTO: MatchDTO) {
         let location = LocationInfo(
-            address: matchDTO.location,
-            latitude: matchDTO.latitude,
-            longitude: matchDTO.longitude
+            address: matchDTO.location ?? "",
+            latitude: matchDTO.latitude ?? "",
+            longitude: matchDTO.longitude ?? ""
         )
-        self.matchID = matchDTO.id
-        self.matchHostID = matchDTO.hostId
-        self.matchTitle = matchDTO.name
-        self.matchImageURL = matchDTO.imageUrl
+        self.matchID = matchDTO.id ?? ""
+        self.matchHostID = matchDTO.hostId ?? ""
+        self.matchTitle = matchDTO.name ?? ""
+        self.matchImageURL = matchDTO.imageUrl ?? ""
         self.locationInfo = location
-        self.content = matchDTO.detail
-        self.matchType = MatchType(matchDTO.teach)
-        self.sport = Sport(matchDTO.eventType)!
-        self.startDate = matchDTO.startTime.toDate()
+        self.content = matchDTO.detail ?? ""
+        self.matchType = MatchType(matchDTO.teach ?? false)
+        self.sport = Sport(matchDTO.eventType ?? "etc")!
+        self.startDate = (matchDTO.startTime ?? "").toDate()
         self.startHour = startDate.hour()
         self.startMinute = startDate.minute()
-        self.duration = matchDTO.duration
-        self.headCount = matchDTO.numOfMembers
-        self.maxHeadCount = matchDTO.maxCapacity
-        self.fee = matchDTO.fee
+        self.duration = matchDTO.duration ?? 30
+        self.headCount = matchDTO.numOfMembers ?? 1
+        self.maxHeadCount = matchDTO.maxCapacity ?? 1
+        self.fee = matchDTO.fee ?? 0
     }
 }

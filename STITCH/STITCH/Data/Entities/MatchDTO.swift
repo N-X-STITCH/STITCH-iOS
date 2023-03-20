@@ -8,22 +8,22 @@
 import Foundation
 
 struct MatchDTO: Codable {
-    let id: String
-    let type: String
-    let location: String
-    let imageUrl: String
-    let name: String
-    let detail: String
-    let startTime: String
-    let duration: Int
-    let eventType: String
-    let hostId: String
-    let maxCapacity: Int
-    let fee: Int
-    let latitude: String
-    let longitude: String
-    let teach: Bool
-    let numOfMembers: Int
+    let id: String?
+    let type: String?
+    let location: String?
+    let imageUrl: String?
+    let name: String?
+    let detail: String?
+    let startTime: String?
+    let duration: Int?
+    let eventType: String?
+    let hostId: String?
+    let maxCapacity: Int?
+    let fee: Int?
+    let latitude: String?
+    let longitude: String?
+    let teach: Bool?
+    let numOfMembers: Int?
     
     init(
         id: String,
