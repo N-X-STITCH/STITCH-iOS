@@ -216,14 +216,6 @@ final class CreateMatchViewController: BaseViewController {
         super.init()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let rect = scrollView.recursiveUnionInDepthFor(view: scrollView)
-        scrollView.contentLayoutGuide.snp.updateConstraints { make in
-            make.height.equalTo(rect.height)
-        }
-    }
-    
     // MARK: - Methods
     
     override func setting() {
@@ -324,7 +316,7 @@ final class CreateMatchViewController: BaseViewController {
                     countLabel: owner.matchDetailCountLabel,
                     validateCount: Constant.contentValidation
                 )
-                owner.createMatchViewModel.newMatch.matchTitle = owner.matchDetailTextView.text ?? ""
+                owner.createMatchViewModel.newMatch.content = owner.matchDetailTextView.text ?? ""
             }
             .disposed(by: disposeBag)
         
@@ -635,6 +627,10 @@ extension CreateMatchViewController {
         configureLocationView()
         configurePeopleView()
         configureFeeView()
+        
+        contentView.snp.makeConstraints { make in
+            make.bottom.equalTo(contentView.subviews.last!.snp.bottom)
+        }
     }
     
     private func configureTitleView() {
@@ -735,13 +731,14 @@ extension CreateMatchViewController {
         
         calendarView.snp.makeConstraints { make in
             make.top.equalTo(matchScheduleInfoView.snp.bottom).offset(Constant.padding32)
-            make.height.equalTo(312) // TODO: 미정
+            //make.height.equalTo(312) // TODO: 미정
             make.left.right.equalToSuperview().inset(Constant.padding16)
         }
         
         startTimeTextField.snp.makeConstraints { make in
-            make.top.equalTo(calendarView.snp.bottom).offset(Constant.padding28)
+            make.top.equalTo(calendarView.snp.bottom).offset(Constant.padding24)
             make.centerX.equalToSuperview()
+            make.height.equalTo(Constant.padding24)
         }
         
         clockImageView.snp.makeConstraints { make in
