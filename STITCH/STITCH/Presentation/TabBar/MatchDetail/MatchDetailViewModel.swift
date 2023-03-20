@@ -11,21 +11,30 @@ import RxSwift
 
 final class MatchDetailViewModel: ViewModel {
     
+    var user: User!
+    
     struct Input {
         let match: Observable<Match>
+        let matchJoinButtonTap: Observable<Void>
     }
     
     struct Output {
+        let user: Observable<User>
         let matchInfo: Observable<MatchInfo>
     }
     
     // MARK: - Properties
     
+    private let userUseCase: UserUseCase
     private let matchUseCase: MatchUseCase
     
     // MARK: - Initializer
     
-    init(matchUseCase: MatchUseCase) {
+    init(
+        userUseCase: UserUseCase,
+        matchUseCase: MatchUseCase
+    ) {
+        self.userUseCase = userUseCase
         self.matchUseCase = matchUseCase
     }
     
@@ -33,16 +42,21 @@ final class MatchDetailViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         
+        let user = userUseCase.fetchLocalUser()
+            .map { user in
+                self.user = user
+                return user
+            }
+            
         let matchInfo = input.match
-            .debug("asdasdasdaasdasd")
             .flatMap { [weak self] match -> Observable<MatchInfo> in
                 guard let self else { return .error(NetworkError.unknownError) }
-                return self.matchUseCase.fetchUser(userID: match.matchHostID)
-                    .map { MatchInfo(match: match, owner: $0) }
+                return self.matchUseCase.fetchMatch(matchID: match.matchID)
             }
         
         return Output(
-            matchInfo: matchInfo
+            user: user.share(),
+            matchInfo: matchInfo.share()
         )
     }
 }

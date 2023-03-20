@@ -158,11 +158,16 @@ final class MatchDetailViewController: BaseViewController {
     
     override func bind() {
         
+        let matchJoinButtonTap = matchJoinButton.rx.tap.asObservable()
+        
         let matchObserver = matchObservable.asObservable().share()
         
         let mapButtonTap = Observable.of(detailInfoButton.rx.tap, detailInfoImageButton.rx.tap).merge().asObservable()
         
-        let input = MatchDetailViewModel.Input(match: matchObserver)
+        let input = MatchDetailViewModel.Input(
+            match: matchObserver,
+            matchJoinButtonTap: matchJoinButtonTap
+        )
         let output = matchDetailViewModel.transform(input: input)
         
         output.matchInfo
@@ -180,6 +185,20 @@ final class MatchDetailViewController: BaseViewController {
             .drive { [weak self] _ in
                 guard let owner = self else { return }
                 owner.openNaverMap()
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(output.user, output.matchInfo)
+            .asDriver(onErrorJustReturn: (User(), MatchInfo(match: Match(), owner: User())))
+            .drive { [weak self] user, matchInfo in
+                guard let self else { return }
+                if user.id == matchInfo.match.matchHostID {
+                    self.setButton(isEnabled: false)
+                } else if matchInfo.joinedUsers.map({ $0.id }).contains(user.id) {
+                    self.setButton(isEnabled: false)
+                } else {
+                    self.setButton(isEnabled: true)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -235,6 +254,14 @@ final class MatchDetailViewController: BaseViewController {
         
         contentView.snp.makeConstraints { make in
             make.bottom.equalTo(contentView.subviews.last!.snp.bottom).offset(100)
+        }
+    }
+    
+    private func setButton(isEnabled: Bool) {
+        if isEnabled {
+            matchJoinButton.changeButtonInMatchDetail(type: .matchJoin)
+        } else {
+            matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
         }
     }
     
