@@ -29,6 +29,21 @@ struct UserAPIEndpoints {
             method: .GET
         )
     }
+    
+    static func updateUser(userDTO: UserDTO) -> Endpoint {
+        return Endpoint(
+            path: "member/update",
+            method: .PUT,
+            bodyParameters: userDTO.toDictionary ?? [:]
+        )
+    }
+    
+    static func deleteUser(userID: String) -> Endpoint {
+        return Endpoint(
+            path: "member/delete/id=\(userID)",
+            method: .DELETE
+        )
+    }
 }
 
 struct MatchAPIEndpoints {
