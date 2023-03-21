@@ -32,6 +32,7 @@ final class MatchHeaderView: BaseCollectionReusableView {
     // MARK: - Methods
     
     override func configureUI() {
+        backgroundColor = .background
         addSubview(lineView)
         addSubview(titleLabel)
         

@@ -22,24 +22,12 @@ final class PopularHeaderView: BaseCollectionReusableView {
         $0.font = .Headline_20
     }
     
-    let viewAllButton = UIButton().then {
-        $0.titleLabel?.font = .Body2_14
-        $0.setTitleColor(.gray07, for: .normal)
-        $0.setTitle("전체보기", for: .normal)
-    }
-    
     override func configureUI() {
         addSubview(titleLabel)
-        addSubview(viewAllButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.left.equalToSuperview()
             make.height.equalTo(Constant.labelHeight)
-        }
-        
-        viewAllButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(Constant.padding16)
-            make.centerY.equalTo(titleLabel.snp.centerY)
         }
     }
 }
