@@ -12,12 +12,9 @@ import RxSwift
 final class SettingViewModel: ViewModel {
     
     struct Input {
-        let tableViewSelect: Observable<IndexPath>
     }
     
     struct Output {
-        let logoutResult: Observable<Void>
-        let signoutResult: Observable<Void>
     }
     
     // MARK: - Properties
@@ -37,29 +34,16 @@ final class SettingViewModel: ViewModel {
     
     // MARK: - Methods
     
+    func logoutResult() -> Observable<Void> {
+        return self.userUseCase.logout()
+    }
+    
+    func signOutResult() -> Observable<Void> {
+        return self.myPageUseCase.deleteUser()
+            .withLatestFrom(self.userUseCase.logout())
+    }
+    
     func transform(input: Input) -> Output {
-        
-        let tableViewSelect = input.tableViewSelect
-        
-        let logoutResult = tableViewSelect
-            .flatMap { indexPath -> Observable<Void> in
-                if indexPath == IndexPath(row: AccountSection.logout.row, section: SettingSection.account.section) {
-                    return self.userUseCase.logout()
-                } else {
-                    return Observable.error(SocialLoginError.logout)
-                }
-            }
-        
-        let signoutResult = tableViewSelect
-            .flatMap { indexPath -> Observable<Void> in
-                if indexPath == IndexPath(row: AccountSection.secession.row, section: SettingSection.account.section) {
-                    return self.myPageUseCase.deleteUser()
-                        .withLatestFrom(self.userUseCase.logout())
-                } else {
-                    return Observable.error(SocialLoginError.logout)
-                }
-            }
-        
-        return Output(logoutResult: logoutResult, signoutResult: signoutResult)
+        return Output()
     }
 }

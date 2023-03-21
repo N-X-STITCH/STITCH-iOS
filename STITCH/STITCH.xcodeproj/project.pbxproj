@@ -178,6 +178,8 @@
 		D875371F29C8A2F600CAF5EA /* HomeMatchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875371E29C8A2F600CAF5EA /* HomeMatchDTO.swift */; };
 		D875372129C8C35E00CAF5EA /* MatchDetailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875372029C8C35E00CAF5EA /* MatchDetailDTO.swift */; };
 		D875372329C8CEA100CAF5EA /* MyPageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875372229C8CEA100CAF5EA /* MyPageDTO.swift */; };
+		D875372529C98E6C00CAF5EA /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875372429C98E6C00CAF5EA /* Report.swift */; };
+		D875372729C99C2500CAF5EA /* BackButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D875372629C99C2400CAF5EA /* BackButtonProtocol.swift */; };
 		D8795E3429BEFC5A004856EF /* CLLocationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3329BEFC5A004856EF /* CLLocationDelegateProxy.swift */; };
 		D8795E3629BF173E004856EF /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3529BF173E004856EF /* SearchPlaceView.swift */; };
 		D8795E3929BF3AD8004856EF /* LocationResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8795E3829BF3AD8004856EF /* LocationResultCell.swift */; };
@@ -360,6 +362,8 @@
 		D875371E29C8A2F600CAF5EA /* HomeMatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMatchDTO.swift; sourceTree = "<group>"; };
 		D875372029C8C35E00CAF5EA /* MatchDetailDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailDTO.swift; sourceTree = "<group>"; };
 		D875372229C8CEA100CAF5EA /* MyPageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDTO.swift; sourceTree = "<group>"; };
+		D875372429C98E6C00CAF5EA /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		D875372629C99C2400CAF5EA /* BackButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonProtocol.swift; sourceTree = "<group>"; };
 		D8795E3329BEFC5A004856EF /* CLLocationDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationDelegateProxy.swift; sourceTree = "<group>"; };
 		D8795E3529BF173E004856EF /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D8795E3829BF3AD8004856EF /* LocationResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultCell.swift; sourceTree = "<group>"; };
@@ -946,6 +950,7 @@
 				D860B5E8299C860C00966683 /* Coordinator.swift */,
 				D860B5EC299C894600966683 /* CoordinatorType.swift */,
 				D860B5F8299C903700966683 /* CoordinatorEvent.swift */,
+				D875372629C99C2400CAF5EA /* BackButtonProtocol.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1158,6 +1163,7 @@
 				D868BA5529AC88EE00E80012 /* SocialLogin.swift */,
 				D805FDD529A5B2980007E63D /* Sport.swift */,
 				D868BA8C29B05F8600E80012 /* MatchType.swift */,
+				D875372429C98E6C00CAF5EA /* Report.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1366,6 +1372,7 @@
 				D850FC9429B5B6C100DC08C6 /* DefaultTextView.swift in Sources */,
 				D8795E4429C0278A004856EF /* MatchCategoryViewController.swift in Sources */,
 				D868BA7C29B0524D00E80012 /* PopularHeaderView.swift in Sources */,
+				D875372529C98E6C00CAF5EA /* Report.swift in Sources */,
 				D8CE789129C627E80028F2AE /* MatchDTO.swift in Sources */,
 				D868BA2B29A7B4DF00E80012 /* ProfileText.swift in Sources */,
 				D868BA6F29AE3F4E00E80012 /* HomeViewController.swift in Sources */,
@@ -1460,6 +1467,7 @@
 				D8CE789529C6CC860028F2AE /* String+Date.swift in Sources */,
 				D868BA3C29A8DE0E00E80012 /* InterestedSportsViewModel.swift in Sources */,
 				D8599AA7299E2B9D00633192 /* Assets+Generated.swift in Sources */,
+				D875372729C99C2500CAF5EA /* BackButtonProtocol.swift in Sources */,
 				D868BA4A29AC7DAE00E80012 /* SocialLoginService.swift in Sources */,
 				D85AA33629B46543004B0A8B /* IconButton.swift in Sources */,
 				D868BA6029ACBE0800E80012 /* User.swift in Sources */,

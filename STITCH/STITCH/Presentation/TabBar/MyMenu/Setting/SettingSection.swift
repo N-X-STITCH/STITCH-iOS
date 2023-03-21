@@ -37,19 +37,16 @@ enum SettingSection: CaseIterable {
 }
 
 enum GuideSection: CaseIterable {
-//    case help
     case opinion
     
     var title: String {
         switch self {
-//        case .help: return "고객센터/도움말"
         case .opinion: return "개선 및 의견 남기기"
         }
     }
     
     var row: Int {
         switch self {
-//        case .help: return 0
         case .opinion: return 0
         }
     }
@@ -74,12 +71,11 @@ enum AccountSection: CaseIterable {
 }
 
 enum NoneSection: CaseIterable {
-    case version, terms, policy
+    case version, policy
     
     var title: String {
         switch self {
         case .version: return "현재 버전"
-        case .terms: return "서비스 이용 약관"
         case .policy: return "개인정보 처리방침"
         }
     }
@@ -87,8 +83,7 @@ enum NoneSection: CaseIterable {
     var row: Int {
         switch self {
         case .version: return 0
-        case .terms: return 1
-        case .policy: return 2
+        case .policy: return 1
         }
     }
 }

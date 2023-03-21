@@ -47,35 +47,33 @@ final class AuthCoordinator: Coordinator {
     
     private func showLoginViewController() {
         let loginViewController = dependencies.loginViewController()
-        loginViewController.coordinatorPublisher
-            .asSignal(onErrorJustReturn: .next)
-            .withUnretained(self)
-            .emit { owner, event in
-                if case .next = event {
-                    owner.showInterestedInSportsViewController()
-                } else if case .showHome = event {
-                    owner.finish()
-                }
-            }
-            .disposed(by: disposeBag)
+        let coordinatorPublisher = loginViewController.coordinatorPublisher.share()
+        
+        addEvent(coordinatorPublisher, showInterestedInSportsViewController, .next)
+        addEvent(coordinatorPublisher, finish, .showHome)
         navigationController.pushViewController(loginViewController, animated: true)
     }
     
     private func showInterestedInSportsViewController() {
         let interestedInSportsViewController = dependencies.interestedInSportsViewController()
-        addNextEvent(interestedInSportsViewController, showLocationViewController)
+        let coordinatorPublisher = interestedInSportsViewController.coordinatorPublisher.share()
+        
+        addEvent(coordinatorPublisher, showLocationViewController, .next)
+        addPopEvent(coordinatorPublisher)
         navigationController.pushViewController(interestedInSportsViewController, animated: true)
     }
     
     private func showLocationViewController() {
         let locationViewController = dependencies.locationViewController()
-        locationViewController.coordinatorPublisher
+        let coordinatorPublisher = locationViewController.coordinatorPublisher.share()
+        
+        addEvent(coordinatorPublisher, showCompleteSignupViewController, .next)
+        addPopEvent(coordinatorPublisher)
+        coordinatorPublisher
             .asSignal(onErrorJustReturn: .next)
             .withUnretained(self)
             .emit { owner, event in
-                if case .next = event {
-                    owner.showCompleteSignupViewController()
-                } else if case .findLocation = event {
+                if case .findLocation = event {
                     owner.showFindLocationViewController(locationViewController: locationViewController)
                 }
             }
@@ -85,7 +83,10 @@ final class AuthCoordinator: Coordinator {
     
     private func showFindLocationViewController(locationViewController: LocationViewController) {
         let findLocationViewController = dependencies.findLocationViewController()
-        findLocationViewController.coordinatorPublisher
+        let coordinatorPublisher = findLocationViewController.coordinatorPublisher.share()
+        
+        addPopEvent(coordinatorPublisher)
+        coordinatorPublisher
             .asSignal(onErrorJustReturn: .pop)
             .withUnretained(self)
             .emit() { owner, event in
@@ -100,14 +101,10 @@ final class AuthCoordinator: Coordinator {
     
     private func showCompleteSignupViewController() {
         let completeSignupViewController = dependencies.completeSignupViewController()
-        completeSignupViewController.coordinatorPublisher
-            .withUnretained(self)
-            .subscribe { owner, event in
-                if case .next = event {
-                    owner.finish()
-                }
-            }
-            .disposed(by: disposeBag)
+        let coordinatorPublisher = completeSignupViewController.coordinatorPublisher.share()
+        
+        addEvent(coordinatorPublisher, finish, .next)
+        addPopEvent(coordinatorPublisher)
         navigationController.pushViewController(completeSignupViewController, animated: true)
     }
 }

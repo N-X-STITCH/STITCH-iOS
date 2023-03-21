@@ -12,7 +12,7 @@ import NMapsMap
 import RxSwift
 import RxCocoa
 
-final class SetLocationViewController: BaseViewController {
+final class SetLocationViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -26,6 +26,8 @@ final class SetLocationViewController: BaseViewController {
         static let bottomPadding = 200
         static let alpha = 0.7
     }
+    
+    var backButton: UIButton!
     
     private lazy var mapView = NMFMapView(frame: view.frame)
     
@@ -91,6 +93,7 @@ final class SetLocationViewController: BaseViewController {
         searchPlaceView.locationResultCollectionView.delegate = self
         mapView.addCameraDelegate(delegate: self)
         configureMapView()
+        addBackButtonTap()
     }
     
     override func bind() {

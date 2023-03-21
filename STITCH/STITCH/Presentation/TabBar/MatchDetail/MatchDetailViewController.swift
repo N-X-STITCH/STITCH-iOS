@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 import Kingfisher
 
-final class MatchDetailViewController: BaseViewController {
+final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -28,7 +28,7 @@ final class MatchDetailViewController: BaseViewController {
         static let buttonHeight = 56
         static let radius8 = 8
         static let radius28 = 28
-        static let sportHeight = 346
+        static let sportHeight = 420
         static let gradientViewHeight = 106
         static let matchImageHeight = 48
         static let matchTitleHeight = 24
@@ -43,7 +43,15 @@ final class MatchDetailViewController: BaseViewController {
         static let badgeHeight = 20
     }
     
-    private let scrollView = UIScrollView()
+    enum JoinType {
+        case host, joined, notJoin
+    }
+    
+    var backButton: UIButton!
+    
+    private lazy var scrollView = UIScrollView(frame: view.frame).then {
+        $0.showsVerticalScrollIndicator = false
+    }
     private let contentView = UIView()
     
     private let matchImageView = UIImageView().then {
@@ -65,10 +73,10 @@ final class MatchDetailViewController: BaseViewController {
     
     private let sportBadgeView = SportBadge(sport: .etc)
     
-    private let locationView = DefaultIconLabelView(icon: .location, text: "서울시 용산구 한강진역")
-    private let scheduleView = DefaultIconLabelView(icon: .calendar, text: "2023.3.4(토) 16:00~18:00")
-    private let feeView = DefaultIconLabelView(icon: .dollar, text: "10,000원")
-    private let peopleCountView = DefaultIconLabelView(icon: .peopleWhite, text: "3/4명")
+    private let locationView = DefaultIconLabelView(icon: .location, text: "")
+    private let scheduleView = DefaultIconLabelView(icon: .calendar, text: "")
+    private let feeView = DefaultIconLabelView(icon: .dollar, text: "")
+    private let peopleCountView = DefaultIconLabelView(icon: .peopleWhite, text: "0/0명")
     
     private let miniDivisionView = UIView().then {
         $0.backgroundColor = .gray11
@@ -76,7 +84,7 @@ final class MatchDetailViewController: BaseViewController {
     
     private let matchHostProfileImageView = DefaultProfileImageView(true)
     
-    private let matchHostNicknameLabel = DefaultTitleLabel(text: "good", textColor: .gray04, font: .Subhead2_14)
+    private let matchHostNicknameLabel = DefaultTitleLabel(text: "", textColor: .gray04, font: .Subhead2_14)
     
     private let matchContentLabel = UILabel().then {
         $0.numberOfLines = 0
@@ -125,7 +133,7 @@ final class MatchDetailViewController: BaseViewController {
     
     // TODO: 지도
     
-    private let matchJoinButton = IconButton(iconButtonType: .matchJoin).then {
+    private let matchJoinButton = IconButton(iconButtonType: .matchJoined).then {
         $0.layer.cornerRadius = CGFloat(Constant.radius28)
     }
     
@@ -133,6 +141,15 @@ final class MatchDetailViewController: BaseViewController {
         $0.layer.borderColor = UIColor.gray12.cgColor
         $0.layer.borderWidth = 1
         $0.backgroundColor = .background
+    }
+    
+    private let menuButton = UIButton().then {
+        $0.setImage(.menu, for: .normal)
+    }
+    
+    private lazy var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet).then {
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        $0.addAction(cancel)
     }
     
     // MARK: Properties
@@ -154,9 +171,17 @@ final class MatchDetailViewController: BaseViewController {
     
     override func setting() {
         configureMapView()
+        addBackButtonTap()
     }
     
     override func bind() {
+        
+        menuButton.rx.tap.asDriver()
+            .drive { [weak self] _ in
+                guard let self else { return }
+                self.show(alertController: self.alertController)
+            }
+            .disposed(by: disposeBag)
         
         let matchJoinButtonTap = matchJoinButton.rx.tap.asObservable()
         
@@ -194,18 +219,16 @@ final class MatchDetailViewController: BaseViewController {
                 guard let self else { return }
                 if user.id == matchInfo.match.matchHostID {
                     self.setButton(isEnabled: false)
+                    self.configureMenu(joinType: .host)
                 } else if matchInfo.joinedUsers.map({ $0.id }).contains(user.id) {
                     self.setButton(isEnabled: false)
+                    self.configureMenu(joinType: .joined)
                 } else {
                     self.setButton(isEnabled: true)
+                    self.configureMenu(joinType: .notJoin)
                 }
             }
             .disposed(by: disposeBag)
-    }
-    
-    override func configureNavigation() {
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.barTintColor = .clear
     }
     
     override func configureUI() {
@@ -215,10 +238,7 @@ final class MatchDetailViewController: BaseViewController {
         view.addSubviews([floatingView, matchJoinButton])
         scrollView.addSubview(contentView)
         
-        scrollView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top)
-            make.left.right.bottom.equalToSuperview()
-        }
+        setScrollViewTop()
         
         matchJoinButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(Constant.padding16)
@@ -232,7 +252,7 @@ final class MatchDetailViewController: BaseViewController {
         }
         
         contentView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.top.left.right.bottom.equalTo(scrollView.contentLayoutGuide)
             make.width.equalTo(scrollView.snp.width)
             make.height.greaterThanOrEqualTo(view.snp.height).priority(.low)
         }
@@ -257,12 +277,74 @@ final class MatchDetailViewController: BaseViewController {
         }
     }
     
+    override func configureNavigation() {
+        let rightBarButton = UIBarButtonItem(customView: menuButton)
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    private func setScrollViewTop() {
+        if let navigationController = navigationController {
+            let topInset = navigationController.navigationBar.frame.size.height
+            scrollView.contentInset = UIEdgeInsets(top: -(topInset + notchHeight()), left: 0, bottom: 0, right: 0)
+        }
+    }
+    
+    private func notchHeight() -> CGFloat {
+        if #available(iOS 15.0, *) {
+            let windowScene = UIApplication.shared.connectedScenes.first
+            if let windowScene = windowScene as? UIWindowScene,
+               let window = windowScene.windows.first {
+                let topPadding = window.safeAreaInsets.top
+                return topPadding
+            }
+        } else {
+            let window = UIApplication.shared.windows[0]
+            let topPadding = window.safeAreaInsets.top
+            return topPadding
+        }
+        return 0
+    }
+    
     private func setButton(isEnabled: Bool) {
         if isEnabled {
             matchJoinButton.changeButtonInMatchDetail(type: .matchJoin)
         } else {
             matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
         }
+    }
+    
+    private func configureMenu(joinType: JoinType) {
+        let report = UIAlertAction(title: "신고하기", style: .default) { [weak self] action in
+            guard let self else { return }
+            self.reportSubscribe(self.matchDetailViewModel.report())
+            return
+        }
+        let cancelJoinMatch = UIAlertAction(title: "매치 참여 취소하기", style: .default) { action in
+            return
+        }
+        let deleteMatch = UIAlertAction(title: "매치 삭제하기", style: .default) { action in
+            return
+        }
+        
+        alertController.addAction(report)
+        switch joinType {
+        case .host: alertController.addAction(deleteMatch)
+        case .joined: alertController.addAction(cancelJoinMatch)
+        case .notJoin: return
+        }
+    }
+    
+    private func reportSubscribe(_ report: Observable<Void>) {
+        report
+            .asDriver(onErrorJustReturn: ())
+            .drive { [weak self] _ in
+                self?.showToastMessage(
+                    text: "신고가 접수되었습니다.",
+                    tintColor: .error01,
+                    icon: .success?.withTintColor(.error01, renderingMode: .alwaysOriginal)
+                )
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setBadgeConstraint(badgeView: UIView) {

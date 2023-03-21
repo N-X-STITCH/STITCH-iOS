@@ -111,12 +111,13 @@ extension TabBarCoordinator {
 extension TabBarCoordinator {
     private func showHomeViewController(_ navigationController: UINavigationController) {
         let homeViewController = dependencies.homeViewController()
-        homeViewController.coordinatorPublisher
+        let coordinatorPublisher = homeViewController.coordinatorPublisher.share()
+        
+        addEventWithNav(coordinatorPublisher, showSelectMatchViewController(_:), navigationController, .selectMatchType)
+        coordinatorPublisher
             .withUnretained(self)
             .subscribe { owner, event in
-                if case .selectMatchType = event {
-                    owner.showSelectMatchViewController(navigationController)
-                } else if case .findLocation = event {
+                if case .findLocation = event {
                     owner.showFindLocationViewController(navigationController, homeViewController)
                 } else if case .created(let match) = event {
                     owner.showMatchDetailViewController(navigationController, match: match)
@@ -129,21 +130,19 @@ extension TabBarCoordinator {
     private func showSelectMatchViewController(_ navigationController: UINavigationController) {
         let selectMatchViewController = dependencies.selectMatchViewController()
         selectMatchViewController.hidesBottomBarWhenPushed = true
-        addNextEventWithNav(
-            selectMatchViewController,
-            showSelectSportViewController(_:),
-            navigationController
-        )
+        let coordinatorPublisher = selectMatchViewController.coordinatorPublisher.share()
+        
+        addEventWithNav(coordinatorPublisher, showSelectSportViewController(_:), navigationController, .next)
+        addPopEvent(coordinatorPublisher, navigationController)
         navigationController.pushViewController(selectMatchViewController, animated: true)
     }
     
     private func showSelectSportViewController(_ navigationController: UINavigationController) {
         let selectSportViewController = dependencies.selectSportViewController()
-        addNextEventWithNav(
-            selectSportViewController,
-            showCreateMatchViewController(_:),
-            navigationController
-        )
+        let coordinatorPublisher = selectSportViewController.coordinatorPublisher.share()
+        
+        addEventWithNav(coordinatorPublisher, showCreateMatchViewController(_:), navigationController, .next)
+        addPopEvent(coordinatorPublisher, navigationController)
         navigationController.pushViewController(selectSportViewController, animated: true)
     }
     
@@ -154,7 +153,10 @@ extension TabBarCoordinator {
     ) {
         let findLocationViewController = dependencies.findLocationViewController()
         findLocationViewController.hidesBottomBarWhenPushed = true
-        findLocationViewController.coordinatorPublisher
+        let coordinatorPublisher = findLocationViewController.coordinatorPublisher
+        
+        addPopEvent(coordinatorPublisher, navigationController)
+        coordinatorPublisher
             .asSignal(onErrorJustReturn: .pop)
             .withUnretained(self)
             .emit() { owner, event in
@@ -177,12 +179,13 @@ extension TabBarCoordinator {
 extension TabBarCoordinator {
     private func showMatchCategoryViewController(_ navigationController: UINavigationController) {
         let matchCategoryViewController = dependencies.matchCategoryViewController()
-        matchCategoryViewController.coordinatorPublisher
+        let coordinatorPublisher = matchCategoryViewController.coordinatorPublisher.share()
+        
+        addEventWithNav(coordinatorPublisher, showSelectMatchViewController(_:), navigationController, .selectMatchType)
+        coordinatorPublisher
             .withUnretained(self)
             .subscribe { owner, event in
-                if case .selectMatchType = event {
-                    owner.showSelectMatchViewController(navigationController)
-                } else if case .findLocation = event {
+                if case .findLocation = event {
                     owner.showFindLocationViewController(navigationController, nil, matchCategoryViewController)
                 } else if case .created(let match) = event {
                     owner.showMatchDetailViewController(navigationController, match: match)
@@ -199,6 +202,9 @@ extension TabBarCoordinator {
         let matchDetailViewController = dependencies.matchDetailViewController()
         matchDetailViewController.hidesBottomBarWhenPushed = true
         matchDetailViewController.matchObservable.onNext(match)
+        let coordinatorPublisher = matchDetailViewController.coordinatorPublisher.share()
+        
+        addPopEvent(coordinatorPublisher, navigationController)
 //        matchDetailViewController.coordinatorPublisher
 //            .withUnretained(self)
 //            .subscribe { owner, event in
@@ -217,7 +223,10 @@ extension TabBarCoordinator {
 extension TabBarCoordinator {
     private func showCreateMatchViewController(_ navigationController: UINavigationController) {
         let createMatchViewController = dependencies.createMatchViewController()
-        createMatchViewController.coordinatorPublisher
+        let coordinatorPublisher = createMatchViewController.coordinatorPublisher.share()
+        
+        addPopEvent(coordinatorPublisher, navigationController)
+        coordinatorPublisher
             .asSignal(onErrorJustReturn: .pop)
             .withUnretained(self)
             .emit() { owner, event in
@@ -237,7 +246,9 @@ extension TabBarCoordinator {
         _ createMatchViewController: CreateMatchViewController
     ) {
         let setLocationViewController = dependencies.setLocationViewController()
-        setLocationViewController.coordinatorPublisher
+        let coordinatorPublisher = setLocationViewController.coordinatorPublisher.share()
+        addPopEvent(coordinatorPublisher, navigationController)
+        coordinatorPublisher
             .asSignal(onErrorJustReturn: .pop)
             .withUnretained(self)
             .emit() { owner, event in
@@ -256,43 +267,37 @@ extension TabBarCoordinator {
 extension TabBarCoordinator {
     private func showMyPageViewController(_ navigationController: UINavigationController) {
         let myPageViewController = dependencies.myPageViewController()
-        myPageViewController.coordinatorPublisher
-            .withUnretained(self)
-            .subscribe { owner, event in
-                if case .next = event {
-                    owner.showMyPageEditViewController(navigationController)
-                } else if case .setting = event {
-                    owner.showSettingViewController(navigationController)
-                }
-            }
-            .disposed(by: disposeBag)
+        let coordinatorPublisher = myPageViewController.coordinatorPublisher.share()
+        
+        addEventWithNav(coordinatorPublisher, showMyPageEditViewController(_:), navigationController, .next)
+        addEventWithNav(coordinatorPublisher, showSettingViewController(_:), navigationController, .setting)
         navigationController.pushViewController(myPageViewController, animated: true)
     }
     
     private func showMyPageEditViewController(_ navigationController: UINavigationController) {
         let myPageEditViewController = dependencies.myPageEditViewController()
-        addDismissEvent(myPageEditViewController)
+        let coordinatorPublisher = myPageEditViewController.coordinatorPublisher.share()
+        
+        addDismissEvent(coordinatorPublisher)
         myPageEditViewController.modalPresentationStyle = .fullScreen
         navigationController.present(myPageEditViewController, animated: true)
     }
     
     private func showSettingViewController(_ navigationController: UINavigationController) {
         let settingViewController = dependencies.settingViewController()
-        settingViewController.coordinatorPublisher
-            .withUnretained(self)
-            .subscribe { owner, event in
-                if case .showLogin = event {
-                    owner.finish()
-                } else if case .version = event {
-                    owner.showVersionViewController(navigationController)
-                }
-            }
-            .disposed(by: disposeBag)
+        let coordinatorPublisher = settingViewController.coordinatorPublisher.share()
+        
+        addEvent(coordinatorPublisher, finish, .showLogin)
+        addEventWithNav(coordinatorPublisher, showVersionViewController(_:), navigationController, .version)
+        addPopEvent(coordinatorPublisher, navigationController)
         navigationController.pushViewController(settingViewController, animated: true)
     }
     
     private func showVersionViewController(_ navigationController: UINavigationController) {
         let versionViewController = dependencies.versionViewController()
+        let coordinatorPublisher = versionViewController.coordinatorPublisher.share()
+        
+        addPopEvent(coordinatorPublisher, navigationController)
         navigationController.pushViewController(versionViewController, animated: true)
     }
 }

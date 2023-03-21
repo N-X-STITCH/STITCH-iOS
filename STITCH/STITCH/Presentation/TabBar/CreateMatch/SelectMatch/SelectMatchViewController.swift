@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SelectMatchViewController: BaseViewController {
+final class SelectMatchViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -33,6 +33,8 @@ final class SelectMatchViewController: BaseViewController {
     
     private let nextButton = DefaultButton(title: "다음")
     
+    var backButton: UIButton!
+    
     // MARK: Properties
     
     private let createMatchViewModel: CreateMatchViewModel
@@ -53,6 +55,7 @@ final class SelectMatchViewController: BaseViewController {
     
     override func setting() {
         setNextButton(isEnabled: false)
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -121,6 +124,10 @@ final class SelectMatchViewController: BaseViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    override func configureNavigation() {
+        navigationItem.title = "매치 개설하기"
     }
 }
 

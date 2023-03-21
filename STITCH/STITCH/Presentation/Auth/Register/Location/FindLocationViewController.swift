@@ -10,7 +10,7 @@ import UIKit
 
 import RxSwift
 
-final class FindLocationViewController: BaseViewController {
+final class FindLocationViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -25,6 +25,8 @@ final class FindLocationViewController: BaseViewController {
         static let padding24 = 24
         static let padding32 = 32
     }
+    
+    var backButton: UIButton!
     
     private let searchTextField = DefaultTextField(
         placeholder: "동명(읍, 면)으로 검색 (ex.서초동)",
@@ -73,9 +75,9 @@ final class FindLocationViewController: BaseViewController {
     // MARK: - Methods
     
     override func setting() {
-        // TODO: 권한을 받아 온 후에 근처 리스트
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -193,6 +195,10 @@ final class FindLocationViewController: BaseViewController {
             make.left.equalToSuperview()
             make.right.bottom.equalToSuperview().inset(Constant.padding16)
         }
+    }
+    
+    override func configureNavigation() {
+        navigationItem.title = "주소입력"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

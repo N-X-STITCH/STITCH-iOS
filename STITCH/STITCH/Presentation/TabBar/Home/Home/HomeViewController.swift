@@ -21,7 +21,7 @@ final class HomeViewController: BaseViewController {
         static let scrollViewHeight = 350
         static let gradientHeight = 90
         static let popularCollectionViewHeight = 384
-        static let matchCollectionViewHeight = 1400
+        static let matchCollectionViewHeight = 660
         static let pages = 3
     }
     
@@ -73,8 +73,10 @@ final class HomeViewController: BaseViewController {
         super.init()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(isNavigationBarTranscluent, Constant.scrollViewHeight, scrollView.contentOffset.y)
+        configureNavigationBar(isTranslucent: isNavigationBarTranscluent)
     }
     
     // MARK: - Methods
@@ -222,6 +224,10 @@ final class HomeViewController: BaseViewController {
             make.left.right.equalToSuperview()
             make.height.equalTo(Constant.matchCollectionViewHeight)
             make.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.bottom.equalTo(contentView.subviews.last!.snp.bottom)
         }
     }
     

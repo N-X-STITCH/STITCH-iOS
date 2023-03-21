@@ -11,7 +11,7 @@ import FSCalendar
 import RxCocoa
 import RxSwift
 
-final class CreateMatchViewController: BaseViewController {
+final class CreateMatchViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -50,6 +50,8 @@ final class CreateMatchViewController: BaseViewController {
         static let titleValidation = 30
         static let contentValidation = 1000
     }
+    
+    var backButton: UIButton!
     
     private let finishButton = UIButton().then {
         $0.titleLabel?.font = .Subhead_16
@@ -221,8 +223,8 @@ final class CreateMatchViewController: BaseViewController {
     // MARK: - Methods
     
     override func setting() {
+        addBackButtonTap()
         changeButton(isEnabled: false)
-        // TODO: 삭제
         scrollView.delegate = self
         calendarView.dataSource = self
         calendarView.delegate = self
@@ -472,8 +474,10 @@ final class CreateMatchViewController: BaseViewController {
     }
     
     private func moveScrollView(_ view: UIView, rowView: UIView? = nil) {
-        if view == matchFeeTitleLabel || view == calendarView {
+        if view == matchFeeTitleLabel {
             scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 240), animated: true)
+        } else if view == calendarView {
+            scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 200), animated: true)
         } else {
             scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 20), animated: true)
         }

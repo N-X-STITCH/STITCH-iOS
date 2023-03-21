@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-final class SelectSportViewController: BaseViewController {
+final class SelectSportViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -19,6 +19,8 @@ final class SelectSportViewController: BaseViewController {
         static let padding32 = 32
         static let collectionViewWidth = 336
     }
+    
+    var backButton: UIButton!
     
     private let gradationView = UIImageView(image: .yellowGradation)
     
@@ -46,6 +48,7 @@ final class SelectSportViewController: BaseViewController {
     // MARK: - Methods
     
     override func setting() {
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -99,6 +102,10 @@ final class SelectSportViewController: BaseViewController {
             make.width.equalTo(Constant.collectionViewWidth)
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom)
         }
+    }
+    
+    override func configureNavigation() {
+        navigationItem.title = "운동종목 선택"
     }
 }
 

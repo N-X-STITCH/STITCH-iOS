@@ -7,8 +7,9 @@
 
 import UIKit
 import MessageUI
+import SafariServices
 
-final class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -20,10 +21,30 @@ final class SettingViewController: BaseViewController {
         static let padding40 = 40
     }
     
+    var backButton: UIButton!
+    
     private let settingTableView = UITableView(frame: .zero, style: .grouped).then {
         $0.separatorStyle = .none
         $0.backgroundColor = .background
         $0.sectionFooterHeight = 32
+    }
+    
+    private lazy var logoutAlertController = UIAlertController(
+        title: "정말 로그아웃 하시겠어요?",
+        message: nil,
+        preferredStyle: .alert
+    ).then {
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        $0.addAction(cancel)
+    }
+    
+    private lazy var signoutAlertController = UIAlertController(
+        title: "정말 탈퇴 하시겠어요?",
+        message: nil,
+        preferredStyle: .alert
+    ).then {
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        $0.addAction(cancel)
     }
     
     // MARK: Properties
@@ -50,32 +71,11 @@ final class SettingViewController: BaseViewController {
             SettingFooterView.self,
             forHeaderFooterViewReuseIdentifier: SettingFooterView.reuseIdentifier
         )
+        addBackButtonTap()
+        addAlertActions()
     }
     
     override func bind() {
-        let itemSelected = settingTableView.rx.itemSelected.share()
-        
-        let input = SettingViewModel.Input(tableViewSelect: itemSelected)
-        
-        let output = settingViewModel.transform(input: input)
-        
-        output.logoutResult
-            .withUnretained(self)
-            .subscribe (onNext: { owner, _ in
-                owner.coordinatorPublisher.onNext(.showLogin)
-            }, onError: { [weak self] error in
-                self?.handle(error: error)
-            })
-            .disposed(by: disposeBag)
-        
-        output.signoutResult
-            .withUnretained(self)
-            .subscribe (onNext: { owner, _ in
-                owner.coordinatorPublisher.onNext(.showLogin)
-            }, onError: { [weak self] error in
-                self?.handle(error: error)
-            })
-            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
@@ -87,6 +87,41 @@ final class SettingViewController: BaseViewController {
             make.edges.equalToSuperview()
         }
     }
+    
+    private func addAlertActions() {
+        let logoutAction = UIAlertAction(title: "로그아웃", style: .default, handler: logoutHandler(_:))
+        let signOutAction = UIAlertAction(title: "탈퇴", style: .default, handler: logoutHandler(_:))
+        logoutAlertController.addAction(logoutAction)
+        signoutAlertController.addAction(signOutAction)
+    }
+    
+    private func logoutHandler(_ action: UIAlertAction) {
+        settingViewModel.logoutResult()
+            .withUnretained(self)
+            .subscribe (onNext: { owner, _ in
+                owner.coordinatorPublisher.onNext(.showLogin)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func signOutHandler(_ action: UIAlertAction) {
+        settingViewModel.signOutResult()
+            .withUnretained(self)
+            .subscribe (onNext: { owner, _ in
+                owner.coordinatorPublisher.onNext(.showLogin)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func openPrivacyPolicy() {
+        guard let url = URL(string: "https://equal-quail-9cc.notion.site/2c5c89013b0b4bac8b3a7e67f597448e") else { return }
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -94,10 +129,16 @@ final class SettingViewController: BaseViewController {
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath {
+        case IndexPath(row: AccountSection.logout.row, section: SettingSection.account.section):
+            show(alertController: logoutAlertController)
+        case IndexPath(row: AccountSection.secession.row, section: SettingSection.account.section):
+            show(alertController: signoutAlertController)
         case IndexPath(row: GuideSection.opinion.row, section: SettingSection.guide.section):
             sendMail()
         case IndexPath(row: NoneSection.version.row, section: SettingSection.none.section):
             coordinatorPublisher.onNext(.version)
+        case IndexPath(row: NoneSection.policy.row, section: SettingSection.none.section):
+            openPrivacyPolicy()
         default: return
         }
     }

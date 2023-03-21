@@ -12,6 +12,7 @@ import RxSwift
 final class MatchDetailViewModel: ViewModel {
     
     var user: User!
+    var matchInfo: MatchInfo!
     
     struct Input {
         let match: Observable<Match>
@@ -40,6 +41,10 @@ final class MatchDetailViewModel: ViewModel {
     
     // MARK: - Methods
     
+    func report() -> Observable<Void> {
+        return matchUseCase.createReport(Report(memberId: user.id, matchId: matchInfo.match.matchID))
+    }
+    
     func transform(input: Input) -> Output {
         
         let user = userUseCase.fetchLocalUser()
@@ -52,6 +57,10 @@ final class MatchDetailViewModel: ViewModel {
             .flatMap { [weak self] match -> Observable<MatchInfo> in
                 guard let self else { return .error(NetworkError.unknownError) }
                 return self.matchUseCase.fetchMatch(matchID: match.matchID)
+            }
+            .map { [weak self] matchInfo in
+                self?.matchInfo = matchInfo
+                return matchInfo
             }
         
         return Output(

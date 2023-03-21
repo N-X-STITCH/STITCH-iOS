@@ -41,7 +41,7 @@ final class DefaultUserRepository: UserRepository {
     func deleteUser(userID: String) -> Observable<String> {
         let endpoint = UserAPIEndpoints.deleteUser(userID: userID)
         return urlSessionNetworkService.request(with: endpoint)
-            .map(String.self)
+            .map { _ in "" }
     }
     
     func myMatch(userID: String) -> Observable<[Match]> {
