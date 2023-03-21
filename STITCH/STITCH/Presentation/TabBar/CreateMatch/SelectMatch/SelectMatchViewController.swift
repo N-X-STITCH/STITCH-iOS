@@ -22,6 +22,8 @@ final class SelectMatchViewController: BaseViewController {
         static let collectionViewHeight = 172
     }
     
+    private let gradationView = UIImageView(image: .yellowGradation)
+    
     private let titleLabel = DefaultTitleLabel(text: "원하시는 매치를 선택해주세요")
     
     private lazy var matchTypeCollectionView = MatchTypeCollectionView(
@@ -94,9 +96,14 @@ final class SelectMatchViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(gradationView)
         view.addSubview(titleLabel)
         view.addSubview(matchTypeCollectionView)
         view.addSubview(nextButton)
+        
+        gradationView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)

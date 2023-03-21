@@ -34,7 +34,7 @@ final class SportsCollectionView: BaseCollectionView {
     }
     
     override func configureUI() {
-        backgroundColor = .background
+        backgroundColor = .clear
     }
     
     override func configureDataSource() {

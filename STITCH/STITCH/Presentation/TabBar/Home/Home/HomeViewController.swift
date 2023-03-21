@@ -19,6 +19,7 @@ final class HomeViewController: BaseViewController {
         static let padding40 = 40
         static let floatingButtonWidth = 56
         static let scrollViewHeight = 350
+        static let gradientHeight = 90
         static let popularCollectionViewHeight = 384
         static let matchCollectionViewHeight = 1400
         static let pages = 3
@@ -31,8 +32,8 @@ final class HomeViewController: BaseViewController {
     private let contentView = UIView()
     
     private let topView = UIView()
-    private lazy var topGradientLayer = CAGradientLayer()
     private lazy var topScrollView = TopScrollView(delegate: self, view)
+    private let topGradientBottomView = UIImageView(image: .homeTopViewGradientView)
     private let topMessageLabel = DefaultTitleLabel(
         text: "STITCH와 함께\n최고의 매치를 가져보세요!",
         textColor: .white,
@@ -74,7 +75,6 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setGradientLayer(superView: topView)
     }
     
     // MARK: - Methods
@@ -136,8 +136,8 @@ final class HomeViewController: BaseViewController {
             .asDriver(onErrorJustReturn: User())
             .drive { [weak self] user in
                 guard let owner = self else { return }
-                owner.locationButton.setTitle(user.address, for: .normal)
-                owner.locationButton.titleLabel?.font = .Headline_20
+                guard let address = user.address.components(separatedBy: " ").last else { return }
+                owner.locationButton.set(text: address, .location)
             }
             .disposed(by: disposeBag)
         
@@ -180,6 +180,7 @@ final class HomeViewController: BaseViewController {
         
         contentView.addSubview(topView)
         topView.addSubview(topScrollView)
+        topView.addSubview(topGradientBottomView)
         contentView.addSubview(topMessageLabel)
         contentView.addSubview(topPageControl)
         contentView.addSubview(popularMatchCollectionView)
@@ -197,6 +198,11 @@ final class HomeViewController: BaseViewController {
         
         topScrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        topGradientBottomView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(Constant.gradientHeight)
         }
         
         topPageControl.snp.makeConstraints { make in
@@ -232,29 +238,6 @@ final class HomeViewController: BaseViewController {
         topPageControl.currentPage = page
     }
     
-    private func setGradientLayer(superView: UIView) {
-        topGradientLayer.colors = [
-            UIColor.background.withAlphaComponent(0.0).cgColor,
-            UIColor.background.cgColor
-        ]
-        
-        topGradientLayer.locations = [0, 1]
-        topGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
-        topGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
-        topGradientLayer.transform = CATransform3DMakeAffineTransform(
-            CGAffineTransform(a: 0, b: 1, c: -1, d: 0, tx: 1, ty: 0)
-        )
-        topGradientLayer.bounds = superView.bounds.insetBy(
-            dx: -0.5 * superView.bounds.size.width,
-            dy: -0.5 * superView.bounds.size.height
-        )
-        topGradientLayer.position = superView.center
-        
-        if topGradientLayer.superlayer == nil {
-            superView.layer.addSublayer(topGradientLayer)
-        }
-    }
-    
     private func configure(matches: (recommendedMatches: [Match], newMatches: [Match])) {
         matchCollectionView.setData(
             section: .newMatch,
@@ -267,8 +250,8 @@ final class HomeViewController: BaseViewController {
         homeViewModel.userUpdate(address: locationInfo.address)
             .withUnretained(self)
             .subscribe { owner, user in
-                owner.locationButton.setTitle(user.address, for: .normal)
-                owner.locationButton.titleLabel?.font = .Headline_20
+                guard let address = user.address.components(separatedBy: " ").last else { return }
+                owner.locationButton.set(text: address, .location)
             }
             .disposed(by: disposeBag)
     }

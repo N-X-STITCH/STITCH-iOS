@@ -20,6 +20,8 @@ final class SelectSportViewController: BaseViewController {
         static let collectionViewWidth = 336
     }
     
+    private let gradationView = UIImageView(image: .yellowGradation)
+    
     private let titleLabel = DefaultTitleLabel(text: "매치를 위한\n운동종목을 선택해주세요")
     
     private lazy var sportsCollectionView = SportsCollectionView(
@@ -78,8 +80,13 @@ final class SelectSportViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(gradationView)
         view.addSubview(titleLabel)
         view.addSubview(sportsCollectionView)
+        
+        gradationView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)

@@ -59,6 +59,8 @@ final class CreateMatchViewController: BaseViewController {
         $0.setTitleColor(.gray10, for: .disabled)
     }
     
+    private let gradationView = UIImageView(image: .yellowGradation)
+    
     // MARK: ScrollView
     
     private let scrollView = UIScrollView().then {
@@ -384,10 +386,15 @@ final class CreateMatchViewController: BaseViewController {
         view.backgroundColor = .background
         
         view.addSubview(scrollView)
+        view.addSubview(gradationView)
         scrollView.addSubview(contentView)
         
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top)
+            make.left.right.bottom.equalToSuperview()
+        }
+        
+        gradationView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
         }
         
