@@ -151,11 +151,21 @@ final class MatchCategoryViewController: BaseViewController {
         
         let input = MatchCategoryViewModel.Input(
             viewDidLoad: Observable.just(Void()),
+            viewWillAppear: rx.viewWillAppear.map { _ in () }.asObservable(),
             selectSport: selectSport,
             refreshObservalble: refreshObservalble
         )
         
         let output = matchCategoryViewModel.transform(input: input)
+        
+        output.userObservable
+            .asDriver(onErrorJustReturn: User())
+            .drive { [weak self] user in
+                guard let owner = self else { return }
+                guard let address = user.address.components(separatedBy: " ").last else { return }
+                owner.locationButton.set(text: address, .location)
+            }
+            .disposed(by: disposeBag)
         
         let allMatchObservable = output.allMatchObservable.share()
         
@@ -282,8 +292,14 @@ final class MatchCategoryViewController: BaseViewController {
     }
     
     func didReceive(locationInfo: LocationInfo) {
-        // 서버 저장
         locationButton.setTitle(locationInfo.address, for: .normal)
+        matchCategoryViewModel.userUpdate(address: locationInfo.address)
+            .withUnretained(self)
+            .subscribe { owner, user in
+                guard let address = user.address.components(separatedBy: " ").last else { return }
+                owner.locationButton.set(text: address, .location)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
