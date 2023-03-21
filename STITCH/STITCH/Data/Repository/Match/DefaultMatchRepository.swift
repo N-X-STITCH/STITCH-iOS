@@ -38,8 +38,10 @@ final class DefaultMatchRepository: MatchRepository {
         return urlSessionNetworkService.request(with: endpoint)
             .map(MatchDetailDTO.self)
             .map { matchDetailDTO in
-                let match = Match(matchDTO: matchDetailDTO.match)
-                let joinedUsers = matchDetailDTO.joinedMembers.map { User(userDTO: $0) }
+                let match = Match(matchDTO: matchDetailDTO.match ?? MatchDTO())
+                let joinedUsers = matchDetailDTO.joinedMembers
+                    .compactMap { $0 }
+                    .map { User(userDTO: $0) }
                 return MatchInfo(match: match, owner: User(), joinedUsers: joinedUsers)
             }
     }
@@ -67,7 +69,11 @@ final class DefaultMatchRepository: MatchRepository {
                     MatchDetailDTO(match: $0.match, hostMember: $0.hostMember, joinedMembers: $0.joinedMembers)
                 }
                 let recommendedMatchDetails = recommendedMatches.map {
-                    MatchDetail(matchDTO: $0.match, hostMemberDTO: $0.hostMember ?? UserDTO(), joinedMembersDTO: $0.joinedMembers)
+                    MatchDetail(
+                        matchDTO: $0.match ?? MatchDTO(),
+                        hostMemberDTO: $0.hostMember ?? UserDTO(),
+                        joinedMembersDTO: $0.joinedMembers.compactMap { $0 }
+                    )
                 }
                 let newMatches = $0.newMatches.map { Match(matchDTO: $0) }
                 return (recommendedMatchDetails, newMatches)
