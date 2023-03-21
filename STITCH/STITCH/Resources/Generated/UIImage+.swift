@@ -17,10 +17,13 @@ extension UIImage {
     static let waveBackground = UIImage(named: "waveBackground")
     static let appleLogo = UIImage(named: "appleLogo")
     static let kakaoLogo = UIImage(named: "kakaoLogo")
+    static let homeTopViewGradientView = UIImage(named: "homeTopViewGradientView")
     static let bottomGridientView = UIImage(named: "bottomGradientView")
     static let smallBottomGradientView = UIImage(named: "smallBottomGradientView")
     static let completeSignup = UIImage(named: "completeSignup")
+    static let homeImage1 = UIImage(named: "homeImage1")
     
+    static let yellowGradation = UIImage(named: "createGradation")
     static let arrowLeft = UIImage(named: "arrow-left")
     static let arrowRight = UIImage(named: "arrow-right")
     static let plus = UIImage(named: "add")
