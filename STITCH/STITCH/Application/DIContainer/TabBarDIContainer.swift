@@ -129,7 +129,11 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: Match
     
     func matchCategoryViewModel() -> MatchCategoryViewModel {
-        return MatchCategoryViewModel(matchUseCase: matchUseCase())
+        return MatchCategoryViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            matchUseCase: matchUseCase()
+        )
     }
     
     func matchDetailViewModel() -> MatchDetailViewModel {
@@ -157,7 +161,10 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: My Page
     
     func myPageViewModel() -> MyPageViewModel {
-        return MyPageViewModel(userUseCase: userUseCase)
+        return MyPageViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase()
+        )
     }
     
     func myPageEditViewModel() -> MyPageEditViewModel {

@@ -43,4 +43,18 @@ final class DefaultUserRepository: UserRepository {
         return urlSessionNetworkService.request(with: endpoint)
             .map(String.self)
     }
+    
+    func myMatch(userID: String) -> Observable<[Match]> {
+        let endpoint = UserAPIEndpoints.fetchMyMatch(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map([MatchDTO].self)
+            .map { $0.map { Match(matchDTO: $0) } }
+    }
+    
+    func myCreatedMatch(userID: String) -> Observable<[Match]> {
+        let endpoint = UserAPIEndpoints.fetchMyMatch(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(MyPageDTO.self)
+            .map { $0.myMatches.map { Match(matchDTO: $0) } }
+    }
 }
