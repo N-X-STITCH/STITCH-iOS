@@ -218,16 +218,29 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
             .drive { [weak self] user, matchInfo in
                 guard let self else { return }
                 if user.id == matchInfo.match.matchHostID {
-                    self.setButton(isEnabled: false)
+                    self.setButton(joinType: .host)
                     self.configureMenu(joinType: .host)
                 } else if matchInfo.joinedUsers.map({ $0.id }).contains(user.id) {
-                    self.setButton(isEnabled: false)
+                    self.setButton(joinType: .joined)
                     self.configureMenu(joinType: .joined)
                 } else {
-                    self.setButton(isEnabled: true)
+                    self.setButton(joinType: .notJoin)
                     self.configureMenu(joinType: .notJoin)
                 }
             }
+            .disposed(by: disposeBag)
+        
+        output.matchJoined
+            .subscribe (onNext: { [weak self] _ in
+                self?.showToastMessage(
+                    text: "성공적으로 매치에 참여했어요",
+                    tintColor: .success,
+                    icon: .success?.withTintColor(.success, renderingMode: .alwaysOriginal)
+                )
+                self?.setButton(joinType: .joined)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
             .disposed(by: disposeBag)
     }
     
@@ -305,11 +318,13 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
         return 0
     }
     
-    private func setButton(isEnabled: Bool) {
-        if isEnabled {
-            matchJoinButton.changeButtonInMatchDetail(type: .matchJoin)
-        } else {
-            matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
+    private func setButton(joinType: JoinType) {
+        DispatchQueue.main.async { [weak self] in
+            switch joinType {
+            case .host: self?.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
+            case .joined: self?.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
+            case .notJoin: self?.matchJoinButton.changeButtonInMatchDetail(type: .matchJoin)
+            }
         }
     }
     
@@ -319,18 +334,26 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
             self.reportSubscribe(self.matchDetailViewModel.report())
             return
         }
-        let cancelJoinMatch = UIAlertAction(title: "매치 참여 취소하기", style: .default) { action in
-            return
+        let cancelJoinMatch = UIAlertAction(title: "매치 참여 취소하기", style: .default) { [weak self] action in
+            guard let self else { return }
+            let joinedMemberIDs = self.matchDetailViewModel.matchInfo.joinedUsers.map { $0.id }
+            let userID = self.matchDetailViewModel.user.id
+            
+            if !joinedMemberIDs.contains(userID) {
+                self.showToastMessage(text: "매치에 참여하고 있지 않아요", icon: .checkmark)
+                return
+            }
+            self.cancelJoinMatchSubscribe(self.matchDetailViewModel.cancelJoinMatch())
         }
-        let deleteMatch = UIAlertAction(title: "매치 삭제하기", style: .default) { action in
-            return
+        let deleteMatch = UIAlertAction(title: "매치 삭제하기", style: .default) { [weak self] action in
+            guard let self else { return }
+            self.deleteMatchSubscribe(self.matchDetailViewModel.deleteMatch())
         }
         
         alertController.addAction(report)
         switch joinType {
         case .host: alertController.addAction(deleteMatch)
-        case .joined: alertController.addAction(cancelJoinMatch)
-        case .notJoin: return
+        default: alertController.addAction(cancelJoinMatch)
         }
     }
     
@@ -344,6 +367,36 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
                     icon: .success?.withTintColor(.error01, renderingMode: .alwaysOriginal)
                 )
             }
+            .disposed(by: disposeBag)
+    }
+    
+    private func cancelJoinMatchSubscribe(_ cancelJoinMatch: Observable<Void>) {
+        cancelJoinMatch
+            .subscribe (onNext: { [weak self] _ in
+                self?.showToastMessage(
+                    text: "매치 참여가 취소되었어요",
+                    tintColor: .success,
+                    icon: .success?.withTintColor(.success, renderingMode: .alwaysOriginal)
+                )
+                self?.setButton(joinType: .notJoin)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func deleteMatchSubscribe(_ deleteJoinMatch: Observable<Void>) {
+        deleteJoinMatch
+            .subscribe (onNext: { [weak self] _ in
+                self?.showToastMessage(
+                    text: "매치 삭제가 완료되었어요",
+                    tintColor: .success,
+                    icon: .success?.withTintColor(.success, renderingMode: .alwaysOriginal)
+                )
+                self?.coordinatorPublisher.onNext(.pop)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
             .disposed(by: disposeBag)
     }
     
