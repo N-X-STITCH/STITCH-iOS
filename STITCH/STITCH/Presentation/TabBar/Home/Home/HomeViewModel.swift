@@ -20,7 +20,7 @@ final class HomeViewModel: ViewModel {
     
     struct Output {
         let userObservable: Observable<User>
-        let homeMatches: Observable<(recommendedMatches: [Match], newMatches: [Match])>
+        let homeMatches: Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])>
     }
     
     // MARK: - Properties

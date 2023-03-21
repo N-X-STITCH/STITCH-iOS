@@ -13,8 +13,8 @@ final class PopularMatchCollectionView: BaseCollectionView {
     
     // MARK: - Properties
     
-    typealias PopularMatchDataSource = UICollectionViewDiffableDataSource<Int, MatchInfo>
-    typealias PopularMatchSnapshot = NSDiffableDataSourceSnapshot<Int, MatchInfo>
+    typealias PopularMatchDataSource = UICollectionViewDiffableDataSource<Int, MatchDetail>
+    typealias PopularMatchSnapshot = NSDiffableDataSourceSnapshot<Int, MatchDetail>
     
     var popularMatchDataSource: PopularMatchDataSource!
     
@@ -42,9 +42,9 @@ final class PopularMatchCollectionView: BaseCollectionView {
     }
     
     override func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<PopularMatchCell, MatchInfo> {
-            cell, indexPath, matchInfo in
-            cell.setMatch(matchInfo)
+        let cellRegistration = UICollectionView.CellRegistration<PopularMatchCell, MatchDetail> {
+            cell, indexPath, matchDetail in
+            cell.setMatch(matchDetail)
         }
         
         popularMatchDataSource = PopularMatchDataSource(collectionView: self) {
@@ -70,10 +70,10 @@ final class PopularMatchCollectionView: BaseCollectionView {
         }
     }
     
-    func setData(_ matchInfos: [MatchInfo]) {
+    func setData(_ matchDetails: [MatchDetail]) {
         var snapshot = PopularMatchSnapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(matchInfos)
+        snapshot.appendItems(matchDetails)
         popularMatchDataSource.apply(snapshot)
     }
 }

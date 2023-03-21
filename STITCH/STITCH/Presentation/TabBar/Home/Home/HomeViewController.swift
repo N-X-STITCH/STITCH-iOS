@@ -27,6 +27,7 @@ final class HomeViewController: BaseViewController {
     
     private let refreshControl = UIRefreshControl()
     private lazy var scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
         $0.refreshControl = refreshControl
     }
     private let contentView = UIView()
@@ -83,8 +84,6 @@ final class HomeViewController: BaseViewController {
     
     override func setting() {
         // TODO: 삭제
-        popularMatchCollectionView.setData([])
-        
         setScrollViewTop()
         scrollView.delegate = self
     }
@@ -244,7 +243,8 @@ final class HomeViewController: BaseViewController {
         topPageControl.currentPage = page
     }
     
-    private func configure(matches: (recommendedMatches: [Match], newMatches: [Match])) {
+    private func configure(matches: (recommendedMatches: [MatchDetail], newMatches: [Match])) {
+        popularMatchCollectionView.setData(matches.recommendedMatches)
         matchCollectionView.setData(
             section: .newMatch,
             matchInfos: matches.newMatches.map { MatchInfo(match: $0, owner: User()) }
