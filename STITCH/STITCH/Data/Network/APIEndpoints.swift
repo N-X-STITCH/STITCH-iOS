@@ -103,6 +103,17 @@ struct MatchAPIEndpoints {
             method: .DELETE
         )
     }
+    
+    // 매치 참여
+    // 매치 참여 취소하기
+    
+    static func createReport(report: Report) -> Endpoint {
+        return Endpoint(
+            path: "report",
+            method: .POST,
+            bodyParameters: report.toDictionary ?? [:]
+        )
+    }
 }
 
 struct LocationAPIEndpoints {

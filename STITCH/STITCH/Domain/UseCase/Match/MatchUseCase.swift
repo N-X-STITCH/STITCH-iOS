@@ -15,6 +15,7 @@ protocol MatchUseCase {
     func fetchAllTeachMatch() -> Observable<[Match]>
     func fetchUser(userID: String) -> Observable<User>
     func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])>
+    func createReport(_ report: Report) -> Observable<Void>
 }
 
 final class DefaultMatchUseCase: MatchUseCase {
@@ -59,5 +60,9 @@ final class DefaultMatchUseCase: MatchUseCase {
     
     func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])> {
         return matchRepository.fetchHomeMatch()
+    }
+    
+    func createReport(_ report: Report) -> Observable<Void> {
+        return matchRepository.createReport(report)
     }
 }

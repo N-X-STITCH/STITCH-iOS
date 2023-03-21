@@ -15,4 +15,5 @@ protocol MatchRepository {
     func fetchAllMatch() -> Observable<[Match]>
     func fetchAllTeachMatch() -> Observable<[Match]>
     func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])>
+    func createReport(_ report: Report) -> Observable<Void>
 }

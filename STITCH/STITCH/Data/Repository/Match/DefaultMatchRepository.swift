@@ -68,4 +68,10 @@ final class DefaultMatchRepository: MatchRepository {
                 return (recommendedMatches, newMatches)
             }
     }
+    
+    func createReport(_ report: Report) -> Observable<Void> {
+        let endpoint = MatchAPIEndpoints.createReport(report: report)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map { _ in () }
+    }
 }
