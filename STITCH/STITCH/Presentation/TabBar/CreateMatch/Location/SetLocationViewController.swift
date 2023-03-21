@@ -139,11 +139,15 @@ final class SetLocationViewController: BaseViewController, BackButtonProtocol {
                 return owner.geocoder.rx.reverseGeocodeLocation(location)
             }
             .compactMap { $0.last }
-            .map {
-                LocationInfo(
-                    address: $0.description.components(separatedBy: ",")[1].components(separatedBy: " ")[1...].joined(),
-                    latitude: "\($0.location?.coordinate.latitude ?? 0)",
-                    longitude: "\($0.location?.coordinate.longitude ?? 0)"
+            .map { place in
+                let location = place.description
+                    .components(separatedBy: ",")[1]
+                    .components(separatedBy: " ")[2...]
+                    .joined(separator: " ")
+                return LocationInfo(
+                    address: location,
+                    latitude: "\(place.location?.coordinate.latitude ?? 0)",
+                    longitude: "\(place.location?.coordinate.longitude ?? 0)"
                 )
             }
             
