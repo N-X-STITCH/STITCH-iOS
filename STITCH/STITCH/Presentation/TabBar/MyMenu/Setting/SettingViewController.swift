@@ -90,7 +90,7 @@ final class SettingViewController: BaseViewController, BackButtonProtocol {
     
     private func addAlertActions() {
         let logoutAction = UIAlertAction(title: "로그아웃", style: .default, handler: logoutHandler(_:))
-        let signOutAction = UIAlertAction(title: "탈퇴", style: .default, handler: logoutHandler(_:))
+        let signOutAction = UIAlertAction(title: "탈퇴", style: .default, handler: signOutHandler(_:))
         logoutAlertController.addAction(logoutAction)
         signoutAlertController.addAction(signOutAction)
     }
