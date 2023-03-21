@@ -111,7 +111,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
             fireStorageRepository: fireStorageRepository()
         )
     }
-        
+    
     // MARK: - View Models
     
     func homeViewModel() -> HomeViewModel {
@@ -156,6 +156,16 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     
     func setLocationViewModel() -> SetLocationViewModel {
         return SetLocationViewModel(findLocationUseCase: findLocationUseCase())
+    }
+    
+    // MARK: My Match
+    
+    func myMatchViewModel() -> MyMatchViewModel {
+        return MyMatchViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            matchUseCase: matchUseCase()
+        )
     }
     
     // MARK: My Page
@@ -225,6 +235,12 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
             createMatchViewModel: createMatchViewModel,
             setLocationViewModel: setLocationViewModel()
         )
+    }
+    
+    // MARK: My Match
+    
+    func myMatchViewController() -> MyMatchViewController {
+        return MyMatchViewController(myMatchViewModel: myMatchViewModel())
     }
     
     // MARK: My Page

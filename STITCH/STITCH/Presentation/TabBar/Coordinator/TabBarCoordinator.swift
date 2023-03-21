@@ -21,6 +21,8 @@ protocol TabBarCoordinatorDependencies {
     func selectSportViewController() -> SelectSportViewController
     func createMatchViewController() -> CreateMatchViewController
     func setLocationViewController() -> SetLocationViewController
+    // My Match
+    func myMatchViewController() -> MyMatchViewController
     // My Page
     func myPageViewController() -> MyPageViewController
     func myPageEditViewController() -> MyPageEditViewController
@@ -87,7 +89,7 @@ extension TabBarCoordinator {
         case .category:
             showMatchCategoryViewController(navigationController)
         case .myMatch:
-            navigationController.pushViewController(UIViewController(), animated: true)
+            showMyMatchViewController(navigationController)
         case .myMenu:
             showMyPageViewController(navigationController)
         }
@@ -262,6 +264,25 @@ extension TabBarCoordinator {
     }
 }
 
+// MARK: - My Match
+
+extension TabBarCoordinator {
+    private func showMyMatchViewController(_ navigationController: UINavigationController) {
+        let myMatchViewController = dependencies.myMatchViewController()
+        let coordinatorPublisher = myMatchViewController.coordinatorPublisher.share()
+        
+        coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .created(let match) = event {
+                    owner.showMatchDetailViewController(navigationController, match: match)
+                }
+            }
+            .disposed(by: disposeBag)
+        navigationController.pushViewController(myMatchViewController, animated: true)
+    }
+}
+
 // MARK: - MyPage
 
 extension TabBarCoordinator {
@@ -271,6 +292,14 @@ extension TabBarCoordinator {
         
         addEventWithNav(coordinatorPublisher, showMyPageEditViewController(_:), navigationController, .next)
         addEventWithNav(coordinatorPublisher, showSettingViewController(_:), navigationController, .setting)
+        coordinatorPublisher
+            .withUnretained(self)
+            .subscribe { owner, event in
+                if case .created(let match) = event {
+                    owner.showMatchDetailViewController(navigationController, match: match)
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(myPageViewController, animated: true)
     }
     
