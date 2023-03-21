@@ -18,9 +18,9 @@ final class TopScrollView: UIScrollView {
     
     private let screen: CGRect?
     private let imageViews: [UIImageView] = [
-        UIImageView().then { $0.contentMode = .scaleToFill },
-        UIImageView().then { $0.contentMode = .scaleToFill },
-        UIImageView().then { $0.contentMode = .scaleToFill }
+        UIImageView(image: .homeImage1).then { $0.contentMode = .scaleAspectFill },
+        UIImageView(image: .homeImage1).then { $0.contentMode = .scaleAspectFill },
+        UIImageView(image: .homeImage1).then { $0.contentMode = .scaleAspectFill }
     ]
     
     // MARK: - Initializer
@@ -60,9 +60,9 @@ final class TopScrollView: UIScrollView {
             height: CGFloat(Constant.imageHeight)
         )
         for (index, imageURL) in imageURLs.enumerated() {
-            guard let url = URL(string: imageURL) else { return }
+            // guard let url = URL(string: imageURL) else { return }
             let imageView = imageViews[index]
-            imageView.kf.setImage(with: url)
+            // imageView.kf.setImage(with: url)
             imageView.frame = imageRect
             imageView.frame.origin.x = (screen?.width ?? 0) * CGFloat(index)
             addSubview(imageView)
