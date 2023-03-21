@@ -17,7 +17,7 @@ final class MyPageViewModel: ViewModel {
     
     struct Output {
         let userObservable: Observable<User>
-        let myMatch: Observable<[Match]>
+        let myCreatedMatch: Observable<[Match]>
     }
     
     // MARK: - Properties
@@ -45,15 +45,15 @@ final class MyPageViewModel: ViewModel {
                 return self.userUseCase.fetchLocalUser()
             }
         
-        let myMatch = input.viewWillAppear
+        let myCreatedMatch = input.viewWillAppear
             .flatMap { [weak self] _ -> Observable<[Match]> in
                 guard let self else { return .error(NetworkError.unknownError) }
-                return self.myPageUseCase.myMatch()
+                return self.myPageUseCase.myCreatedMatch()
             }
         
         return Output(
             userObservable: userObservable,
-            myMatch: myMatch
+            myCreatedMatch: myCreatedMatch
         )
     }
 }

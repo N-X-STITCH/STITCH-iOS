@@ -99,6 +99,16 @@ final class MyPageViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        let matchSelected = createdMatchCollectionView.rx.itemSelected.share()
+        
+        matchSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let matchCell = owner.createdMatchCollectionView.cellForItem(at: indexPath) as? MatchCell else { return }
+                owner.coordinatorPublisher.onNext(.created(match: matchCell.match))
+            }
+            .disposed(by: disposeBag)
+        
         let input = MyPageViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable().share())
         
         let output = myPageViewModel.transform(input: input)
@@ -111,11 +121,14 @@ final class MyPageViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.myMatch
+        output.myCreatedMatch
             .asDriver(onErrorJustReturn: [])
             .drive { [weak self] matches in
                 guard let self else { return }
-                self.createdMatchCollectionView.setData(section: .createdMatchList(nickname: "asdasd"), matchInfos: matches.map { MatchInfo(match: $0, owner: User()) })
+                self.createdMatchCollectionView.setData(
+                    section: .createdMatchList(nickname: "asdasd"),
+                    matchInfos: matches.map { MatchInfo(match: $0, owner: User()) }
+                )
             }
             .disposed(by: disposeBag)
     }
