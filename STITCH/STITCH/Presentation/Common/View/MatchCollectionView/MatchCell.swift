@@ -33,6 +33,8 @@ final class MatchCell: BaseCollectionViewCell {
         $0.contentMode = .scaleAspectFill
     }
     
+    private lazy var badgeView = UIView()
+    
     private lazy var classBadgeView = ClassBadge()
     
     private let sportBadgeView = SportBadge(sport: .etc)
@@ -66,6 +68,7 @@ final class MatchCell: BaseCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         matchImageView.image = nil
+        badgeView.removeFromSuperview()
     }
     
     // MARK: - Methods
@@ -107,7 +110,7 @@ final class MatchCell: BaseCollectionViewCell {
         }
     }
     
-    private func setBadgeConstraint(badgeView: UIView) {
+    private func setBadgeConstraint() {
         addSubview(badgeView)
         badgeView.snp.makeConstraints { make in
             make.bottom.equalTo(matchTitleLabel.snp.top).offset(-Constant.padding4)
@@ -119,13 +122,14 @@ final class MatchCell: BaseCollectionViewCell {
         sportBadgeView.set(sport: match.sport)
         switch match.matchType {
         case .teachMatch:
-            let stackView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
+            badgeView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
                 $0.axis = .horizontal
                 $0.spacing = CGFloat(Constant.padding6)
             }
-            setBadgeConstraint(badgeView: stackView)
+            setBadgeConstraint()
         default:
-            setBadgeConstraint(badgeView: sportBadgeView)
+            badgeView = sportBadgeView
+            setBadgeConstraint()
         }
     }
     
