@@ -99,7 +99,7 @@ final class MyPageViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        let input = MyPageViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable())
+        let input = MyPageViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable().share())
         
         let output = myPageViewModel.transform(input: input)
         
@@ -108,6 +108,14 @@ final class MyPageViewController: BaseViewController {
             .drive { [weak self] user in
                 guard let self else { return }
                 self.configure(user: user)
+            }
+            .disposed(by: disposeBag)
+        
+        output.myMatch
+            .asDriver(onErrorJustReturn: [])
+            .drive { [weak self] matches in
+                guard let self else { return }
+                self.createdMatchCollectionView.setData(section: .createdMatchList(nickname: "asdasd"), matchInfos: matches.map { MatchInfo(match: $0, owner: User()) })
             }
             .disposed(by: disposeBag)
     }

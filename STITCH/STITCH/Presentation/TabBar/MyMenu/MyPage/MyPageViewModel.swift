@@ -17,16 +17,22 @@ final class MyPageViewModel: ViewModel {
     
     struct Output {
         let userObservable: Observable<User>
+        let myMatch: Observable<[Match]>
     }
     
     // MARK: - Properties
     
     private let userUseCase: UserUseCase
+    private let myPageUseCase: MyPageUseCase
     
     // MARK: - Initializer
     
-    init(userUseCase: UserUseCase) {
+    init(
+        userUseCase: UserUseCase,
+        myPageUseCase: MyPageUseCase
+    ) {
         self.userUseCase = userUseCase
+        self.myPageUseCase = myPageUseCase
     }
     
     // MARK: - Methods
@@ -39,6 +45,15 @@ final class MyPageViewModel: ViewModel {
                 return self.userUseCase.fetchLocalUser()
             }
         
-        return Output(userObservable: userObservable)
+        let myMatch = input.viewWillAppear
+            .flatMap { [weak self] _ -> Observable<[Match]> in
+                guard let self else { return .error(NetworkError.unknownError) }
+                return self.myPageUseCase.myMatch()
+            }
+        
+        return Output(
+            userObservable: userObservable,
+            myMatch: myMatch
+        )
     }
 }
