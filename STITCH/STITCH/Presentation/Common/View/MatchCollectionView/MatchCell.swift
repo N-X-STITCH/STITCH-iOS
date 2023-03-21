@@ -30,7 +30,7 @@ final class MatchCell: BaseCollectionViewCell {
         $0.image = .defaultLogoImageSmall
         $0.layer.cornerRadius = CGFloat(Constant.radius8)
         $0.clipsToBounds = true
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFill
     }
     
     private lazy var classBadgeView = ClassBadge()
@@ -140,7 +140,10 @@ final class MatchCell: BaseCollectionViewCell {
         }
         peopleCountLabel.text = "\(match.headCount)/\(match.maxHeadCount)명"
         setBadge(match: match)
-        guard let url = URL(string: match.matchImageURL) else { return }
-        matchImageView.kf.setImage(with: url)
+        if let url = URL(string: match.matchImageURL) {
+            matchImageView.kf.setImage(with: url)
+        } else {
+            matchImageView.image = .defaultLogoImageSmall
+        }
     }
 }
