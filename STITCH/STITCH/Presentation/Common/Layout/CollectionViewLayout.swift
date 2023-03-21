@@ -190,6 +190,7 @@ enum MatchCollectionViewLayout {
                     elementKind: MatchCollectionView.sectionHeaderElementKind,
                     alignment: .top
                 )
+                sectionHeader.pinToVisibleBounds = true
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = CGFloat(Constant.padding16)
                 section.boundarySupplementaryItems = [sectionHeader]
