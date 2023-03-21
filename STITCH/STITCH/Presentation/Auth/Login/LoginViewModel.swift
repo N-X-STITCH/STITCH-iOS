@@ -50,7 +50,11 @@ final class LoginViewModel: ViewModel {
         let isSign = signupedUser
             .flatMap { [weak self] user in
                 guard let self else { return Observable<Bool>.just(true).asObservable() }
-                return self.userUseCase.save(user: user).map { true }
+                if user.id.isEmpty {
+                    return Single<Bool>.just(false).asObservable()
+                } else {
+                    return self.userUseCase.save(user: user).map { true }
+                }
             }
         
         return Output(signupedUser: isSign)
