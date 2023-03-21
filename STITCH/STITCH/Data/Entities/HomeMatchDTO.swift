@@ -8,6 +8,6 @@
 import Foundation
 
 struct HomeMatchDTO: Decodable {
-    let recommendedMatches: [MatchDTO]
+    let recommendedMatches: [MatchDetailDTO]
     let newMatches: [MatchDTO]
 }

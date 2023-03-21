@@ -58,15 +58,38 @@ final class DefaultMatchRepository: MatchRepository {
             .map { $0.map { Match(matchDTO: $0) } }
     }
     
-    func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])> {
+    func fetchHomeMatch() -> Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])> {
         let endpoint = MatchAPIEndpoints.fetchHomeMatch()
         return urlSessionNetworkService.request(with: endpoint)
             .map(HomeMatchDTO.self)
             .map {
-                let recommendedMatches = $0.recommendedMatches.map { Match(matchDTO: $0) }
+                let recommendedMatches = $0.recommendedMatches.map {
+                    MatchDetailDTO(match: $0.match, hostMember: $0.hostMember, joinedMembers: $0.joinedMembers)
+                }
+                let recommendedMatchDetails = recommendedMatches.map {
+                    MatchDetail(matchDTO: $0.match, hostMemberDTO: $0.hostMember ?? UserDTO(), joinedMembersDTO: $0.joinedMembers)
+                }
                 let newMatches = $0.newMatches.map { Match(matchDTO: $0) }
-                return (recommendedMatches, newMatches)
+                return (recommendedMatchDetails, newMatches)
             }
+    }
+    
+    func deleteMatch(matchID: String) -> Observable<Void> {
+        let endpoint = MatchAPIEndpoints.deleteMatch(matchID: matchID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map { _ in () }
+    }
+    
+    func joinMatch(userID: String, matchID: String) -> Observable<Void> {
+        let endpoint = MatchAPIEndpoints.joinMatch(userID: userID, joinMatchDTO: JoinMatchDTO(id: matchID))
+        return urlSessionNetworkService.request(with: endpoint)
+            .map { _ in () }
+    }
+    
+    func cancelJoinMatch(userID: String, matchID: String) -> Observable<Void> {
+        let endpoint = MatchAPIEndpoints.cancelJoinMatch(userID: userID, matchID: matchID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map { _ in () }
     }
     
     func createReport(_ report: Report) -> Observable<Void> {

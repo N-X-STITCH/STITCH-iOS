@@ -199,6 +199,11 @@
 		D8CE789C29C6FF0E0028F2AE /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789B29C6FF0E0028F2AE /* UserRepository.swift */; };
 		D8CE789F29C6FF470028F2AE /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789E29C6FF470028F2AE /* DefaultUserRepository.swift */; };
 		D8E1113029A3222500A3CE6A /* FindLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */; };
+		D8FFC5F229C9CACC008B4137 /* JoinMatchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5F129C9CACC008B4137 /* JoinMatchDTO.swift */; };
+		D8FFC5F429C9CB01008B4137 /* UserMatchJoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5F329C9CB01008B4137 /* UserMatchJoin.swift */; };
+		D8FFC5F629C9DE5F008B4137 /* MatchDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5F529C9DE5F008B4137 /* MatchDetail.swift */; };
+		D8FFC5FA29C9F5A8008B4137 /* MyMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5F929C9F5A8008B4137 /* MyMatchViewController.swift */; };
+		D8FFC5FC29C9F5AE008B4137 /* MyMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5FB29C9F5AE008B4137 /* MyMatchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -383,6 +388,11 @@
 		D8CE789B29C6FF0E0028F2AE /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		D8CE789E29C6FF470028F2AE /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		D8E1112F29A3222500A3CE6A /* FindLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewController.swift; sourceTree = "<group>"; };
+		D8FFC5F129C9CACC008B4137 /* JoinMatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinMatchDTO.swift; sourceTree = "<group>"; };
+		D8FFC5F329C9CB01008B4137 /* UserMatchJoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMatchJoin.swift; sourceTree = "<group>"; };
+		D8FFC5F529C9DE5F008B4137 /* MatchDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetail.swift; sourceTree = "<group>"; };
+		D8FFC5F929C9F5A8008B4137 /* MyMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMatchViewController.swift; sourceTree = "<group>"; };
+		D8FFC5FB29C9F5AE008B4137 /* MyMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMatchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -850,6 +860,7 @@
 				D875371E29C8A2F600CAF5EA /* HomeMatchDTO.swift */,
 				D875372029C8C35E00CAF5EA /* MatchDetailDTO.swift */,
 				D875372229C8CEA100CAF5EA /* MyPageDTO.swift */,
+				D8FFC5F129C9CACC008B4137 /* JoinMatchDTO.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -892,11 +903,12 @@
 			children = (
 				D860B5FD299C948400966683 /* TabBarPage.swift */,
 				D860B5FF299C955100966683 /* Coordinator */,
-				D8795E3D29C0111E004856EF /* MatchCategory */,
 				D850FC7329B4CB4200DC08C6 /* CreateMatch */,
-				D8455A1229BB7659006AF28B /* MatchDetail */,
 				D868BA6829AE3EFE00E80012 /* Home */,
+				D8795E3D29C0111E004856EF /* MatchCategory */,
+				D8455A1229BB7659006AF28B /* MatchDetail */,
 				D868BA6A29AE3F0A00E80012 /* MyMenu */,
+				D8FFC5F829C9F53D008B4137 /* MyMatchTab */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -1158,12 +1170,14 @@
 			isa = PBXGroup;
 			children = (
 				D868BA9929B07BE300E80012 /* Match.swift */,
+				D8FFC5F529C9DE5F008B4137 /* MatchDetail.swift */,
 				D868BA5A29AC908E00E80012 /* LoginInfo.swift */,
 				D868BA5F29ACBE0800E80012 /* User.swift */,
 				D868BA5529AC88EE00E80012 /* SocialLogin.swift */,
 				D805FDD529A5B2980007E63D /* Sport.swift */,
 				D868BA8C29B05F8600E80012 /* MatchType.swift */,
 				D875372429C98E6C00CAF5EA /* Report.swift */,
+				D8FFC5F329C9CB01008B4137 /* UserMatchJoin.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1251,6 +1265,15 @@
 				D8CE789E29C6FF470028F2AE /* DefaultUserRepository.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		D8FFC5F829C9F53D008B4137 /* MyMatchTab */ = {
+			isa = PBXGroup;
+			children = (
+				D8FFC5F929C9F5A8008B4137 /* MyMatchViewController.swift */,
+				D8FFC5FB29C9F5AE008B4137 /* MyMatchViewModel.swift */,
+			);
+			path = MyMatchTab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1366,6 +1389,7 @@
 				D8795E3629BF173E004856EF /* SearchPlaceView.swift in Sources */,
 				D86B254F29A742620041EB00 /* NicknameValidation.swift in Sources */,
 				D860B606299CE58400966683 /* NetworkConfig.swift in Sources */,
+				D8FFC5F629C9DE5F008B4137 /* MatchDetail.swift in Sources */,
 				D820258829A21E2C00892CE8 /* DefaultToolbar.swift in Sources */,
 				D828DA5229BDBD2100B598FE /* SetLocationViewModel.swift in Sources */,
 				D8599ABE299E365700633192 /* UIImage+.swift in Sources */,
@@ -1410,6 +1434,7 @@
 				D8455A1629BB76C4006AF28B /* MatchDetailViewModel.swift in Sources */,
 				D8795E3C29BF3B3D004856EF /* LocationInfo.swift in Sources */,
 				D8455A0429BB301B006AF28B /* MyPageViewModel.swift in Sources */,
+				D8FFC5F229C9CACC008B4137 /* JoinMatchDTO.swift in Sources */,
 				D868BA9A29B07BE300E80012 /* Match.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
 				D850FC8F29B5ADFC00DC08C6 /* CreateMatchViewController.swift in Sources */,
@@ -1431,6 +1456,7 @@
 				D868BA6D29AE3F4700E80012 /* HomeViewModel.swift in Sources */,
 				D84559FC29BB13B4006AF28B /* SettingViewController.swift in Sources */,
 				D860B5D8299BD9D400966683 /* String+Localized.swift in Sources */,
+				D8FFC5FC29C9F5AE008B4137 /* MyMatchViewModel.swift in Sources */,
 				D8CE789729C6CCD10028F2AE /* Date+String.swift in Sources */,
 				D875372129C8C35E00CAF5EA /* MatchDetailDTO.swift in Sources */,
 				D85F1D6429C053D9007E0521 /* DefaultUserStorage.swift in Sources */,
@@ -1482,10 +1508,12 @@
 				D863D95A29C071B4006E99B6 /* Observable+Data.swift in Sources */,
 				D868BA4029A8FAA400E80012 /* SignupViewModel.swift in Sources */,
 				D85E1BE429C2E4E700AF1FCA /* FireStorageRepository.swift in Sources */,
+				D8FFC5F429C9CB01008B4137 /* UserMatchJoin.swift in Sources */,
 				D868BA7629B04D2600E80012 /* TopScrollView.swift in Sources */,
 				D860B5F3299C8DB000966683 /* BaseViewController.swift in Sources */,
 				D868BA9629B070B000E80012 /* MatchInfo.swift in Sources */,
 				D868BA3A29A8A32C00E80012 /* FindLocationUseCase.swift in Sources */,
+				D8FFC5FA29C9F5A8008B4137 /* MyMatchViewController.swift in Sources */,
 				D868BA7A29B051CD00E80012 /* BaseCollectionReusableView.swift in Sources */,
 				D875371729C85E2B00CAF5EA /* MyPageUseCase.swift in Sources */,
 				D863D97529C27AC0006E99B6 /* NearAddressRepository.swift in Sources */,

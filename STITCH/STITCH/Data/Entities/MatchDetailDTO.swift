@@ -9,5 +9,6 @@ import Foundation
 
 struct MatchDetailDTO: Decodable {
     let match: MatchDTO
+    let hostMember: UserDTO?
     let joinedMembers: [UserDTO]
 }

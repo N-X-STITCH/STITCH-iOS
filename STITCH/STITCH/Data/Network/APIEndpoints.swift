@@ -104,8 +104,21 @@ struct MatchAPIEndpoints {
         )
     }
     
-    // 매치 참여
-    // 매치 참여 취소하기
+    static func joinMatch(userID: String, joinMatchDTO: JoinMatchDTO) -> Endpoint {
+        return Endpoint(
+            path: "match/join/id=\(userID)",
+            method: .PUT,
+            bodyParameters: joinMatchDTO.toDictionary ?? [:]
+        )
+    }
+    
+    static func cancelJoinMatch(userID: String, matchID: String) -> Endpoint {
+        return Endpoint(
+            path: "",
+            method: .DELETE,
+            queryParameters: ["memberId": userID, "matchId": matchID]
+        )
+    }
     
     static func createReport(report: Report) -> Endpoint {
         return Endpoint(

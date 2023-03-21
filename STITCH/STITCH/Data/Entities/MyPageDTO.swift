@@ -8,6 +8,6 @@
 import Foundation
 
 struct MyPageDTO: Decodable {
-    let member: User
+    let member: UserDTO
     let myMatches: [MatchDTO]
 }

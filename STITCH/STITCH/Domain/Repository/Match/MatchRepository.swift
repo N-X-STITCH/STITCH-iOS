@@ -14,6 +14,9 @@ protocol MatchRepository {
     func fetchMatch(matchID: String) -> Observable<MatchInfo>
     func fetchAllMatch() -> Observable<[Match]>
     func fetchAllTeachMatch() -> Observable<[Match]>
-    func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])>
+    func fetchHomeMatch() -> Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])>
+    func deleteMatch(matchID: String) -> Observable<Void>
+    func joinMatch(userID: String, matchID: String) -> Observable<Void>
+    func cancelJoinMatch(userID: String, matchID: String) -> Observable<Void>
     func createReport(_ report: Report) -> Observable<Void>
 }

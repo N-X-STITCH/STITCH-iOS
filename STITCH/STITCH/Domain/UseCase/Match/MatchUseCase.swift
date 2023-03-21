@@ -14,7 +14,10 @@ protocol MatchUseCase {
     func fetchAllMatch() -> Observable<[Match]>
     func fetchAllTeachMatch() -> Observable<[Match]>
     func fetchUser(userID: String) -> Observable<User>
-    func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])>
+    func fetchHomeMatch() -> Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])>
+    func deleteMatch(matchID: String) -> Observable<Void>
+    func joinMatch(userID: String, matchID: String) -> Observable<Void>
+    func cancelJoinMatch(userID: String, matchID: String) -> Observable<Void>
     func createReport(_ report: Report) -> Observable<Void>
 }
 
@@ -58,8 +61,20 @@ final class DefaultMatchUseCase: MatchUseCase {
         return userRepository.fetchUser(userID: userID)
     }
     
-    func fetchHomeMatch() -> Observable<(recommendedMatches: [Match], newMatches: [Match])> {
+    func fetchHomeMatch() -> Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])> {
         return matchRepository.fetchHomeMatch()
+    }
+    
+    func deleteMatch(matchID: String) -> Observable<Void> {
+        return matchRepository.deleteMatch(matchID: matchID)
+    }
+    
+    func joinMatch(userID: String, matchID: String) -> Observable<Void> {
+        return matchRepository.joinMatch(userID: userID, matchID: matchID)
+    }
+    
+    func cancelJoinMatch(userID: String, matchID: String) -> Observable<Void> {
+        return matchRepository.cancelJoinMatch(userID: userID, matchID: matchID)
     }
     
     func createReport(_ report: Report) -> Observable<Void> {
