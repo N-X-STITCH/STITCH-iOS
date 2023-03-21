@@ -38,13 +38,13 @@ final class MatchCell: BaseCollectionViewCell {
     private let sportBadgeView = SportBadge(sport: .etc)
     
     private let matchTitleLabel = UILabel().then {
-        $0.text = "이번주 토요일에 탁구내기 한번?"
+        $0.text = ""
         $0.font = .Subhead_16
         $0.textColor = .gray02
     }
     
     private let matchInfoLabel = UILabel().then {
-        $0.text = "성동구 | 02.02(월) 오후 3:00"
+        $0.text = ""
         $0.font = .Caption1_12
         $0.textColor = .gray04
     }
@@ -54,7 +54,7 @@ final class MatchCell: BaseCollectionViewCell {
     }
     
     private let peopleCountLabel = UILabel().then {
-        $0.text = "3/4명"
+        $0.text = ""
         $0.font = .Caption2_10
         $0.textColor = .gray04
     }
@@ -136,7 +136,14 @@ final class MatchCell: BaseCollectionViewCell {
         if match.locationInfo.address == "" || match.locationInfo.address == " " {
             matchInfoLabel.text = match.startDate.toDisplay()
         } else {
-            matchInfoLabel.text = "\(match.locationInfo.address) | \(match.startDate.toDisplay())"
+            let addresses = match.locationInfo.address.components(separatedBy: " ")
+            if 2 <= addresses.count {
+                matchInfoLabel.text = "\(addresses[1]) | \(match.startDate.toDisplay())"
+            } else if addresses.count < 2 {
+                matchInfoLabel.text = "\(match.locationInfo.address) | \(match.startDate.toDisplay())"
+            } else {
+                matchInfoLabel.text = match.startDate.toDisplay()
+            }
         }
         peopleCountLabel.text = "\(match.headCount)/\(match.maxHeadCount)명"
         setBadge(match: match)
