@@ -14,6 +14,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         let userDefaultsService: UserDefaultsService
         let naverCloudAPIService: URLSessionNetworkService
         let naverOpenAPIService: URLSessionNetworkService
+        let appleIDService: URLSessionNetworkService
         let userUseCase: UserUseCase
     }
     
@@ -53,6 +54,10 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return DefaultUserRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
     }
     
+    func appleLoginRepository() -> AppleLoginRepository {
+        return DefaultAppleLoginRepository(appleIDService: dependencies.appleIDService)
+    }
+    
     // MARK: Match
     
     func matchRepository() -> MatchRepository {
@@ -76,6 +81,12 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     }
     
     // MARK: - Use Cases
+    
+    // MARK: Auth
+    
+    func appleLoginUseCase() -> AppleLoginUseCase {
+        return DefaultAppleLoginUseCase(appleLoginRepository: appleLoginRepository())
+    }
     
     // MARK: Home
     
@@ -189,7 +200,11 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     }
     
     func settingViewModel() -> SettingViewModel {
-        return SettingViewModel(userUseCase: userUseCase, myPageUseCase: myPageUseCase())
+        return SettingViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            appleLoginUseCase: appleLoginUseCase()
+        )
     }
     
     // MARK: - ViewControllers
