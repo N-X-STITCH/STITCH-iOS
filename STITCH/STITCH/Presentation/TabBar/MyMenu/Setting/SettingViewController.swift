@@ -9,6 +9,9 @@ import UIKit
 import MessageUI
 import SafariServices
 
+import RxCocoa
+import RxSwift
+
 final class SettingViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
@@ -49,6 +52,8 @@ final class SettingViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: Properties
     
+    private lazy var appleLoginService: SocialLoginService = AppleLoginService(self)
+    
     private let settingViewModel: SettingViewModel
     
     // MARK: - Initializer
@@ -76,6 +81,11 @@ final class SettingViewController: BaseViewController, BackButtonProtocol {
     }
     
     override func bind() {
+        settingViewModel.loginTypeObservable()
+            .subscribe { loginType in
+                print("loginType")
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
@@ -107,6 +117,34 @@ final class SettingViewController: BaseViewController, BackButtonProtocol {
     }
     
     private func signOutHandler(_ action: UIAlertAction) {
+        if settingViewModel.loginType == SocialLogin.apple.rawValue {
+            revokeAppleLogin()
+        } else {
+            signOut()
+        }
+    }
+    
+    private func revokeAppleLogin() {
+        let revokeResult = appleLoginService.login()
+            .flatMap { [weak self] loginInfo -> Observable<Void> in
+                guard let self else { return .error(SocialLoginError.signout) }
+                guard let authorizationCode = loginInfo.authorizationCode else { return .error(SocialLoginError.authorizationCode) }
+                return self.settingViewModel.revokeToken(authorizationCode: authorizationCode)
+            }
+            .debug()
+        
+        revokeResult
+            .withLatestFrom(settingViewModel.signOutResult())
+            .withUnretained(self)
+            .subscribe (onNext: { owner, _ in
+                owner.coordinatorPublisher.onNext(.showLogin)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func signOut() {
         settingViewModel.signOutResult()
             .withUnretained(self)
             .subscribe (onNext: { owner, _ in
