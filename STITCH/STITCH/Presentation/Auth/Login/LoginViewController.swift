@@ -141,6 +141,13 @@ final class LoginViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        loginOutput.saveSocialLoginType
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                print("로그인 타입 저장됨")
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureUI() {

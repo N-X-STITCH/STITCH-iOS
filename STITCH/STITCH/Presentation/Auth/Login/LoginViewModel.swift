@@ -17,6 +17,7 @@ final class LoginViewModel: ViewModel {
     
     struct Output {
         let signupedUser: Observable<Bool>
+        let saveSocialLoginType: Observable<Void>
     }
     
     // MARK: - Properties
@@ -39,12 +40,21 @@ final class LoginViewModel: ViewModel {
     // MARK: - Methods
     
     func transform(input: Input) -> Output {
-        let signupedUser = input.loginInfo
+        let loginInfo = input.loginInfo.share()
+        
+        let signupedUser = loginInfo
             .withUnretained(self)
             .flatMap { owner, loginInfo in
                 print("보내는 아이디")
                 print(loginInfo)
                 return owner.signupUseCase.isSignuped(userID: loginInfo.id)
+            }
+        
+        let saveSocialLoginType = loginInfo
+            .withUnretained(self)
+            .flatMap { owner, loginInfo -> Observable<Void> in
+                guard let socialLoginType = loginInfo.loginType else { return .error(SocialLoginError.unknown) }
+                return owner.userUseCase.save(socialLogin: socialLoginType)
             }
         
         let isSign = signupedUser
@@ -57,6 +67,6 @@ final class LoginViewModel: ViewModel {
                 }
             }
         
-        return Output(signupedUser: isSign)
+        return Output(signupedUser: isSign, saveSocialLoginType: saveSocialLoginType)
     }
 }
