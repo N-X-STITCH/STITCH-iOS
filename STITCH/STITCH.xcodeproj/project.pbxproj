@@ -110,7 +110,7 @@
 		D860B5FC299C912B00966683 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5FB299C912B00966683 /* AuthCoordinator.swift */; };
 		D860B5FE299C948400966683 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B5FD299C948400966683 /* TabBarPage.swift */; };
 		D860B601299C956200966683 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B600299C956200966683 /* TabBarCoordinator.swift */; };
-		D860B604299CE45600966683 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B603299CE45600966683 /* EndPoint.swift */; };
+		D860B604299CE45600966683 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B603299CE45600966683 /* Endpoint.swift */; };
 		D860B606299CE58400966683 /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B605299CE58400966683 /* NetworkConfig.swift */; };
 		D860B609299CE71800966683 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B608299CE71800966683 /* NetworkError.swift */; };
 		D860B60B299CE76800966683 /* Encodable+toDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B60A299CE76800966683 /* Encodable+toDictionary.swift */; };
@@ -204,6 +204,12 @@
 		D8FFC5F629C9DE5F008B4137 /* MatchDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5F529C9DE5F008B4137 /* MatchDetail.swift */; };
 		D8FFC5FA29C9F5A8008B4137 /* MyMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5F929C9F5A8008B4137 /* MyMatchViewController.swift */; };
 		D8FFC5FC29C9F5AE008B4137 /* MyMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC5FB29C9F5AE008B4137 /* MyMatchViewModel.swift */; };
+		D8FFC60B29CA2EA6008B4137 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = D8FFC60A29CA2EA6008B4137 /* SwiftJWT */; };
+		D8FFC60D29CA2EE5008B4137 /* AppleLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC60C29CA2EE5008B4137 /* AppleLoginUseCase.swift */; };
+		D8FFC60F29CA2EFE008B4137 /* AppleLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC60E29CA2EFE008B4137 /* AppleLoginRepository.swift */; };
+		D8FFC61129CA30DD008B4137 /* DefaultAppleLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC61029CA30DD008B4137 /* DefaultAppleLoginRepository.swift */; };
+		D8FFC61529CA3811008B4137 /* RefreshTokenResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC61429CA3811008B4137 /* RefreshTokenResponseDTO.swift */; };
+		D8FFC61929CAAA19008B4137 /* AppleEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFC61829CAAA19008B4137 /* AppleEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -302,7 +308,7 @@
 		D860B5FB299C912B00966683 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		D860B5FD299C948400966683 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
 		D860B600299C956200966683 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
-		D860B603299CE45600966683 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		D860B603299CE45600966683 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D860B605299CE58400966683 /* NetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		D860B608299CE71800966683 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D860B60A299CE76800966683 /* Encodable+toDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+toDictionary.swift"; sourceTree = "<group>"; };
@@ -393,6 +399,11 @@
 		D8FFC5F529C9DE5F008B4137 /* MatchDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetail.swift; sourceTree = "<group>"; };
 		D8FFC5F929C9F5A8008B4137 /* MyMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMatchViewController.swift; sourceTree = "<group>"; };
 		D8FFC5FB29C9F5AE008B4137 /* MyMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMatchViewModel.swift; sourceTree = "<group>"; };
+		D8FFC60C29CA2EE5008B4137 /* AppleLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginUseCase.swift; sourceTree = "<group>"; };
+		D8FFC60E29CA2EFE008B4137 /* AppleLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRepository.swift; sourceTree = "<group>"; };
+		D8FFC61029CA30DD008B4137 /* DefaultAppleLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppleLoginRepository.swift; sourceTree = "<group>"; };
+		D8FFC61429CA3811008B4137 /* RefreshTokenResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenResponseDTO.swift; sourceTree = "<group>"; };
+		D8FFC61829CAAA19008B4137 /* AppleEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,6 +421,7 @@
 				D85AA33929B478BA004B0A8B /* Lottie in Frameworks */,
 				D85E1BED29C2E79F00AF1FCA /* FirebaseRemoteConfig in Frameworks */,
 				D868BA4629AB172F00E80012 /* RxKakaoSDKCommon in Frameworks */,
+				D8FFC60B29CA2EA6008B4137 /* SwiftJWT in Frameworks */,
 				D81115CE29C2FB0000124590 /* RxCocoa in Frameworks */,
 				D868BA4429AB172F00E80012 /* RxKakaoSDKAuth in Frameworks */,
 				D81115D029C2FB0000124590 /* RxSwift in Frameworks */,
@@ -861,6 +873,7 @@
 				D875372029C8C35E00CAF5EA /* MatchDetailDTO.swift */,
 				D875372229C8CEA100CAF5EA /* MyPageDTO.swift */,
 				D8FFC5F129C9CACC008B4137 /* JoinMatchDTO.swift */,
+				D8FFC61429CA3811008B4137 /* RefreshTokenResponseDTO.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -998,7 +1011,8 @@
 		D860B602299CE43D00966683 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				D860B603299CE45600966683 /* EndPoint.swift */,
+				D860B603299CE45600966683 /* Endpoint.swift */,
+				D8FFC61829CAAA19008B4137 /* AppleEndpoint.swift */,
 				D860B605299CE58400966683 /* NetworkConfig.swift */,
 				D868BAAE29B31C3000E80012 /* APIEndpoints.swift */,
 				D860B60E299CE9F300966683 /* NetworkService.swift */,
@@ -1032,6 +1046,7 @@
 				D85F1D6829C05958007E0521 /* UserUseCase.swift */,
 				D860B61A299CF3F100966683 /* SignupUseCase.swift */,
 				D800291529A600A300F75378 /* NicknameUseCase.swift */,
+				D8FFC60C29CA2EE5008B4137 /* AppleLoginUseCase.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1040,6 +1055,7 @@
 			isa = PBXGroup;
 			children = (
 				D860B61E299D199A00966683 /* SignupRepository.swift */,
+				D8FFC60E29CA2EFE008B4137 /* AppleLoginRepository.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1048,6 +1064,7 @@
 			isa = PBXGroup;
 			children = (
 				D860B621299D19DA00966683 /* DefaultSignupRepository.swift */,
+				D8FFC61029CA30DD008B4137 /* DefaultAppleLoginRepository.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1308,6 +1325,7 @@
 				D85E1BEE29C2E79F00AF1FCA /* FirebaseStorage */,
 				D81115CD29C2FB0000124590 /* RxCocoa */,
 				D81115CF29C2FB0000124590 /* RxSwift */,
+				D8FFC60A29CA2EA6008B4137 /* SwiftJWT */,
 			);
 			productName = STITCH;
 			productReference = D857612D299BCFF800F1AFEB /* STITCH.app */;
@@ -1348,6 +1366,7 @@
 				D828DA4A29BDB84B00B598FE /* XCRemoteSwiftPackageReference "NMapsMap-SPM" */,
 				D85E1BE729C2E79F00AF1FCA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D81115CC29C2FB0000124590 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				D8FFC60929CA2EA5008B4137 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
 			);
 			productRefGroup = D857612E299BCFF800F1AFEB /* Products */;
 			projectDirPath = "";
@@ -1402,7 +1421,7 @@
 				D868BA6F29AE3F4E00E80012 /* HomeViewController.swift in Sources */,
 				D84559FA29BB1326006AF28B /* CreatedMatchViewController.swift in Sources */,
 				D820258C29A220CC00892CE8 /* DefaultProfileImageView.swift in Sources */,
-				D860B604299CE45600966683 /* EndPoint.swift in Sources */,
+				D860B604299CE45600966683 /* Endpoint.swift in Sources */,
 				D863D97929C28593006E99B6 /* ReverseGeoCodingResultDTO.swift in Sources */,
 				D87BD88C299E77C7003A1B76 /* DefaultTextField.swift in Sources */,
 				D8E1113029A3222500A3CE6A /* FindLocationViewController.swift in Sources */,
@@ -1438,6 +1457,7 @@
 				D868BA9A29B07BE300E80012 /* Match.swift in Sources */,
 				D860B60F299CE9F300966683 /* NetworkService.swift in Sources */,
 				D850FC8F29B5ADFC00DC08C6 /* CreateMatchViewController.swift in Sources */,
+				D8FFC60D29CA2EE5008B4137 /* AppleLoginUseCase.swift in Sources */,
 				D82025A429A24AE900892CE8 /* CompleteSignupViewController.swift in Sources */,
 				D8038B3829C416DB006C1BF8 /* DefaultSearchLocationRepository.swift in Sources */,
 				D860B60D299CE7AC00966683 /* Dictionary+queryString.swift in Sources */,
@@ -1465,6 +1485,7 @@
 				D81115D629C310C000124590 /* MatchScheduleInfoView.swift in Sources */,
 				D868BA5229AC871E00E80012 /* AppleLoginService.swift in Sources */,
 				D850FC9829B5D4A000DC08C6 /* UIView+.swift in Sources */,
+				D8FFC60F29CA2EFE008B4137 /* AppleLoginRepository.swift in Sources */,
 				D868BAA129B0EADC00E80012 /* BaseView.swift in Sources */,
 				D860B622299D19DA00966683 /* DefaultSignupRepository.swift in Sources */,
 				D868BA3829A8A14200E80012 /* FindLocationViewModel.swift in Sources */,
@@ -1523,6 +1544,7 @@
 				D850FC8629B4D3D000DC08C6 /* DefaultMatchRepository.swift in Sources */,
 				D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */,
 				D860B5FE299C948400966683 /* TabBarPage.swift in Sources */,
+				D8FFC61529CA3811008B4137 /* RefreshTokenResponseDTO.swift in Sources */,
 				D875371F29C8A2F600CAF5EA /* HomeMatchDTO.swift in Sources */,
 				D805FDD629A5B2980007E63D /* Sport.swift in Sources */,
 				D868BA7829B0516600E80012 /* PopularMatchCollectionView.swift in Sources */,
@@ -1534,6 +1556,7 @@
 				D8CE789F29C6FF470028F2AE /* DefaultUserRepository.swift in Sources */,
 				D860B617299CF1B000966683 /* LoginViewModel.swift in Sources */,
 				D868BA7E29B0525700E80012 /* MatchHeaderView.swift in Sources */,
+				D8FFC61129CA30DD008B4137 /* DefaultAppleLoginRepository.swift in Sources */,
 				D863D96829C0C155006E99B6 /* LocationViewModel.swift in Sources */,
 				D8795E3929BF3AD8004856EF /* LocationResultCell.swift in Sources */,
 				D863D97B29C2A3BE006E99B6 /* LocationError.swift in Sources */,
@@ -1552,6 +1575,7 @@
 				D84559F629BB1312006AF28B /* MyPageViewController.swift in Sources */,
 				D82025A229A24AC300892CE8 /* InterestedInSportsViewController.swift in Sources */,
 				D8455A0829BB302C006AF28B /* CreatedMatchViewModel.swift in Sources */,
+				D8FFC61929CAAA19008B4137 /* AppleEndpoint.swift in Sources */,
 				D860B61B299CF3F100966683 /* SignupUseCase.swift in Sources */,
 				D805FDDC29A5B4AD0007E63D /* SportsCollectionView.swift in Sources */,
 				D850FC8329B4D38100DC08C6 /* CreateMatchUseCase.swift in Sources */,
@@ -1849,6 +1873,14 @@
 				kind = branch;
 			};
 		};
+		D8FFC60929CA2EA5008B4137 /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1926,6 +1958,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D868BA9B29B0901F00E80012 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		D8FFC60A29CA2EA6008B4137 /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8FFC60929CA2EA5008B4137 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
