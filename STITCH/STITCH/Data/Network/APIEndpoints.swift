@@ -60,6 +60,36 @@ struct UserAPIEndpoints {
     }
 }
 
+struct AuthAPIEndpoints {
+    static func refreshToken(authorizationCode: String, clientSecret: String) -> AppleEndpoint {
+        return AppleEndpoint(
+            path: "auth/token",
+            method: .POST,
+            headerParameters: ["Content-Type": "application/x-www-form-urlencoded"],
+            bodyParameters: [
+                "code": authorizationCode,
+                "client_id": "com.neuli.STITCH",
+                "client_secret": clientSecret,
+                "grant_type": "authorization_code"
+            ]
+        )
+    }
+    
+    static func revokeToken(refreshToken: String, clientSecret: String) -> AppleEndpoint {
+        return AppleEndpoint(
+            path: "auth/revoke",
+            method: .POST,
+            headerParameters: ["Content-Type": "application/x-www-form-urlencoded"],
+            bodyParameters: [
+                "token": refreshToken,
+                "client_id": Bundle.main.bundleIdentifier!,
+                "client_secret": clientSecret,
+                "grant_type": "refresh_token"
+            ]
+        )
+    }
+}
+
 struct MatchAPIEndpoints {
     static func createMatch(matchDTO: MatchDTO) -> Endpoint {
         return Endpoint(
