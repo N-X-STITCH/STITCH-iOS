@@ -216,12 +216,14 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         var content = cell.defaultContentConfiguration()
-        var background = cell.defaultBackgroundConfiguration()
+        
         content.attributedText = makeTableViewCellTitle(indexPath)
-        background.backgroundColor = .background
         cell.contentConfiguration = content
-        cell.backgroundConfiguration = background
         cell.accessoryType = .disclosureIndicator
+        
+        var backgroundConfig = UIBackgroundConfiguration.listPlainCell()
+        backgroundConfig.backgroundColor = .background
+        cell.backgroundConfiguration = backgroundConfig
         return cell
     }
     
