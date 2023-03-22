@@ -21,6 +21,7 @@ final class HomeViewModel: ViewModel {
     struct Output {
         let userObservable: Observable<User>
         let homeMatches: Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])>
+        let refreshHomeMatches: Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])>
     }
     
     // MARK: - Properties
@@ -49,13 +50,17 @@ final class HomeViewModel: ViewModel {
     // MARK: - Methods
     
     func transform(input: Input) -> Output {
-        let callHomeMatches = Observable.of(input.viewWillAppear, input.refreshControl).merge()
         
-        let homeMatchesObservable = matchUseCase.fetchHomeMatch().share()
+        let refreshHomeMatches = input.refreshControl
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                return owner.matchUseCase.fetchHomeMatch()
+            }
         
-        let homeMatches = callHomeMatches
-            .flatMap { _ in
-                return homeMatchesObservable
+        let homeMatches = input.viewWillAppear
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                return owner.matchUseCase.fetchHomeMatch()
             }
         
         let userObservable = input.viewWillAppear
@@ -71,7 +76,8 @@ final class HomeViewModel: ViewModel {
 
         return Output(
             userObservable: userObservable,
-            homeMatches: homeMatches
+            homeMatches: homeMatches,
+            refreshHomeMatches: refreshHomeMatches
         )
     }
 }

@@ -149,6 +149,15 @@ final class HomeViewController: BaseViewController {
                 owner.configure(matches: matches)
             }
             .disposed(by: disposeBag)
+        
+        output.refreshHomeMatches
+            .asDriver(onErrorJustReturn: ([], []))
+            .drive { [weak self] matches in
+                guard let owner = self else { return }
+                owner.refreshControl.endRefreshing()
+                owner.configure(matches: matches)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureNavigation() {
