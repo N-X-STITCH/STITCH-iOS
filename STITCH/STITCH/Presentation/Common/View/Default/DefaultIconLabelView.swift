@@ -16,7 +16,7 @@ final class DefaultIconLabelView: UIView {
     }
     
     private let iconImageView = UIImageView()
-    let textLabel = DefaultTitleLabel(text: "", textColor: .gray02, font: .Subhead_16)
+    let textLabel = DefaultTitleLabel(text: "", textColor: .gray02, font: .Body2_14)
     
     init(
         icon: UIImage?,

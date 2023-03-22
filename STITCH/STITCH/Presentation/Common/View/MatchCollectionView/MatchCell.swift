@@ -15,6 +15,7 @@ final class MatchCell: BaseCollectionViewCell {
         static let padding4 = 4
         static let padding6 = 6
         static let padding12 = 12
+        static let padding16 = 16
         static let padding24 = 24
         static let radius8 = 8
         static let imageWidth = 88
@@ -29,21 +30,23 @@ final class MatchCell: BaseCollectionViewCell {
         $0.image = .defaultLogoImageSmall
         $0.layer.cornerRadius = CGFloat(Constant.radius8)
         $0.clipsToBounds = true
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFill
     }
+    
+    private lazy var badgeView = UIView()
     
     private lazy var classBadgeView = ClassBadge()
     
     private let sportBadgeView = SportBadge(sport: .etc)
     
     private let matchTitleLabel = UILabel().then {
-        $0.text = "이번주 토요일에 탁구내기 한번?"
+        $0.text = ""
         $0.font = .Subhead_16
         $0.textColor = .gray02
     }
     
     private let matchInfoLabel = UILabel().then {
-        $0.text = "성동구 | 02.02(월) 오후 3:00"
+        $0.text = ""
         $0.font = .Caption1_12
         $0.textColor = .gray04
     }
@@ -53,7 +56,7 @@ final class MatchCell: BaseCollectionViewCell {
     }
     
     private let peopleCountLabel = UILabel().then {
-        $0.text = "3/4명"
+        $0.text = ""
         $0.font = .Caption2_10
         $0.textColor = .gray04
     }
@@ -65,6 +68,7 @@ final class MatchCell: BaseCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         matchImageView.image = nil
+        badgeView.removeFromSuperview()
     }
     
     // MARK: - Methods
@@ -77,7 +81,8 @@ final class MatchCell: BaseCollectionViewCell {
         contentView.addSubview(peopleCountLabel)
         
         matchImageView.snp.makeConstraints { make in
-            make.top.left.equalToSuperview()
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(Constant.padding16)
             make.width.height.equalTo(Constant.imageWidth)
         }
         
@@ -105,7 +110,7 @@ final class MatchCell: BaseCollectionViewCell {
         }
     }
     
-    private func setBadgeConstraint(badgeView: UIView) {
+    private func setBadgeConstraint() {
         addSubview(badgeView)
         badgeView.snp.makeConstraints { make in
             make.bottom.equalTo(matchTitleLabel.snp.top).offset(-Constant.padding4)
@@ -117,13 +122,14 @@ final class MatchCell: BaseCollectionViewCell {
         sportBadgeView.set(sport: match.sport)
         switch match.matchType {
         case .teachMatch:
-            let stackView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
+            badgeView = UIStackView(arrangedSubviews: [classBadgeView, sportBadgeView]).then {
                 $0.axis = .horizontal
                 $0.spacing = CGFloat(Constant.padding6)
             }
-            setBadgeConstraint(badgeView: stackView)
+            setBadgeConstraint()
         default:
-            setBadgeConstraint(badgeView: sportBadgeView)
+            badgeView = sportBadgeView
+            setBadgeConstraint()
         }
     }
     
@@ -134,11 +140,21 @@ final class MatchCell: BaseCollectionViewCell {
         if match.locationInfo.address == "" || match.locationInfo.address == " " {
             matchInfoLabel.text = match.startDate.toDisplay()
         } else {
-            matchInfoLabel.text = "\(match.locationInfo.address) | \(match.startDate.toDisplay())"
+            let addresses = match.locationInfo.address.components(separatedBy: " ")
+            if 2 <= addresses.count {
+                matchInfoLabel.text = "\(addresses[1]) | \(match.startDate.toDisplay())"
+            } else if addresses.count < 2 {
+                matchInfoLabel.text = "\(match.locationInfo.address) | \(match.startDate.toDisplay())"
+            } else {
+                matchInfoLabel.text = match.startDate.toDisplay()
+            }
         }
         peopleCountLabel.text = "\(match.headCount)/\(match.maxHeadCount)명"
         setBadge(match: match)
-        guard let url = URL(string: match.matchImageURL) else { return }
-        matchImageView.kf.setImage(with: url)
+        if let url = URL(string: match.matchImageURL) {
+            matchImageView.kf.setImage(with: url)
+        } else {
+            matchImageView.image = .defaultLogoImageSmall
+        }
     }
 }

@@ -99,7 +99,17 @@ final class MyPageViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        let input = MyPageViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable())
+        let matchSelected = createdMatchCollectionView.rx.itemSelected.share()
+        
+        matchSelected
+            .withUnretained(self)
+            .subscribe { owner, indexPath in
+                guard let matchCell = owner.createdMatchCollectionView.cellForItem(at: indexPath) as? MatchCell else { return }
+                owner.coordinatorPublisher.onNext(.created(match: matchCell.match))
+            }
+            .disposed(by: disposeBag)
+        
+        let input = MyPageViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable().share())
         
         let output = myPageViewModel.transform(input: input)
         
@@ -108,6 +118,17 @@ final class MyPageViewController: BaseViewController {
             .drive { [weak self] user in
                 guard let self else { return }
                 self.configure(user: user)
+            }
+            .disposed(by: disposeBag)
+        
+        output.myCreatedMatch
+            .asDriver(onErrorJustReturn: [])
+            .drive { [weak self] matches in
+                guard let self else { return }
+                self.createdMatchCollectionView.setData(
+                    section: .createdMatchList(nickname: "asdasd"),
+                    matchInfos: matches.map { MatchInfo(match: $0, owner: User()) }
+                )
             }
             .disposed(by: disposeBag)
     }
@@ -149,7 +170,7 @@ final class MyPageViewController: BaseViewController {
         
         createdMatchCollectionView.snp.makeConstraints { make in
             make.top.equalTo(introduceLabel.snp.bottom).offset(Constant.padding32)
-            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
@@ -162,6 +183,7 @@ final class MyPageViewController: BaseViewController {
             profileImageView.kf.setImage(with: profileURL)
         }
         setBadgeView(sports: user.interestedSports)
+        createdMatchCollectionView.setHeader(nickname: user.nickname)
     }
     
     private func setBadgeView(sports: [Sport]) {

@@ -40,7 +40,7 @@ final class DefaultSignupUseCase: SignupUseCase {
                 if isSignuped {
                     return self.signupRepository.fetchUser(userID: userID)
                 } else {
-                    return .error(SocialLoginError.unknown)
+                    return Single<User>.just(User()).asObservable()
                 }
             }
     }

@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-final class LocationViewController: BaseViewController {
+final class LocationViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -27,6 +27,8 @@ final class LocationViewController: BaseViewController {
         static let padding24 = 24
         static let padding34 = 34
     }
+    
+    var backButton: UIButton!
     
     private let titleLabel = DefaultTitleLabel(text: "현재 거주하는\n위치를 설정해주세요")
     
@@ -78,6 +80,7 @@ final class LocationViewController: BaseViewController {
     
     override func setting() {
         setNextButton(isEnabled: false)
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -145,6 +148,10 @@ final class LocationViewController: BaseViewController {
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    override func configureNavigation() {
+        navigationItem.title = "회원가입"
     }
     
     private func setNextButton(isEnabled: Bool) {

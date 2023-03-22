@@ -39,7 +39,7 @@ final class PopularMatchCell: BaseCollectionViewCell {
     private let profileImageView = DefaultProfileImageView(true)
     
     private let nicknameLabel = UILabel().then {
-        $0.text = "good"
+        $0.text = ""
         $0.textColor = .white
         $0.font = .Subhead2_14
     }
@@ -49,13 +49,13 @@ final class PopularMatchCell: BaseCollectionViewCell {
     private let sportBadgeView = SportBadge(sport: .etc)
     
     private let titleLabel = UILabel().then {
-        $0.text = "이번주 토요일 테니스"
+        $0.text = ""
         $0.textColor = .white
         $0.font = .Subhead_16
     }
     
     private let matchInfoLabel = UILabel().then {
-        $0.text = "성동구 | 02.02(월) 오후 3:00"
+        $0.text = ""
         $0.textColor = .white
         $0.font = .Caption1_12
     }
@@ -65,7 +65,7 @@ final class PopularMatchCell: BaseCollectionViewCell {
     }
     
     private let peopleCountLabel = UILabel().then {
-        $0.text = "3/4명"
+        $0.text = ""
         $0.textColor = .white
         $0.font = .Body2_14
     }
@@ -79,7 +79,7 @@ final class PopularMatchCell: BaseCollectionViewCell {
     // MARK: - Methods
     
     override func configureUI() {
-        contentView.backgroundColor = .yellow05_primary
+        contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = CGFloat(Constant.radius24)
         contentView.clipsToBounds = true
         
@@ -157,18 +157,46 @@ final class PopularMatchCell: BaseCollectionViewCell {
         }
     }
     
-    func setMatch(_ matchInfo: MatchInfo) {
-        self.matchInfo = matchInfo
+    func setMatch(_ matchDetail: MatchDetail) {
+        self.matchInfo = MatchInfo(match: matchDetail.match, owner: matchDetail.hostMember)
         
         let match = matchInfo.match
         let owner = matchInfo.owner
         
-        nicknameLabel.text = owner.nickname
-        
+        configure(user: owner)
+        configure(match: match)
+    }
+    
+    private func configure(user: User) {
+        nicknameLabel.text = user.nickname
+        if let profileImageURL = URL(string: user.profileImageURL ?? "") {
+            profileImageView.kf.setImage(with: profileImageURL)
+        } else {
+            profileImageView.image = .defaultProfileImage
+        }
+    }
+    
+    private func configure(match: Match) {
         setBadge(match: match)
+        titleLabel.text = match.matchTitle
+        peopleCountLabel.text = "\(match.headCount)/\(match.maxHeadCount)명"
         
-        guard let url = URL(string: "https://blog.kakaocdn.net/dn/pbATv/btqxtXkCDlt/DwhLZCFllImV3OOYWassZ0/img.jpg") else { return }
-        backgroundImageView.kf.setImage(with: url)
-        // TODO: 추가
+        if let matchImageURL = URL(string: matchInfo.match.matchImageURL) {
+            backgroundImageView.kf.setImage(with: matchImageURL)
+        } else {
+            backgroundImageView.image = .defaultLogoImageLarge
+        }
+        if match.locationInfo.address == "" || match.locationInfo.address == " " {
+            matchInfoLabel.text = match.startDate.toDisplay()
+        } else {
+            let addresses = match.locationInfo.address.components(separatedBy: " ")
+            if 2 <= addresses.count {
+                matchInfoLabel.text = "\(addresses[1]) | \(match.startDate.toDisplay())"
+            } else if addresses.count < 2 {
+                matchInfoLabel.text = "\(match.locationInfo.address) | \(match.startDate.toDisplay())"
+            } else {
+                matchInfoLabel.text = match.startDate.toDisplay()
+            }
+        }
     }
 }

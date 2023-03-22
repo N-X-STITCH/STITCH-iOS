@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "DefaultLogoImage_large.png",
+      "filename" : "launchingBackground.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "DefaultLogoImage_large@2x.png",
+      "filename" : "launchingBackground@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "DefaultLogoImage_large@3x.png",
+      "filename" : "launchingBackground@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -13,4 +13,8 @@ protocol UserStorage {
     func save(user: User) -> Observable<Void>
     func fetchUser() -> Observable<User?>
     func logout() -> Observable<Void>
+    
+    func save(socialLogin: SocialLogin) -> Observable<Void>
+    func fetchSocialLogin() -> Observable<String?>
+    func removeSocialLogin() -> Observable<Void>
 }

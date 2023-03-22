@@ -16,6 +16,17 @@ struct UserDTO: Codable {
     let sports: [String]?
     let token: String?
     let introduce: String?
+   
+    init() {
+        self.id = ""
+        self.type = ""
+        self.name = ""
+        self.location = ""
+        self.imageUrl = ""
+        self.sports = []
+        self.token = ""
+        self.introduce = ""
+    }
     
     init(user: User) {
         self.id = user.id

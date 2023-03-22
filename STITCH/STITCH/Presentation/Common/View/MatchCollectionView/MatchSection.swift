@@ -15,7 +15,7 @@ enum MatchSection: Hashable {
     var title: String {
         switch self {
         case .newMatch: return "새롭게 열린 매치"
-        case .createdMatchList(let nickname): return "\(nickname)님의 생성한 매치목록"
+        case .createdMatchList(let nickname): return "생성한 매치목록"
         case .none: return ""
         }
     }

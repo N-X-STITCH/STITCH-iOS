@@ -11,7 +11,7 @@ import FSCalendar
 import RxCocoa
 import RxSwift
 
-final class CreateMatchViewController: BaseViewController {
+final class CreateMatchViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -51,6 +51,8 @@ final class CreateMatchViewController: BaseViewController {
         static let contentValidation = 1000
     }
     
+    var backButton: UIButton!
+    
     private let finishButton = UIButton().then {
         $0.titleLabel?.font = .Subhead_16
         $0.setTitle("완료", for: .normal)
@@ -58,6 +60,8 @@ final class CreateMatchViewController: BaseViewController {
         $0.setTitleColor(.yellow05_primary, for: .normal)
         $0.setTitleColor(.gray10, for: .disabled)
     }
+    
+    private let gradationView = UIImageView(image: .yellowGradation)
     
     // MARK: ScrollView
     
@@ -219,8 +223,8 @@ final class CreateMatchViewController: BaseViewController {
     // MARK: - Methods
     
     override func setting() {
+        addBackButtonTap()
         changeButton(isEnabled: false)
-        // TODO: 삭제
         scrollView.delegate = self
         calendarView.dataSource = self
         calendarView.delegate = self
@@ -384,10 +388,15 @@ final class CreateMatchViewController: BaseViewController {
         view.backgroundColor = .background
         
         view.addSubview(scrollView)
+        view.addSubview(gradationView)
         scrollView.addSubview(contentView)
         
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top)
+            make.left.right.bottom.equalToSuperview()
+        }
+        
+        gradationView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
         }
         
@@ -465,8 +474,10 @@ final class CreateMatchViewController: BaseViewController {
     }
     
     private func moveScrollView(_ view: UIView, rowView: UIView? = nil) {
-        if view == matchFeeTitleLabel || view == calendarView {
+        if view == matchFeeTitleLabel {
             scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 240), animated: true)
+        } else if view == calendarView {
+            scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 200), animated: true)
         } else {
             scrollView.setContentOffset(CGPoint(x: 0, y: view.frame.midY - 20), animated: true)
         }

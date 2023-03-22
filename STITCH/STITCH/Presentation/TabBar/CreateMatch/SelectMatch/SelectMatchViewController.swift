@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SelectMatchViewController: BaseViewController {
+final class SelectMatchViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -22,6 +22,8 @@ final class SelectMatchViewController: BaseViewController {
         static let collectionViewHeight = 172
     }
     
+    private let gradationView = UIImageView(image: .yellowGradation)
+    
     private let titleLabel = DefaultTitleLabel(text: "원하시는 매치를 선택해주세요")
     
     private lazy var matchTypeCollectionView = MatchTypeCollectionView(
@@ -30,6 +32,8 @@ final class SelectMatchViewController: BaseViewController {
     )
     
     private let nextButton = DefaultButton(title: "다음")
+    
+    var backButton: UIButton!
     
     // MARK: Properties
     
@@ -51,6 +55,7 @@ final class SelectMatchViewController: BaseViewController {
     
     override func setting() {
         setNextButton(isEnabled: false)
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -94,9 +99,14 @@ final class SelectMatchViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .background
         
+        view.addSubview(gradationView)
         view.addSubview(titleLabel)
         view.addSubview(matchTypeCollectionView)
         view.addSubview(nextButton)
+        
+        gradationView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide.snp.top).offset(Constant.padding24)
@@ -114,6 +124,10 @@ final class SelectMatchViewController: BaseViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    override func configureNavigation() {
+        navigationItem.title = "매치 개설하기"
     }
 }
 

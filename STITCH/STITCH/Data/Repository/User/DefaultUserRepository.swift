@@ -41,6 +41,22 @@ final class DefaultUserRepository: UserRepository {
     func deleteUser(userID: String) -> Observable<String> {
         let endpoint = UserAPIEndpoints.deleteUser(userID: userID)
         return urlSessionNetworkService.request(with: endpoint)
-            .map(String.self)
+            .map { _ in "" }
+    }
+    
+    func myMatch(userID: String) -> Observable<[Match]> {
+        let endpoint = UserAPIEndpoints.fetchMyMatch(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map([MatchDTO?].self)
+            .map { $0.compactMap { $0 } }
+            .map { $0.map { Match(matchDTO: $0) } }
+    }
+    
+    func myCreatedMatch(userID: String) -> Observable<[Match]> {
+        let endpoint = UserAPIEndpoints.fetchMyPage(userID: userID)
+        return urlSessionNetworkService.request(with: endpoint)
+            .map(MyPageDTO.self)
+            .debug()
+            .map { $0.myMatches.map { Match(matchDTO: $0) } }
     }
 }

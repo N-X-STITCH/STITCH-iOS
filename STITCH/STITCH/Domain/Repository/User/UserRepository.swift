@@ -13,4 +13,6 @@ protocol UserRepository {
     func fetchUser(userID: String) -> Observable<User>
     func updateUser(user: User) -> Observable<User>
     func deleteUser(userID: String) -> Observable<String>
+    func myMatch(userID: String) -> Observable<[Match]>
+    func myCreatedMatch(userID: String) -> Observable<[Match]>
 }

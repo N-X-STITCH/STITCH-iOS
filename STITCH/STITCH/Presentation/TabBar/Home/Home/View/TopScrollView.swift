@@ -18,9 +18,9 @@ final class TopScrollView: UIScrollView {
     
     private let screen: CGRect?
     private let imageViews: [UIImageView] = [
-        UIImageView().then { $0.contentMode = .scaleToFill },
-        UIImageView().then { $0.contentMode = .scaleToFill },
-        UIImageView().then { $0.contentMode = .scaleToFill }
+        UIImageView(image: .homeImage1).then { $0.contentMode = .scaleAspectFill },
+        UIImageView(image: .homeImage1).then { $0.contentMode = .scaleAspectFill },
+        UIImageView(image: .homeImage1).then { $0.contentMode = .scaleAspectFill }
     ]
     
     // MARK: - Initializer
@@ -49,7 +49,7 @@ final class TopScrollView: UIScrollView {
     // MARK: - Methods
     
     func setImages(imageURLs: [String] = [
-        "https://trythis.co.kr/classes/userfiles/1599722127497_%EB%86%8D%EA%B5%AC.jpg.jpg",
+        "https://firebasestorage.googleapis.com/v0/b/stitch-1677850382202.appspot.com/o/banner_img_1.png?alt=media&token=24dddb4b-304b-4a16-8e27-f45afca26c24",
         "https://trythis.co.kr/classes/userfiles/1599722127497_%EB%86%8D%EA%B5%AC.jpg.jpg",
         "https://trythis.co.kr/classes/userfiles/1599722127497_%EB%86%8D%EA%B5%AC.jpg.jpg"
     ]) {
@@ -60,9 +60,9 @@ final class TopScrollView: UIScrollView {
             height: CGFloat(Constant.imageHeight)
         )
         for (index, imageURL) in imageURLs.enumerated() {
-            guard let url = URL(string: imageURL) else { return }
+            // guard let url = URL(string: imageURL) else { return }
             let imageView = imageViews[index]
-            imageView.kf.setImage(with: url)
+            // imageView.kf.setImage(with: url)
             imageView.frame = imageRect
             imageView.frame.origin.x = (screen?.width ?? 0) * CGFloat(index)
             addSubview(imageView)

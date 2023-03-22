@@ -53,9 +53,12 @@ class BaseViewController: UIViewController {
 extension BaseViewController {
     func configureNavigationBar(isTranslucent: Bool = true) {
         navigationController?.navigationBar.isTranslucent = isTranslucent
+        navigationController?.navigationBar.tintColor = .gray02
+        navigationController?.navigationBar.topItem?.title = ""
         if isTranslucent {
             navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController?.navigationBar.shadowImage = UIImage()
+            navigationController?.navigationBar.backgroundColor = .clear
         } else {
             navigationController?.navigationBar.barTintColor = .background
         }
@@ -92,6 +95,14 @@ extension BaseViewController {
     func generateImpactHaptic(_ feedBackType: UIImpactFeedbackGenerator.FeedbackStyle = .medium) {
         let haptic = UIImpactFeedbackGenerator(style: feedBackType)
         haptic.impactOccurred()
+    }
+}
+
+// MARK: - show action sheet (변경)
+
+extension BaseViewController {
+    func show(alertController: UIAlertController) {
+        present(alertController, animated: true)
     }
 }
 
@@ -134,6 +145,7 @@ extension BaseViewController {
             $0.text = text
             $0.textColor = tintColor
             $0.font = .Body2_14
+            $0.numberOfLines = 0
         }
         toastMessageView.addSubviews([iconImageView, messageLabel])
         
@@ -145,6 +157,7 @@ extension BaseViewController {
         
         messageLabel.snp.makeConstraints { make in
             make.left.equalTo(iconImageView.snp.right).offset(12)
+            make.right.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
         

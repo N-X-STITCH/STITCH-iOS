@@ -25,6 +25,25 @@ struct MatchDTO: Codable {
     let teach: Bool?
     let numOfMembers: Int?
     
+    init() {
+        self.id = ""
+        self.type = ""
+        self.location = ""
+        self.imageUrl = ""
+        self.name = ""
+        self.detail = ""
+        self.startTime = ""
+        self.duration = 0
+        self.eventType = ""
+        self.hostId = ""
+        self.maxCapacity = 0
+        self.fee = 0
+        self.latitude = ""
+        self.longitude = ""
+        self.teach = false
+        self.numOfMembers = 0
+    }
+    
     init(
         id: String,
         type: String = "match",

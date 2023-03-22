@@ -13,6 +13,8 @@ protocol MyPageUseCase {
     func uploadImage(data: Data?, path: String) -> Observable<String>
     func update(user: User) -> Observable<User>
     func deleteUser() -> Observable<String>
+    func myMatch() -> Observable<[Match]>
+    func myCreatedMatch() -> Observable<[Match]>
 }
 
 final class DefaultMyPageUseCase: MyPageUseCase {
@@ -56,6 +58,24 @@ final class DefaultMyPageUseCase: MyPageUseCase {
             .flatMap { [weak self] user -> Observable<String> in
                 guard let self else { return .error(SocialLoginError.signout) }
                 return self.userRepository.deleteUser(userID: user.id)
+            }
+    }
+    
+    func myMatch() -> Observable<[Match]> {
+        userStorage.fetchUser()
+            .compactMap { $0 }
+            .flatMap { [weak self] user -> Observable<[Match]> in
+                guard let self else { return .error(NetworkError.unknownError) }
+                return self.userRepository.myMatch(userID: user.id)
+            }
+    }
+    
+    func myCreatedMatch() -> Observable<[Match]> {
+        userStorage.fetchUser()
+            .compactMap { $0 }
+            .flatMap { [weak self] user -> Observable<[Match]> in
+                guard let self else { return .error(NetworkError.unknownError) }
+                return self.userRepository.myCreatedMatch(userID: user.id)
             }
     }
 }

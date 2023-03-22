@@ -50,9 +50,10 @@ extension Coordinator {
         
     }
     
-    func addPopEvent(_ viewController: BaseViewController) {
-        viewController.coordinatorPublisher
-            .subscribe { event in
+    func addPopEvent(_ coordinatorPublisher: Observable<CoordinatorEvent>) {
+        coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .emit()  { event in
                 if .pop == event {
                     self.popViewController()
                 }
@@ -60,9 +61,24 @@ extension Coordinator {
             .disposed(by: disposeBag)
     }
     
-    func addDismissEvent(_ viewController: BaseViewController) {
-        viewController.coordinatorPublisher
-            .subscribe { event in
+    func addPopEvent(
+        _ coordinatorPublisher: Observable<CoordinatorEvent>,
+        _ navigationController: UINavigationController
+    ) {
+        coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .emit()  { event in
+                if .pop == event {
+                    navigationController.popViewController(animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func addDismissEvent(_ coordinatorPublisher: Observable<CoordinatorEvent>) {
+        coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .emit() { event in
                 if .dismiss == event {
                     self.dismissViewController()
                 }
@@ -70,13 +86,14 @@ extension Coordinator {
             .disposed(by: disposeBag)
     }
     
-    func addNextEvent(
-        _ viewController: BaseViewController,
+    func addEvent(
+        _ coordinatorPublisher: Observable<CoordinatorEvent>,
         _ showViewController: @escaping () -> Void,
-        _ coordinatorEvent: CoordinatorEvent = .next
+        _ coordinatorEvent: CoordinatorEvent
     ) {
-        viewController.coordinatorPublisher
-            .subscribe { event in
+        coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .emit() { event in
                 if coordinatorEvent == event {
                     showViewController()
                 }
@@ -84,14 +101,15 @@ extension Coordinator {
             .disposed(by: disposeBag)
     }
     
-    func addNextEventWithNav(
-        _ viewController: BaseViewController,
+    func addEventWithNav(
+        _ coordinatorPublisher: Observable<CoordinatorEvent>,
         _ showViewController: @escaping (UINavigationController) -> Void,
         _ navigationController: UINavigationController,
-        _ coordinatorEvent: CoordinatorEvent = .next
+        _ coordinatorEvent: CoordinatorEvent
     ) {
-        viewController.coordinatorPublisher
-            .subscribe { event in
+        coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .emit() { event in
                 if coordinatorEvent == event {
                     showViewController(navigationController)
                 }

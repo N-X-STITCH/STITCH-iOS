@@ -51,6 +51,7 @@ final class DefaultNearAddressRepository: NearAddressRepository {
     func fetchNearAddresses(text: String) -> Observable<[LocationInfo]> {
         let endpoint = LocationAPIEndpoints.fetchGeoCodingAddress(query: text)
         return naverCloudNetworkService.request(with: endpoint)
+            .retry()
             .map(GeoCodingResultDTO.self)
             .compactMap { $0.addresses }
             .map { addresses in

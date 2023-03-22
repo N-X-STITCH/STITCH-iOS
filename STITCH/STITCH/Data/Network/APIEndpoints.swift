@@ -44,6 +44,50 @@ struct UserAPIEndpoints {
             method: .DELETE
         )
     }
+    
+    static func fetchMyPage(userID: String) -> Endpoint {
+        return Endpoint(
+            path: "view/myPage/id=\(userID)",
+            method: .GET
+        )
+    }
+    
+    static func fetchMyMatch(userID: String) -> Endpoint {
+        return Endpoint(
+            path: "view/myMatch/id=\(userID)",
+            method: .GET
+        )
+    }
+}
+
+struct AuthAPIEndpoints {
+    static func refreshToken(authorizationCode: String, clientSecret: String) -> AppleEndpoint {
+        return AppleEndpoint(
+            path: "auth/token",
+            method: .POST,
+            headerParameters: ["Content-Type": "application/x-www-form-urlencoded"],
+            bodyParameters: [
+                "code": authorizationCode,
+                "client_id": "com.neuli.STITCH",
+                "client_secret": clientSecret,
+                "grant_type": "authorization_code"
+            ]
+        )
+    }
+    
+    static func revokeToken(refreshToken: String, clientSecret: String) -> AppleEndpoint {
+        return AppleEndpoint(
+            path: "auth/revoke",
+            method: .POST,
+            headerParameters: ["Content-Type": "application/x-www-form-urlencoded"],
+            bodyParameters: [
+                "token": refreshToken,
+                "client_id": Bundle.main.bundleIdentifier!,
+                "client_secret": clientSecret,
+                "grant_type": "refresh_token"
+            ]
+        )
+    }
 }
 
 struct MatchAPIEndpoints {
@@ -73,6 +117,44 @@ struct MatchAPIEndpoints {
         return Endpoint(
             path: "match/allTeach",
             method: .GET
+        )
+    }
+    
+    static func fetchHomeMatch() -> Endpoint {
+        return Endpoint(
+            path: "match/home",
+            method: .GET
+        )
+    }
+    
+    static func deleteMatch(matchID: String) -> Endpoint {
+        return Endpoint(
+            path: "match/delete/\(matchID)",
+            method: .DELETE
+        )
+    }
+    
+    static func joinMatch(userID: String, joinMatchDTO: JoinMatchDTO) -> Endpoint {
+        return Endpoint(
+            path: "match/join/id=\(userID)",
+            method: .PUT,
+            bodyParameters: joinMatchDTO.toDictionary ?? [:]
+        )
+    }
+    
+    static func cancelJoinMatch(userID: String, matchID: String) -> Endpoint {
+        return Endpoint(
+            path: "",
+            method: .DELETE,
+            queryParameters: ["memberId": userID, "matchId": matchID]
+        )
+    }
+    
+    static func createReport(report: Report) -> Endpoint {
+        return Endpoint(
+            path: "report",
+            method: .POST,
+            bodyParameters: report.toDictionary ?? [:]
         )
     }
 }

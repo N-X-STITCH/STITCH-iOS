@@ -10,7 +10,7 @@ import UIKit
 import Lottie
 import RxSwift
 
-final class CompleteSignupViewController: BaseViewController {
+final class CompleteSignupViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -45,6 +45,8 @@ final class CompleteSignupViewController: BaseViewController {
         $0.textAlignment = .left
     }
     
+    var backButton: UIButton!
+    
     private let fireworksView = LottieAnimationView(name: "fireworks")
     
     private let startImageView = UIImageView(image: .completeSignup)
@@ -71,6 +73,7 @@ final class CompleteSignupViewController: BaseViewController {
     
     override func setting() {
         setAnimation()
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -105,6 +108,10 @@ final class CompleteSignupViewController: BaseViewController {
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    override func configureNavigation() {
+        navigationItem.title = "회원가입 완료"
     }
     
     private func setAnimation() {

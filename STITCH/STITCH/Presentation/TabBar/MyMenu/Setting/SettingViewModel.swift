@@ -11,55 +11,57 @@ import RxSwift
 
 final class SettingViewModel: ViewModel {
     
+    var loginType: String!
+    
     struct Input {
-        let tableViewSelect: Observable<IndexPath>
     }
     
     struct Output {
-        let logoutResult: Observable<Void>
-        let signoutResult: Observable<Void>
     }
     
     // MARK: - Properties
     
     private let userUseCase: UserUseCase
     private let myPageUseCase: MyPageUseCase
+    private let appleLoginUseCase: AppleLoginUseCase
     
     // MARK: - Initializer
     
     init(
         userUseCase: UserUseCase,
-        myPageUseCase: MyPageUseCase
+        myPageUseCase: MyPageUseCase,
+        appleLoginUseCase: AppleLoginUseCase
     ) {
         self.userUseCase = userUseCase
         self.myPageUseCase = myPageUseCase
+        self.appleLoginUseCase = appleLoginUseCase
     }
     
     // MARK: - Methods
     
+    func loginTypeObservable() -> Observable<String> {
+        return userUseCase.fetchSocialLogin()
+            .compactMap { $0 }
+            .map { [weak self] loginType in
+                self?.loginType = loginType
+                return loginType
+            }
+    }
+    
+    func logoutResult() -> Observable<Void> {
+        return userUseCase.logout()
+    }
+    
+    func signOutResult() -> Observable<Void> {
+        return myPageUseCase.deleteUser()
+            .withLatestFrom(self.userUseCase.logout())
+    }
+    
+    func revokeToken(authorizationCode: String) -> Observable<Void> {
+        return appleLoginUseCase.revokeToken(authorizationCode: authorizationCode)
+    }
+    
     func transform(input: Input) -> Output {
-        
-        let tableViewSelect = input.tableViewSelect
-        
-        let logoutResult = tableViewSelect
-            .flatMap { indexPath -> Observable<Void> in
-                if indexPath == IndexPath(row: AccountSection.logout.row, section: SettingSection.account.section) {
-                    return self.userUseCase.logout()
-                } else {
-                    return Observable.error(SocialLoginError.logout)
-                }
-            }
-        
-        let signoutResult = tableViewSelect
-            .flatMap { indexPath -> Observable<Void> in
-                if indexPath == IndexPath(row: AccountSection.secession.row, section: SettingSection.account.section) {
-                    return self.myPageUseCase.deleteUser()
-                        .withLatestFrom(self.userUseCase.logout())
-                } else {
-                    return Observable.error(SocialLoginError.logout)
-                }
-            }
-        
-        return Output(logoutResult: logoutResult, signoutResult: signoutResult)
+        return Output()
     }
 }

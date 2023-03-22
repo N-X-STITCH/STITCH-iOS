@@ -14,6 +14,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         let userDefaultsService: UserDefaultsService
         let naverCloudAPIService: URLSessionNetworkService
         let naverOpenAPIService: URLSessionNetworkService
+        let appleIDService: URLSessionNetworkService
         let userUseCase: UserUseCase
     }
     
@@ -53,6 +54,10 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return DefaultUserRepository(urlSessionNetworkService: dependencies.urlsessionNetworkService)
     }
     
+    func appleLoginRepository() -> AppleLoginRepository {
+        return DefaultAppleLoginRepository(appleIDService: dependencies.appleIDService)
+    }
+    
     // MARK: Match
     
     func matchRepository() -> MatchRepository {
@@ -76,6 +81,12 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     }
     
     // MARK: - Use Cases
+    
+    // MARK: Auth
+    
+    func appleLoginUseCase() -> AppleLoginUseCase {
+        return DefaultAppleLoginUseCase(appleLoginRepository: appleLoginRepository())
+    }
     
     // MARK: Home
     
@@ -111,11 +122,15 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
             fireStorageRepository: fireStorageRepository()
         )
     }
-        
+    
     // MARK: - View Models
     
     func homeViewModel() -> HomeViewModel {
-        return HomeViewModel()
+        return HomeViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            matchUseCase: matchUseCase()
+        )
     }
     
     func findLocationViewModel() -> FindLocationViewModel {
@@ -125,11 +140,18 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: Match
     
     func matchCategoryViewModel() -> MatchCategoryViewModel {
-        return MatchCategoryViewModel(matchUseCase: matchUseCase())
+        return MatchCategoryViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            matchUseCase: matchUseCase()
+        )
     }
     
     func matchDetailViewModel() -> MatchDetailViewModel {
-        return MatchDetailViewModel(matchUseCase: matchUseCase())
+        return MatchDetailViewModel(
+            userUseCase: userUseCase,
+            matchUseCase: matchUseCase()
+        )
     }
     
     // MARK: Create Match
@@ -147,10 +169,23 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         return SetLocationViewModel(findLocationUseCase: findLocationUseCase())
     }
     
+    // MARK: My Match
+    
+    func myMatchViewModel() -> MyMatchViewModel {
+        return MyMatchViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            matchUseCase: matchUseCase()
+        )
+    }
+    
     // MARK: My Page
     
     func myPageViewModel() -> MyPageViewModel {
-        return MyPageViewModel(userUseCase: userUseCase)
+        return MyPageViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase()
+        )
     }
     
     func myPageEditViewModel() -> MyPageEditViewModel {
@@ -165,7 +200,11 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     }
     
     func settingViewModel() -> SettingViewModel {
-        return SettingViewModel(userUseCase: userUseCase, myPageUseCase: myPageUseCase())
+        return SettingViewModel(
+            userUseCase: userUseCase,
+            myPageUseCase: myPageUseCase(),
+            appleLoginUseCase: appleLoginUseCase()
+        )
     }
     
     // MARK: - ViewControllers
@@ -211,6 +250,12 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
             createMatchViewModel: createMatchViewModel,
             setLocationViewModel: setLocationViewModel()
         )
+    }
+    
+    // MARK: My Match
+    
+    func myMatchViewController() -> MyMatchViewController {
+        return MyMatchViewController(myMatchViewModel: myMatchViewModel())
     }
     
     // MARK: My Page

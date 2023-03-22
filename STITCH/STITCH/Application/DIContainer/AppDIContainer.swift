@@ -38,6 +38,13 @@ final class AppDIContainer {
         return DefaultURLSessionNetworkService(config: config)
     }()
     
+    lazy var appleIDService: URLSessionNetworkService = {
+        let config = NetworkConfig(
+            baseURL: URL(string: "https://appleid.apple.com/")!
+        )
+        return DefaultURLSessionNetworkService(config: config)
+    }()
+    
     let userDefaultsService: UserDefaultsService = DefaultUserDefaultsService()
     
     // MARK: - Properties
@@ -63,6 +70,7 @@ final class AppDIContainer {
             userDefaultsService: userDefaultsService,
             naverCloudAPIService: naverCloudAPIService,
             naverOpenAPIService: naverOpenAPIService,
+            appleIDService: appleIDService,
             userUseCase: userUseCase
         )
         return TabBarDIContainer(dependencies: dependencies)

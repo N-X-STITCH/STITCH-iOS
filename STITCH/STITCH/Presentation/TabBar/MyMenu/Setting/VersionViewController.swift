@@ -7,13 +7,15 @@
 
 import UIKit
 
-final class VersionViewController: BaseViewController {
+final class VersionViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
     enum Constant {
         static let padding16 = 16
     }
+    
+    var backButton: UIButton!
     
     private let versionLabel = DefaultTitleLabel(text: "")
     
@@ -28,6 +30,7 @@ final class VersionViewController: BaseViewController {
     override func setting() {
         guard let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         versionLabel.text = version
+        addBackButtonTap()
     }
     
     override func bind() {

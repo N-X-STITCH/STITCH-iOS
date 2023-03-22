@@ -12,7 +12,7 @@ import NMapsMap
 import RxSwift
 import RxCocoa
 
-final class SetLocationViewController: BaseViewController {
+final class SetLocationViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -26,6 +26,8 @@ final class SetLocationViewController: BaseViewController {
         static let bottomPadding = 200
         static let alpha = 0.7
     }
+    
+    var backButton: UIButton!
     
     private lazy var mapView = NMFMapView(frame: view.frame)
     
@@ -91,6 +93,7 @@ final class SetLocationViewController: BaseViewController {
         searchPlaceView.locationResultCollectionView.delegate = self
         mapView.addCameraDelegate(delegate: self)
         configureMapView()
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -136,11 +139,17 @@ final class SetLocationViewController: BaseViewController {
                 return owner.geocoder.rx.reverseGeocodeLocation(location)
             }
             .compactMap { $0.last }
-            .map { LocationInfo(
-                address: $0.name ?? "",
-                latitude: "\($0.location?.coordinate.latitude ?? 0)",
-                longitude: "\($0.location?.coordinate.longitude ?? 0)"
-            ) }
+            .map { place in
+                let location = place.description
+                    .components(separatedBy: ",")[1]
+                    .components(separatedBy: " ")[2...]
+                    .joined(separator: " ")
+                return LocationInfo(
+                    address: location,
+                    latitude: "\(place.location?.coordinate.latitude ?? 0)",
+                    longitude: "\(place.location?.coordinate.longitude ?? 0)"
+                )
+            }
             
         mapPlacemarkObservable
             .withUnretained(self)

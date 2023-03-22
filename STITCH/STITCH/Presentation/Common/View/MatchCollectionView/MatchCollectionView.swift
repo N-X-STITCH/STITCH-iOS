@@ -89,4 +89,14 @@ final class MatchCollectionView: BaseCollectionView {
         snapshot.appendItems(matchInfos)
         matchDataSource.apply(snapshot)
     }
+    
+    func setHeader(nickname: String) {
+        // TODO: 접근이 안됨
+        guard let headerView = supplementaryView(
+            forElementKind: Self.sectionHeaderElementKind,
+            at: IndexPath(row: 0, section: 0)
+        ) as? MatchHeaderView
+        else{ return }
+        headerView.titleLabel.text = MatchSection.createdMatchList(nickname: nickname).title
+    }
 }

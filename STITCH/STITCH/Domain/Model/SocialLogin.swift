@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum SocialLogin {
+enum SocialLogin: String {
     case apple, kakao
 }

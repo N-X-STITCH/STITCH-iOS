@@ -16,6 +16,7 @@ final class DefaultUserStorage: UserStorage {
     private let userDefaultsService: UserDefaultsService
     
     private let userIDKey = "userIDKey"
+    private let socialLoginIDKey = "socialLoginIDKey"
     
     // MARK: - Initializer
     
@@ -36,6 +37,20 @@ final class DefaultUserStorage: UserStorage {
     
     func logout() -> Observable<Void> {
         userDefaultsService.delete(forKey: userIDKey)
+        return Single<Void>.just(()).asObservable()
+    }
+    
+    func save(socialLogin: SocialLogin) -> Observable<Void> {
+        userDefaultsService.save(value: socialLogin.rawValue, forKey: socialLoginIDKey)
+        return Single<Void>.just(()).asObservable()
+    }
+    
+    func fetchSocialLogin() -> Observable<String?> {
+        return userDefaultsService.value(valueType: String.self, forKey: socialLoginIDKey)
+    }
+    
+    func removeSocialLogin() -> Observable<Void> {
+        userDefaultsService.delete(forKey: socialLoginIDKey)
         return Single<Void>.just(()).asObservable()
     }
 }

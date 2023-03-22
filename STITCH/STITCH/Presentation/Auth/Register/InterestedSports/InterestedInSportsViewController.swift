@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-final class InterestedInSportsViewController: BaseViewController {
+final class InterestedInSportsViewController: BaseViewController, BackButtonProtocol {
     
     // MARK: - Properties
     
@@ -22,6 +22,8 @@ final class InterestedInSportsViewController: BaseViewController {
         static let padding40 = 40
         static let collectionViewWidth = 336
     }
+    
+    var backButton: UIButton!
     
     private let bottomGradientView = UIImageView(image: .bottomGridientView)
     
@@ -59,6 +61,7 @@ final class InterestedInSportsViewController: BaseViewController {
     
     override func setting() {
         setNextButton(isEnabled: false)
+        addBackButtonTap()
     }
     
     override func bind() {
@@ -153,6 +156,10 @@ final class InterestedInSportsViewController: BaseViewController {
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).inset(Constant.padding24)
             make.height.equalTo(Constant.buttonHeight)
         }
+    }
+    
+    override func configureNavigation() {
+        navigationItem.title = "회원가입"
     }
 }
 

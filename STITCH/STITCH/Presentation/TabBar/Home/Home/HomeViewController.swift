@@ -19,17 +19,24 @@ final class HomeViewController: BaseViewController {
         static let padding40 = 40
         static let floatingButtonWidth = 56
         static let scrollViewHeight = 350
+        static let gradientHeight = 90
         static let popularCollectionViewHeight = 384
-        static let matchCollectionViewHeight = 1400
+        static let matchCollectionViewHeight = 660
         static let pages = 3
     }
     
-    private let scrollView = UIScrollView()
+    private let refreshControl = UIRefreshControl()
+    private lazy var scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+        $0.refreshControl = refreshControl
+    }
     private let contentView = UIView()
     
     private let topView = UIView()
-    private lazy var topGradientLayer = CAGradientLayer()
-    private lazy var topScrollView = TopScrollView(delegate: self, view)
+    private lazy var topCollectionView = TopCollectionView(self, layout: TopCollectionViewLayout.layout()).then {
+        $0.isUserInteractionEnabled = false
+    }
+    private let topGradientBottomView = UIImageView(image: .homeTopViewGradientView)
     private let topMessageLabel = DefaultTitleLabel(
         text: "STITCH와 함께\n최고의 매치를 가져보세요!",
         textColor: .white,
@@ -60,6 +67,8 @@ final class HomeViewController: BaseViewController {
     // MARK: Properties
     
     private var isNavigationBarTranscluent = true
+    private var timer: Timer?
+    
     private let homeViewModel: HomeViewModel
     
     // MARK: - Initializer
@@ -69,25 +78,33 @@ final class HomeViewController: BaseViewController {
         super.init()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(isNavigationBarTranscluent, Constant.scrollViewHeight, scrollView.contentOffset.y)
+        configureNavigationBar(isTranslucent: isNavigationBarTranscluent)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setGradientLayer(superView: topView)
+        topCollectionView.scrollToItem(
+            at: IndexPath(item: datas.count, section: 0),
+            at: .centeredHorizontally,
+            animated: false
+        )
     }
     
     // MARK: - Methods
     
     override func setting() {
         // TODO: 삭제
-        popularMatchCollectionView.setData([])
-        
         setScrollViewTop()
         scrollView.delegate = self
+        topCollectionView.setData(datas + datas2 + datas3)
+        invalidateTimer()
+        activateTimer()
     }
     
     override func bind() {
-        topScrollView.setImages()
-        matchCollectionView.setData(section: .newMatch, matchInfos: [])
-        
         locationButton.rx.tap
             .withUnretained(self)
             .subscribe { owner, _ in
@@ -118,6 +135,41 @@ final class HomeViewController: BaseViewController {
                 guard let matchCell = owner.matchCollectionView.cellForItem(at: indexPath) as? MatchCell else { return }
                 
                 owner.coordinatorPublisher.onNext(.created(match: matchCell.match))
+            }
+            .disposed(by: disposeBag)
+        
+        let refreshObservalble = refreshControl.rx.controlEvent(.valueChanged).asObservable().share()
+        
+        let input = HomeViewModel.Input(
+            viewWillAppear: rx.viewWillAppear.map { _ in () }.asObservable(),
+            refreshControl: refreshObservalble
+        )
+        
+        let output = homeViewModel.transform(input: input)
+        
+        output.userObservable
+            .asDriver(onErrorJustReturn: User())
+            .drive { [weak self] user in
+                guard let owner = self else { return }
+                guard let address = user.address.components(separatedBy: " ").last else { return }
+                owner.locationButton.set(text: address, .location)
+            }
+            .disposed(by: disposeBag)
+        
+        output.homeMatches
+            .asDriver(onErrorJustReturn: ([], []))
+            .drive { [weak self] matches in
+                guard let owner = self else { return }
+                owner.configure(matches: matches)
+            }
+            .disposed(by: disposeBag)
+        
+        output.refreshHomeMatches
+            .asDriver(onErrorJustReturn: ([], []))
+            .drive { [weak self] matches in
+                guard let owner = self else { return }
+                owner.refreshControl.endRefreshing()
+                owner.configure(matches: matches)
             }
             .disposed(by: disposeBag)
     }
@@ -151,7 +203,8 @@ final class HomeViewController: BaseViewController {
         }
         
         contentView.addSubview(topView)
-        topView.addSubview(topScrollView)
+        topView.addSubview(topCollectionView)
+        topView.addSubview(topGradientBottomView)
         contentView.addSubview(topMessageLabel)
         contentView.addSubview(topPageControl)
         contentView.addSubview(popularMatchCollectionView)
@@ -167,12 +220,17 @@ final class HomeViewController: BaseViewController {
             make.bottom.equalTo(topView.snp.bottom).inset(Constant.padding24)
         }
         
-        topScrollView.snp.makeConstraints { make in
+        topCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
+        topGradientBottomView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(Constant.gradientHeight)
+        }
+        
         topPageControl.snp.makeConstraints { make in
-            make.top.equalTo(topScrollView.snp.bottom).offset(Constant.padding12)
+            make.top.equalTo(topCollectionView.snp.bottom).offset(Constant.padding12)
             make.centerX.equalToSuperview()
         }
         
@@ -185,9 +243,13 @@ final class HomeViewController: BaseViewController {
         
         matchCollectionView.snp.makeConstraints { make in
             make.top.equalTo(popularMatchCollectionView.snp.bottom).offset(Constant.padding40)
-            make.left.right.equalToSuperview().inset(Constant.padding16)
+            make.left.right.equalToSuperview()
             make.height.equalTo(Constant.matchCollectionViewHeight)
             make.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.bottom.equalTo(contentView.subviews.last!.snp.bottom)
         }
     }
     
@@ -204,44 +266,94 @@ final class HomeViewController: BaseViewController {
         topPageControl.currentPage = page
     }
     
-    private func setGradientLayer(superView: UIView) {
-        topGradientLayer.colors = [
-            UIColor.background.withAlphaComponent(0.0).cgColor,
-            UIColor.background.cgColor
-        ]
-        
-        topGradientLayer.locations = [0, 1]
-        topGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
-        topGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
-        topGradientLayer.transform = CATransform3DMakeAffineTransform(
-            CGAffineTransform(a: 0, b: 1, c: -1, d: 0, tx: 1, ty: 0)
+    private func configure(matches: (recommendedMatches: [MatchDetail], newMatches: [Match])) {
+        popularMatchCollectionView.setData(matches.recommendedMatches)
+        matchCollectionView.setData(
+            section: .newMatch,
+            matchInfos: matches.newMatches.map { MatchInfo(match: $0, owner: User()) }
         )
-        topGradientLayer.bounds = superView.bounds.insetBy(
-            dx: -0.5 * superView.bounds.size.width,
-            dy: -0.5 * superView.bounds.size.height
-        )
-        topGradientLayer.position = superView.center
-        
-        if topGradientLayer.superlayer == nil {
-            superView.layer.addSublayer(topGradientLayer)
-        }
     }
     
+    private func invalidateTimer() {
+        timer?.invalidate()
+    }
+    
+    private func activateTimer() {
+        timer = Timer.scheduledTimer(
+            timeInterval: 3,
+            target: self,
+            selector: #selector(timerCallBack),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
+    @objc func timerCallBack() {
+        var item = visibleCellIndexPath().item
+        if item == datas.count * 3 - 1 {
+            topCollectionView.scrollToItem(
+                at: IndexPath(item: datas.count * 2 - 1, section: 0),
+                at: .centeredHorizontally,
+                animated: false
+            )
+            item = datas.count * 2 - 1
+        }
+        
+        item += 1
+        topCollectionView.scrollToItem(
+            at: IndexPath(item: item, section: 0),
+            at: .centeredHorizontally,
+            animated: true
+        )
+        let count: Int = item % datas.count
+        topPageControl.currentPage = Int(count)
+   }
+    
     func didReceive(locationInfo: LocationInfo) {
-        // 서버 저장
         locationButton.setTitle(locationInfo.address, for: .normal)
+        homeViewModel.userUpdate(address: locationInfo.address)
+            .withUnretained(self)
+            .subscribe { owner, user in
+                guard let address = user.address.components(separatedBy: " ").last else { return }
+                owner.locationButton.set(text: address, .location)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate {}
+// MARK: - UICollectionViewDelegate
+
+extension HomeViewController: UICollectionViewDelegate {
+    private func visibleCellIndexPath() -> IndexPath {
+        return topCollectionView.indexPathsForVisibleItems[0]
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == topCollectionView {
+            invalidateTimer()
+            activateTimer()
+            var item = visibleCellIndexPath().item
+            if item == datas.count * 3 - 2 {
+                item = datas.count * 2
+            } else if item == 1 {
+                item = datas.count + 1
+            }
+            topCollectionView.scrollToItem(
+                at: IndexPath(item: item, section: 0),
+                                      at: .centeredHorizontally,
+                                      animated: false
+            )
+            
+            let unitCount: Int = item % datas.count
+            topPageControl.currentPage = unitCount
+        }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if topScrollView == scrollView {
-            let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-            setPageControl(page: page)
-        }
-        
         if self.scrollView == scrollView {
             if isNavigationBarTranscluent &&
                 CGFloat(Constant.scrollViewHeight) <= scrollView.contentOffset.y {
