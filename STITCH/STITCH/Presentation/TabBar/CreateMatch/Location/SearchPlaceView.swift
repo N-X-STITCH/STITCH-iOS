@@ -33,7 +33,7 @@ final class SearchPlaceView: UIView {
     }
     
     let searchTextField = DefaultTextField(
-        placeholder: "동명(읍, 면)으로 검색 (ex.서초동)",
+        placeholder: "장소명으로 검색 (ex.서울대입구역)",
         leftSearchView: true
     )
     
