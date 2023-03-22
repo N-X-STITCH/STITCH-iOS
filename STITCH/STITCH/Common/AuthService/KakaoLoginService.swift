@@ -32,7 +32,8 @@ final class KakaoLoginService: SocialLoginService {
                 let loginInfo = LoginInfo(
                     id: "\(String(describing: user.id!))",
                     nickname: user.kakaoAccount?.profile?.nickname ?? "User\(Int.random(in: 0...999))",
-                    profileImageURL: user.kakaoAccount?.profile?.profileImageUrl?.absoluteString ?? ""
+                    profileImageURL: user.kakaoAccount?.profile?.profileImageUrl?.absoluteString ?? "",
+                    loginType: .kakao
                 )
                 self.loginInfo.onNext(loginInfo)
             }

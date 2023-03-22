@@ -27,7 +27,7 @@ final class AppleLoginService: NSObject, SocialLoginService {
     func createRequest() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName]
+        request.requestedScopes = []
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
@@ -55,7 +55,9 @@ extension AppleLoginService: ASAuthorizationControllerDelegate, ASAuthorizationC
             let loginInfo = LoginInfo(
                 id: appleIDCredential.user,
                 nickname: appleIDCredential.fullName?.nickname ?? "User\(Int.random(in: 0...9999))",
-                profileImageURL: nil
+                profileImageURL: nil,
+                loginType: .apple,
+                authorizationCode: String(decoding: appleIDCredential.authorizationCode!, as: UTF8.self)
             )
             print(loginInfo)
             self.loginInfo.onNext(loginInfo)
