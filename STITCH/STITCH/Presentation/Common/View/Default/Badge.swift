@@ -11,7 +11,7 @@ final class ClassBadge: DefaultBadgeLabel {
     
     init() {
         super.init(
-            text: "클래스",
+            text: "Teach",
             textColor: .gray12,
             backgroundColor: .yellow05_primary
         )

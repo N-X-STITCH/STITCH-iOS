@@ -33,7 +33,9 @@ final class HomeViewController: BaseViewController {
     private let contentView = UIView()
     
     private let topView = UIView()
-    private lazy var topScrollView = TopScrollView(delegate: self, view)
+    private lazy var topCollectionView = TopCollectionView(self, layout: TopCollectionViewLayout.layout()).then {
+        $0.isUserInteractionEnabled = false
+    }
     private let topGradientBottomView = UIImageView(image: .homeTopViewGradientView)
     private let topMessageLabel = DefaultTitleLabel(
         text: "STITCH와 함께\n최고의 매치를 가져보세요!",
@@ -65,6 +67,8 @@ final class HomeViewController: BaseViewController {
     // MARK: Properties
     
     private var isNavigationBarTranscluent = true
+    private var timer: Timer?
+    
     private let homeViewModel: HomeViewModel
     
     // MARK: - Initializer
@@ -80,17 +84,27 @@ final class HomeViewController: BaseViewController {
         configureNavigationBar(isTranslucent: isNavigationBarTranscluent)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        topCollectionView.scrollToItem(
+            at: IndexPath(item: datas.count, section: 0),
+            at: .centeredHorizontally,
+            animated: false
+        )
+    }
+    
     // MARK: - Methods
     
     override func setting() {
         // TODO: 삭제
         setScrollViewTop()
         scrollView.delegate = self
+        topCollectionView.setData(datas + datas2 + datas3)
+        invalidateTimer()
+        activateTimer()
     }
     
     override func bind() {
-        topScrollView.setImages()
-        
         locationButton.rx.tap
             .withUnretained(self)
             .subscribe { owner, _ in
@@ -189,7 +203,7 @@ final class HomeViewController: BaseViewController {
         }
         
         contentView.addSubview(topView)
-        topView.addSubview(topScrollView)
+        topView.addSubview(topCollectionView)
         topView.addSubview(topGradientBottomView)
         contentView.addSubview(topMessageLabel)
         contentView.addSubview(topPageControl)
@@ -206,7 +220,7 @@ final class HomeViewController: BaseViewController {
             make.bottom.equalTo(topView.snp.bottom).inset(Constant.padding24)
         }
         
-        topScrollView.snp.makeConstraints { make in
+        topCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
@@ -216,7 +230,7 @@ final class HomeViewController: BaseViewController {
         }
         
         topPageControl.snp.makeConstraints { make in
-            make.top.equalTo(topScrollView.snp.bottom).offset(Constant.padding12)
+            make.top.equalTo(topCollectionView.snp.bottom).offset(Constant.padding12)
             make.centerX.equalToSuperview()
         }
         
@@ -260,6 +274,41 @@ final class HomeViewController: BaseViewController {
         )
     }
     
+    private func invalidateTimer() {
+        timer?.invalidate()
+    }
+    
+    private func activateTimer() {
+        timer = Timer.scheduledTimer(
+            timeInterval: 3,
+            target: self,
+            selector: #selector(timerCallBack),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
+    @objc func timerCallBack() {
+        var item = visibleCellIndexPath().item
+        if item == datas.count * 3 - 1 {
+            topCollectionView.scrollToItem(
+                at: IndexPath(item: datas.count * 2 - 1, section: 0),
+                at: .centeredHorizontally,
+                animated: false
+            )
+            item = datas.count * 2 - 1
+        }
+        
+        item += 1
+        topCollectionView.scrollToItem(
+            at: IndexPath(item: item, section: 0),
+            at: .centeredHorizontally,
+            animated: true
+        )
+        let count: Int = item % datas.count
+        topPageControl.currentPage = Int(count)
+   }
+    
     func didReceive(locationInfo: LocationInfo) {
         locationButton.setTitle(locationInfo.address, for: .normal)
         homeViewModel.userUpdate(address: locationInfo.address)
@@ -272,15 +321,39 @@ final class HomeViewController: BaseViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate {}
+// MARK: - UICollectionViewDelegate
+
+extension HomeViewController: UICollectionViewDelegate {
+    private func visibleCellIndexPath() -> IndexPath {
+        return topCollectionView.indexPathsForVisibleItems[0]
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == topCollectionView {
+            invalidateTimer()
+            activateTimer()
+            var item = visibleCellIndexPath().item
+            if item == datas.count * 3 - 2 {
+                item = datas.count * 2
+            } else if item == 1 {
+                item = datas.count + 1
+            }
+            topCollectionView.scrollToItem(
+                at: IndexPath(item: item, section: 0),
+                                      at: .centeredHorizontally,
+                                      animated: false
+            )
+            
+            let unitCount: Int = item % datas.count
+            topPageControl.currentPage = unitCount
+        }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if topScrollView == scrollView {
-            let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-            setPageControl(page: page)
-        }
-        
         if self.scrollView == scrollView {
             if isNavigationBarTranscluent &&
                 CGFloat(Constant.scrollViewHeight) <= scrollView.contentOffset.y {
