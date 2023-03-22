@@ -1744,6 +1744,7 @@
 				DEVELOPMENT_TEAM = SLD3XB8ML6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = STITCH/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = STITCH;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1774,6 +1775,7 @@
 				DEVELOPMENT_TEAM = SLD3XB8ML6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = STITCH/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = STITCH;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
