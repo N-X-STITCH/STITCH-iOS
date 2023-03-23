@@ -218,13 +218,13 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
             .drive { [weak self] user, matchInfo in
                 guard let self else { return }
                 if user.id == matchInfo.match.matchHostID {
-                    self.setButton(joinType: .host)
+                    self.setButton(joinType: .host, matchInfo: matchInfo)
                     self.configureMenu(joinType: .host)
                 } else if matchInfo.joinedUsers.map({ $0.id }).contains(user.id) {
-                    self.setButton(joinType: .joined)
+                    self.setButton(joinType: .joined, matchInfo: matchInfo)
                     self.configureMenu(joinType: .joined)
                 } else {
-                    self.setButton(joinType: .notJoin)
+                    self.setButton(joinType: .notJoin, matchInfo: matchInfo)
                     self.configureMenu(joinType: .notJoin)
                 }
             }
@@ -320,10 +320,29 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
     
     private func setButton(joinType: JoinType) {
         DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
             switch joinType {
-            case .host: self?.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
-            case .joined: self?.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
-            case .notJoin: self?.matchJoinButton.changeButtonInMatchDetail(type: .matchJoin)
+            case .host: self.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
+            case .joined: self.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
+            case .notJoin:
+                self.matchJoinButton.changeButtonInMatchDetail(type: .matchJoin)
+            }
+        }
+    }
+    
+    private func setButton(joinType: JoinType, matchInfo: MatchInfo) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            switch joinType {
+            case .host: self.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
+            case .joined: self.matchJoinButton.changeButtonInMatchDetail(type: .matchJoined)
+            case .notJoin:
+                if matchInfo.match.headCount >= matchInfo.match.maxHeadCount {
+                    self.matchJoinButton.changeButtonInMatchDetail(type: .matchComplete)
+                    return
+                } else {
+                    self.matchJoinButton.changeButtonInMatchDetail(type: .matchJoin)
+                }
             }
         }
     }
@@ -332,6 +351,11 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
         let report = UIAlertAction(title: "신고하기", style: .default) { [weak self] action in
             guard let self else { return }
             self.reportSubscribe(self.matchDetailViewModel.report())
+            return
+        }
+        let block = UIAlertAction(title: "차단하기", style: .default) { [weak self] action in
+            guard let self else { return }
+            self.blockSubscribe(self.matchDetailViewModel.block())
             return
         }
         let cancelJoinMatch = UIAlertAction(title: "매치 참여 취소하기", style: .default) { [weak self] action in
@@ -351,6 +375,7 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
         }
         
         alertController.addAction(report)
+        alertController.addAction(block)
         switch joinType {
         case .host: alertController.addAction(deleteMatch)
         default: alertController.addAction(cancelJoinMatch)
@@ -359,13 +384,20 @@ final class MatchDetailViewController: BaseViewController, BackButtonProtocol {
     
     private func reportSubscribe(_ report: Observable<Void>) {
         report
-            .asDriver(onErrorJustReturn: ())
-            .drive { [weak self] _ in
-                self?.showToastMessage(
-                    text: "신고가 접수되었습니다.",
-                    tintColor: .error01,
-                    icon: .success?.withTintColor(.error01, renderingMode: .alwaysOriginal)
-                )
+            .subscribe (onNext: { [weak self] _ in
+                guard let self else { return }
+                self.coordinatorPublisher.onNext(.report)
+            }, onError: { [weak self] error in
+                self?.handle(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func blockSubscribe(_ block: Observable<Void>) {
+        block
+            .subscribe { [weak self] _ in
+                guard let self else { return }
+                self.coordinatorPublisher.onNext(.block)
             }
             .disposed(by: disposeBag)
     }

@@ -207,14 +207,19 @@ extension TabBarCoordinator {
         let coordinatorPublisher = matchDetailViewController.coordinatorPublisher.share()
         
         addPopEvent(coordinatorPublisher, navigationController)
-//        matchDetailViewController.coordinatorPublisher
-//            .withUnretained(self)
-//            .subscribe { owner, event in
-//                if case .selectMatchType = event {
-//                    owner.showSelectMatchViewController(navigationController)
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        matchDetailViewController.coordinatorPublisher
+            .asSignal(onErrorJustReturn: .pop)
+            .withUnretained(self)
+            .emit { owner, event in
+                if case .block = event {
+                    navigationController.popViewController(animated: true)
+                    owner.showAlert(message: "해당 글이 차단되었습니다.")
+                } else if case .report = event {
+                    navigationController.popViewController(animated: true)
+                    owner.showAlert(message: "해당 글이 신고되었습니다. 24시간 이내에 처리될 예정입니다.")
+                }
+            }
+            .disposed(by: disposeBag)
         navigationController.pushViewController(matchDetailViewController, animated: true)
     }
 }

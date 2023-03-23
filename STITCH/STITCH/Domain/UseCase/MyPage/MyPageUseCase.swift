@@ -64,9 +64,16 @@ final class DefaultMyPageUseCase: MyPageUseCase {
     func myMatch() -> Observable<[Match]> {
         userStorage.fetchUser()
             .compactMap { $0 }
-            .flatMap { [weak self] user -> Observable<[Match]> in
+            .flatMap { [weak self] user -> Observable<([Match], [String]?)> in
                 guard let self else { return .error(NetworkError.unknownError) }
-                return self.userRepository.myMatch(userID: user.id)
+                return Observable.combineLatest(self.userRepository.myMatch(userID: user.id), self.userStorage.fetchMatchIDs())
+            }
+            .flatMap { (matches, blockMatchIDs) -> Observable<[Match]> in
+                var matches = matches
+                if let blockMatchIDs {
+                    matches = matches.filter { !blockMatchIDs.contains($0.matchID) }
+                }
+                return Single<[Match]>.just(matches).asObservable()
             }
     }
     

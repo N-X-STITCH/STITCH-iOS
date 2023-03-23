@@ -17,6 +17,7 @@ final class DefaultUserStorage: UserStorage {
     
     private let userIDKey = "userIDKey"
     private let socialLoginIDKey = "socialLoginIDKey"
+    private let blockMatchIDsKey = "blockMatchIDsKey"
     
     // MARK: - Initializer
     
@@ -52,5 +53,14 @@ final class DefaultUserStorage: UserStorage {
     func removeSocialLogin() -> Observable<Void> {
         userDefaultsService.delete(forKey: socialLoginIDKey)
         return Single<Void>.just(()).asObservable()
+    }
+    
+    func save(blockMatchIDs: [String]) -> Observable<Void> {
+        userDefaultsService.save(value: blockMatchIDs, forKey: blockMatchIDsKey)
+        return Single<Void>.just(()).asObservable()
+    }
+    
+    func fetchMatchIDs() -> Observable<[String]?> {
+        return userDefaultsService.value(valueType: [String].self, forKey: blockMatchIDsKey)
     }
 }

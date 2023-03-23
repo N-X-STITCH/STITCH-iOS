@@ -17,6 +17,8 @@ protocol UserUseCase {
     func save(socialLogin: SocialLogin) -> Observable<Void>
     func fetchSocialLogin() -> Observable<String?>
     func removeSocialLogin() -> Observable<Void>
+    func save(blockMatchID: String) -> Observable<Void>
+    func fetchMatchIDs() -> Observable<[String]?>
 }
 
 final class DefaultUserUseCase: UserUseCase {
@@ -59,5 +61,24 @@ final class DefaultUserUseCase: UserUseCase {
     
     func removeSocialLogin() -> Observable<Void> {
         return userStorage.removeSocialLogin()
+    }
+    
+    func save(blockMatchID: String) -> Observable<Void> {
+        userStorage.fetchMatchIDs()
+            .flatMap { [weak self] matchIDs -> Observable<Void> in
+                guard let self else { return .error(STITCHError.unknown) }
+                var saveMatchIDs: [String] = []
+                if let matchIDs = matchIDs {
+                    saveMatchIDs = matchIDs
+                    saveMatchIDs.append(blockMatchID)
+                } else {
+                    saveMatchIDs = [blockMatchID]
+                }
+                return self.userStorage.save(blockMatchIDs: saveMatchIDs)
+            }
+    }
+    
+    func fetchMatchIDs() -> Observable<[String]?> {
+        return self.userStorage.fetchMatchIDs()
     }
 }

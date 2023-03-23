@@ -25,7 +25,7 @@ protocol Coordinator: AnyObject {
     func popViewController()
     func popToRootViewController()
     func dismissViewController()
-    func showAlert()
+    func showAlert(message: String)
 }
 
 extension Coordinator {
@@ -46,8 +46,11 @@ extension Coordinator {
         navigationController.dismiss(animated: true)
     }
     
-    func showAlert() {
-        
+    func showAlert(message: String) {
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "확인", style: .cancel)
+        alertController.addAction(cancelAction)
+        navigationController.present(alertController, animated: true)
     }
     
     func addPopEvent(_ coordinatorPublisher: Observable<CoordinatorEvent>) {

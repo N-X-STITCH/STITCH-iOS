@@ -194,6 +194,7 @@
 		D8B91DC629CAC67600C465B7 /* TopCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B91DC529CAC67600C465B7 /* TopCollectionView.swift */; };
 		D8B91DC829CAC68200C465B7 /* TopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B91DC729CAC68200C465B7 /* TopCollectionViewCell.swift */; };
 		D8B91DCA29CAC74C00C465B7 /* BannerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B91DC929CAC74C00C465B7 /* BannerInfo.swift */; };
+		D8B91DD229CBFBD600C465B7 /* STITCH.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B91DD129CBFBD600C465B7 /* STITCH.swift */; };
 		D8CE788F29C5635E0028F2AE /* KatechConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE788E29C5635E0028F2AE /* KatechConverter.swift */; };
 		D8CE789129C627E80028F2AE /* MatchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789029C627E80028F2AE /* MatchDTO.swift */; };
 		D8CE789529C6CC860028F2AE /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE789429C6CC860028F2AE /* String+Date.swift */; };
@@ -392,6 +393,7 @@
 		D8B91DC529CAC67600C465B7 /* TopCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCollectionView.swift; sourceTree = "<group>"; };
 		D8B91DC729CAC68200C465B7 /* TopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCollectionViewCell.swift; sourceTree = "<group>"; };
 		D8B91DC929CAC74C00C465B7 /* BannerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfo.swift; sourceTree = "<group>"; };
+		D8B91DD129CBFBD600C465B7 /* STITCH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STITCH.swift; sourceTree = "<group>"; };
 		D8CE788E29C5635E0028F2AE /* KatechConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KatechConverter.swift; sourceTree = "<group>"; };
 		D8CE789029C627E80028F2AE /* MatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDTO.swift; sourceTree = "<group>"; };
 		D8CE789429C6CC860028F2AE /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
@@ -1115,6 +1117,7 @@
 			isa = PBXGroup;
 			children = (
 				D860B608299CE71800966683 /* NetworkError.swift */,
+				D8B91DD129CBFBD600C465B7 /* STITCH.swift */,
 				D868BA5729AC894800E80012 /* SocialLoginError.swift */,
 				D863D97A29C2A3BE006E99B6 /* LocationError.swift */,
 			);
@@ -1573,6 +1576,7 @@
 				D863D97529C27AC0006E99B6 /* NearAddressRepository.swift in Sources */,
 				D868BA5829AC894800E80012 /* SocialLoginError.swift in Sources */,
 				D863D96F29C27A0B006E99B6 /* NearAddressesDTO.swift in Sources */,
+				D8B91DD229CBFBD600C465B7 /* STITCH.swift in Sources */,
 				D875371929C88FCC00CAF5EA /* VersionViewController.swift in Sources */,
 				D850FC8629B4D3D000DC08C6 /* DefaultMatchRepository.swift in Sources */,
 				D8576131299BCFF800F1AFEB /* AppDelegate.swift in Sources */,
@@ -1767,8 +1771,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = STITCH/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = STITCH;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "STITCH는 지역간 모임을 제공하기 위해 위치 설정을 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "STITCH는 지역간 모임을 제공하기 위해 위치 설정을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1804,8 +1808,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = STITCH/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = STITCH;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 설정을 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "STITCH는 지역간 모임을 제공하기 위해 위치 설정을 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "STITCH는 지역간 모임을 제공하기 위해 위치 설정을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
