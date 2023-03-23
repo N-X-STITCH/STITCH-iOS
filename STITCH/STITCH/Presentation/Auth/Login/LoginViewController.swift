@@ -6,6 +6,7 @@
 //
 
 import AuthenticationServices
+import SafariServices
 import UIKit
 
 import RxSwift
@@ -46,6 +47,10 @@ final class LoginViewController: BaseViewController {
         $0.font = .Subhead2_20
         $0.textColor = .white
         $0.textAlignment = .left
+    }
+    
+    private let useTermsButton = UIButton().then {
+        $0.backgroundColor = .clear
     }
     
     private let useTermsLabel = UILabel().then {
@@ -102,6 +107,13 @@ final class LoginViewController: BaseViewController {
     // MARK: - Methods
     
     override func bind() {
+        useTermsButton.rx.tap
+            .asDriver()
+            .drive { [weak self] _ in
+                self?.openPrivacyPolicy()
+            }
+            .disposed(by: disposeBag)
+        
         let kakaoLogin = kakaoLoginButton.rx.tap
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .flatMap { _ in return self.kakaoLoginService.login() }
@@ -148,6 +160,8 @@ final class LoginViewController: BaseViewController {
                 print("로그인 타입 저장됨")
             }
             .disposed(by: disposeBag)
+        
+        
     }
     
     override func configureUI() {
@@ -157,6 +171,7 @@ final class LoginViewController: BaseViewController {
         view.addSubview(logoImageView)
         view.addSubview(stitchLogoImageView)
         view.addSubview(useTermsLabel)
+        view.addSubview(useTermsButton)
         view.addSubview(appleLoginButton)
         view.addSubview(kakaoLoginButton)
         view.addSubview(startLabel)
@@ -190,6 +205,10 @@ final class LoginViewController: BaseViewController {
             make.left.equalToSuperview().offset(Constant.paading16)
             make.right.equalToSuperview().offset(-Constant.paading16)
             make.bottom.equalTo(view.layoutMarginsGuide.snp.bottom).offset(-Constant.paading20)
+        }
+        
+        useTermsButton.snp.makeConstraints { make in
+            make.edges.equalTo(useTermsLabel)
         }
         
         appleLoginButton.snp.makeConstraints { make in
@@ -226,5 +245,11 @@ final class LoginViewController: BaseViewController {
         gradientLayer.position = view.center
 
         view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    private func openPrivacyPolicy() {
+        guard let url = URL(string: "https://equal-quail-9cc.notion.site/2c5c89013b0b4bac8b3a7e67f597448e") else { return }
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true, completion: nil)
     }
 }

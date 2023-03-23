@@ -43,7 +43,15 @@ final class MatchDetailViewModel: ViewModel {
     // MARK: - Methods
     
     func report() -> Observable<Void> {
-        return matchUseCase.createReport(Report(memberId: user.id, matchId: matchInfo.match.matchID))
+        return userUseCase.save(blockMatchID: matchInfo.match.matchID)
+            .flatMap { [weak self] _ -> Observable<Void> in
+                guard let self else { return .error(STITCHError.unknown) }
+                return self.matchUseCase.createReport(Report(memberId: self.user.id, matchId: self.matchInfo.match.matchID))
+            }
+    }
+    
+    func block() -> Observable<Void> {
+        return userUseCase.save(blockMatchID: matchInfo.match.matchID)
     }
     
     func joinMatch() -> Observable<Void> {

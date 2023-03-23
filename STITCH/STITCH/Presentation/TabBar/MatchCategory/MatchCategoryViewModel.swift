@@ -55,6 +55,8 @@ final class MatchCategoryViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         
+        let viewWillAppear = input.viewWillAppear.share()
+        
         let userObservable = input.viewWillAppear
             .flatMap { [weak self] _ -> Observable<User> in
                 guard let self else { return .error(NetworkError.unknownError) }
@@ -68,7 +70,9 @@ final class MatchCategoryViewModel: ViewModel {
         
         let viewDidLoad = input.viewDidLoad.share()
         
-        let allMatchObservable = viewDidLoad
+        let view = Observable.of(viewDidLoad, viewWillAppear).merge()
+        
+        let allMatchObservable = view
             .flatMap { [weak self] _ -> Observable<[Match]> in
                 guard let self else { return .error(NetworkError.unknownError) }
                 return self.matchUseCase.fetchAllMatch()

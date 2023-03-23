@@ -13,6 +13,8 @@ enum CoordinatorEvent: Equatable {
     case dismiss
     case pop
     case send(locationInfo: LocationInfo)
+    case block
+    case report
     
     // login
     case showHome

@@ -27,15 +27,18 @@ final class DefaultMatchUseCase: MatchUseCase {
     
     private let matchRepository: MatchRepository
     private let userRepository: UserRepository
+    private let userStorage: UserStorage
     
     // MARK: - Initializer
     
     init(
         matchRepository: MatchRepository,
-        userRepository: UserRepository
+        userRepository: UserRepository,
+        userStorage: UserStorage
     ) {
         self.matchRepository = matchRepository
         self.userRepository = userRepository
+        self.userStorage = userStorage
     }
     
     // MARK: - Methods
@@ -50,7 +53,15 @@ final class DefaultMatchUseCase: MatchUseCase {
     }
     
     func fetchAllMatch() -> Observable<[Match]> {
-        return matchRepository.fetchAllMatch()
+        return Observable.combineLatest(matchRepository.fetchAllMatch(), userStorage.fetchMatchIDs())
+            .flatMap { (matches, blockMatchIDs) -> Observable<[Match]> in
+                var matches = matches
+                if let blockMatchIDs {
+                    matches = matches.filter { !blockMatchIDs.contains($0.matchID) }
+                }
+                return Single<[Match]>.just(matches).asObservable()
+            }
+        
     }
     
     func fetchAllTeachMatch() -> Observable<[Match]> {
@@ -62,7 +73,19 @@ final class DefaultMatchUseCase: MatchUseCase {
     }
     
     func fetchHomeMatch() -> Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])> {
-        return matchRepository.fetchHomeMatch()
+        return Observable.combineLatest(matchRepository.fetchHomeMatch(), userStorage.fetchMatchIDs())
+            .flatMap { (homeMatches, blockMatchIDs) -> Observable<(recommendedMatches: [MatchDetail], newMatches: [Match])> in
+                let (recommendedMatches, newMatches) = homeMatches
+                var filteredRecommendedMatches = recommendedMatches
+                var filteredNewMatches = newMatches
+                
+                if let blockMatchIDs {
+                    filteredRecommendedMatches = recommendedMatches.filter { blockMatchIDs.contains($0.match.matchID) }
+                    filteredNewMatches = newMatches.filter { blockMatchIDs.contains($0.matchID) }
+                }
+                return Single<(recommendedMatches: [MatchDetail], newMatches: [Match])>
+                    .just((filteredRecommendedMatches, filteredNewMatches)).asObservable()
+            }
     }
     
     func deleteMatch(matchID: String) -> Observable<Void> {

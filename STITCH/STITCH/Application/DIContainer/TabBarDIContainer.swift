@@ -104,7 +104,11 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     }
     
     func matchUseCase() -> MatchUseCase {
-        return DefaultMatchUseCase(matchRepository: matchRepository(), userRepository: userRepository())
+        return DefaultMatchUseCase(
+            matchRepository: matchRepository(),
+            userRepository: userRepository(),
+            userStorage: userStorage()
+        )
     }
     
     // MARK: Location
