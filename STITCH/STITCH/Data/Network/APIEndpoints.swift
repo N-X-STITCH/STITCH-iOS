@@ -10,7 +10,7 @@ import Foundation
 struct UserAPIEndpoints {
     static func createUser(userDTO: UserDTO) -> Endpoint {
         return Endpoint(
-            path: "member",
+            path: "/member",
             method: .POST,
             bodyParameters: userDTO.toDictionary ?? [:]
         )
@@ -18,21 +18,21 @@ struct UserAPIEndpoints {
     
     static func isUser(userID: String) -> Endpoint {
         return Endpoint(
-            path: "member/isMember/id=\(userID)",
+            path: "/member/isMember/id=\(userID)",
             method: .GET
         )
     }
     
     static func fetchUser(userID: String) -> Endpoint {
         return Endpoint(
-            path: "member/info/id=\(userID)",
+            path: "/member/info/id=\(userID)",
             method: .GET
         )
     }
     
     static func updateUser(userDTO: UserDTO) -> Endpoint {
         return Endpoint(
-            path: "member/update",
+            path: "/member/update",
             method: .PUT,
             bodyParameters: userDTO.toDictionary ?? [:]
         )
@@ -40,21 +40,21 @@ struct UserAPIEndpoints {
     
     static func deleteUser(userID: String) -> Endpoint {
         return Endpoint(
-            path: "member/delete/id=\(userID)",
+            path: "/member/delete/id=\(userID)",
             method: .DELETE
         )
     }
     
     static func fetchMyPage(userID: String) -> Endpoint {
         return Endpoint(
-            path: "view/myPage/id=\(userID)",
+            path: "/view/myPage/id=\(userID)",
             method: .GET
         )
     }
     
     static func fetchMyMatch(userID: String) -> Endpoint {
         return Endpoint(
-            path: "view/myMatch/id=\(userID)",
+            path: "/view/myMatch/id=\(userID)",
             method: .GET
         )
     }
@@ -93,7 +93,7 @@ struct AuthAPIEndpoints {
 struct MatchAPIEndpoints {
     static func createMatch(matchDTO: MatchDTO) -> Endpoint {
         return Endpoint(
-            path: "match/create",
+            path: "/match/create",
             method: .POST,
             bodyParameters: matchDTO.toDictionary ?? [:]
         )
@@ -101,42 +101,42 @@ struct MatchAPIEndpoints {
     
     static func fetchMatch(matchID: String) -> Endpoint {
         return Endpoint(
-            path: "match/info/id=\(matchID)",
+            path: "/match/info/id=\(matchID)",
             method: .GET
         )
     }
     
     static func fetchAllMatch() -> Endpoint {
         return Endpoint(
-            path: "match/allMatch",
+            path: "/match/allMatch",
             method: .GET
         )
     }
     
     static func fetchAllTeachMatch() -> Endpoint {
         return Endpoint(
-            path: "match/allTeach",
+            path: "/match/allTeach",
             method: .GET
         )
     }
     
     static func fetchHomeMatch() -> Endpoint {
         return Endpoint(
-            path: "match/home",
+            path: "/match/home",
             method: .GET
         )
     }
     
     static func deleteMatch(matchID: String) -> Endpoint {
         return Endpoint(
-            path: "match/delete/\(matchID)",
+            path: "/match/delete/\(matchID)",
             method: .DELETE
         )
     }
     
     static func joinMatch(userID: String, joinMatchDTO: JoinMatchDTO) -> Endpoint {
         return Endpoint(
-            path: "match/join/id=\(userID)",
+            path: "/match/join/id=\(userID)",
             method: .PUT,
             bodyParameters: joinMatchDTO.toDictionary ?? [:]
         )
@@ -144,7 +144,7 @@ struct MatchAPIEndpoints {
     
     static func cancelJoinMatch(userID: String, matchID: String) -> Endpoint {
         return Endpoint(
-            path: "",
+            path: "/match/leave",
             method: .DELETE,
             queryParameters: ["memberId": userID, "matchId": matchID]
         )
@@ -152,7 +152,7 @@ struct MatchAPIEndpoints {
     
     static func createReport(report: Report) -> Endpoint {
         return Endpoint(
-            path: "report",
+            path: "/report",
             method: .POST,
             bodyParameters: report.toDictionary ?? [:]
         )
@@ -188,7 +188,7 @@ struct LocationAPIEndpoints {
     
     static func fetchNearAddresses(location: LocationInfo) -> Endpoint {
         return Endpoint(
-            path: "view/getNearAddress/address=\(location.address)",
+            path: "/view/getNearAddress/address=\(location.address)",
             method: .GET
         )
     }
