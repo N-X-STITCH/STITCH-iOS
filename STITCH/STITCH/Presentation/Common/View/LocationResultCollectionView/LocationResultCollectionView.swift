@@ -30,7 +30,7 @@ final class LocationResultCollectionView: BaseCollectionView {
             cell.location = locationInfo
             
             var backgroundConfig = UIBackgroundConfiguration.listPlainCell()
-            backgroundConfig.backgroundColor = .background
+            backgroundConfig.backgroundColor = .clear
             cell.backgroundConfiguration = backgroundConfig
             
             var content = cell.defaultContentConfiguration()
