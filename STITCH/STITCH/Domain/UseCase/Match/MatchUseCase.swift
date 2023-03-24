@@ -80,8 +80,8 @@ final class DefaultMatchUseCase: MatchUseCase {
                 var filteredNewMatches = newMatches
                 
                 if let blockMatchIDs {
-                    filteredRecommendedMatches = recommendedMatches.filter { blockMatchIDs.contains($0.match.matchID) }
-                    filteredNewMatches = newMatches.filter { blockMatchIDs.contains($0.matchID) }
+                    filteredRecommendedMatches = recommendedMatches.filter { !blockMatchIDs.contains($0.match.matchID) }
+                    filteredNewMatches = newMatches.filter { !blockMatchIDs.contains($0.matchID) }
                 }
                 return Single<(recommendedMatches: [MatchDetail], newMatches: [Match])>
                     .just((filteredRecommendedMatches, filteredNewMatches)).asObservable()
