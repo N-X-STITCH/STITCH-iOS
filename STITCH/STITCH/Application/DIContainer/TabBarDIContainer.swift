@@ -13,7 +13,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
         let urlsessionNetworkService: URLSessionNetworkService
         let userDefaultsService: UserDefaultsService
         let naverCloudAPIService: URLSessionNetworkService
-        let naverOpenAPIService: URLSessionNetworkService
+        let searchOpenAPIService: URLSessionNetworkService
         let appleIDService: URLSessionNetworkService
         let userUseCase: UserUseCase
     }
@@ -77,7 +77,7 @@ final class TabBarDIContainer: TabBarCoordinatorDependencies {
     // MARK: Location
     
     func searchLocationRepository() -> SearchLocationRepository {
-        return DefaultSearchLocationRepository(naverAPINetworkService: dependencies.naverOpenAPIService)
+        return DefaultSearchLocationRepository(searchAPINetworkService: dependencies.searchOpenAPIService)
     }
     
     // MARK: - Use Cases

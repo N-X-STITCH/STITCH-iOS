@@ -11,6 +11,7 @@ import MapKit
 
 struct LocationInfo: Codable, Hashable {
     var address: String
+    var placeName: String?
     var roadAddress: String?
     var latitude: String?
     var longitude: String?
@@ -19,6 +20,7 @@ struct LocationInfo: Codable, Hashable {
     
     init(
         address: String,
+        placeName: String? = nil,
         roadAddress: String? = nil,
         latitude: String? = nil,
         longitude: String? = nil,
@@ -26,6 +28,7 @@ struct LocationInfo: Codable, Hashable {
         katechY: String? = nil
     ) {
         self.address = address
+        self.placeName = placeName
         self.roadAddress = roadAddress
         self.latitude = latitude
         self.longitude = longitude

@@ -140,12 +140,13 @@ final class SetLocationViewController: BaseViewController, BackButtonProtocol {
             }
             .compactMap { $0.last }
             .map { place in
+                print(place.description)
                 let location = place.description
                     .components(separatedBy: ",")[1]
                     .components(separatedBy: " ")[2...]
                     .joined(separator: " ")
                 return LocationInfo(
-                    address: location,
+                    address: location.isEmpty ? place.description.components(separatedBy: ",")[1] : location,
                     latitude: "\(place.location?.coordinate.latitude ?? 0)",
                     longitude: "\(place.location?.coordinate.longitude ?? 0)"
                 )
@@ -154,7 +155,13 @@ final class SetLocationViewController: BaseViewController, BackButtonProtocol {
         mapPlacemarkObservable
             .withUnretained(self)
             .subscribe { owner, locationInfo in
-                owner.locationLabel.text = "\(locationInfo.address)"
+                if let placeName = locationInfo.placeName {
+                    owner.locationLabel.text = placeName
+                } else if let address = locationInfo.address.components(separatedBy: "@").first {
+                    owner.locationLabel.text = address
+                } else {
+                    owner.locationLabel.text = "\(locationInfo.address)"
+                }
             }
             .disposed(by: disposeBag)
         
@@ -177,15 +184,14 @@ final class SetLocationViewController: BaseViewController, BackButtonProtocol {
             .map { owner, indexPath in
                 guard let locationResultCell = owner.searchPlaceView.locationResultCollectionView.cellForItem(at: indexPath)
                         as? LocationResultCell else { return LocationInfo(address: "") }
-                guard var locationInfo = locationResultCell.location else { return LocationInfo(address: "") }
-                
-                locationInfo.convertKatechToGEO()
+                guard let locationInfo = locationResultCell.location else { return LocationInfo(address: "") }
                 
                 guard let latitude = locationInfo.latitude,
                       let latitude = Double(latitude),
                       let longitude = locationInfo.longitude,
                       let longitude = Double(longitude)
                 else { return LocationInfo(address: "") }
+                
                 let location = NMGLatLng(lat: latitude, lng: longitude)
                 owner.currentLocation = location
                 owner.moveMarker(to: location)
