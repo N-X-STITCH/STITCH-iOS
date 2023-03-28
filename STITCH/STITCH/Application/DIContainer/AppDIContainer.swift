@@ -27,13 +27,10 @@ final class AppDIContainer {
         return DefaultURLSessionNetworkService(config: config)
     }()
     
-    lazy var naverOpenAPIService: URLSessionNetworkService = {
+    lazy var kakaoOpenAPIService: URLSessionNetworkService = {
         let config = NetworkConfig(
-            baseURL: URL(string: "https://openapi.naver.com/v1/search/local.json")!,
-            headers: [
-                "X-Naver-Client-Id": APIKey.naverClientID,
-                "X-Naver-Client-Secret": APIKey.naverClientSecret
-            ]
+            baseURL: URL(string: "https://dapi.kakao.com")!,
+            headers: ["Authorization": "KakaoAK \(APIKey.kakaoAPIKey)"]
         )
         return DefaultURLSessionNetworkService(config: config)
     }()
@@ -69,7 +66,7 @@ final class AppDIContainer {
             urlsessionNetworkService: urlsessionNetworkService,
             userDefaultsService: userDefaultsService,
             naverCloudAPIService: naverCloudAPIService,
-            naverOpenAPIService: naverOpenAPIService,
+            searchOpenAPIService: kakaoOpenAPIService,
             appleIDService: appleIDService,
             userUseCase: userUseCase
         )

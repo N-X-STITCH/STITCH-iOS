@@ -13,31 +13,31 @@ final class DefaultSearchLocationRepository: SearchLocationRepository {
     
     // MARK: - Properties
     
-    private let naverAPINetworkService: URLSessionNetworkService
+    private let searchAPINetworkService: URLSessionNetworkService
     
     // MARK: - Initializer
     
-    init(naverAPINetworkService: URLSessionNetworkService) {
-        self.naverAPINetworkService = naverAPINetworkService
+    init(searchAPINetworkService: URLSessionNetworkService) {
+        self.searchAPINetworkService = searchAPINetworkService
     }
     
     // MARK: - Methods
     
     func fetchSearchLocations(query: String) -> Observable<[LocationInfo]> {
         let endpoint = LocationAPIEndpoints.fetchSearchLocations(query: query)
-        return naverAPINetworkService.request(with: endpoint)
+        return searchAPINetworkService.request(with: endpoint)
             .map(SearchLocationDTO.self)
-            .compactMap { $0.items }
+            .compactMap { $0.documents }
             .map {
-                return $0.map {
-                    let title = $0.title.replacingOccurrences(of: "<b>", with: "")
-                        .replacingOccurrences(of: "</b>", with: "")
-                    return LocationInfo(
-                        address: "\($0.address), \(title)",
-                        roadAddress: $0.roadAddress,
-                        katechX: $0.mapx,
-                        katechY: $0.mapy
-                    ) }
+                return $0.map { document in
+                    LocationInfo(
+                        address: document.address_name,
+                        placeName: document.place_name,
+                        roadAddress: document.road_address_name,
+                        latitude: document.y,
+                        longitude: document.x
+                    )
+                }
             }
     }
 }

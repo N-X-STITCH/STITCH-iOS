@@ -195,12 +195,11 @@ struct LocationAPIEndpoints {
     
     static func fetchSearchLocations(query: String) -> Endpoint {
         return Endpoint(
-            path: "",
+            path: "/v2/local/search/keyword.json",
             method: .GET,
             queryParameters: [
                 "query": query,
-                "display": 5,
-                "sort": "random"
+                "display": 45
             ]
         )
     }
