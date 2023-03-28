@@ -19,7 +19,6 @@ STITCH는 스포츠 메이트 매칭 플랫폼 애플리케이션 입니다.
 |@비니|@개리|[@kim-hyeungsuk](https://github.com/kim-hyeungsuk)|[@seunggyu97](https://github.com/seunggyu97)|[@NEULiee](https://github.com/NEULiee)
 
 ## 기능 & 동작화면
-- 개인 정보 처리 방침, 오픈소스 및 라이브러리를 확인할 수 있어요.
 
 |<img src="https://user-images.githubusercontent.com/39167842/228167106-6af8bffb-2854-45e8-b4c7-a5e7261d8701.png" width=200>|<img src="https://user-images.githubusercontent.com/39167842/228167265-b07230eb-d4c2-4fd7-bdc3-94303b449887.png" width=200>|<img src="https://user-images.githubusercontent.com/39167842/228167409-dddd4479-3360-480c-9191-c4db88ac8506.png" width=200>|<img src="https://user-images.githubusercontent.com/39167842/228167502-c84280a3-e609-4d56-8adb-f8738de1c167.png" width=200>|
 |:-:|:-:|:-:|:-:|
