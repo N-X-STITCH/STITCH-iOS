@@ -8,13 +8,24 @@
 import Foundation
 
 struct SearchLocationDTO: Decodable {
-    let items: [SearchLocationItem]?
+    let meta: Meta
+    let documents: [Document]
 }
 
-struct SearchLocationItem: Decodable {
-    let title: String
-    let address: String
-    let roadAddress: String
-    let mapx: String
-    let mapy: String
+struct Meta: Decodable {
+    let same_name: SearchName
+}
+
+struct SearchName: Decodable {
+    let region: [String]
+    let keyword: String
+    let selected_region: String
+}
+
+struct Document: Decodable {
+    let place_name: String
+    let address_name: String
+    let road_address_name: String
+    let x: String // longitude
+    let y: String // latitude
 }
