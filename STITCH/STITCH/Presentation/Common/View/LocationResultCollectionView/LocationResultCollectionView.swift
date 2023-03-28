@@ -34,7 +34,7 @@ final class LocationResultCollectionView: BaseCollectionView {
             cell.backgroundConfiguration = backgroundConfig
             
             var content = cell.defaultContentConfiguration()
-            content.text = locationInfo.address
+            content.text = "\(locationInfo.placeName ?? "")"
             content.textProperties.font = .Body1_16 ?? .systemFont(ofSize: 16, weight: .regular)
             content.textProperties.color = .gray02
             cell.contentConfiguration = content
