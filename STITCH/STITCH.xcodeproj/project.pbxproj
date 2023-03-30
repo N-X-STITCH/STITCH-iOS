@@ -120,6 +120,7 @@
 		D860B61B299CF3F100966683 /* SignupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B61A299CF3F100966683 /* SignupUseCase.swift */; };
 		D860B61F299D199A00966683 /* SignupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B61E299D199A00966683 /* SignupRepository.swift */; };
 		D860B622299D19DA00966683 /* DefaultSignupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860B621299D19DA00966683 /* DefaultSignupRepository.swift */; };
+		D86235AB29D5E4B500D54C03 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D86235AA29D5E4B500D54C03 /* FirebaseCrashlytics */; };
 		D863D95A29C071B4006E99B6 /* Observable+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863D95929C071B4006E99B6 /* Observable+Data.swift */; };
 		D863D96829C0C155006E99B6 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863D96729C0C155006E99B6 /* LocationViewModel.swift */; };
 		D863D96A29C1B7CA006E99B6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D863D96929C1B7CA006E99B6 /* APIKey.swift */; };
@@ -432,6 +433,7 @@
 				D8FFC60B29CA2EA6008B4137 /* SwiftJWT in Frameworks */,
 				D81115CE29C2FB0000124590 /* RxCocoa in Frameworks */,
 				D868BA4429AB172F00E80012 /* RxKakaoSDKAuth in Frameworks */,
+				D86235AB29D5E4B500D54C03 /* FirebaseCrashlytics in Frameworks */,
 				D81115D029C2FB0000124590 /* RxSwift in Frameworks */,
 				D860B5DE299BDB7000966683 /* Then in Frameworks */,
 				D850FC9B29B5E91600DC08C6 /* FSCalendar in Frameworks */,
@@ -1339,6 +1341,7 @@
 				D81115CD29C2FB0000124590 /* RxCocoa */,
 				D81115CF29C2FB0000124590 /* RxSwift */,
 				D8FFC60A29CA2EA6008B4137 /* SwiftJWT */,
+				D86235AA29D5E4B500D54C03 /* FirebaseCrashlytics */,
 			);
 			productName = STITCH;
 			productReference = D857612D299BCFF800F1AFEB /* STITCH.app */;
@@ -1993,6 +1996,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D860B5DC299BDB7000966683 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		D86235AA29D5E4B500D54C03 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D85E1BE729C2E79F00AF1FCA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		D868BA4329AB172F00E80012 /* RxKakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
