@@ -181,8 +181,9 @@ final class MatchCategoryViewController: BaseViewController {
         let selectSportObservable = output.selectSportObservable.share()
         
         selectSportObservable
-            .withUnretained(self)
-            .subscribe { owner, matchs in
+            .asDriver(onErrorJustReturn: [])
+            .drive { [weak self] matchs in
+                guard let owner = self else { return }
                 owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
                 owner.matchCountLabel.text = "\(matchs.count)개"
             }
