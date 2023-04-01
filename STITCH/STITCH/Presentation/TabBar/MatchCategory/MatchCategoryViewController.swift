@@ -116,8 +116,14 @@ final class MatchCategoryViewController: BaseViewController {
         
         let selected = sportCategoryCollectionView.rx.itemSelected.share()
         
-        let selectSport = selected
+        let selectSport = BehaviorSubject<Sport>(value: .all)
+        
+        selected
             .map { Sport.allCases[$0.row] }
+            .subscribe { sport in
+                selectSport.onNext(sport)
+            }
+            .disposed(by: disposeBag)
         
         selected
             .withUnretained(self)
@@ -152,7 +158,7 @@ final class MatchCategoryViewController: BaseViewController {
         let input = MatchCategoryViewModel.Input(
             viewDidLoad: Observable.just(Void()),
             viewWillAppear: rx.viewWillAppear.map { _ in () }.asObservable(),
-            selectSport: selectSport,
+            selectSport: selectSport.asObservable().share().debug(),
             refreshObservalble: refreshObservalble
         )
         
@@ -167,9 +173,7 @@ final class MatchCategoryViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        let allMatchObservable = output.allMatchObservable.share()
-        
-        allMatchObservable
+        output.viewDidLoadMatchObservable
             .asDriver(onErrorJustReturn: [])
             .drive { [weak self] matchs in
                 guard let owner = self else { return }
@@ -178,52 +182,15 @@ final class MatchCategoryViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        let selectSportObservable = output.selectSportObservable.share()
-        
-        selectSportObservable
-            .asDriver(onErrorJustReturn: [])
-            .drive { [weak self] matchs in
-                guard let owner = self else { return }
-                owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
-                owner.matchCountLabel.text = "\(matchs.count)개"
-            }
-            .disposed(by: disposeBag)
-        
-        let refreshMatchObservable = output.refreshMatchObservable.share()
-        
-        refreshMatchObservable
+        output.viewRefreshMatchObservable
             .asDriver(onErrorJustReturn: [])
             .drive { [weak self] matchs in
                 guard let owner = self else { return }
                 owner.refreshControl.endRefreshing()
-                owner.sportCategoryCollectionView.selectItem(
-                    at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .top
-                )
                 owner.matchCollectionView.setData(section: .none, matchInfos: matchs.map { MatchInfo(match: $0, owner: User()) })
                 owner.matchCountLabel.text = "\(matchs.count)개"
             }
             .disposed(by: disposeBag)
-        
-//        let matchButtonTap = matchButton.rx.tap.share()
-//        
-//        matchButtonTap
-//            .withUnretained(self)
-//            .subscribe { owner, _ in
-//                owner.set(owner.matchButton, isSelected: true)
-//                owner.set(owner.teachMatchButton, isSelected: false)
-//            }
-//            .disposed(by: disposeBag)
-//
-//        let teachMatchButtonTap = teachMatchButton.rx.tap.share()
-//
-//        teachMatchButtonTap
-//            .withUnretained(self)
-//            .subscribe { owner, _ in
-//                owner.set(owner.matchButton, isSelected: false)
-//                owner.set(owner.teachMatchButton, isSelected: true)
-//            }
-//            .disposed(by: disposeBag)
-        
 
     }
     

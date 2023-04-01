@@ -22,10 +22,8 @@ final class MatchCategoryViewModel: ViewModel {
     
     struct Output {
         let userObservable: Observable<User>
-        let allMatchObservable: Observable<[Match]>
-        let teachMatchObservable: Observable<[Match]>
-        let selectSportObservable: Observable<[Match]>
-        let refreshMatchObservable: Observable<[Match]>
+        let viewDidLoadMatchObservable: Observable<[Match]>
+        let viewRefreshMatchObservable: Observable<[Match]>
     }
     
     // MARK: - Properties
@@ -55,7 +53,9 @@ final class MatchCategoryViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         
+        let viewDidLoad = input.viewDidLoad.share()
         let viewWillAppear = input.viewWillAppear.share()
+        let selectSport = input.selectSport.share()
         
         let userObservable = input.viewWillAppear
             .flatMap { [weak self] _ -> Observable<User> in
@@ -68,43 +68,28 @@ final class MatchCategoryViewModel: ViewModel {
             }
             .share()
         
-        let viewDidLoad = input.viewDidLoad.share()
-        
-        let view = Observable.of(viewDidLoad, viewWillAppear).merge()
-        
-        let allMatchObservable = view
+        let viewDidLoadMatchObservable = viewDidLoad
             .flatMap { [weak self] _ -> Observable<[Match]> in
                 guard let self else { return .error(NetworkError.unknownError) }
                 return self.matchUseCase.fetchAllMatch()
             }
             .share()
         
-        let teachMatchObservable = viewDidLoad
-            .flatMap { [weak self] _ -> Observable<[Match]> in
-                guard let self else { return .error(NetworkError.unknownError) }
-                return self.matchUseCase.fetchAllTeachMatch()
-            }
+        let viewRefreshObservable = Observable.of(viewWillAppear, input.refreshObservalble).merge().debug("refresh")
         
-        let selectSportObservable = Observable.combineLatest(allMatchObservable, input.selectSport)
-            .flatMap { (matchs, sport) -> Observable<[Match]> in
-                if sport == .all {
-                    return Single<[Match]>.just(matchs).asObservable()
-                }
-                return Single<[Match]>.just(matchs.filter { $0.sport == sport }).asObservable()
-            }
-        
-        let refreshMatchObservable = input.refreshObservalble
-            .flatMap { [weak self] _ -> Observable<[Match]> in
+        let viewRefreshMatchObservable = Observable.combineLatest(viewRefreshObservable, selectSport)
+            .skip(1)
+            .flatMap { [weak self] (_, sport) -> Observable<[Match]> in
                 guard let self else { return .error(NetworkError.unknownError) }
                 return self.matchUseCase.fetchAllMatch()
+                    .map { sport == .all ? $0 : $0.filter { $0.sport == sport } }
             }
+            .share()
         
         return Output(
             userObservable: userObservable,
-            allMatchObservable: allMatchObservable,
-            teachMatchObservable: teachMatchObservable,
-            selectSportObservable: selectSportObservable,
-            refreshMatchObservable: refreshMatchObservable
+            viewDidLoadMatchObservable: viewDidLoadMatchObservable,
+            viewRefreshMatchObservable: viewRefreshMatchObservable
         )
     }
 }
