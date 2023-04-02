@@ -310,11 +310,12 @@ final class HomeViewController: BaseViewController {
    }
     
     func didReceive(locationInfo: LocationInfo) {
-        locationButton.setTitle(locationInfo.address, for: .normal)
         homeViewModel.userUpdate(address: locationInfo.address)
-            .withUnretained(self)
-            .subscribe { owner, user in
+            .asDriver(onErrorJustReturn: User())
+            .drive { [weak self] user in
+                guard let owner = self else { return }
                 guard let address = user.address.components(separatedBy: " ").last else { return }
+                print(address)
                 owner.locationButton.set(text: address, .location)
             }
             .disposed(by: disposeBag)
