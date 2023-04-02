@@ -168,7 +168,7 @@ extension TabBarCoordinator {
                     } else if let matchCategoryViewController {
                         matchCategoryViewController.didReceive(locationInfo: locationInfo)
                     }
-                    owner.popViewController()
+                    navigationController.popViewController(animated: true)
                 }
             }
             .disposed(by: disposeBag)

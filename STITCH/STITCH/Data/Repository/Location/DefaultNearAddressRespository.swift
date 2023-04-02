@@ -51,12 +51,12 @@ final class DefaultNearAddressRepository: NearAddressRepository {
     func fetchNearAddresses(text: String) -> Observable<[LocationInfo]> {
         let endpoint = LocationAPIEndpoints.fetchGeoCodingAddress(query: text)
         return naverCloudNetworkService.request(with: endpoint)
-            .retry()
+            .retry(1)
             .map(GeoCodingResultDTO.self)
             .compactMap { $0.addresses }
             .map { addresses in
                 let dongAddresses = addresses.filter { !$0.addressElements[2].longName.isEmpty }
-                return dongAddresses.map { LocationInfo(address: $0.jibunAddress) }
+                return dongAddresses.map { LocationInfo(address: $0.jibunAddress, placeName: $0.jibunAddress) }
             }
     }
 }

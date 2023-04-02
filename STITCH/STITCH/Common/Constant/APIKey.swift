@@ -10,8 +10,6 @@ import Foundation
 struct ServiceAPIKey: Codable {
     let kakaoAPIKey: String
     let privateAuthKey: String
-    let clientID: String
-    let clientSecret: String
     let cloudClientID: String
     let cloudClientSecret: String
 }
